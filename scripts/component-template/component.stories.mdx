@@ -1,0 +1,19 @@
+import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
+import { action } from "@storybook/addon-actions";
+import { linkTo } from '@storybook/addon-links'
+import ComponentNameCamelCase from './ComponentNameCamelCase.vue';
+
+<Meta title="ComponentType|ComponentName" component={ComponentNameCamelCase} />
+
+# ComponentName
+
+<Props of={ComponentNameCamelCase} />
+
+<Preview>
+  <Story name="Common">
+    {{
+        components: { ComponentNameCamelCase },
+        template: '<ComponentNameCamelCase />',
+    }}
+  </Story>
+</Preview>

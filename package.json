@@ -1,0 +1,36 @@
+{
+  "name": "root",
+  "private": true,
+  "version": "0.0.0",
+  "devDependencies": {
+    "lerna": "^3.22.1"
+  },
+  "scripts": {
+    "create-component": "node ./scripts/create-component.js",
+    "storybook:serve": "cd packages/ui && yarn storybook:serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pspaczek/nowa-zhp.git"
+  },
+  "author": "Przemysław Spaczek",
+  "license": "MIT",
+  "workspaces": [
+    "packages/*"
+  ],
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-conventional": "^8.3.4",
+    "file-save": "^0.2.0",
+    "glob": "^7.1.6",
+    "husky": "^4.2.5",
+    "lerna": "^3.20.2",
+    "prompts": "^2.3.2",
+    "uppercamelcase": "^3.0.0"
+  }
+}
