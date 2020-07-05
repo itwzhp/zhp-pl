@@ -1,0 +1,19 @@
+import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
+import { action } from "@storybook/addon-actions";
+import { linkTo } from '@storybook/addon-links'
+import ZButton from './ZButton.vue';
+
+<Meta title="Atoms|Button" component={ZButton} />
+
+# Button
+
+<Props of={ZButton} />
+
+<Preview>
+  <Story name="Common">
+    {{
+        components: { ZButton },
+        template: '<ZButton>Button</ZButton>',
+    }}
+  </Story>
+</Preview>
