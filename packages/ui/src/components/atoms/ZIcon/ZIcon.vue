@@ -28,7 +28,7 @@
         return icons[iconName] ? icons[iconName].paths : [];
       },
       viewBox() {
-        const iconName = this.icon;
+        const iconName = this.name;
         return icons[iconName] ? icons[iconName].viewBox : "0 0 24 24"
       }
     }
