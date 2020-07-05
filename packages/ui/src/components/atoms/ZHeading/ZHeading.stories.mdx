@@ -1,0 +1,19 @@
+import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
+import { action } from "@storybook/addon-actions";
+import { linkTo } from '@storybook/addon-links'
+import ZHeading from './ZHeading.vue';
+
+<Meta title="Atoms|Heading" component={ZHeading} />
+
+# Heading
+
+<Props of={ZHeading} />
+
+<Preview>
+  <Story name="Common">
+    {{
+        components: { ZHeading },
+        template: `<ZHeading>Heading</ZHeading>`,
+    }}
+  </Story>
+</Preview>
