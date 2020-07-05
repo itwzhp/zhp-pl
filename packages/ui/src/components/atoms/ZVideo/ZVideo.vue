@@ -1,11 +1,11 @@
 <template>
   <video class="z-video">
     <source
-      v-for="({src, media, type}, key) in sources"
+      v-for="(source, key) in sources"
       :key="key"
-      :src="src"
-      :media="media"
-      :type="type"
+      :src="source.src"
+      :media="source.media"
+      :type="source.type"
     >
   </video>
 </template>

@@ -6,11 +6,11 @@
     :data-alt="alt"
   >
     <source
-      v-for="({srcset, media, type}, key) in sources"
+      v-for="(source, key) in sources"
       :key="key"
-      :srcset="srcset"
-      :media="media"
-      :type="type"
+      :srcset="source.srcset"
+      :media="source.media"
+      :type="source.type"
     >
   </picture>
 </template>
