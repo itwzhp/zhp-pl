@@ -6,9 +6,9 @@
     :data-alt="alt"
   >
     <source
-      v-for="({srcset, media, type}, key) in srcset"
+      v-for="({source, media, type}, key) in srcset"
       :key="key"
-      :srcset="srcset"
+      :srcset="source"
       :media="media"
       :type="type"
     >
