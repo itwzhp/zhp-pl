@@ -1,0 +1,36 @@
+import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
+import { action } from "@storybook/addon-actions";
+import { linkTo } from '@storybook/addon-links'
+import ZCard from './ZCard.vue';
+
+<Meta title="Molecules|Card" component={ZCard} />
+
+# Card
+
+<Props of={ZCard} />
+
+<Preview>
+  <Story name="Common">
+    {{
+        components: { ZCard },
+        template: `<ZCard
+          title="Weź udział w konferencjach podczas VI Zlotu Kadry ZHP"
+          to="https://zhp.pl"
+          content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tempus euismod libero, et varius lorem rutrum ut. "
+          :author="{name: 'Author Name', to:'#'}"
+          :categories="[{name: 'Category A', to:'#'}, {name: 'Category B', to:'#'}]"
+          src-image="https://zhp.pl/wp-content/uploads/2020/06/News-podsumowanie-na-obozie-kopia-850x468.png"
+          :sources-image="[
+            {
+              srcset: 'https://zhp.pl/wp-content/uploads/2020/06/News-podsumowanie-na-obozie-kopia-850x468.png',
+              media: '(min-width: 480px)',
+              type: 'image/png'
+            },
+            {
+              srcset: 'https://zhp.pl/wp-content/uploads/2020/06/News-podsumowanie-na-obozie-kopia-850x468.png'
+            }
+          ]"
+        />`,
+    }}
+  </Story>
+</Preview>
