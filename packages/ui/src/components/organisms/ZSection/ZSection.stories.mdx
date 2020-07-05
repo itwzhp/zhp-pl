@@ -1,0 +1,19 @@
+import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
+import { action } from "@storybook/addon-actions";
+import { linkTo } from '@storybook/addon-links'
+import ZSection from './ZSection.vue';
+
+<Meta title="Organisms|Section" component={ZSection} />
+
+# Section
+
+<Props of={ZSection} />
+
+<Preview>
+  <Story name="Common">
+    {{
+        components: { ZSection },
+        template: `<ZSection :title="Title" :subtitle="Subtitle"/>`,
+    }}
+  </Story>
+</Preview>
