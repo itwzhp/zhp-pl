@@ -17,7 +17,12 @@
     props: {
       settings: {
         type: Object,
-        default: ()=>({})
+        default: ()=>({
+          type: 'carousel',
+          perView: 4,
+          gap: 14,
+          peek: 50
+        })
       }
     },
     mounted() {
