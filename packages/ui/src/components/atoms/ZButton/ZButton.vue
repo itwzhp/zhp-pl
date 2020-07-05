@@ -19,5 +19,14 @@
   }
 </script>
 <style lang="scss">
-  .z-button {}
+  .z-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    &--pure {
+      padding: 0;
+      background: transparent;
+    }
+  }
 </style>
