@@ -28,9 +28,12 @@
           /> Zmień serwis
         </ZButton>
       </div>
-      <nav class="z-navigation">
+      <nav
+        class="z-navigation"
+        style="grid-row: 2; grid-column: 1 / span 3;"
+      >
         <ZLink
-          v-for="(item, key) in navigation"
+          v-for="(item, key) in headerNavigation"
           :key="key"
           :to="item.to"
         >
@@ -41,24 +44,44 @@
     <div id="home">
       content
     </div>
-    <footer>
-      footer
+    <footer class="z-footer">
+      <div class="h-container" style="display: grid; grid-auto-flow: column; column-gap: 1rem; justify-content: space-between; align-items: center;">
+        <div>
+          <ZHeading level="3">Czy wiesz, że...</ZHeading>
+          <ZText>ZHP jest jedyną w Polsce organizacją skautową uznaną przez Światową Rodzinę Skautową i należy do WOSM i WAGGGS.</ZText>
+        </div>
+        <div>WOSM i WAGGGS</div>
+      </div>
+      <div class="h-container" style="display: grid; grid-auto-flow: column; column-gap: 1rem; justify-content: center; align-items: center;">
+        <ZText>Copyright © 1997-2020 Związek Harcerstwa Polskiego</ZText>
+        <nav class="z-navigation">
+          <ZLink
+            v-for="(item, key) in footerNavigation"
+            :key="key"
+            :to="item.to"
+          >
+            {{ item.name }}
+          </ZLink>
+        </nav>
+      </div>
     </footer>
   </div>
 </template>
 <script>
-  import {ZButton, ZIcon, ZLink, ZImage} from "@nowa-zhp/ui"
+  import {ZButton, ZIcon, ZLink, ZImage, ZText, ZHeading} from "@nowa-zhp/ui"
   export default {
     name: "Home",
     components: {
+      ZText,
       ZButton,
       ZIcon,
       ZLink,
-      ZImage
+      ZImage,
+      ZHeading
     },
     data() {
       return {
-        navigation: [
+        headerNavigation: [
           {to: "#", name: "Strona Główna"},
           {to: "#", name: "Aktualności"},
           {to: "#", name: "Wydarzenia"},
@@ -66,6 +89,12 @@
           {to: "#", name: "Dla rodzica"},
           {to: "#", name: "1% dla ZHP"},
           {to: "#", name: "Kontakt"}
+        ],
+        footerNavigation: [
+          {to: "#", name: "Informacje i uwagi prawne"},
+          {to: "#", name: "Polityka prywatności"},
+          {to: "#", name: "Biuletyn Informacji Publicznej"},
+          {to: "#", name: "RSS"}
         ]
       }
     }
@@ -91,12 +120,11 @@
     column-gap: 1rem;
   }
   .z-navigation {
-    grid-row: 2;
-    grid-column: 1 / span 3;
     display: grid;
     grid-auto-flow: column;
     column-gap: 1rem;
     justify-content: center;
   }
-#home {}
+  .z-footer {}
+  #home {}
 </style>
