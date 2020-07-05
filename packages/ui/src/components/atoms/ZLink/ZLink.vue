@@ -49,5 +49,11 @@
   }
 </script>
 <style lang="scss">
-  .z-link {}
+  .z-link {
+    color: var(--link-color, inherit);
+    text-decoration: var(--link-text-decoration, inherit);
+    &:hover {
+      text-decoration: var(--link-text-decoration, underline);
+    }
+  }
 </style>
