@@ -58,5 +58,10 @@
   }
 </script>
 <style lang="scss">
-  .z-image {}
+  .z-image {
+    img {
+      width: var(--image-width);
+      height: var(--image-height);
+    }
+  }
 </style>
