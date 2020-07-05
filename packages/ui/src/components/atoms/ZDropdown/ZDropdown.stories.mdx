@@ -1,0 +1,23 @@
+import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
+import { action } from "@storybook/addon-actions";
+import { linkTo } from '@storybook/addon-links'
+import ZDropdown from './ZDropdown.vue';
+
+<Meta title="Atoms|Dropdown" component={ZDropdown} />
+
+# Dropdown
+
+<Props of={ZDropdown} />
+
+<Preview>
+  <Story name="Common">
+    {{
+        components: { ZDropdown },
+        template: `<ZDropdown>
+          <p>Option A</p>
+          <p>Option B</p>
+          <p>Option C</p>
+        </ZDropdown>`,
+    }}
+  </Story>
+</Preview>
