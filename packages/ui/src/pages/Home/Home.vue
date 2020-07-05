@@ -1,6 +1,6 @@
 <template>
   <div>
-    <header class="z-header h-container">
+    <header class="z-header l-container">
       <ZButton class="z-button--pure">
         <ZIcon
           name="shuffle"
@@ -42,17 +42,66 @@
       </nav>
     </header>
     <div id="home">
-      content
+      <ZSection
+        title="Aktualności"
+        subtitle="Zobacz, co nowego w ZHP"
+      >
+        <ZCarousel>
+          <li
+            v-for="(post, key) in posts"
+            :key="key"
+            class="glide__slide"
+          >
+            <ZCard
+              :title="post.title"
+              :author="post.author"
+              :date="post.date"
+              :to-link="post.toLink"
+              :src-image="post.srcImage"
+              :sources-image="post.sourcesImage"
+            />
+          </li>
+        </ZCarousel>
+      </ZSection>
+      <ZSection
+        title="Wydarzenia i przedsięwzięcia"
+        subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tempus euismod libero, et varius lorem rutrum ut. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. "
+      >
+        <ZCarousel>
+          <li
+            v-for="(post, key) in posts"
+            :key="key"
+            class="glide__slide"
+          >
+            <ZCard
+              :title="post.title"
+              :author="post.author"
+              :date="post.date"
+              :to-link="post.toLink"
+              :src-image="post.srcImage"
+              :sources-image="post.sourcesImage"
+            />
+          </li>
+        </ZCarousel>
+      </ZSection>
     </div>
     <footer class="z-footer">
-      <div class="h-container" style="display: grid; grid-auto-flow: column; column-gap: 1rem; justify-content: space-between; align-items: center;">
+      <div
+        class="l-container"
+        style="display: grid; grid-auto-flow: column; column-gap: 1rem; justify-content: space-between; align-items: center;"
+      >
         <div>
-          <ZHeading level="3">Czy wiesz, że...</ZHeading>
+          <ZHeading level="3">
+            Czy wiesz, że...
+          </ZHeading>
           <ZText>ZHP jest jedyną w Polsce organizacją skautową uznaną przez Światową Rodzinę Skautową i należy do WOSM i WAGGGS.</ZText>
         </div>
         <div>WOSM i WAGGGS</div>
       </div>
-      <div class="h-container" style="display: grid; grid-auto-flow: column; column-gap: 1rem; justify-content: center; align-items: center;">
+      <div
+        class="l-container"
+        style="display: grid; grid-auto-flow: column; column-gap: 1rem; justify-content: center; align-items: center;"
+      >
         <ZText>Copyright © 1997-2020 Związek Harcerstwa Polskiego</ZText>
         <nav class="z-navigation">
           <ZLink
@@ -68,16 +117,19 @@
   </div>
 </template>
 <script>
-  import {ZButton, ZIcon, ZLink, ZImage, ZText, ZHeading} from "@nowa-zhp/ui"
+  import {ZButton, ZIcon, ZLink, ZImage, ZText, ZHeading, ZSection, ZCarousel, ZCard } from "@nowa-zhp/ui"
   export default {
     name: "Home",
     components: {
+      ZCard,
       ZText,
       ZButton,
       ZIcon,
       ZLink,
       ZImage,
-      ZHeading
+      ZHeading,
+      ZSection,
+      ZCarousel
     },
     data() {
       return {
@@ -95,13 +147,47 @@
           {to: "#", name: "Polityka prywatności"},
           {to: "#", name: "Biuletyn Informacji Publicznej"},
           {to: "#", name: "RSS"}
+        ],
+        posts: [
+          {
+            srcImage: "https://zhp.pl/wp-content/uploads/2020/01/Weronika_Malachowska_ZHP_20180814BKK_2137-850x468.jpg",
+            sourcesImage: [{srcset:"https://zhp.pl/wp-content/uploads/2020/01/Weronika_Malachowska_ZHP_20180814BKK_2137-850x468.jpg"}],
+            toLink: "#",
+            title: "Szkolenie z RODO dla komisji rewizyjnych",
+            author: {name: "Marta Jeżak", to:"#"},
+            date: "14.05.2020"
+          },
+          {
+              srcImage: "https://zhp.pl/wp-content/uploads/2020/01/Weronika_Malachowska_ZHP_20180814BKK_2137-850x468.jpg",
+              sourcesImage: [{srcset:"https://zhp.pl/wp-content/uploads/2020/01/Weronika_Malachowska_ZHP_20180814BKK_2137-850x468.jpg"}],
+              toLink: "#",
+              title: "Szkolenie z RODO dla komisji rewizyjnych",
+              author: {name: "Marta Jeżak", to:"#"},
+              date: "14.05.2020"
+          },
+          {
+              srcImage: "https://zhp.pl/wp-content/uploads/2020/01/Weronika_Malachowska_ZHP_20180814BKK_2137-850x468.jpg",
+              sourcesImage: [{srcset:"https://zhp.pl/wp-content/uploads/2020/01/Weronika_Malachowska_ZHP_20180814BKK_2137-850x468.jpg"}],
+              toLink: "#",
+              title: "Szkolenie z RODO dla komisji rewizyjnych",
+              author: {name: "Marta Jeżak", to:"#"},
+              date: "14.05.2020"
+          },
+          {
+              srcImage: "https://zhp.pl/wp-content/uploads/2020/01/Weronika_Malachowska_ZHP_20180814BKK_2137-850x468.jpg",
+              sourcesImage: [{srcset:"https://zhp.pl/wp-content/uploads/2020/01/Weronika_Malachowska_ZHP_20180814BKK_2137-850x468.jpg"}],
+              toLink: "#",
+              title: "Szkolenie z RODO dla komisji rewizyjnych",
+              author: {name: "Marta Jeżak", to:"#"},
+              date: "14.05.2020"
+          }
         ]
       }
     }
   }
 </script>
 <style lang="scss">
-  .h-container {
+  .l-container {
     max-width: 1240px;
     margin: auto;
   }
