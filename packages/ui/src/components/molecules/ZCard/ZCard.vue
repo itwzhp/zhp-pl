@@ -31,8 +31,12 @@
       </ZLink>
     </slot>
     <slot name="categories">
-      <ZLink v-for="(category, key) in categories" :key="key" :to="category.to">
-        {{category.name}}
+      <ZLink
+        v-for="(category, key) in categories"
+        :key="key"
+        :to="category.to"
+      >
+        {{ category.name }}
       </ZLink>
     </slot>
   </component>
