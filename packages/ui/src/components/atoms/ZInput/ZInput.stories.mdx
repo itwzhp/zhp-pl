@@ -1,0 +1,24 @@
+import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
+import { action } from "@storybook/addon-actions";
+import { linkTo } from '@storybook/addon-links'
+import ZInput from './ZInput.vue';
+
+<Meta title="Atoms|Input" component={ZInput} />
+
+# Input
+
+<Props of={ZInput} />
+
+<Preview>
+  <Story name="Common">
+    {{
+        components: { ZInput },
+        data(){
+          return {
+            message: ""
+          }
+        },
+        template: `<ZInput v-model="message" type="text" placeholder="Write what you want, and send it to us!"/>`,
+    }}
+  </Story>
+</Preview>
