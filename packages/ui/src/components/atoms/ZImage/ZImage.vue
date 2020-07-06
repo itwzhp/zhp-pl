@@ -61,7 +61,8 @@
   .z-image {
     img {
       width: var(--image-width);
-      height: var(--image-height);
+      max-width: 100%;
+      height: var(--image-height, auto);
     }
   }
 </style>
