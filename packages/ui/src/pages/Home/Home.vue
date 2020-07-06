@@ -42,6 +42,7 @@
       </nav>
     </header>
     <div id="home">
+      <!-- aktualności -->
       <ZSection
         title="Aktualności"
         subtitle="Zobacz, co nowego w ZHP"
@@ -63,6 +64,63 @@
           </li>
         </ZCarousel>
       </ZSection>
+      <!-- poznaj -->
+      <ZSection>
+        <ZBanner
+          class="l-container"
+          title="Poznaj ZHP"
+          content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tempus euismod libero, et varius lorem rutrum ut. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Morbi in nibh luctus, fermentum arcu sit amet, tincidunt nisl. Maecenas malesuada nisl eu elit dignissim, et tempor odio feugiat."
+        >
+          <template #thumb>
+            <ZVideo
+              autoplay
+              loop
+              :sources="[
+                {
+                  src: 'https://watra.zhp.pl/media/wdesktop.842e12d8.mp4'
+                }
+              ]"
+            />
+          </template>
+        </ZBanner>
+      </ZSection>
+      <!-- zapisz -->
+      <ZSection>
+        <div style="max-width:1070px; margin: auto; display: grid; grid-template-columns: 1fr 250px; column-gap: 30px">
+          <ZBanner
+            title="Chcesz zapisać swoje dziecko do harcerstwa?"
+            content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tempus euismod libero, et varius lorem rutrum ut. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Morbi in nibh luctus, fermentum arcu sit amet, tincidunt nisl. Maecenas malesuada nisl eu elit dignissim, et tempor odio feugiat."
+            :call-to-actions="[{name: 'Jak zacząć?', to: '#'}, {name: 'Ile kosztuje harcerstwo?', to: '#'}, {name: 'Gdzie zacząć?', to: '#'}]"
+            src-image="https://zhp.pl/wp-content/uploads/2020/06/News-podsumowanie-na-obozie-kopia-850x468.png"
+            :sources-image="[
+              {
+                srcset: 'https://zhp.pl/wp-content/uploads/2020/06/News-podsumowanie-na-obozie-kopia-850x468.png',
+                media: '(min-width: 480px)',
+                type: 'image/png'
+              },
+              {
+                srcset: 'https://zhp.pl/wp-content/uploads/2020/06/News-podsumowanie-na-obozie-kopia-850x468.png'
+              }
+            ]"
+          />
+          <ZCard
+            title="Przewodnicząca ZHP i Naczelnik ZHP: Wychowujemy w zgodzie z wartościami"
+            src-image="https://zhp.pl/wp-content/uploads/2020/06/News-podsumowanie-na-obozie-kopia-850x468.png"
+            :sources-image="[
+              {
+                srcset: 'https://zhp.pl/wp-content/uploads/2020/06/News-podsumowanie-na-obozie-kopia-850x468.png',
+                media: '(min-width: 480px)',
+                type: 'image/png'
+              },
+              {
+                srcset: 'https://zhp.pl/wp-content/uploads/2020/06/News-podsumowanie-na-obozie-kopia-850x468.png'
+              }
+            ]"
+          />
+        </div>
+      </ZSection>
+      <!-- stopnie i sprawności | pion metodyczny | statut i władze zhp | przejdź do strony -->
+      <!-- wydarzenia i przedsięwzięcia-->
       <ZSection
         title="Wydarzenia i przedsięwzięcia"
         subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tempus euismod libero, et varius lorem rutrum ut. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. "
@@ -84,6 +142,7 @@
           </li>
         </ZCarousel>
       </ZSection>
+      <!-- #Instagram | Facebook | Partenrzy organizacji | Partnerzy wyjazdu na WSJ2019 -->
     </div>
     <footer class="z-footer">
       <div
@@ -117,7 +176,7 @@
   </div>
 </template>
 <script>
-  import {ZButton, ZIcon, ZLink, ZImage, ZText, ZHeading, ZSection, ZCarousel, ZCard } from "@nowa-zhp/ui"
+  import {ZButton, ZIcon, ZLink, ZImage, ZVideo, ZText, ZHeading, ZSection, ZCarousel, ZCard, ZBanner } from "@nowa-zhp/ui"
   export default {
     name: "Home",
     components: {
@@ -127,9 +186,11 @@
       ZIcon,
       ZLink,
       ZImage,
+      ZVideo,
       ZHeading,
       ZSection,
-      ZCarousel
+      ZCarousel,
+      ZBanner
     },
     data() {
       return {
@@ -187,10 +248,6 @@
   }
 </script>
 <style lang="scss">
-  .l-container {
-    max-width: 1240px;
-    margin: auto;
-  }
   .z-header {
     display: grid;
     grid-auto-flow: column;
