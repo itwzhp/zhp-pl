@@ -4,10 +4,10 @@
     class="z-section"
   >
     <slot name="title">
-      <ZHeading>{{ title }}</ZHeading>
+      <ZHeading class="l-container">{{ title }}</ZHeading>
     </slot>
     <slot name="subtitle">
-      <ZText>{{ subtitle }}</ZText>
+      <ZText class="l-container">{{ subtitle }}</ZText>
     </slot>
     <slot />
   </component>
@@ -39,5 +39,6 @@
   }
 </script>
 <style lang="scss">
-  .z-section {}
+  .z-section {
+  }
 </style>
