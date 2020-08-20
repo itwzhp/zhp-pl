@@ -12,6 +12,7 @@
       :media="source.media"
       :type="source.type"
     >
+    <img :src="src" alt="alt">
   </picture>
 </template>
 <script>
@@ -45,15 +46,15 @@
       }
     },
     mounted() {
-      const lazy = this.lazy;
-      const rootMargin = this.rootMargin;
-      const threshold = this.threshold;
-      const {image} = this.$refs;
-      const observer = lozad(image, {
-        rootMargin,
-        threshold
-      })
-      observer.observe();
+      // const lazy = this.lazy;
+      // const rootMargin = this.rootMargin;
+      // const threshold = this.threshold;
+      // const {image} = this.$refs;
+      // const observer = lozad(image, {
+      //   rootMargin,
+      //   threshold
+      // })
+      // observer.observe();
     }
   }
 </script>
