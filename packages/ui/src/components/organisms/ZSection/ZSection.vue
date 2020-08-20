@@ -4,10 +4,10 @@
     class="z-section"
   >
     <slot name="title">
-      <ZHeading class="l-container">{{ title }}</ZHeading>
+      <ZHeading>{{ title }}</ZHeading>
     </slot>
     <slot name="subtitle">
-      <ZText class="l-container">{{ subtitle }}</ZText>
+      <ZText>{{ subtitle }}</ZText>
     </slot>
     <slot />
   </component>

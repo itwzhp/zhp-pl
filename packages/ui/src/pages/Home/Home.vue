@@ -1,6 +1,6 @@
 <template>
   <div>
-    <header class="z-header l-container">
+    <header class="z-header">
       <ZButton class="z-button--pure">
         <ZIcon
           name="shuffle"
@@ -67,7 +67,6 @@
       <!-- poznaj -->
       <ZSection>
         <ZBanner
-          class="l-container"
           title="Poznaj ZHP"
           content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tempus euismod libero, et varius lorem rutrum ut. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Morbi in nibh luctus, fermentum arcu sit amet, tincidunt nisl. Maecenas malesuada nisl eu elit dignissim, et tempor odio feugiat."
         >
@@ -146,7 +145,6 @@
     </div>
     <footer class="z-footer">
       <div
-        class="l-container"
         style="display: grid; grid-auto-flow: column; column-gap: 1rem; justify-content: space-between; align-items: center;"
       >
         <div>
@@ -158,7 +156,6 @@
         <div>WOSM i WAGGGS</div>
       </div>
       <div
-        class="l-container"
         style="display: grid; grid-auto-flow: column; column-gap: 1rem; justify-content: center; align-items: center;"
       >
         <ZText>Copyright © 1997-2020 Związek Harcerstwa Polskiego</ZText>
