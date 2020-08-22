@@ -1,0 +1,19 @@
+import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
+import { action } from "@storybook/addon-actions";
+import { linkTo } from '@storybook/addon-links'
+import Default from './Default.vue';
+
+<Meta title="Templates/Default" component={Default} />
+
+# Default
+
+<Props of={Default} />
+
+<Preview>
+  <Story name="Common">
+    {{
+        components: { Default },
+        template: '<Default />'
+    }}
+  </Story>
+</Preview>
