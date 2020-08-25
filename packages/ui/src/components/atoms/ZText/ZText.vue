@@ -18,5 +18,7 @@
   }
 </script>
 <style lang="scss">
-  .z-text {}
+  .z-text {
+    font-size: var(--text-font-size);
+  }
 </style>

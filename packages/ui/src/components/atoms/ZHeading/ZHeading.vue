@@ -23,7 +23,7 @@
   @each $size in $sizes {
     $i: index($sizes, $size);
     .h#{$i} {
-      font-size: $size;
+      font-size: var(--heading-font-size, $size);
     }
   }
   .z-heading {

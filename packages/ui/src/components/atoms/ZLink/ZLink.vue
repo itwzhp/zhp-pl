@@ -29,7 +29,7 @@
       _to() {
         const to = this.to;
         const routerTag = this.routerTag;
-        return routerTag === "a" ? {href: to} : {to};
+        return routerTag === "a" ? {href: to, target: '__blank'} : {to};
       },
       isExternal() {
         const to = this.to;

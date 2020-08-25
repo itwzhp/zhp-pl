@@ -38,6 +38,7 @@
   .z-icon {
     width: var(--icon-size, 1rem);
     height: var(--icon-size, 1rem);
+    margin: var(--icon-margin);
     fill: var(--icon-color);
   }
 </style>

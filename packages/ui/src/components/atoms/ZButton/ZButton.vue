@@ -24,7 +24,8 @@
     align-items: center;
     justify-content: center;
     border: 0;
-    &--pure {
+    color: var(--button-color);
+    &--text {
       padding: 0;
       background: transparent;
     }
