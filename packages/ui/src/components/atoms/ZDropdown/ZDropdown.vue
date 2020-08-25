@@ -7,15 +7,15 @@
   </component>
 </template>
 <script>
-  export default {
-    name: "ZDropdown",
-    props: {
-      tag: {
-        type: String,
-        default: 'div'
-      }
+export default {
+  name: 'ZDropdown',
+  props: {
+    tag: {
+      type: String,
+      default: 'div',
     },
-  }
+  },
+};
 </script>
 <style lang="scss">
   .z-dropdown {}

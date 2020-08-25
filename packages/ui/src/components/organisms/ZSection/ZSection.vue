@@ -13,30 +13,31 @@
   </component>
 </template>
 <script>
-  import ZHeading from "../../atoms/ZHeading/ZHeading";
-  import ZText from "../../atoms/ZText/ZText";
-  export default {
-    name: "ZSection",
-    components: {ZText, ZHeading},
-    props: {
-      tag: {
-        type: String,
-        default: "section"
-      },
-      title: {
-        type: String,
-        default: ""
-      },
-      subtitle: {
-        type: String,
-        default: ""
-      },
-      levelHeading: {
-        type: [String, Number],
-        default: "2"
-      }
-    }
-  }
+import ZHeading from '../../atoms/ZHeading/ZHeading.vue';
+import ZText from '../../atoms/ZText/ZText.vue';
+
+export default {
+  name: 'ZSection',
+  components: { ZText, ZHeading },
+  props: {
+    tag: {
+      type: String,
+      default: 'section',
+    },
+    title: {
+      type: String,
+      default: '',
+    },
+    subtitle: {
+      type: String,
+      default: '',
+    },
+    levelHeading: {
+      type: [String, Number],
+      default: '2',
+    },
+  },
+};
 </script>
 <style lang="scss">
   .z-section {

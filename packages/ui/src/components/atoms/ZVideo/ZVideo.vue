@@ -10,15 +10,15 @@
   </video>
 </template>
 <script>
-  export default {
-    name: "ZVideo",
-    props: {
-      sources: {
-        type: Array,
-        default: ()=>([])
-      },
-    }
-  }
+export default {
+  name: 'ZVideo',
+  props: {
+    sources: {
+      type: Array,
+      default: () => ([]),
+    },
+  },
+};
 </script>
 <style lang="scss">
   .z-video {}

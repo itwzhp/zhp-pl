@@ -7,36 +7,36 @@
   >
 </template>
 <script>
-  export default {
-    name: "ZInput",
-    model: {
-      prop: "input"
+export default {
+  name: 'ZInput',
+  model: {
+    prop: 'input',
+  },
+  props: {
+    input: {
+      type: [String, Number, Boolean],
+      default: '',
     },
-    props: {
-      input: {
-        type: [String, Number, Boolean],
-        default: ""
-      },
-      value: {
-        type: [String, Number, Boolean],
-        default: ""
-      },
-      type: {
-        type: String,
-        default: "text"
-      }
+    value: {
+      type: [String, Number, Boolean],
+      default: '',
     },
-    data(){
-      return {
-        state: this.input
-      }
+    type: {
+      type: String,
+      default: 'text',
     },
-    watch: {
-      state(value) {
-        this.$emit('input', value)
-      }
-    }
-  }
+  },
+  data() {
+    return {
+      state: this.input,
+    };
+  },
+  watch: {
+    state(value) {
+      this.$emit('input', value);
+    },
+  },
+};
 </script>
 <style lang="scss">
   .z-input {}

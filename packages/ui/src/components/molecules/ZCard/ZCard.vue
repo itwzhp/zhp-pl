@@ -42,57 +42,58 @@
   </component>
 </template>
 <script>
-  import ZImage from "../../atoms/ZImage/ZImage.vue";
-  import ZLink from "../../atoms/ZLink/ZLink.vue"
-  import ZHeading from "../../atoms/ZHeading/ZHeading.vue";
-  import ZText from "../../atoms/ZText/ZText.vue"
-  export default {
-    name: "ZCard",
-    components: {
-      ZImage,
-      ZLink,
-      ZHeading,
-      ZText,
+import ZImage from '../../atoms/ZImage/ZImage.vue';
+import ZLink from '../../atoms/ZLink/ZLink.vue';
+import ZHeading from '../../atoms/ZHeading/ZHeading.vue';
+import ZText from '../../atoms/ZText/ZText.vue';
+
+export default {
+  name: 'ZCard',
+  components: {
+    ZImage,
+    ZLink,
+    ZHeading,
+    ZText,
+  },
+  props: {
+    tag: {
+      type: String,
+      default: 'div',
     },
-    props: {
-      tag: {
-        type: String,
-        default: "div"
-      },
-      title: {
-        type: String,
-        default: ""
-      },
-      content: {
-        type: String,
-        default: ""
-      },
-      author: {
-        type: Object,
-        default: ()=>({})
-      },
-      date: {
-        type: String,
-        default: ""
-      },
-      categories: {
-        type: Array,
-        default: ()=>([])
-      },
-      toLink: {
-        type: [Object, String],
-        default: ()=>({})
-      },
-      srcImage: {
-        type: String,
-        default: ""
-      },
-      sourcesImage: {
-        type: Array,
-        default: ()=>([])
-      }
-    }
-  }
+    title: {
+      type: String,
+      default: '',
+    },
+    content: {
+      type: String,
+      default: '',
+    },
+    author: {
+      type: Object,
+      default: () => ({}),
+    },
+    date: {
+      type: String,
+      default: '',
+    },
+    categories: {
+      type: Array,
+      default: () => ([]),
+    },
+    toLink: {
+      type: [Object, String],
+      default: () => ({}),
+    },
+    srcImage: {
+      type: String,
+      default: '',
+    },
+    sourcesImage: {
+      type: Array,
+      default: () => ([]),
+    },
+  },
+};
 </script>
 <style lang="scss">
   .z-card {}

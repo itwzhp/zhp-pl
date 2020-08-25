@@ -1,17 +1,18 @@
 module.exports = {
   root: true,
   env: {
-    jest: true
+    jest: true,
   },
   extends: [
-    "plugin:vue/essential",
-    "plugin:vue/strongly-recommended",
-    "plugin:vue/recommended"
+    '@vue/eslint-config-airbnb',
+    'plugin:vue/recommended',
   ],
   rules: {
-    "no-multiple-empty-lines": ["error", { max: 0 }],
+    'no-multiple-empty-lines': ['error', { max: 1 }],
+    'max-len': ['error', { code: 120, ignoreStrings: true, ignoreUrls: true }],
   },
   parserOptions: {
-    parser: "babel-eslint",
+    parser: 'babel-eslint',
   },
-}
+  ignorePatterns: ['**/directives/*'],
+};

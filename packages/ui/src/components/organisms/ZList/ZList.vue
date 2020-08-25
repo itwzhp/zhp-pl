@@ -7,15 +7,15 @@
   </component>
 </template>
 <script>
-  export default {
-    name: "ZList",
-    props: {
-      tag: {
-        type: String,
-        default: "ul"
-      }
-    }
-  }
+export default {
+  name: 'ZList',
+  props: {
+    tag: {
+      type: String,
+      default: 'ul',
+    },
+  },
+};
 </script>
 <style lang="scss">
   .z-list {

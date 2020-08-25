@@ -15,33 +15,33 @@
   </select>
 </template>
 <script>
-  export default {
-    name: "ZSelect",
-    model: {
-      prop: "selected",
-      event: "change"
+export default {
+  name: 'ZSelect',
+  model: {
+    prop: 'selected',
+    event: 'change',
+  },
+  props: {
+    selected: {
+      type: String,
+      default: '',
     },
-    props: {
-      selected: {
-        type: String,
-        default: ""
-      },
-      options: {
-        type: Array,
-        default: () => ({})
-      },
+    options: {
+      type: Array,
+      default: () => ({}),
     },
-    data() {
-      return {
-        state: this.selected
-      }
+  },
+  data() {
+    return {
+      state: this.selected,
+    };
+  },
+  watch: {
+    state(value) {
+      this.$emit('change', value);
     },
-    watch: {
-      state(value) {
-        this.$emit('change', value)
-      }
-    }
-  }
+  },
+};
 </script>
 <style lang="scss">
   .z-select {}

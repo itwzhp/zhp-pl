@@ -8,15 +8,15 @@
   </component>
 </template>
 <script>
-  export default {
-    name: "ZButton",
-    props: {
-      tag: {
-        type: String,
-        default: "button"
-      }
-    }
-  }
+export default {
+  name: 'ZButton',
+  props: {
+    tag: {
+      type: String,
+      default: 'button',
+    },
+  },
+};
 </script>
 <style lang="scss">
   .z-button {
@@ -25,6 +25,7 @@
     justify-content: center;
     border: 0;
     color: var(--button-color);
+
     &--text {
       padding: 0;
       background: transparent;

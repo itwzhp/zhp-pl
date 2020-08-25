@@ -13,26 +13,27 @@
   </svg>
 </template>
 <script>
-  import {icons} from "./icons"
-  export default {
-    name: "ZIcon",
-    props: {
-      name: {
-        type: String,
-        default: ""
-      }
+import icons from './icons';
+
+export default {
+  name: 'ZIcon',
+  props: {
+    name: {
+      type: String,
+      default: '',
     },
-    computed: {
-      paths() {
-        const iconName = this.name;
-        return icons[iconName] ? icons[iconName].paths : [];
-      },
-      viewBox() {
-        const iconName = this.name;
-        return icons[iconName] ? icons[iconName].viewBox : "0 0 24 24"
-      }
-    }
-  }
+  },
+  computed: {
+    paths() {
+      const iconName = this.name;
+      return icons[iconName] ? icons[iconName].paths : [];
+    },
+    viewBox() {
+      const iconName = this.name;
+      return icons[iconName] ? icons[iconName].viewBox : '0 0 24 24';
+    },
+  },
+};
 </script>
 <style lang="scss">
   .z-icon {

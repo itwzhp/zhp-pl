@@ -1,4 +1,4 @@
-'use strict';
+
 export const clickOutside = {
   bind(el, binding) {
     const handler = binding.value;
@@ -7,12 +7,12 @@ export const clickOutside = {
         event.stopPropagation();
         handler();
       }
-    }
-    document.addEventListener("mouseup", el._outsideClickHandler);
-    document.addEventListener("touchend", el._outsideClickHandler);
+    };
+    document.addEventListener('mouseup', el._outsideClickHandler);
+    document.addEventListener('touchend', el._outsideClickHandler);
   },
   unbind(el) {
-    document.removeEventListener("mouseup", el._outsideClickHandler);
-    document.removeEventListener("touchend", el._outsideClickHandler);
-  }
-}
+    document.removeEventListener('mouseup', el._outsideClickHandler);
+    document.removeEventListener('touchend', el._outsideClickHandler);
+  },
+};
