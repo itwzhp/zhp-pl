@@ -7,5 +7,5 @@ export default create({
   colorSecondary: '#84a311',
   brandTitle: 'Związek Harcerstwa Polskiego',
   brandUrl: 'https://zhp.pl/',
-  brandImage: '/assets/brand.svg'
-})
+  brandImage: '/assets/brand.svg',
+});

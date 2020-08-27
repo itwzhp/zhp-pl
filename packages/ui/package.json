@@ -26,6 +26,7 @@
     "vue-fragment": "^1.5.1"
   },
   "devDependencies": {
+    "@storybook/addon-a11y": ">=6.0.15",
     "@storybook/addon-actions": ">=6.0.15",
     "@storybook/addon-docs": ">=6.0.15",
     "@storybook/addon-knobs": ">=6.0.15",

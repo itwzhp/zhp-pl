@@ -1,4 +1,5 @@
 const path = require('path');
+
 module.exports = {
   webpackFinal: async (config, { configType }) => {
     // `configType` has a value of 'DEVELOPMENT' or 'PRODUCTION'
@@ -25,15 +26,16 @@ module.exports = {
             [
               '@vue/cli-plugin-babel/preset',
               {
-                jsx: false
-              }
-            ]
-          ]
-        }
-      }
+                jsx: false,
+              },
+            ],
+          ],
+        },
+      },
     },
     '@storybook/addon-knobs',
     '@storybook/addon-links',
-    '@storybook/addon-notes'
-  ]
-}
+    '@storybook/addon-notes',
+    '@storybook/addon-a11y',
+  ],
+};
