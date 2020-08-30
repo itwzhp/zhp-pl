@@ -3,16 +3,16 @@
     :is="tag"
     class="z-article"
   >
-    <div class="z-article__thumbnail">
-      <slot name="thumbnail">
+    <slot name="thumbnail">
+      <div class="z-article__thumbnail">
         <ZImage
           :src="thumbnail"
           alt=""
         />
-      </slot>
-    </div>
-    <div class="z-article__content">
-      <slot name="content">
+      </div>
+    </slot>
+    <slot name="content">
+      <div class="z-article__content">
         <slot name="heading">
           <ZHeading
             class="z-article__title"
@@ -43,8 +43,8 @@
             </slot>
           </div>
         </slot>
-      </slot>
-    </div>
+      </div>
+    </slot>
   </component>
 </template>
 <script>

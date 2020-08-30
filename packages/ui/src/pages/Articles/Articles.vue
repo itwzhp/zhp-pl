@@ -23,7 +23,7 @@
       />
     </div>
     <!-- Paginacja -->
-    <div style="display: grid; justify-content: end; grid-auto-flow: column; max-width: 1120px; margin: 32px auto;">
+    <div style="display: grid; max-width: 1120px; justify-content: end; margin: 32px auto; grid-auto-flow: column;">
       <ZButton>
         <ZIcon name="search" />
       </ZButton>
