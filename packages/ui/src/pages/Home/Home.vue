@@ -1,156 +1,231 @@
 <template>
   <div id="home">
-    <!-- aktualności -->
+    <!-- Przygoda. Przyjaźń. Wychowanie. -->
+    <div style="display: grid; max-width: 1120px; margin: auto; grid-template-columns: repeat(12, 1fr);">
+      <ZHeading style="grid-column: 6 / span 1;">
+        Przygoda.
+        Przyjaźń.
+        Wychowanie.
+      </ZHeading>
+      <!-- Czego dzisiaj chcesz się dowiedzieć o ZHP? ZSearch -->
+    </div>
+    <!-- Aktualności -->
     <ZSection
       title="Aktualności"
       subtitle="Zobacz, co nowego w ZHP"
+      style="margin: 90px auto;"
     >
-      <ZCarousel>
+      <ZCarousel v-if="mountCarousel">
         <li
-          v-for="(post, key) in posts"
-          :key="key"
+          v-for="post in posts"
+          :key="post.id"
           class="glide__slide"
         >
-          <ZCard
-            :title="post.title"
+          <ZArticle
+            :key="post.id"
+            :thumbnail="post.futured_media"
+            :title="post.title.rendered"
+            :to="post.link"
             :author="post.author"
+            :sticky="post.sticky"
             :date="post.date"
-            :to-link="post.toLink"
-            :src-image="post.srcImage"
-            :sources-image="post.sourcesImage"
           />
         </li>
       </ZCarousel>
     </ZSection>
-    <!-- poznaj -->
-    <ZSection>
-      <ZBanner
-        title="Poznaj ZHP"
-        content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tempus euismod libero, et varius lorem
-        rutrum ut. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
-        Morbi in nibh luctus, fermentum arcu sit amet, tincidunt nisl. Maecenas malesuada nisl eu elit dignissim,
-        et tempor odio feugiat."
+    <!-- Warto przeczytać -->
+    <div
+      style="display: grid;
+    max-width: 1120px;
+    margin: 90px auto;
+    column-gap: 20px;
+    grid-template-columns: repeat(12, 1fr);"
+    >
+      <ZArticle
+        title="Polska reprezentacja na Jamboree 2019 w USA!"
+        thumbnail="http://demo.przemyslawspaczek.atthost24.pl/wp-content/uploads/2020/08/ZHP_WYLOT_JAMBOREE_2019_KAROLINA_PIOTROWSKA-12.jpg"
+        style="grid-column: span 4;"
       />
-    </ZSection>
-    <!-- zapisz -->
-    <ZSection>
-      <div>
-        <ZBanner
-          title="Chcesz zapisać swoje dziecko do harcerstwa?"
-          content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tempus euismod libero, et varius
-          lorem rutrum ut. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
-          Morbi in nibh luctus, fermentum arcu sit amet, tincidunt nisl. Maecenas malesuada nisl eu elit dignissim,
-          et tempor odio feugiat."
-          :call-to-actions="[
-            {name: 'Jak zacząć?', to: '#'},
-            {name: 'Ile kosztuje harcerstwo?', to: '#'},
-            {name: 'Gdzie zacząć?', to: '#'}
-          ]"
-          src-image="https://zhp.pl/wp-content/uploads/2020/06/News-podsumowanie-na-obozie-kopia-850x468.png"
-          :sources-image="[
-            {
-              srcset: 'https://zhp.pl/wp-content/uploads/2020/06/News-podsumowanie-na-obozie-kopia-850x468.png',
-              media: '(min-width: 480px)',
-              type: 'image/png'
-            },
-            {
-              srcset: 'https://zhp.pl/wp-content/uploads/2020/06/News-podsumowanie-na-obozie-kopia-850x468.png'
-            }
-          ]"
-        />
-        <ZCard
-          title="Przewodnicząca ZHP i Naczelnik ZHP: Wychowujemy w zgodzie z wartościami"
-          src-image="https://zhp.pl/wp-content/uploads/2020/06/News-podsumowanie-na-obozie-kopia-850x468.png"
-          :sources-image="[
-            {
-              srcset: 'https://zhp.pl/wp-content/uploads/2020/06/News-podsumowanie-na-obozie-kopia-850x468.png',
-              media: '(min-width: 480px)',
-              type: 'image/png'
-            },
-            {
-              srcset: 'https://zhp.pl/wp-content/uploads/2020/06/News-podsumowanie-na-obozie-kopia-850x468.png'
-            }
-          ]"
-        />
+      <div
+        class="z-highlighted"
+        style="grid-column: span 7;"
+      >
+        <ZHeading>Warto przeczytać</ZHeading>
+        <ZLink>Zobacz więcej</ZLink>
+        <ZList>
+          <li>
+            <Zlink>400 harcerek i harcerzy wyruszyło do USA na Światowy Zlot Ska...</Zlink>
+            <time datetime="18.08.2020">18.08.2020</time>
+          </li>
+          <li>
+            <Zlink>Oferty pracy w warszawskim biurze Europejskiego Jamboree 2020</Zlink>
+            <time datetime="18.08.2020">18.08.2020</time>
+          </li>
+          <li>
+            <Zlink>Rekrutacja instruktorów do programu "Dobrze być sobą"</Zlink>
+            <time datetime="18.08.2020">18.08.2020</time>
+          </li>
+          <li>
+            <Zlink>Bezpieczne #harcerskielato</Zlink>
+            <time datetime="18.08.2020">18.08.2020</time>
+          </li>
+          <li>
+            <Zlink>Kielecki "Wiatraczek" znowu się kręci</Zlink>
+            <time datetime="18.08.2020">18.08.2020</time>
+          </li>
+        </ZList>
       </div>
-    </ZSection>
-    <!-- stopnie i sprawności | pion metodyczny | statut i władze zhp | przejdź do strony -->
-    <!-- wydarzenia i przedsięwzięcia-->
+    </div>
+    <!-- Poznaj ZHP -->
+    <!-- Chcesz zapisać swoje dziecko do harcerstwa -->
+    <div
+      style="display: grid;
+      max-width: 1120px;
+      margin: 90px auto;
+      column-gap: 20px;
+      grid-template-columns: repeat(12, 1fr);"
+    >
+      <ZBanner
+        title="Chcesz zapisać swoje dziecko do harcerstwa?"
+        content="Gromada zuchowa, drużyna harcerska, starszoharcerska, wędrownicza to doskonałe  miejsce aktywności
+          dzieci i młodzieży. W drużynach dzieci i młodzież przygotowują się do aktywnego, dorosłego życia. Przez
+          szkołę harcerską przeszło wiele znanych i cenionych osób, zajmujących dzisiaj ważne stanowiska w życiu
+          społecznym, gospodarczym i politycznym. Harcerska szkoła życia i harcerski system wychowawczy odciska trwałe,
+          pozytywne  piętno na młodych ludziach i procentuje na całe dorosłe życie."
+        style="grid-column: span 9;"
+      />
+      <ZArticle
+        thumbnail="http://demo.przemyslawspaczek.atthost24.pl/wp-content/uploads/2020/08/fot.-ZHP-_-Karolina-Piotrowska-18.jpg"
+        title="Przewodniczący ZHP i Naczelniczka ZHP: Wychowujemy w zgodzie z wartościami"
+        date="19.05.202"
+        style="grid-column: 10 / span 3;"
+      />
+    </div>
+    <!-- Stopnie i sprawności -->
+    <div
+      style="display: grid;
+      max-width: 1120px;
+      margin: 90px auto;
+      column-gap: 20px;
+      grid-template-columns: repeat(24, 1fr);"
+    >
+      <ZArticle
+        title="Stopnie i sprawności"
+        thumbnail="http://demo.przemyslawspaczek.atthost24.pl/wp-content/uploads/2020/08/ZHP_WYLOT_JAMBOREE_2019_KAROLINA_PIOTROWSKA-12.jpg"
+        style="grid-column: 2 / span 5;"
+      />
+      <ZArticle
+        title="Piony metodyczne"
+        thumbnail="http://demo.przemyslawspaczek.atthost24.pl/wp-content/uploads/2020/08/ZHP_WYLOT_JAMBOREE_2019_KAROLINA_PIOTROWSKA-12.jpg"
+        style="grid-column: span 5;"
+      />
+      <ZArticle
+        title="Status ZHP i Władze ZHP"
+        thumbnail="http://demo.przemyslawspaczek.atthost24.pl/wp-content/uploads/2020/08/ZHP_WYLOT_JAMBOREE_2019_KAROLINA_PIOTROWSKA-12.jpg"
+        style="grid-column: span 5;"
+      />
+      <!-- CTA / BANNER-->
+      <ZArticle
+        title="Sprawdź strefę instrukotra"
+        thumbnail="http://demo.przemyslawspaczek.atthost24.pl/wp-content/uploads/2020/08/ZHP_WYLOT_JAMBOREE_2019_KAROLINA_PIOTROWSKA-12.jpg"
+        style="grid-column: span 5;"
+      />
+    </div>
+    <!-- Wydarzenia -->
     <ZSection
       title="Wydarzenia i przedsięwzięcia"
       subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tempus euismod libero, et varius lorem
       rutrum ut. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. "
+      style="margin: 90px auto;"
     >
-      <ZCarousel>
+      <ZCarousel v-if="mountCarousel">
         <li
-          v-for="(post, key) in posts"
-          :key="key"
+          v-for="post in posts"
+          :key="post.id"
           class="glide__slide"
         >
-          <ZCard
-            :title="post.title"
+          <ZArticle
+            :key="post.id"
+            :thumbnail="post.futured_media"
+            :title="post.title.rendered"
+            :to="post.link"
             :author="post.author"
+            :sticky="post.sticky"
             :date="post.date"
-            :to-link="post.toLink"
-            :src-image="post.srcImage"
-            :sources-image="post.sourcesImage"
           />
         </li>
       </ZCarousel>
     </ZSection>
-    <!-- #Instagram | Facebook | Partenrzy organizacji | Partnerzy wyjazdu na WSJ2019 -->
+    <!-- Instagram, Facebook, Partnerzy -->
+    <div style="display: grid; max-width: 1120px; margin: auto; grid-template-columns: repeat(12, 1fr);">
+      <div
+        class="instagram"
+        style="grid-column: span 4;"
+      >
+        <ZHeading>#instagram</ZHeading>
+      </div>
+      <div
+        class="facebook"
+        style="grid-column: span 3;"
+      >
+        <ZHeading>facebook</ZHeading>
+      </div>
+      <div
+        class="partners"
+        style="grid-column: span 5;"
+      >
+        <ZHeading>Partnerzy organizacji</ZHeading>
+        <ZHeading>Partnerzy wyjazdu na WSJ2019</ZHeading>
+      </div>
+    </div>
   </div>
 </template>
 <script>
+import axios from 'axios';
 import {
-  ZSection, ZCarousel, ZCard, ZBanner,
+  ZSection, ZCarousel, ZArticle, ZHeading, ZList, ZLink, ZBanner,
 } from '../../../index';
 
 export default {
   name: 'Home',
   components: {
-    ZCard,
     ZSection,
     ZCarousel,
+    ZArticle,
+    ZHeading,
+    ZList,
+    ZLink,
     ZBanner,
   },
   data() {
     return {
-      posts: [
-        {
-          srcImage: 'https://zhp.pl/wp-content/uploads/2020/01/Weronika_Malachowska_ZHP_20180814BKK_2137-850x468.jpg',
-          sourcesImage: [{ srcset: 'https://zhp.pl/wp-content/uploads/2020/01/Weronika_Malachowska_ZHP_20180814BKK_2137-850x468.jpg' }],
-          toLink: '#',
-          title: 'Szkolenie z RODO dla komisji rewizyjnych',
-          author: { name: 'Marta Jeżak', to: '#' },
-          date: '14.05.2020',
-        },
-        {
-          srcImage: 'https://zhp.pl/wp-content/uploads/2020/01/Weronika_Malachowska_ZHP_20180814BKK_2137-850x468.jpg',
-          sourcesImage: [{ srcset: 'https://zhp.pl/wp-content/uploads/2020/01/Weronika_Malachowska_ZHP_20180814BKK_2137-850x468.jpg' }],
-          toLink: '#',
-          title: 'Szkolenie z RODO dla komisji rewizyjnych',
-          author: { name: 'Marta Jeżak', to: '#' },
-          date: '14.05.2020',
-        },
-        {
-          srcImage: 'https://zhp.pl/wp-content/uploads/2020/01/Weronika_Malachowska_ZHP_20180814BKK_2137-850x468.jpg',
-          sourcesImage: [{ srcset: 'https://zhp.pl/wp-content/uploads/2020/01/Weronika_Malachowska_ZHP_20180814BKK_2137-850x468.jpg' }],
-          toLink: '#',
-          title: 'Szkolenie z RODO dla komisji rewizyjnych',
-          author: { name: 'Marta Jeżak', to: '#' },
-          date: '14.05.2020',
-        },
-        {
-          srcImage: 'https://zhp.pl/wp-content/uploads/2020/01/Weronika_Malachowska_ZHP_20180814BKK_2137-850x468.jpg',
-          sourcesImage: [{ srcset: 'https://zhp.pl/wp-content/uploads/2020/01/Weronika_Malachowska_ZHP_20180814BKK_2137-850x468.jpg' }],
-          toLink: '#',
-          title: 'Szkolenie z RODO dla komisji rewizyjnych',
-          author: { name: 'Marta Jeżak', to: '#' },
-          date: '14.05.2020',
-        },
-      ],
+      posts: [],
     };
+  },
+  computed: {
+    mountCarousel() {
+      return this.posts.length > 0;
+    },
+  },
+  async mounted() {
+    const API_URL = 'http://demo.przemyslawspaczek.atthost24.pl/wp-json/wp/v2';
+    const usersResponse = await axios.get(`${API_URL}/users`);
+    const users = usersResponse.data.reduce((accumulator, user) => ({
+      ...accumulator,
+      [user.id]: {
+        name: user.name,
+        to: user.link,
+      },
+    }), {});
+    const postsResponse = await axios.get(`${API_URL}/posts?per_page=6`);
+    const posts = postsResponse.data;
+    const postsWithMedia = await Promise.all(posts.map(async (post) => {
+      const mediaResponse = await axios.get(`${API_URL}/media/${post.featured_media}`);
+      const media = mediaResponse.data;
+      return { ...post, futured_media: media.guid.rendered };
+    }));
+    const postsWithAuthors = postsWithMedia.map((post) => ({ ...post, author: users[post.author] }));
+    this.posts = postsWithAuthors;
   },
 };
 </script>
