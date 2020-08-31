@@ -85,7 +85,6 @@ import ZEvent from './ZEvent.vue';
           const mediaResponse = await axios.get(`${API_URL}/media/${event.featured_media}`);
           const media = mediaResponse.data;
           return { ...event, futured_media: media.guid.rendered };
-          this.posts = eventsWithMedia;
         }));
         this.events = eventsWithMedia;
       }

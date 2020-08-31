@@ -1,0 +1,19 @@
+import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
+import { action } from "@storybook/addon-actions";
+import { linkTo } from '@storybook/addon-links'
+import Events from './Events.vue';
+
+<Meta title="Pages/Events" component={Events} parameters={{layout: 'fullscreen'}}/>
+
+# Home
+
+<Props of={Events} />
+
+<Preview>
+  <Story name="Common">
+    {{
+        components: { Events },
+        template: '<Events />'
+    }}
+  </Story>
+</Preview>
