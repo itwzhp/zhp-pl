@@ -23,12 +23,19 @@
       />
     </div>
     <!-- Paginacja -->
-    <div style="display: grid; max-width: 1120px; justify-content: end; margin: 32px auto; grid-auto-flow: column;">
-      <ZButton>
-        <ZIcon name="search" />
+    <div
+      style="display: grid;
+    max-width: 1120px;
+    justify-content: end;
+    margin: 32px auto;
+    column-gap: 8px;
+    grid-auto-flow: column;"
+    >
+      <ZButton style="--icon-color: #fff; width: 34px; height: 34px;">
+        <ZIcon name="arrow-left" />
       </ZButton>
-      <ZButton>
-        <ZIcon name="search" />
+      <ZButton style="--icon-color: #fff; width: 34px; height: 34px;">
+        <ZIcon name="arrow-right" />
       </ZButton>
     </div>
   </div>
@@ -80,5 +87,5 @@ export default {
 };
 </script>
 <style lang="scss">
-  #home {}
+  #articles {}
 </style>
