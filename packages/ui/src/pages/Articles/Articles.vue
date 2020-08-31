@@ -65,7 +65,7 @@ export default {
     },
   },
   async mounted() {
-    const API_URL = 'http://demo.przemyslawspaczek.atthost24.pl/wp-json/wp/v2';
+    const API_URL = process.env.API_URL;
     const usersResponse = await axios.get(`${API_URL}/users`);
     const users = usersResponse.data.reduce((accumulator, user) => ({
       ...accumulator,

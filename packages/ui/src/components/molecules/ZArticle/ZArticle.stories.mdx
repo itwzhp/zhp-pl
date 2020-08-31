@@ -17,7 +17,7 @@ import ZArticle from './ZArticle.vue';
             default: text('tag', 'div')
           },
           thumbnail: {
-            default: text('thumbnail', 'http://demo.przemyslawspaczek.atthost24.pl/wp-content/uploads/2020/08/fot.-ZHP-_-Karolina-Piotrowska-18.jpg')
+            default: text('thumbnail', 'http://demo.przemyslawspaczek.pl/wp-content/uploads/2020/08/fot.-ZHP-_-Karolina-Piotrowska-18.jpg')
           },
           title: {
             default: text('title', 'Nabór instruktorów do wydziałów i zespołów Głównej Kwatery ZHP: Podejmij służbę!')
@@ -66,12 +66,13 @@ import ZArticle from './ZArticle.vue';
         </div>`,
       async mounted(){
         // todo: keep it in vuex
-        let users = await axios.get('http://demo.przemyslawspaczek.atthost24.pl/wp-json/wp/v2/users')
+        const API_URL = process.env.API_URL;
+        let users = await axios.get(`${API_URL}/users`)
         users = users.data.reduce((accumulator, user) => ({...accumulator, [user.id]: {name: user.name, to: user.link}}),{});
-        const {data} =  await axios.get('http://demo.przemyslawspaczek.atthost24.pl/wp-json/wp/v2/posts?per_page=16')
+        const {data} =  await axios.get(`${API_URL}/posts?per_page=16`)
         // todo: create scoped-slot component
         const postWithMedia = await Promise.all(data.map(async(post) => {
-          const {data} = await axios.get('http://demo.przemyslawspaczek.atthost24.pl/wp-json/wp/v2/media/'+post.featured_media)
+          const {data} = await axios.get(`${API_URL}/media/${post.featured_media}`)
           return {...post, futured_media: data.guid.rendered}
         }))
         // todo: create scoped-slot component

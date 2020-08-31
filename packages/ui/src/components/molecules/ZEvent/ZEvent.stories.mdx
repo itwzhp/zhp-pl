@@ -14,7 +14,7 @@ import ZEvent from './ZEvent.vue';
         components: { ZEvent },
         props: {
           thumbnail: {
-            default: text('thumbnail', 'http://demo.przemyslawspaczek.atthost24.pl/wp-content/uploads/2020/08/malachowska.jpg')
+            default: text('thumbnail', 'http://demo.przemyslawspaczek.pl/wp-content/uploads/2020/08/malachowska.jpg')
           },
           title: {
             default: text('title', 'Ogólnopolska Zbiórka Alertu Pamięci')
@@ -72,7 +72,7 @@ import ZEvent from './ZEvent.vue';
           />
         </div>`,
       async mounted(){
-        const API_URL = 'http://demo.przemyslawspaczek.atthost24.pl/wp-json/wp/v2';
+        const API_URL = process.env.API_URL;
         const ageGroupsResponse = await axios.get(`${API_URL}/ageGroups`);
         const ageGroups = ageGroupsResponse.data.reduce((accumulator, methodology)=>({...accumulator, [methodology.id]: {name: methodology.name, background: methodology.acf.background, color: methodology.acf.color,}}), {});
         this.ageGroups = ageGroups;

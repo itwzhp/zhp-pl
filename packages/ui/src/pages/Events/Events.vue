@@ -138,7 +138,7 @@ export default {
     };
   },
   async mounted() {
-    const API_URL = 'http://demo.przemyslawspaczek.atthost24.pl/wp-json/wp/v2';
+    const API_URL = 'http://demo.przemyslawspaczek.pl/wp-json/wp/v2';
     const ageGroupsResponse = await axios.get(`${API_URL}/ageGroups`);
     const ageGroups = ageGroupsResponse.data.reduce((accumulator, methodology) => ({
       ...accumulator,
