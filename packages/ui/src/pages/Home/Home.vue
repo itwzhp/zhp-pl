@@ -15,7 +15,7 @@
       subtitle="Zobacz, co nowego w ZHP"
       style="margin: 90px auto;"
     >
-      <ZCarousel v-if="mountCarousel">
+      <ZCarousel v-if="posts.length > 0">
         <li
           v-for="post in posts"
           :key="post.id"
@@ -138,20 +138,21 @@
       rutrum ut. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. "
       style="margin: 90px auto;"
     >
-      <ZCarousel v-if="mountCarousel">
+      <ZCarousel v-if="events.length > 0">
         <li
-          v-for="post in posts"
-          :key="post.id"
+          v-for="event in events"
+          :key="event.id"
           class="glide__slide"
         >
-          <ZArticle
-            :key="post.id"
-            :thumbnail="post.futured_media"
-            :title="post.title.rendered"
-            :to="post.link"
-            :author="post.author"
-            :sticky="post.sticky"
-            :date="post.date"
+          <ZEvent
+            :key="event.id"
+            :thumbnail="event.futured_media"
+            :title="event.title.rendered"
+            :date="event.acf.date"
+            :location="{name: 'Warszawa'}"
+            :audience="{name: 'Wszyscy harcerze'}"
+            :type="eventTypes[event.eventTypes]"
+            :age-group="ageGroups[event.ageGroups]"
           />
         </li>
       </ZCarousel>
@@ -183,7 +184,7 @@
 <script>
 import axios from 'axios';
 import {
-  ZSection, ZCarousel, ZArticle, ZHeading, ZList, ZLink, ZBanner,
+  ZSection, ZCarousel, ZArticle, ZEvent, ZHeading, ZList, ZLink, ZBanner,
 } from '../../../index';
 
 export default {
@@ -192,6 +193,7 @@ export default {
     ZSection,
     ZCarousel,
     ZArticle,
+    ZEvent,
     ZHeading,
     ZList,
     ZLink,
@@ -200,12 +202,10 @@ export default {
   data() {
     return {
       posts: [],
+      events: [],
+      eventTypes: [],
+      ageGroups: [],
     };
-  },
-  computed: {
-    mountCarousel() {
-      return this.posts.length > 0;
-    },
   },
   async mounted() {
     const API_URL = 'http://demo.przemyslawspaczek.atthost24.pl/wp-json/wp/v2';
@@ -226,6 +226,30 @@ export default {
     }));
     const postsWithAuthors = postsWithMedia.map((post) => ({ ...post, author: users[post.author] }));
     this.posts = postsWithAuthors;
+    const ageGroupsResponse = await axios.get(`${API_URL}/ageGroups`);
+    const ageGroups = ageGroupsResponse.data.reduce((accumulator, methodology) => ({
+      ...accumulator,
+      [methodology.id]: {
+        name: methodology.name,
+        background: methodology.acf.background,
+        color: methodology.acf.color,
+      },
+    }), {});
+    this.ageGroups = ageGroups;
+    const eventTypesResponse = await axios.get(`${API_URL}/eventTypes`);
+    const eventTypes = eventTypesResponse.data.reduce((accumulator, type) => ({
+      ...accumulator,
+      [type.id]: { name: type.name },
+    }), {});
+    this.eventTypes = eventTypes;
+    const eventsResponse = await axios.get(`${API_URL}/events?per_page=6`);
+    const events = eventsResponse.data;
+    const eventsWithMedia = await Promise.all(events.map(async (event) => {
+      const mediaResponse = await axios.get(`${API_URL}/media/${event.featured_media}`);
+      const media = mediaResponse.data;
+      return { ...event, futured_media: media.guid.rendered };
+    }));
+    this.events = eventsWithMedia;
   },
 };
 </script>

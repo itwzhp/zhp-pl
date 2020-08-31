@@ -4,7 +4,7 @@
     <div style="display: grid; max-width: 1120px; margin: auto; grid-template-columns: repeat(12, 1fr);">
       <ZHeading style="grid-column: 5 / span 7;">
         Aktualności
-        <small style="display: block;">Sprawdź, co nowego w ZHP</small>
+        <small style="display: block; margin: 8px 0; font-weight: 400;">Sprawdź, co nowego w ZHP</small>
       </zHeading>
       <!-- Wybierz miesiąc, Wybierz kategorię, Wybierz tagi -->
     </div>
