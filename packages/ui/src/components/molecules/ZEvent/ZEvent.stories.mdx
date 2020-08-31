@@ -1,0 +1,98 @@
+import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
+import { withKnobs, text, object } from '@storybook/addon-knobs';
+import { withA11y } from '@storybook/addon-a11y';
+import axios from 'axios';
+import ZEvent from './ZEvent.vue';
+
+<Meta title="Molecules/Event" component={ZEvent} decorators={[withKnobs, withA11y]}/>
+
+# Event
+
+<Preview>
+  <Story name="Common">
+    {{
+        components: { ZEvent },
+        props: {
+          thumbnail: {
+            default: text('thumbnail', 'http://demo.przemyslawspaczek.atthost24.pl/wp-content/uploads/2020/08/malachowska.jpg')
+          },
+          title: {
+            default: text('title', 'Ogólnopolska Zbiórka Alertu Pamięci')
+          },
+          date: {
+            default: object('date', {start: '20/05/2020', end: '20/06/2020'})
+          },
+          location: {
+            default: object('location', {name: 'Warszawa'})
+          },
+          audience: {
+            default: object('audience', {name: 'Wszyscy harcerze'})
+          },
+          type: {
+            default: object('type', {name: 'Obóz'})
+          }
+        },
+        template: `<ZEvent
+          :thumbnail="thumbnail"
+          :title="title"
+          :date="date"
+          :location="location"
+          :audience="audience"
+          :type="type"
+          :ageGroup="{name: 'Harcerze', color: '#ffffff', background: '#f58220'}"
+          style="width: 250px"
+        />`,
+    }}
+  </Story>
+</Preview>
+
+<Preview>
+  <Story name="Grid">
+    {{
+      components: { ZEvent },
+      data() {
+        return {
+          events: [],
+          eventTypes: [],
+          ageGroups: [],
+        }
+      },
+      template: `<div style="display: grid; grid-template-columns: repeat(4, 1fr); column-gap: 20px; row-gap: 20px; max-width: 1071px; margin: 0 auto">
+          <div style="grid-row: span 4; grid-column: 1;"></div>
+          <ZEvent
+            v-for="(event, index) in events"
+            :key="event.id"
+            :thumbnail="event.futured_media"
+            :title="event.title.rendered"
+            :date="event.acf.date"
+            :location="{name: 'Warszawa'}"
+            :audience="{name: 'Wszyscy harcerze'}"
+            :type="eventTypes[event.eventTypes]"
+            :age-group="ageGroups[event.ageGroups]"
+          />
+        </div>`,
+      async mounted(){
+        const API_URL = 'http://demo.przemyslawspaczek.atthost24.pl/wp-json/wp/v2';
+        const ageGroupsResponse = await axios.get(`${API_URL}/ageGroups`);
+        const ageGroups = ageGroupsResponse.data.reduce((accumulator, methodology)=>({...accumulator, [methodology.id]: {name: methodology.name, background: methodology.acf.background, color: methodology.acf.color,}}), {});
+        this.ageGroups = ageGroups;
+        const eventTypesResponse = await axios.get(`${API_URL}/eventTypes`);
+        const eventTypes = eventTypesResponse.data.reduce((accumulator, type)=>({...accumulator, [type.id]: {name: type.name}}), {});
+        this.eventTypes = eventTypes;
+        const eventsResponse = await axios.get(`${API_URL}/events?per_page=12`);
+        const events = eventsResponse.data;
+        const eventsWithMedia = await Promise.all(events.map(async (event) => {
+          const mediaResponse = await axios.get(`${API_URL}/media/${event.featured_media}`);
+          const media = mediaResponse.data;
+          return { ...event, futured_media: media.guid.rendered };
+          this.posts = eventsWithMedia;
+        }));
+        this.events = eventsWithMedia;
+      }
+    }}
+  </Story>
+</Preview>
+
+#Props
+
+<Props of={ZEvent} />
