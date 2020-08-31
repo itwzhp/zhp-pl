@@ -65,7 +65,7 @@ export default {
     },
   },
   async mounted() {
-    const API_URL = process.env.API_URL;
+    const { API_URL } = process.env;
     const usersResponse = await axios.get(`${API_URL}/users`);
     const users = usersResponse.data.reduce((accumulator, user) => ({
       ...accumulator,

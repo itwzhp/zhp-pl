@@ -16,8 +16,10 @@
     <div style="display: grid; max-width: 1120px; margin: 32px auto; gap: 20px; grid-template-columns: repeat(4, 1fr);">
       <div style=" display: grid; grid-column: 1; grid-row: span 4; grid-template-rows: repeat(4, 1fr);">
         <form
-          style=" padding: 24px; border-radius: 10px;
-        box-shadow: 0 2px 4px 0 rgba(157, 157, 157, 0.5); grid-row: span 3;"
+          style=" padding: 24px;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px 0 rgba(157, 157, 157, 0.5);
+        grid-row: span 3;"
         >
           <ZHeading :level="3">
             Filtry
@@ -29,8 +31,10 @@
             <ZText
               tag="label"
               for="types"
-              style="display:block;"
-            >Rodzaj wydarzenia</ZText>
+              style="display: block;"
+            >
+              Rodzaj wydarzenia
+            </ZText>
             <select id="types">
               <option>Obóz</option>
               <option>Zlot</option>
@@ -39,10 +43,12 @@
           </div>
           <div>
             <ZText
-                tag="label"
-                for="ageGroups"
-                style="display:block;"
-            >Metodyka</ZText>
+              tag="label"
+              for="ageGroups"
+              style="display: block;"
+            >
+              Metodyka
+            </ZText>
             <select id="ageGroups">
               <option>Zuchy</option>
               <option>Harcerze</option>
@@ -52,10 +58,12 @@
           </div>
           <div>
             <ZText
-                tag="label"
-                for="districts"
-                style="display:block;"
-            >Metodyka</ZText>
+              tag="label"
+              for="districts"
+              style="display: block;"
+            >
+              Metodyka
+            </ZText>
             <select id="districts">
               <option>Opolskie</option>
               <option>Dolnoślaskie</option>
@@ -66,7 +74,10 @@
             <!-- todo: jak to wspierać, jak oganire to acf -->
             <!-- todo: datatime dla between -->
             <label for="date">Data wydarzenia</label>
-            <input id="date" type="date"/>
+            <input
+              id="date"
+              type="date"
+            >
           </div>
           <div
             style="display: grid;
@@ -138,7 +149,7 @@ export default {
     };
   },
   async mounted() {
-    const API_URL = 'http://demo.przemyslawspaczek.pl/wp-json/wp/v2';
+    const { API_URL } = process.env;
     const ageGroupsResponse = await axios.get(`${API_URL}/ageGroups`);
     const ageGroups = ageGroupsResponse.data.reduce((accumulator, methodology) => ({
       ...accumulator,
