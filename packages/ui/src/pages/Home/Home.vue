@@ -54,23 +54,23 @@
         <ZLink>Zobacz więcej</ZLink>
         <ZList>
           <li>
-            <Zlink>400 harcerek i harcerzy wyruszyło do USA na Światowy Zlot Ska...</Zlink>
+            <ZLink>400 harcerek i harcerzy wyruszyło do USA na Światowy Zlot Ska...</ZLink>
             <time datetime="18.08.2020">18.08.2020</time>
           </li>
           <li>
-            <Zlink>Oferty pracy w warszawskim biurze Europejskiego Jamboree 2020</Zlink>
+            <ZLink>Oferty pracy w warszawskim biurze Europejskiego Jamboree 2020</ZLink>
             <time datetime="18.08.2020">18.08.2020</time>
           </li>
           <li>
-            <Zlink>Rekrutacja instruktorów do programu "Dobrze być sobą"</Zlink>
+            <ZLink>Rekrutacja instruktorów do programu "Dobrze być sobą"</ZLink>
             <time datetime="18.08.2020">18.08.2020</time>
           </li>
           <li>
-            <Zlink>Bezpieczne #harcerskielato</Zlink>
+            <ZLink>Bezpieczne #harcerskielato</ZLink>
             <time datetime="18.08.2020">18.08.2020</time>
           </li>
           <li>
-            <Zlink>Kielecki "Wiatraczek" znowu się kręci</Zlink>
+            <ZLink>Kielecki "Wiatraczek" znowu się kręci</ZLink>
             <time datetime="18.08.2020">18.08.2020</time>
           </li>
         </ZList>

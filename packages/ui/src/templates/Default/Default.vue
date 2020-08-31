@@ -36,12 +36,14 @@
             v-for="(item, key) in headerNavigation"
             :key="key"
             :to="item.to"
+            @click.native.prevent.stop="component = item.to"
           >
             {{ item.name }}
           </ZLink>
         </nav>
       </div>
     </header>
+    <slot v-bind="{component}" />
     <footer class="z-footer">
       <div class="z-footer__content">
         <div class="z-did-you-know z-footer__did-you-know">
@@ -104,7 +106,7 @@ import {
 } from '../../../index';
 
 export default {
-  name: 'Home',
+  name: 'Default',
   components: {
     ZHeading,
     ZText,
@@ -115,14 +117,15 @@ export default {
   },
   data() {
     return {
+      component: 'home',
       headerNavigation: [
-        { to: '#', name: 'Strona Główna' },
-        { to: '#', name: 'Aktualności' },
-        { to: '#', name: 'Wydarzenia' },
-        { to: '#', name: 'Dla mediów' },
-        { to: '#', name: 'Dla rodzica' },
-        { to: '#', name: '1% dla ZHP' },
-        { to: '#', name: 'Kontakt' },
+        { to: 'home', name: 'Strona Główna' },
+        { to: 'articles', name: 'Aktualności' },
+        { to: 'events', name: 'Wydarzenia' },
+        { to: 'home', name: 'Dla mediów' },
+        { to: 'home', name: 'Dla rodzica' },
+        { to: 'home', name: '1% dla ZHP' },
+        { to: 'home', name: 'Kontakt' },
       ],
       footerNavigation: [
         { to: '#', name: 'Informacje i uwagi prawne' },
