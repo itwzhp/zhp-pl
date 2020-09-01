@@ -48,38 +48,28 @@ import ZArticle from './ZArticle.vue';
         data() {
           return {
             posts: [],
-            authors: {},
           }
         },
         template: `<div style="display: grid; grid-template-columns: repeat(4, 1fr); column-gap: 20px; row-gap: 20px; max-width: 1071px; margin: 0 auto">
           <ZArticle
             v-for="(post, index) in posts"
             :key="post.id"
-            :thumbnail="post.futured_media"
+            :thumbnail="'https://demo.przemyslawspaczek.pl/wp-content/uploads/'+post.media.file"
             :title="post.title.rendered"
             :to="post.link"
-            :author="post.author"
+            author="Przemysław Spaczek"
             :sticky="post.sticky"
             :date="post.date"
             :class="{'z-article--highlighted': post.sticky, 'z-article--primary': index === 0}"
           />
         </div>`,
-      async mounted(){
-        // todo: keep it in vuex
+      async created(){
         const { API_URL } = process.env;
-        let users = await axios.get(`${API_URL}/users`)
-        users = users.data.reduce((accumulator, user) => ({...accumulator, [user.id]: {name: user.name, to: user.link}}),{});
-        const {data} =  await axios.get(`${API_URL}/posts?per_page=16`)
-        // todo: create scoped-slot component
-        const postWithMedia = await Promise.all(data.map(async(post) => {
-          const {data} = await axios.get(`${API_URL}/media/${post.featured_media}`)
-          return {...post, futured_media: data.guid.rendered}
-        }))
-        // todo: create scoped-slot component
-        const postWithAuthors = postWithMedia.map((post) => {
-          return {...post, author: users[post.author]}
-        })
-        this.posts = postWithAuthors
+        const params = {
+          per_page: 16,
+        };
+        const { data } = await axios.get(`${API_URL}/posts`, { params });
+        this.posts = data;
       }
     }}
   </Story>
