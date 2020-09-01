@@ -10,17 +10,18 @@
     </div>
     <!-- Aktualności -->
     <div style="display: grid; max-width: 1120px; margin: 32px auto; gap: 20px; grid-template-columns: repeat(4, 1fr);">
-      <ZArticle
-        v-for="(post, index) in posts"
-        :key="post.id"
-        :thumbnail="post.futured_media"
-        :title="post.title.rendered"
-        :to="post.link"
-        :author="post.author"
-        :sticky="post.sticky"
-        :date="post.date"
-        :class="{'z-article--highlighted': post.sticky, 'z-article--primary': index === 0}"
-      />
+      <template v-for="(post, index) in posts">
+        <ZArticle
+          :key="post.id"
+          :thumbnail="`https://demo.przemyslawspaczek.pl/wp-content/uploads/${post.media.file}`"
+          :title="post.title.rendered"
+          :to="post.link"
+          author="Przemysław Spaczek"
+          :sticky="post.sticky"
+          :date="post.date"
+          :class="{'z-article--highlighted': post.sticky, 'z-article--primary': index === 0}"
+        />
+      </template>
     </div>
     <!-- Paginacja -->
     <div
@@ -64,25 +65,13 @@ export default {
       return this.posts.length > 0;
     },
   },
-  async mounted() {
+  async created() {
     const { API_URL } = process.env;
-    const usersResponse = await axios.get(`${API_URL}/users`);
-    const users = usersResponse.data.reduce((accumulator, user) => ({
-      ...accumulator,
-      [user.id]: {
-        name: user.name,
-        to: user.link,
-      },
-    }), {});
-    const postsResponse = await axios.get(`${API_URL}/posts?per_page=16`);
-    const posts = postsResponse.data;
-    const postsWithMedia = await Promise.all(posts.map(async (post) => {
-      const mediaResponse = await axios.get(`${API_URL}/media/${post.featured_media}`);
-      const media = mediaResponse.data;
-      return { ...post, futured_media: media.guid.rendered };
-    }));
-    const postsWithAuthors = postsWithMedia.map((post) => ({ ...post, author: users[post.author] }));
-    this.posts = postsWithAuthors;
+    const params = {
+      per_page: 16,
+    };
+    const { data } = await axios.get(`${API_URL}/posts`, { params });
+    this.posts = data;
   },
 };
 </script>

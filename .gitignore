@@ -1,7 +1,8 @@
 .DS_Store
 node_modules
-/dist
+dist
 storybook-static
+wordpress
 
 # local env files
 .env.local
@@ -20,3 +21,4 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw?
+packages/ui/src/helpers/

@@ -96,17 +96,18 @@
           </div>
         </form>
       </div>
-      <ZEvent
-        v-for="(event) in events"
-        :key="event.id"
-        :thumbnail="event.futured_media"
-        :title="event.title.rendered"
-        :date="event.acf.date"
-        :location="{name: 'Warszawa'}"
-        :audience="{name: 'Wszyscy harcerze'}"
-        :type="eventTypes[event.eventTypes]"
-        :age-group="ageGroups[event.ageGroups]"
-      />
+      <template v-for="(event) in events">
+        <ZEvent
+          :key="event.id"
+          :thumbnail="`https://demo.przemyslawspaczek.pl/wp-content/uploads/${event.media.file}`"
+          :title="event.title.rendered"
+          :date="{start: '01/09/2020', end: '03/09/2020'}"
+          :location="{name: 'Warszawa'}"
+          :audience="{name: 'Wszyscy harcerze'}"
+          :type="{name: 'Zlot'}"
+          :age-group="{name: 'Harcerze Starsi', color: '#ffffff', background: '#084da1'}"
+        />
+      </template>
     </div>
     <!-- Paginacja -->
     <div
@@ -144,36 +145,15 @@ export default {
   data() {
     return {
       events: [],
-      eventTypes: [],
-      ageGroups: [],
     };
   },
-  async mounted() {
+  async created() {
     const { API_URL } = process.env;
-    const ageGroupsResponse = await axios.get(`${API_URL}/ageGroups`);
-    const ageGroups = ageGroupsResponse.data.reduce((accumulator, methodology) => ({
-      ...accumulator,
-      [methodology.id]: {
-        name: methodology.name,
-        background: methodology.acf.background,
-        color: methodology.acf.color,
-      },
-    }), {});
-    this.ageGroups = ageGroups;
-    const eventTypesResponse = await axios.get(`${API_URL}/eventTypes`);
-    const eventTypes = eventTypesResponse.data.reduce((accumulator, type) => ({
-      ...accumulator,
-      [type.id]: { name: type.name },
-    }), {});
-    this.eventTypes = eventTypes;
-    const eventsResponse = await axios.get(`${API_URL}/events?per_page=12`);
-    const events = eventsResponse.data;
-    const eventsWithMedia = await Promise.all(events.map(async (event) => {
-      const mediaResponse = await axios.get(`${API_URL}/media/${event.featured_media}`);
-      const media = mediaResponse.data;
-      return { ...event, futured_media: media.guid.rendered };
-    }));
-    this.events = eventsWithMedia;
+    const params = {
+      per_page: 12,
+    };
+    const eventsRes = await axios.get(`${API_URL}/events`, { params });
+    this.events = eventsRes.data;
   },
 };
 </script>

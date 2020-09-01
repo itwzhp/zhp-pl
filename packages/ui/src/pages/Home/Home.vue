@@ -23,10 +23,10 @@
         >
           <ZArticle
             :key="post.id"
-            :thumbnail="post.futured_media"
+            :thumbnail="`https://demo.przemyslawspaczek.pl/wp-content/uploads/${post.media.file}`"
             :title="post.title.rendered"
             :to="post.link"
-            :author="post.author"
+            author="Przemysław Spaczek"
             :sticky="post.sticky"
             :date="post.date"
           />
@@ -146,13 +146,13 @@
         >
           <ZEvent
             :key="event.id"
-            :thumbnail="event.futured_media"
+            :thumbnail="`https://demo.przemyslawspaczek.pl/wp-content/uploads/${event.media.file}`"
             :title="event.title.rendered"
-            :date="event.acf.date"
+            :date="{start: '01/09/2020', end: '03/09/2020'}"
             :location="{name: 'Warszawa'}"
             :audience="{name: 'Wszyscy harcerze'}"
-            :type="eventTypes[event.eventTypes]"
-            :age-group="ageGroups[event.ageGroups]"
+            :type="{name: 'Zlot'}"
+            :age-group="{name: 'Harcerze Starsi', color: '#ffffff', background: '#084da1'}"
           />
         </li>
       </ZCarousel>
@@ -203,53 +203,17 @@ export default {
     return {
       posts: [],
       events: [],
-      eventTypes: [],
-      ageGroups: [],
     };
   },
-  async mounted() {
+  async created() {
     const { API_URL } = process.env;
-    const usersResponse = await axios.get(`${API_URL}/users`);
-    const users = usersResponse.data.reduce((accumulator, user) => ({
-      ...accumulator,
-      [user.id]: {
-        name: user.name,
-        to: user.link,
-      },
-    }), {});
-    const postsResponse = await axios.get(`${API_URL}/posts?per_page=6`);
-    const posts = postsResponse.data;
-    const postsWithMedia = await Promise.all(posts.map(async (post) => {
-      const mediaResponse = await axios.get(`${API_URL}/media/${post.featured_media}`);
-      const media = mediaResponse.data;
-      return { ...post, futured_media: media.guid.rendered };
-    }));
-    const postsWithAuthors = postsWithMedia.map((post) => ({ ...post, author: users[post.author] }));
-    this.posts = postsWithAuthors;
-    const ageGroupsResponse = await axios.get(`${API_URL}/ageGroups`);
-    const ageGroups = ageGroupsResponse.data.reduce((accumulator, methodology) => ({
-      ...accumulator,
-      [methodology.id]: {
-        name: methodology.name,
-        background: methodology.acf.background,
-        color: methodology.acf.color,
-      },
-    }), {});
-    this.ageGroups = ageGroups;
-    const eventTypesResponse = await axios.get(`${API_URL}/eventTypes`);
-    const eventTypes = eventTypesResponse.data.reduce((accumulator, type) => ({
-      ...accumulator,
-      [type.id]: { name: type.name },
-    }), {});
-    this.eventTypes = eventTypes;
-    const eventsResponse = await axios.get(`${API_URL}/events?per_page=6`);
-    const events = eventsResponse.data;
-    const eventsWithMedia = await Promise.all(events.map(async (event) => {
-      const mediaResponse = await axios.get(`${API_URL}/media/${event.featured_media}`);
-      const media = mediaResponse.data;
-      return { ...event, futured_media: media.guid.rendered };
-    }));
-    this.events = eventsWithMedia;
+    const params = {
+      per_page: 8,
+    };
+    const postsRes = await axios.get(`${API_URL}/posts`, { params });
+    this.posts = postsRes.data;
+    const eventsRes = await axios.get(`${API_URL}/events`, { params });
+    this.events = eventsRes.data;
   },
 };
 </script>
