@@ -26,7 +26,7 @@
             :thumbnail="`https://demo.przemyslawspaczek.pl/wp-content/uploads/${post.media.file}`"
             :title="post.title.rendered"
             :to="post.link"
-            author="Przemysław Spaczek"
+            :author="{name: 'Przemysław Spaczek'}"
             :sticky="post.sticky"
             :date="post.date"
           />
@@ -41,7 +41,7 @@
     column-gap: 20px;
     grid-template-columns: repeat(12, 1fr);"
     >
-      <ZArticle
+      <ZCard
         title="Polska reprezentacja na Jamboree 2019 w USA!"
         thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/08/ZHP_WYLOT_JAMBOREE_2019_KAROLINA_PIOTROWSKA-12.jpg"
         style="grid-column: span 4;"
@@ -105,24 +105,28 @@
     <div
       style="display: grid;
       max-width: 1120px;
+      align-items: end;
       margin: 90px auto;
       column-gap: 20px;
       grid-template-columns: repeat(24, 1fr);"
     >
-      <ZArticle
+      <ZCard
         title="Stopnie i sprawności"
-        thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/08/ZHP_WYLOT_JAMBOREE_2019_KAROLINA_PIOTROWSKA-12.jpg"
-        style="grid-column: 2 / span 5;"
+        thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/01.png"
+        class="z-card--uppercase"
+        style="grid-column: 2 / span 5; grid-template-rows: 360px 1fr;"
       />
-      <ZArticle
+      <ZCard
         title="Piony metodyczne"
-        thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/08/ZHP_WYLOT_JAMBOREE_2019_KAROLINA_PIOTROWSKA-12.jpg"
-        style="grid-column: span 5;"
+        thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/02.png"
+        class="z-card--uppercase"
+        style="grid-column: span 5; grid-template-rows: 376px 1fr;"
       />
-      <ZArticle
+      <ZCard
         title="Status ZHP i Władze ZHP"
-        thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/08/ZHP_WYLOT_JAMBOREE_2019_KAROLINA_PIOTROWSKA-12.jpg"
-        style="grid-column: span 5;"
+        thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/03.png"
+        class="z-card--uppercase"
+        style="grid-column: span 5; grid-template-rows: 360px 1fr;"
       />
       <!-- CTA / BANNER-->
       <ZArticle
@@ -184,7 +188,7 @@
 <script>
 import axios from 'axios';
 import {
-  ZSection, ZCarousel, ZArticle, ZEvent, ZHeading, ZList, ZLink, ZBanner,
+  ZSection, ZCarousel, ZArticle, ZEvent, ZCard, ZHeading, ZList, ZLink, ZBanner,
 } from '../../../index';
 
 export default {
@@ -194,6 +198,7 @@ export default {
     ZCarousel,
     ZArticle,
     ZEvent,
+    ZCard,
     ZHeading,
     ZList,
     ZLink,
