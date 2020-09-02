@@ -13,7 +13,7 @@
       <ZLink
         v-for="(callToAction, key) in callToActions"
         :key="key"
-        :to="callToAction.to"
+        :to="callToAction.href"
       >
         {{ callToAction.name }}
       </ZLink>

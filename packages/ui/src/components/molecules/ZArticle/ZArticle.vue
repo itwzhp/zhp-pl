@@ -27,7 +27,7 @@
         <slot name="meta">
           <div class="z-article__meta">
             <slot name="author">
-              <ZLink :to="author.to">
+              <ZLink :to="author.href">
                 <div
                   class="z-article__author"
                   v-text="author.name"
@@ -76,7 +76,10 @@ export default {
     },
     author: {
       type: [Object, String],
-      default: () => ({}),
+      default: () => ({
+        name: '',
+        href: '',
+      }),
     },
     date: {
       type: String,

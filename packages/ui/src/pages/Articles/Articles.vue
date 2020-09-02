@@ -13,7 +13,7 @@
       <template v-for="(post, index) in posts">
         <ZArticle
           :key="post.id"
-          :thumbnail="`https://demo.przemyslawspaczek.pl/wp-content/uploads/${post.media.file}`"
+          :thumbnail="`https://demo.przemyslawspaczek.pl/wp-content/uploads/${post.rest_media.file}`"
           :title="post.title.rendered"
           :to="post.link"
           author="Przemysław Spaczek"

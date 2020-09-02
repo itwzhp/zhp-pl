@@ -99,7 +99,7 @@
       <template v-for="(event) in events">
         <ZEvent
           :key="event.id"
-          :thumbnail="`https://demo.przemyslawspaczek.pl/wp-content/uploads/${event.media.file}`"
+          :thumbnail="`https://demo.przemyslawspaczek.pl/wp-content/uploads/${event.rest_media.file}`"
           :title="event.title.rendered"
           :date="{start: '01/09/2020', end: '03/09/2020'}"
           :location="{name: 'Warszawa'}"

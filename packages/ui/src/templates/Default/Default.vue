@@ -45,44 +45,46 @@
     </header>
     <slot v-bind="{component}" />
     <footer class="z-footer">
-      <div class="z-footer__content">
-        <div class="z-did-you-know z-footer__did-you-know">
-          <ZHeading
-            level="3"
-            class="z-heading--uppercase z-did-you-know__title"
-          >
-            Czy wiesz że...
-          </ZHeading>
-          <ZText>
-            Drużynowi ZHP przepracowują społecznie łącznie 8 mln godzin w ciągu roku.
-            Jeżeli przeliczyć to na złotówki, wartość pracy wolontariackiej wyniosłaby 136 mln zł.
-          </ZText>
-        </div>
-        <div class="z-world-logos z-footer__world-logos">
-          <ZLink to="https://www.wagggs.org/">
-            <ZImage
-              src="/assets/brand.svg"
-              :sources="[
-                {
-                  srcset: '/assets/wagggs.png',
-                  src: '/assets/wagggs.png'
-                }
-              ]"
-              class="z-worlds-logos__logo"
-            />
-          </ZLink>
-          <ZLink to="https://www.scout.org/">
-            <ZImage
-              src="/assets/brand.svg"
-              :sources="[
-                {
-                  srcset: '/assets/wosm.png',
-                  src: '/assets/wosm.png'
-                }
-              ]"
-              class="z-worlds-logos__logo"
-            />
-          </ZLink>
+      <div style="background: #78a22f; color: #fff;">
+        <div class="z-footer__content">
+          <div class="z-did-you-know z-footer__did-you-know">
+            <ZHeading
+              level="3"
+              class="z-heading--uppercase z-did-you-know__title"
+            >
+              Czy wiesz że...
+            </ZHeading>
+            <ZText>
+              Drużynowi ZHP przepracowują społecznie łącznie 8 mln godzin w ciągu roku.
+              Jeżeli przeliczyć to na złotówki, wartość pracy wolontariackiej wyniosłaby 136 mln zł.
+            </ZText>
+          </div>
+          <div class="z-world-logos z-footer__world-logos">
+            <ZLink to="https://www.wagggs.org/">
+              <ZImage
+                src="/assets/brand.svg"
+                :sources="[
+                  {
+                    srcset: '/assets/wagggs.png',
+                    src: '/assets/wagggs.png'
+                  }
+                ]"
+                class="z-worlds-logos__logo"
+              />
+            </ZLink>
+            <ZLink to="https://www.scout.org/">
+              <ZImage
+                src="/assets/brand.svg"
+                :sources="[
+                  {
+                    srcset: '/assets/wosm.png',
+                    src: '/assets/wosm.png'
+                  }
+                ]"
+                class="z-worlds-logos__logo"
+              />
+            </ZLink>
+          </div>
         </div>
       </div>
       <div class="z-footer__bar">
@@ -177,10 +179,10 @@ export default {
 
   &__content {
     display: grid;
+    max-width: 1120px;
     height: 120px;
     align-items: center;
-    background: #78a22f;
-    color: #fff;
+    margin: 0 auto;
     grid-template-columns: repeat(3, calc(100% / 3));
   }
 
@@ -194,9 +196,11 @@ export default {
 
   &__bar {
     display: grid;
+    max-width: 1120px;
     height: 48px;
     align-items: center;
     justify-content: center;
+    margin: 0 auto;
     grid-auto-flow: column;
   }
 }

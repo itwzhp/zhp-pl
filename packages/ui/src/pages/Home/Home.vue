@@ -23,10 +23,10 @@
         >
           <ZArticle
             :key="post.id"
-            :thumbnail="`https://demo.przemyslawspaczek.pl/wp-content/uploads/${post.media.file}`"
+            :thumbnail="`https://demo.przemyslawspaczek.pl/wp-content/uploads/${post.rest_media.file}`"
             :title="post.title.rendered"
             :to="post.link"
-            :author="{name: 'Przemysław Spaczek'}"
+            :author="post.rest_author"
             :sticky="post.sticky"
             :date="post.date"
           />
@@ -129,9 +129,10 @@
         style="grid-column: span 5; grid-template-rows: 360px 1fr;"
       />
       <!-- CTA / BANNER-->
-      <ZArticle
-        title="Sprawdź strefę instrukotra"
-        thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/08/ZHP_WYLOT_JAMBOREE_2019_KAROLINA_PIOTROWSKA-12.jpg"
+      <ZBanner
+        title="Sprawdź Strefę Instruktora"
+        content="Szukasz pomysłu na zajęcia? Inspiracji do pracy z harcerzami?"
+        :call-to-actions="[{name: 'Przejdź do strony', href: '#'}]"
         style="grid-column: span 5;"
       />
     </div>
@@ -150,7 +151,7 @@
         >
           <ZEvent
             :key="event.id"
-            :thumbnail="`https://demo.przemyslawspaczek.pl/wp-content/uploads/${event.media.file}`"
+            :thumbnail="`https://demo.przemyslawspaczek.pl/wp-content/uploads/${event.rest_media.file}`"
             :title="event.title.rendered"
             :date="{start: '01/09/2020', end: '03/09/2020'}"
             :location="{name: 'Warszawa'}"
@@ -180,7 +181,45 @@
         style="grid-column: span 5;"
       >
         <ZHeading>Partnerzy organizacji</ZHeading>
+        <ZCarousel
+          v-if="partners.length > 0"
+          :settings="{
+            type: 'carousel',
+            perView: 3,
+            gap: 14,
+            peek: { before: 0, after: 50 },
+          }"
+        >
+          <li
+            v-for="(partner, key) in partners"
+            :key="key"
+            class="glide__slide"
+          >
+            <ZImage
+              :src="`https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/${partner}.png`"
+            />
+          </li>
+        </ZCarousel>
         <ZHeading>Partnerzy wyjazdu na WSJ2019</ZHeading>
+        <ZCarousel
+          v-if="wsj2019Partners.length > 0"
+          :settings="{
+            type: 'carousel',
+            perView: 3,
+            gap: 14,
+            peek: { before: 0, after: 50 },
+          }"
+        >
+          <li
+            v-for="(partner, key) in wsj2019Partners"
+            :key="key"
+            class="glide__slide"
+          >
+            <ZImage
+              :src="`https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/${partner}.png`"
+            />
+          </li>
+        </ZCarousel>
       </div>
     </div>
   </div>
@@ -188,12 +227,22 @@
 <script>
 import axios from 'axios';
 import {
-  ZSection, ZCarousel, ZArticle, ZEvent, ZCard, ZHeading, ZList, ZLink, ZBanner,
+  ZImage,
+  ZSection,
+  ZCarousel,
+  ZArticle,
+  ZEvent,
+  ZCard,
+  ZHeading,
+  ZList,
+  ZLink,
+  ZBanner,
 } from '../../../index';
 
 export default {
   name: 'Home',
   components: {
+    ZImage,
     ZSection,
     ZCarousel,
     ZArticle,
@@ -208,6 +257,8 @@ export default {
     return {
       posts: [],
       events: [],
+      partners: ['greenpeace', 'wwf', 'mop', 'ufs'],
+      wsj2019Partners: ['mbank', 'wsb', 'brand', 'pko'],
     };
   },
   async created() {
