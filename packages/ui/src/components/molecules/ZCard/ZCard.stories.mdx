@@ -1,0 +1,36 @@
+import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
+import { withKnobs, text, object } from '@storybook/addon-knobs';
+import { withA11y } from '@storybook/addon-a11y';
+import axios from 'axios';
+import ZCard from './ZCard.vue';
+
+<Meta title="Molecules/Card" component={ZCard}   decorators={[withKnobs, withA11y]}/>
+
+# Card
+
+<Props of={ZCard} />
+
+<Preview>
+  <Story name="Common">
+    {{
+        components: { ZCard },
+        props: {
+          tag: {
+            default: text('tag', 'div')
+          },
+          thumbnail: {
+            default: text('thumbnail', 'https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/08/fot.-ZHP-_-Karolina-Piotrowska-18.jpg')
+          },
+          title: {
+            default: text('title', 'Stopnie i sprawności')
+          },
+        },
+        template: `<ZCard
+          :thumbnail="thumbnail"
+          :title="title"
+          to="https://zhp.pl"
+          style="width: 250px"
+        />`,
+    }}
+  </Story>
+</Preview>
