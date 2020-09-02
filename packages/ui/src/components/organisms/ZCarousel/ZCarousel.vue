@@ -21,8 +21,7 @@ export default {
       default: () => ({
         type: 'carousel',
         perView: 4,
-        gap: 14,
-        peek: 50,
+        gap: 20,
       }),
     },
   },

@@ -15,8 +15,9 @@
       <div class="z-article__content">
         <slot name="heading">
           <ZHeading
-            class="z-article__title"
+            v-if="title"
             :level="3"
+            class="z-article__title"
           >
             <ZLink
               :to="to"
@@ -27,18 +28,19 @@
         <slot name="meta">
           <div class="z-article__meta">
             <slot name="author">
-              <ZLink :to="author.href">
-                <div
-                  class="z-article__author"
-                  v-text="author.name"
-                />
-              </ZLink>
+              <ZLink
+                v-if="author.name"
+                :to="author.href"
+                class="z-article__author"
+                v-text="author.name"
+              />
             </slot>
             <slot name="date">
               <time
+                v-if="date"
                 :datetime="date"
                 class="z-article__date"
-                v-text="date"
+                v-text="formattedDate"
               />
             </slot>
           </div>
@@ -48,6 +50,7 @@
   </component>
 </template>
 <script>
+import { format } from 'date-fns';
 import ZImage from '../../atoms/ZImage/ZImage.vue';
 import ZLink from '../../atoms/ZLink/ZLink.vue';
 import ZHeading from '../../atoms/ZHeading/ZHeading.vue';
@@ -90,6 +93,11 @@ export default {
       default: () => ({}),
     },
   },
+  computed: {
+    formattedDate() {
+      return format(new Date(this.date), 'dd.MM.yyyy');
+    },
+  },
 };
 </script>
 <style lang="scss">
@@ -98,7 +106,7 @@ export default {
     overflow: hidden;
     border-radius: 10px;
     box-shadow: 0 2px 4px 0 rgba(157, 157, 157, 0.5);
-    grid-template-rows: 128px 1fr;
+    grid-template-rows: 1fr 128px;
 
     &__thumbnail {
       position: relative;
@@ -131,6 +139,7 @@ export default {
     }
 
     &__title {
+      order: var(--article-title-order);
       margin: 8px 0;
       font-size: 14px;
       font-weight: 400;
@@ -140,6 +149,7 @@ export default {
       display: grid;
       align-items: center;
       justify-content: start;
+      order: var(--article-meta-order);
       column-gap: 8px;
       grid-template-columns: repeat(2, auto);
     }

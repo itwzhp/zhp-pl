@@ -20,13 +20,20 @@ export default {
 </script>
 <style lang="scss">
   .z-button {
+    --icon-color: #fff;
+
     display: inline-flex;
+    width: var(--button-width);
+    min-width: var(--button-min-width, 168px);
+    height: var(--button-height, 32px);
     align-items: center;
     justify-content: center;
-    border: 1px solid #7ba22e;
+    padding: var(--button-padding);
+    border: var(--button-border, 1px solid #7ba22e);
     background: var(--button-background, #a6ce39);
-    border-radius: 6px;
-    color: var(--button-color, #fffff);
+    border-radius: var(--button-border-radius, 6px);
+    color: var(--button-color, #fff);
+    text-transform: var(--button-text-transform);
 
     &--text {
       padding: 0;

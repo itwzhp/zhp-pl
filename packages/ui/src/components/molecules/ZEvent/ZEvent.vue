@@ -197,7 +197,7 @@ export default {
     overflow: hidden;
     border-radius: 10px;
     box-shadow: 0 2px 4px 0 rgba(157, 157, 157, 0.5);
-    grid-template-rows: 128px 1fr;
+    grid-template-rows: 1fr 128px;
 
     &__thumbnail {
       position: relative;

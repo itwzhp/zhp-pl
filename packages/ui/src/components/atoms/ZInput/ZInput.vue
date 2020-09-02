@@ -1,9 +1,8 @@
 <template>
   <input
-    v-model="state"
-    class="z-input"
-    :type="type"
     :value="value"
+    class="z-input"
+    @input="$emit($event.target.value)"
   >
 </template>
 <script>
@@ -13,31 +12,24 @@ export default {
     prop: 'input',
   },
   props: {
-    input: {
-      type: [String, Number, Boolean],
-      default: '',
-    },
     value: {
       type: [String, Number, Boolean],
       default: '',
-    },
-    type: {
-      type: String,
-      default: 'text',
-    },
-  },
-  data() {
-    return {
-      state: this.input,
-    };
-  },
-  watch: {
-    state(value) {
-      this.$emit('input', value);
     },
   },
 };
 </script>
 <style lang="scss">
-  .z-input {}
+  .z-input {
+    height: var(--input-height, 48px);
+    padding: var(--input-padding, 0 16px);
+    border: var(--input-border, 0);
+    background: var(--input-background, #a6ce39);
+    border-radius: var(--input-border-radius, 10px);
+    color: var(--input-color, #fff);
+
+    &::placeholder {
+      color: var(--input-color, #fff);
+    }
+  }
 </style>

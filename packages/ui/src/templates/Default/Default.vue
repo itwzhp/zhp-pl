@@ -31,7 +31,7 @@
         </div>
       </div>
       <div class="z-header__navigation">
-        <nav>
+        <nav class="z-navigation">
           <ZLink
             v-for="(item, key) in headerNavigation"
             :key="key"
@@ -141,6 +141,8 @@ export default {
 </script>
 <style lang="scss">
 .z-header {
+  padding: 0 20px;
+
   &__bar {
     display: grid;
     height: 80px;
@@ -217,5 +219,15 @@ export default {
 
   &__logo {
   }
+}
+
+.z-navigation {
+  display: grid;
+  column-gap: 24px;
+  font-size: 18px;
+  font-weight: 500;
+  grid-auto-flow: column;
+
+  &--secondary {}
 }
 </style>

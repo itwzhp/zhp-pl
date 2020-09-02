@@ -33,35 +33,3 @@ import ZVideo from '../../atoms/ZVideo/ZVideo.vue';
     }}
   </Story>
 </Preview>
-
-<Preview>
-  <Story name="With Video">
-      {{
-          components: { ZBanner, ZVideo },
-          template: `<ZBanner
-            title="Poznaj ZHP"
-            content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi tempus euismod libero, et varius lorem rutrum ut. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Morbi in nibh luctus, fermentum arcu sit amet, tincidunt nisl. Maecenas malesuada nisl eu elit dignissim, et tempor odio feugiat."
-            :call-to-actions="[{name: 'Jak zacząć?', to: '#'}, {name: 'Ile kosztuje harcerstwo?', to: '#'}, {name: 'Gdzie zacząć?', to: '#'}]"
-            src-image="https://zhp.pl/wp-content/uploads/2020/06/News-podsumowanie-na-obozie-kopia-850x468.png"
-            :sources-image="[
-              {
-                srcset: 'https://zhp.pl/wp-content/uploads/2020/06/News-podsumowanie-na-obozie-kopia-850x468.png',
-                media: '(min-width: 480px)',
-                type: 'image/png'
-              },
-              {
-                srcset: 'https://zhp.pl/wp-content/uploads/2020/06/News-podsumowanie-na-obozie-kopia-850x468.png'
-              }
-            ]"
-          >
-           <template #thumb>
-            <ZVideo
-              autoplay
-              loop
-              :sources="[{src: 'https://watra.zhp.pl/media/wdesktop.842e12d8.mp4'}]"
-            />
-           </template>
-          </ZBanner>`,
-      }}
-    </Story>
-</Preview>

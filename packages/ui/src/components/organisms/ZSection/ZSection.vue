@@ -3,13 +3,29 @@
     :is="tag"
     class="z-section"
   >
-    <slot name="title">
-      <ZHeading>{{ title }}</ZHeading>
+    <slot name="header">
+      <div class="z-section__header">
+        <slot name="title">
+          <ZHeading
+              v-if="title"
+              class="z-section__title"
+              v-text="title"
+          />
+        </slot>
+        <slot name="subtitle">
+          <ZText
+              v-if="subtitle"
+              class="z-section__subtitle"
+              v-text="subtitle"
+          />
+        </slot>
+      </div>
     </slot>
-    <slot name="subtitle">
-      <ZText>{{ subtitle }}</ZText>
+    <slot name="content">
+      <div class="z-section__content">
+        <slot />
+      </div>
     </slot>
-    <slot />
   </component>
 </template>
 <script>
@@ -41,5 +57,30 @@ export default {
 </script>
 <style lang="scss">
   .z-section {
+    &__header {
+      display: grid;
+      max-width: 1120px;
+      margin: 0 auto 24px auto;
+      grid-template-columns: repeat(12, 1fr);
+    }
+
+    &__title {
+      margin: var(--section--title-margin, 0 0 8px 0);
+      font-size: 32px;
+      font-weight: 900;
+      grid-column: span 4;
+      text-transform: uppercase;
+    }
+
+    &__subtitle {
+      margin: var(--section--subtitle-margin);
+      font-size: 16px;
+      grid-column: span 5;
+      grid-row: 2;
+    }
+
+    &__content {
+      grid-column: span 12;
+    }
   }
 </style>
