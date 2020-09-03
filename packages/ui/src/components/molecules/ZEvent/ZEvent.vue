@@ -12,7 +12,6 @@
         />
       </div>
     </slot>
-
     <slot name="content">
       <div class="z-event__content">
         <slot name="date">
@@ -80,11 +79,10 @@
       </div>
     </slot>
     <slot name="type">
-      <ZLink to="#">
-        <div
-          class="z-event__type"
-          v-text="type.name"
-        />
+      <ZLink :to="type.href" class="z-event__type">
+        <ZBubble>
+          {{type.name}}
+        </ZBubble>
       </ZLink>
     </slot>
   </component>
@@ -93,6 +91,7 @@
 import ZImage from '../../atoms/ZImage/ZImage.vue';
 import ZHeading from '../../atoms/ZHeading/ZHeading.vue';
 import ZLink from '../../atoms/ZLink/ZLink.vue';
+import ZBubble from '../../atoms/ZBubble/ZBubble.vue';
 
 export default {
   name: 'ZEvent',
@@ -100,6 +99,7 @@ export default {
     ZLink,
     ZImage,
     ZHeading,
+    ZBubble,
   },
   props: {
     tag: {
@@ -256,19 +256,14 @@ export default {
     }
 
     &__type {
+      --bubble-height: 24px;
+      --bubble-background: var(--background);
+
       position: absolute;
       top: 0;
       right: 0;
-      min-width: 72px;
-      padding: 4px 8px;
-      background: var(--background);
-      border-radius: 10px;
-      color: var(--color, #fff);
-      text-align: center;
       transform: translate(-8px, 8px);
     }
-
-    &--primary {}
   }
   // todo: przenieść do atomu
   .z-calendar {

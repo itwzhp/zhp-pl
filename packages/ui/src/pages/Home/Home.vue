@@ -75,7 +75,7 @@ grid-template-columns: repeat(12, 1fr);"
           />
           <ZLink
             to="#"
-            class="z-highlighted__more"
+            class="z-highlighted__more z-highlighted__link"
             v-text="'Zobacz więcej'"
           />
         </div>
@@ -88,6 +88,7 @@ grid-template-columns: repeat(12, 1fr);"
               <ZLink
                 to="#"
                 v-text="item.title"
+                class="z-highlighted__link"
               />
               <time
                 :datetime="item.date"
@@ -346,6 +347,8 @@ export default {
   }
 
   .z-highlighted {
+    --link-text-decoration: underline;
+
     &__header {
       display: grid;
       align-items: center;
@@ -368,6 +371,12 @@ export default {
       margin: 16px 0;
       grid-template-columns: repeat(2, auto);
     }
+
+    &__link {
+      &:hover {
+        --link-text-decoration: none;
+      }
+    }
   }
 
   .z-search {
@@ -380,6 +389,8 @@ export default {
     }
 
     &__icon {
+      --icon-color: #fff;
+
       margin: 0 8px 0 0;
     }
   }

@@ -31,15 +31,21 @@
         </div>
       </div>
       <div class="z-header__navigation">
-        <nav class="z-navigation">
-          <ZLink
-            v-for="(item, key) in headerNavigation"
-            :key="key"
-            :to="item.to"
-            @click.native.prevent.stop="component = item.to"
-          >
-            {{ item.name }}
-          </ZLink>
+        <nav>
+          <ZList class="z-navigation">
+            <template v-for="(item, key) in headerNavigation">
+              <li
+                :key="key"
+                class="z-navigation__item"
+              >
+                <ZLink
+                  :to="item.to"
+                  class="z-navigation__link"
+                  v-text="item.name"
+                />
+              </li>
+            </template>
+          </ZList>
         </nav>
       </div>
     </header>
@@ -88,15 +94,22 @@
         </div>
       </div>
       <div class="z-footer__bar">
-        <ZText>Copyright © 1997-2020 Związek Harcerstwa Polskiego</ZText>
-        <nav>
-          <ZLink
-            v-for="(item, key) in footerNavigation"
-            :key="key"
-            :to="item.to"
-          >
-            {{ item.name }}
-          </ZLink>
+        <ZText v-text="'Copyright © 1997-2020 Związek Harcerstwa Polskiego'"/>
+        <nav class="z-footer__navigation">
+          <ZList class="z-navigation z-navigation--secondary">
+            <template v-for="(item, key) in footerNavigation">
+              <li
+                :key="key"
+                class="z-navigation__item"
+              >
+                <ZLink
+                  :to="item.to"
+                  class="z-navigation__link"
+                  v-text="item.name"
+                />
+              </li>
+            </template>
+          </ZList>
         </nav>
       </div>
     </footer>
@@ -104,7 +117,7 @@
 </template>
 <script>
 import {
-  ZButton, ZIcon, ZLink, ZImage, ZText, ZHeading,
+  ZButton, ZIcon, ZLink, ZImage, ZText, ZHeading, ZList,
 } from '../../../index';
 
 export default {
@@ -116,6 +129,7 @@ export default {
     ZIcon,
     ZLink,
     ZImage,
+    ZList,
   },
   data() {
     return {
@@ -205,6 +219,10 @@ export default {
     margin: 0 auto;
     grid-auto-flow: column;
   }
+
+  &__navigation {
+    margin: 0 0 0 4px;
+  }
 }
 
 .z-did-you-know {
@@ -224,10 +242,24 @@ export default {
 .z-navigation {
   display: grid;
   column-gap: 24px;
+  align-items: center;
+  line-height: 1;
   font-size: 18px;
   font-weight: 500;
   grid-auto-flow: column;
 
-  &--secondary {}
+  &--secondary {
+    column-gap: 4px;
+    .z-navigation {
+      &__link {
+        font-size: 14px;
+
+        &::before {
+          content: "|";
+          margin: 0 4px 0 0;
+        }
+      }
+    }
+  }
 }
 </style>

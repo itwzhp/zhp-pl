@@ -103,6 +103,7 @@ export default {
 
     &__link {
       --icon-color: #fff;
+      --link-text-decoration: underline;
 
       display: grid;
       align-items: center;
@@ -112,6 +113,10 @@ export default {
       font-size: 16px;
       grid-auto-flow: column;
       white-space: nowrap;
+
+      &:hover {
+        --link-text-decoration: none;
+      }
     }
   }
 </style>

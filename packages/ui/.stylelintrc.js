@@ -9,5 +9,9 @@ module.exports = {
     'at-rule-no-unknown': [true, {
       ignoreAtRules: ['function', 'if', 'each', 'include', 'mixin'],
     }],
+    'order/order': [
+      'custom-properties',
+      'declaration'
+    ]
   },
 };
