@@ -1,0 +1,44 @@
+import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
+import { withKnobs, text } from '@storybook/addon-knobs';
+import { withA11y } from '@storybook/addon-a11y';
+import ZBubble from './ZBubble.vue';
+
+<Meta title="Atoms/Bubble" component={ZBubble} decorators={[withKnobs, withA11y]} />
+
+# Bubble
+
+<Preview>
+  <Story name="Common">
+    {{
+        components: { ZBubble },
+        props: {
+          name: {
+            default: text('name', 'Zagranica')
+          }
+        },
+        template: `<div style="display: grid; justify-content: start">
+          <ZBubble>{{ name }}</ZBubble>
+        </div>`,
+    }}
+  </Story>
+</Preview>
+
+<Preview>
+  <Story name="as filter">
+    {{
+      components: { ZBubble },
+      props: {
+        name: {
+          default: text('name', '13/04/2017 - 18/04/2017')
+        }
+      },
+      template: `<div style="display: grid; justify-content: start">
+          <ZBubble type="filter">{{ name }}</ZBubble>
+        </div>`,
+    }}
+  </Story>
+</Preview>
+
+# Props
+
+<Props of={ZBubble} />
