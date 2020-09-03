@@ -20,8 +20,6 @@ export default {
 </script>
 <style lang="scss">
   .z-button {
-    --icon-color: #fff;
-
     display: inline-flex;
     width: var(--button-width);
     min-width: var(--button-min-width, 168px);
@@ -36,6 +34,7 @@ export default {
     text-transform: var(--button-text-transform);
 
     &--text {
+      min-width: var(--button-min-width, unset);
       padding: 0;
       border: 0;
       background: transparent;
