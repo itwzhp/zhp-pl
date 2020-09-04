@@ -1,9 +1,9 @@
 module.exports = {
   apps: [
     {
-      name: 'NuxtNowa',
+      name: 'nowa-zhp',
       exec_mode: 'cluster',
-      instances: 'max', // Or a number of instances
+      instances: 'max',
       script: './node_modules/nuxt/bin/nuxt.js',
       args: 'start',
     },
