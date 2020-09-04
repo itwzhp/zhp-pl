@@ -241,22 +241,23 @@ export default {
 
 .z-navigation {
   display: grid;
-  column-gap: 24px;
   align-items: center;
-  line-height: 1;
+  column-gap: 24px;
   font-size: 18px;
   font-weight: 500;
   grid-auto-flow: column;
+  line-height: 1;
 
   &--secondary {
     column-gap: 4px;
+
     .z-navigation {
       &__link {
         font-size: 14px;
 
         &::before {
-          content: "|";
           margin: 0 4px 0 0;
+          content: "|";
         }
       }
     }

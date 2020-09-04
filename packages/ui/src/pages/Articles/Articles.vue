@@ -7,6 +7,43 @@
         <small style="display: block; margin: 8px 0; font-weight: 400;">Sprawdź, co nowego w ZHP</small>
       </zHeading>
       <!-- Wybierz miesiąc, Wybierz kategorię, Wybierz tagi -->
+      <div style=" margin: 32px 0; grid-column: 5 / span 7;">
+        <ZDropdown
+          name="Wybierz miesiąc"
+          class="z-dropdown--has-chevron"
+          style="--button-box-shadow: 5px 10px 20px 0 rgba(0, 0, 0, 0.13); --dropdown-content-width: calc(300% - 28px);"
+        >
+          ...
+        </ZDropdown>
+        <ZDropdown
+          name="Wybierz kategorię"
+          class="z-dropdown--has-chevron"
+          style="
+
+--dropdown-toggle-background: #78a22f;
+--dropdown-content-width: calc(200% - 14px);
+
+margin: 0 0 0 -14px;
+
+--button-box-shadow: 5px 10px 20px 0 rgba(0, 0, 0, 0.13);"
+        >
+          ...
+        </ZDropdown>
+        <ZDropdown
+          name="Wybierz tagi"
+          class="z-dropdown--has-chevron"
+          style="
+
+            --dropdown-toggle-background: #4a7b26;
+            --dropdown-toggle-color: #fff;
+
+            margin: 0 0 0 -14px;
+
+            --button-box-shadow: 5px 10px 20px 0 rgba(0, 0, 0, 0.13);"
+        >
+          ...
+        </ZDropdown>
+      </div>
     </div>
     <!-- Aktualności -->
     <div style="display: grid; max-width: 1120px; margin: 32px auto; gap: 20px; grid-template-columns: repeat(4, 1fr);">
@@ -19,6 +56,7 @@
           author="Przemysław Spaczek"
           :sticky="post.sticky"
           :date="post.date"
+          :category="post.sticky ? 'Wyróżnione' : index === 0 ? 'Dzieje się' : post.category"
           :class="{'z-article--highlighted': post.sticky, 'z-article--primary': index === 0}"
         />
       </template>
@@ -44,12 +82,13 @@
 <script>
 import axios from 'axios';
 import {
-  ZArticle, ZHeading, ZButton, ZIcon,
+  ZArticle, ZHeading, ZButton, ZIcon, ZDropdown,
 } from '../../../index';
 
 export default {
   name: 'Home',
   components: {
+    ZDropdown,
     ZArticle,
     ZHeading,
     ZButton,

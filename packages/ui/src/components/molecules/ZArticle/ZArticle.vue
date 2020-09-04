@@ -45,6 +45,14 @@
             </slot>
           </div>
         </slot>
+        <slot name="category">
+          <ZBubble
+            v-if="category"
+            class="z-article__category"
+          >
+            {{ category }}
+          </ZBubble>
+        </slot>
       </div>
     </slot>
   </component>
@@ -55,6 +63,7 @@ import ZImage from '../../atoms/ZImage/ZImage.vue';
 import ZLink from '../../atoms/ZLink/ZLink.vue';
 import ZHeading from '../../atoms/ZHeading/ZHeading.vue';
 import ZText from '../../atoms/ZText/ZText.vue';
+import ZBubble from '../../atoms/ZBubble/ZBubble.vue';
 
 export default {
   name: 'ZArticle',
@@ -63,6 +72,7 @@ export default {
     ZLink,
     ZHeading,
     ZText,
+    ZBubble,
   },
   props: {
     tag: {
@@ -92,6 +102,10 @@ export default {
       type: [Object, String],
       default: () => ({}),
     },
+    category: {
+      type: [String, Array],
+      default: '',
+    },
   },
   computed: {
     formattedDate() {
@@ -102,6 +116,9 @@ export default {
 </script>
 <style lang="scss">
   .z-article {
+    $this: &;
+
+    position: relative;
     display: grid;
     overflow: hidden;
     border-radius: 10px;
@@ -163,56 +180,72 @@ export default {
       font-size: 10px;
     }
 
+    &__category {
+      --bubble-height: 24px;
+
+      order: -1;
+      font-weight: 300;
+      place-self: start;
+      text-transform: uppercase;
+    }
+
     &--highlighted {
+      --bubble-background: #ce171e;
+
       grid-row: span 2;
       grid-template-rows: 1fr 128px;
 
-      .z-article {
-        &__content {
-          z-index: 1;
-          color: #fff;
-          grid-column: 1;
-          grid-row: 2;
-        }
+      #{$this}__content {
+        z-index: 1;
+        color: #fff;
+        grid-column: 1;
+        grid-row: 2;
+      }
 
-        &__thumbnail {
-          grid-column: 1;
-          grid-row: 1 / span 2;
+      #{$this}__thumbnail {
+        grid-column: 1;
+        grid-row: 1 / span 2;
 
-          &::after {
-            content: none;
-          }
+        &::after {
+          content: none;
         }
+      }
+
+      #{$this}__category {
+        position: absolute;
+        top: 0;
+        right: 0;
+        transform: translate(-8px, 8px);
       }
     }
 
     &--primary {
+      --bubble-background: #efac1f;
+
       grid-column: span 4;
       grid-template-columns: repeat(4, 1fr);
       grid-template-rows: repeat(2, calc(345px / 2));
 
-      .z-article {
-        &__thumbnail {
-          grid-column: 1 / span 4;
-          grid-row: 1 / span 2;
+      #{$this}__thumbnail {
+        grid-column: 1 / span 4;
+        grid-row: 1 / span 2;
 
-          &::after {
-            content: none;
-          }
+        &::after {
+          content: none;
         }
+      }
 
-        &__content {
-          z-index: 1;
-          padding: 40px;
-          color: #fff;
-          grid-column: 1 / span 2;
-          grid-row: 2;
-          place-self: start;
-        }
+      #{$this}__content {
+        z-index: 1;
+        padding: 40px;
+        color: #fff;
+        grid-column: 1 / span 2;
+        grid-row: 2;
+        place-self: start;
+      }
 
-        &__title {
-          font-size: 24px;
-        }
+      #{$this}__title {
+        font-size: 24px;
       }
     }
   }
