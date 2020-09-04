@@ -11,6 +11,7 @@
     "storybook:serve": "yarn create-index && vue-cli-service storybook:serve -s ./public -p 6006 -c config/storybook"
   },
   "main": "index.js",
+  "module": "index.js",
   "files": [
     "src/*",
     "index.js"
