@@ -3,7 +3,14 @@
     :is="tag"
     class="z-dropdown"
   >
-    <slot />
+    <slot name="toggle">
+      <div class="dropdown__toggle" />
+    </slot>
+    <slot name="content">
+      <div class="dropdown__content">
+        <slot />
+      </div>
+    </slot>
   </component>
 </template>
 <script>
