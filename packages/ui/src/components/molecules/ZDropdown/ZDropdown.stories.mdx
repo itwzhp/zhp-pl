@@ -1,9 +1,11 @@
 import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
-import { action } from "@storybook/addon-actions";
-import { linkTo } from '@storybook/addon-links'
+import { withKnobs, text, object } from '@storybook/addon-knobs';
+import { withA11y } from '@storybook/addon-a11y';
 import ZDropdown from './ZDropdown.vue';
+import ZButton from '../../atoms/ZButton/ZButton.vue';
+import ZIcon from '../../atoms/ZIcon/ZIcon.vue';
 
-<Meta title="Atoms/Dropdown" component={ZDropdown} />
+<Meta title="Molecules/Dropdown" component={ZDropdown} />
 
 # Dropdown
 
@@ -12,11 +14,26 @@ import ZDropdown from './ZDropdown.vue';
 <Preview>
   <Story name="Common">
     {{
-        components: { ZDropdown },
-        template: `<ZDropdown>
-          <p>Option A</p>
-          <p>Option B</p>
-          <p>Option C</p>
+        components: { ZDropdown, ZButton, ZIcon },
+        props: {
+          name: {
+            default: text('name', 'Wybierz miesiąc')
+          }
+        },
+        template: `<ZDropdown
+          :name="name"
+          class="z-dropdown--has-chevron"
+        >
+          <form>
+            <div style="column-gap: 8px; display: grid; justify-content: end; grid-template-columns: repeat(2, 32px)">
+              <ZButton type="button" style="--button-min-width: none; --button-height: 32px; --button-background: #fff">
+                <ZIcon name="cross" style="--icon-color: #7ba22e"/>
+              </ZButton>
+              <ZButton style="--button-min-width: none; --button-height: 32px">
+               <ZIcon name="approved" style="--icon-color: #fff"/>
+              </ZButton>
+            </div>
+          </form>
         </ZDropdown>`,
     }}
   </Story>
