@@ -32,7 +32,15 @@
       subtitle="Zobacz, co nowego w ZHP"
       style="margin: 90px auto;"
     >
-      <ZCarousel v-if="posts.length > 0">
+      <ZCarousel
+        v-if="posts.length > 0"
+        :settings="{
+          type: 'carousel',
+          perView: 4,
+          gap: 20,
+        }"
+        class="carousel"
+      >
         <li
           v-for="post in posts"
           :key="post.id"
@@ -87,8 +95,8 @@ grid-template-columns: repeat(12, 1fr);"
             >
               <ZLink
                 to="#"
-                v-text="item.title"
                 class="z-highlighted__link"
+                v-text="item.title"
               />
               <time
                 :datetime="item.date"
@@ -186,7 +194,15 @@ grid-template-columns: repeat(12, 1fr);"
       ultrices consectetur turpis."
       style="margin: 90px auto;"
     >
-      <ZCarousel v-if="events.length > 0">
+      <ZCarousel
+        v-if="events.length > 0"
+        :settings="{
+          type: 'carousel',
+          perView: 4,
+          gap: 20,
+        }"
+        class="carousel"
+      >
         <li
           v-for="event in events"
           :key="event.id"
@@ -333,6 +349,8 @@ export default {
 
 <style lang="scss">
   #home {
+    overflow: hidden;
+
     .title {
       margin: 24px 0;
       font-size: 50px;
@@ -343,6 +361,37 @@ export default {
     .search {
       grid-column: 6 / span 6;
       grid-row: 2;
+    }
+
+    .carousel {
+      max-width: 1120px;
+      margin: auto;
+
+      .glide {
+        @mixin slides-active ($step) {
+          & + .glide__slide {
+            opacity: 1;
+
+            @if $step > 0 {
+              @include slides-active($step - 1);
+            }
+          }
+        }
+
+        &__track {
+          overflow: visible;
+        }
+
+        &__slides {
+          display: grid;
+          padding: 0 0 6px 0;
+          grid-auto-flow: column;
+        }
+
+        &__slide {
+          display: grid;
+        }
+      }
     }
   }
 
@@ -395,7 +444,4 @@ export default {
     }
   }
 
-  .glide__slide {
-    max-width: 248px;
-  }
 </style>
