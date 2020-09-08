@@ -215,8 +215,8 @@ grid-template-columns: repeat(12, 1fr);"
             :date="{start: '01/09/2020', end: '03/09/2020'}"
             :location="{name: 'Warszawa'}"
             :audience="{name: 'Wszyscy harcerze'}"
-            :type="{name: 'Zlot'}"
-            :age-group="{name: 'Harcerze Starsi', color: '#ffffff', background: '#084da1'}"
+            :type="event.rest_event_type"
+            :age-group="event.rest_age_group"
           />
         </li>
       </ZCarousel>
@@ -241,7 +241,7 @@ grid-template-columns: repeat(12, 1fr);"
       >
         <ZHeading>Partnerzy organizacji</ZHeading>
         <ZCarousel
-          v-if="partners.length > 0"
+          v-if="logos.length > 0"
           :settings="{
             type: 'carousel',
             perView: 3,
@@ -250,18 +250,22 @@ grid-template-columns: repeat(12, 1fr);"
           }"
         >
           <li
-            v-for="(partner, key) in partners"
+            v-for="(logo, key) in logos"
             :key="key"
             class="glide__slide"
           >
-            <ZImage
-              :src="`https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/${partner}.png`"
-            />
+            <ZLink
+              to="#"
+            >
+              <ZImage
+                :src="`https://demo.przemyslawspaczek.pl/wp-content/uploads/${logo.rest_media.file}`"
+              />
+            </ZLink>
           </li>
         </ZCarousel>
         <ZHeading>Partnerzy wyjazdu na WSJ2019</ZHeading>
         <ZCarousel
-          v-if="wsj2019Partners.length > 0"
+          v-if="logos.length > 0"
           :settings="{
             type: 'carousel',
             perView: 3,
@@ -270,13 +274,17 @@ grid-template-columns: repeat(12, 1fr);"
           }"
         >
           <li
-            v-for="(partner, key) in wsj2019Partners"
+            v-for="(logo, key) in logos"
             :key="key"
             class="glide__slide"
           >
-            <ZImage
-              :src="`https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/${partner}.png`"
-            />
+            <ZLink
+              to="#"
+            >
+              <ZImage
+                :src="`https://demo.przemyslawspaczek.pl/wp-content/uploads/${logo.rest_media.file}`"
+              />
+            </ZLink>
           </li>
         </ZCarousel>
       </div>
@@ -330,8 +338,7 @@ export default {
         { title: 'Bezpieczne #harcerskielato', date: '15.07.2019' },
         { title: 'Kielecki "Wiatraczek" znowu się kręci', date: '15.07.2019' },
       ],
-      partners: ['greenpeace', 'wwf', 'mop', 'ufs'],
-      wsj2019Partners: ['mbank', 'wsb', 'brand', 'pko'],
+      logos: [],
     };
   },
   async created() {
@@ -339,10 +346,15 @@ export default {
     const params = {
       per_page: 8,
     };
+
     const postsRes = await axios.get(`${API_URL}/posts`, { params });
     this.posts = postsRes.data;
+
     const eventsRes = await axios.get(`${API_URL}/events`, { params });
     this.events = eventsRes.data;
+
+    const logosRes = await axios.get(`${API_URL}/logos`, { params });
+    this.logos = logosRes.data;
   },
 };
 </script>

@@ -26,7 +26,7 @@ export default {
   .z-button {
     display: inline-flex;
     width: var(--button-width);
-    min-width: var(--button-min-width, 168px);
+    min-width: var(--button-min-width);
     height: var(--button-height, 32px);
     align-items: center;
     justify-content: center;

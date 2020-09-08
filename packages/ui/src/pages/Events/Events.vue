@@ -104,8 +104,8 @@
           :date="{start: '01/09/2020', end: '03/09/2020'}"
           :location="{name: 'Warszawa'}"
           :audience="{name: 'Wszyscy harcerze'}"
-          :type="{name: 'Zlot'}"
-          :age-group="{name: 'Harcerze Starsi', color: '#ffffff', background: '#084da1'}"
+          :type="event.rest_event_type"
+          :age-group="event.rest_age_group"
         />
       </template>
     </div>
