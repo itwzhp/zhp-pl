@@ -15,7 +15,7 @@
           class="z-search__input"
         />
         <ZButton
-          style="--button-text-transform: uppercase;"
+          style="--button-text-transform: uppercase; --button-min-width: 168px;"
           class="z-search__submit"
         >
           <ZIcon

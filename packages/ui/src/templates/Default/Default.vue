@@ -3,11 +3,18 @@
     <header class="z-header">
       <div class="z-header__bar">
         <div class="z-header__actions">
-          <ZButton class="z-button--text">
-            <ZIcon
-              name="shuffle"
-            /> Zmień serwis
-          </ZButton>
+          <ZDropdown>
+            <template #toggle="{toggle}">
+              <ZButton
+                class="z-button--text"
+                @click="toggle"
+              >
+                <ZIcon
+                  name="shuffle"
+                /> Zmień serwis
+              </ZButton>
+            </template>
+          </ZDropdown>
         </div>
         <ZLink to="/">
           <ZImage
@@ -17,17 +24,39 @@
           />
         </ZLink>
         <div class="z-header__actions">
-          <ZButton class="z-button--text">
-            Wyszukaj
-          </ZButton>
-          <ZButton class="z-button--text">
-            Język
-          </ZButton>
-          <ZButton class="z-button--text">
-            <ZIcon
-              name="wheelchair"
-            /> Zmień serwis
-          </ZButton>
+          <ZDropdown>
+            <template #toggle="{toggle}">
+              <ZButton
+                class="z-button--text"
+                @click="toggle"
+              >
+                Wyszukaj
+              </ZButton>
+            </template>
+          </ZDropdown>
+          <ZDropdown class="z-dropdown--has-chevron">
+            <template #toggle="{toggle}">
+              <ZButton
+                class="z-button--text z-dropdown__toggle"
+                style="--dropdown-toggle-color: #78a22f;"
+                @click="toggle"
+              >
+                Język
+              </ZButton>
+            </template>
+          </ZDropdown>
+          <ZDropdown>
+            <template #toggle="{toggle}">
+              <ZButton
+                class="z-button--text"
+                @click="toggle"
+              >
+                <ZIcon
+                  name="wheelchair"
+                /> Zmień serwis
+              </ZButton>
+            </template>
+          </ZDropdown>
         </div>
       </div>
       <div class="z-header__navigation">
@@ -54,6 +83,10 @@
       <div style="background: #78a22f; color: #fff;">
         <div class="z-footer__content">
           <div class="z-did-you-know z-footer__did-you-know">
+            <ZIcon
+              name="question-marks"
+              class="z-did-you-know__question-marks"
+            />
             <ZHeading
               level="3"
               class="z-heading--uppercase z-did-you-know__title"
@@ -94,7 +127,7 @@
         </div>
       </div>
       <div class="z-footer__bar">
-        <ZText v-text="'Copyright © 1997-2020 Związek Harcerstwa Polskiego'"/>
+        <ZText v-text="'Copyright © 1997-2020 Związek Harcerstwa Polskiego'" />
         <nav class="z-footer__navigation">
           <ZList class="z-navigation z-navigation--secondary">
             <template v-for="(item, key) in footerNavigation">
@@ -117,12 +150,20 @@
 </template>
 <script>
 import {
-  ZButton, ZIcon, ZLink, ZImage, ZText, ZHeading, ZList,
+  ZDropdown,
+  ZHeading,
+  ZText,
+  ZButton,
+  ZIcon,
+  ZLink,
+  ZImage,
+  ZList,
 } from '../../../index';
 
 export default {
   name: 'Default',
   components: {
+    ZDropdown,
     ZHeading,
     ZText,
     ZButton,
@@ -228,6 +269,25 @@ export default {
 .z-did-you-know {
   --heading-font-size: 12px;
   --text-font-size: 12px;
+
+  position: relative;
+
+  & > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  &__question-marks {
+    --icon-size: 100px;
+
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    left: 0;
+    fill: #4a7b26;
+    opacity: 0.4;
+    transform: translate(-66%, -34%);
+  }
 }
 
 .z-world-logos {

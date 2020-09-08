@@ -36,6 +36,7 @@ export default {
     border-radius: var(--button-border-radius, 10px);
     box-shadow: var(--button-box-shadow);
     color: var(--button-color, #fff);
+    cursor: var(--button-cursor, pointer);
     text-transform: var(--button-text-transform);
 
     &--text {
