@@ -119,7 +119,9 @@ grid-template-columns: repeat(12, 1fr);"
         title="Poznaj ZHP"
         content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam augue nisl, dignissim id metus
         sagittis, ultrices consectetur turpis. Quisque maximus metus purus, vitae convallis mi tempus eu."
-        style="grid-column: span 12;"
+        class="meet"
+        thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/news-DMB.png"
+        cover-type="video"
       />
     </div>
     <!-- Chcesz zapisać swoje dziecko do harcerstwa -->
@@ -138,7 +140,8 @@ grid-template-columns: repeat(12, 1fr);"
           {name:'Jak zacząć', href: '#'},
           {name:'Ile kosztuje harcerstwo?', href: '#'},
           {name:'Gdzie się zapisać?', href: '#'}]"
-        style="grid-column: span 9;"
+        class="enjoy"
+        thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/Agnieszka_Madetko-Kurczab_ZHP_21-scaled.jpg"
       />
       <ZArticle
         thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/08/fot.-ZHP-_-Karolina-Piotrowska-18.jpg"
@@ -179,12 +182,7 @@ grid-template-columns: repeat(12, 1fr);"
         title="Sprawdź Strefę Instruktora"
         content="Szukasz pomysłu na zajęcia? Inspiracji do pracy z harcerzami?"
         :calls-to-action="{name: 'Przejdź do strony', href: '#'}"
-        style="grid-column: span 5;
-
-        --banner-title-margin: 0 0 32px 0;
-        --banner-content-order: -1;
-        --banner-title-font-size: 14px;
-        --banner-title-text-transform: normal;"
+        class="instructor-zone"
       />
     </div>
     <!-- Wydarzenia -->
@@ -404,6 +402,31 @@ export default {
           display: grid;
         }
       }
+    }
+
+    .meet {
+      --banner-content-padding: 64px;
+      --banner-description-grid-column: span 5;
+      --banner-title-grid-column: span 5;
+
+      grid-column: span 12;
+    }
+
+    .enjoy {
+      grid-column: span 9;
+    }
+
+    .instructor-zone {
+      grid-column: span 5;
+
+      --banner-title-margin: 0 0 32px 0;
+      --banner-description-grid-row: 1;
+      --banner-description-grid-column: span 12;
+      --banner-title-grid-column: span 12;
+      --banner-cta-grid-column: span 12;
+      --banner-title-grid-row: 2;
+      --banner-title-font-size: 14px;
+      --banner-title-text-transform: normal;
     }
   }
 

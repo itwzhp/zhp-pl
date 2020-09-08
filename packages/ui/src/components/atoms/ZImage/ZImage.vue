@@ -69,5 +69,19 @@ export default {
       max-width: 100%;
       height: var(--image-height, auto);
     }
+
+    &--has-overlay {
+      &::before {
+        position: absolute;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to left, #7ba22e 133%, rgba(123, 162, 46, 0) 42%);
+        content: "";
+        opacity: 0.4;
+      }
+    }
   }
 </style>

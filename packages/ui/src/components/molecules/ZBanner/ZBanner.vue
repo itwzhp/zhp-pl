@@ -3,36 +3,55 @@
     :is="tag"
     class="z-banner"
   >
-    <slot name="title">
-      <ZHeading
-        class="z-banner__title"
-        v-text="title"
-      />
-    </slot>
-    <slot name="content">
-      <ZText
-        class="z-banner__content"
-        v-text="content"
-      />
-    </slot>
-    <slot name="cta">
-      <div class="z-banner__cta">
-        <template v-for="(action, key) in actions">
-          <slot name="link">
-            <div
-              :key="key"
-              class="z-banner__link"
-            >
-              <ZLink
-                :to="action.href"
-                v-text="action.name"
-              />
-              <ZIcon name="chevron" />
-            </div>
-          </slot>
-        </template>
+    <div
+      v-if="thumbnail"
+      class="z-banner__cover"
+    >
+      <div class="z-banner__mask">
+        <ZImage
+          v-if="coverType === 'image'"
+          class="z-image--has-overlay z-banner__thumbnail"
+          :src="thumbnail"
+        />
+        <ZVideo
+          v-else
+          class="z-banner__thumbnail"
+          :src="thumbnail"
+        />
       </div>
-    </slot>
+    </div>
+    <div class="z-banner__content">
+      <slot name="title">
+        <ZHeading
+          class="z-banner__title"
+          v-text="title"
+        />
+      </slot>
+      <slot name="content">
+        <ZText
+          class="z-banner__description"
+          v-text="content"
+        />
+      </slot>
+      <slot name="cta">
+        <div class="z-banner__cta">
+          <template v-for="(action, key) in actions">
+            <slot name="link">
+              <div
+                :key="key"
+                class="z-banner__link"
+              >
+                <ZLink
+                  :to="action.href"
+                  v-text="action.name"
+                />
+                <ZIcon name="chevron" />
+              </div>
+            </slot>
+          </template>
+        </div>
+      </slot>
+    </div>
   </component>
 </template>
 <script>
@@ -41,11 +60,18 @@ import ZHeading from '../../atoms/ZHeading/ZHeading.vue';
 import ZText from '../../atoms/ZText/ZText.vue';
 import ZLink from '../../atoms/ZLink/ZLink.vue';
 import ZIcon from '../../atoms/ZIcon/ZIcon.vue';
+import ZImage from '../../atoms/ZImage/ZImage.vue';
+import ZVideo from '../../atoms/ZVideo/ZVideo.vue';
 
 export default {
   name: 'ZBanner',
   components: {
-    ZIcon, ZLink, ZText, ZHeading,
+    ZImage,
+    ZVideo,
+    ZIcon,
+    ZLink,
+    ZText,
+    ZHeading,
   },
   props: {
     tag: {
@@ -64,6 +90,14 @@ export default {
       type: [Array, Object],
       default: () => ([]),
     },
+    thumbnail: {
+      type: [String, Object],
+      default: '',
+    },
+    coverType: {
+      type: String,
+      default: 'image',
+    },
   },
   computed: {
     actions() {
@@ -75,30 +109,75 @@ export default {
 <style lang="scss">
   .z-banner {
     display: grid;
+    overflow: hidden;
     height: 392px;
-    align-content: end;
-    padding: var(--banner-padding, 24px);
     background: var(--banner-background, linear-gradient(135deg, rgba(123, 162, 46, 1) 8%, rgba(166, 206, 57, 1) 70%));
     border-radius: var(--banner-border-radius, 10px);
+    box-shadow: 5px 5px 20px 0 rgba(0, 0, 0, 0.16);
     color: var(--banner-color, #fff);
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: 1fr;
 
-    &__title {
-      order: var(--banner-title-order);
-      margin: var(--banner-title-margin, 16px 0);
-      font-size: var(--banner-title-font-size, 1.953rem);
-      font-weight: var(--banner-title-font-weight, 500);
-      text-transform: var(--banner-title-text-transform, uppercase);
+    &__cover {
+      display: block;
+      margin: -1px;
+      grid-column: 7 / span 6;
+      grid-row: 1;
+      line-height: 0;
+    }
+
+    &__mask {
+      position: relative;
+      overflow: hidden;
+      height: 100%;
+      box-sizing: content-box;
+      padding: 10% 0;
+      margin: -10% 0;
+      border-radius: var(--banner-mask-border-radius, 20% 0 0 20% / 50% 0 0 50%);
+    }
+
+    &__thumbnail {
+      &,
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
     }
 
     &__content {
-      order: var(--banner-content-order);
-      margin: var(--banner-content-margin, 16px 0);
-      font-weight: var(--banner-content-font-weight, 300);
+      position: relative;
+      z-index: 1;
+      display: grid;
+      align-content: end;
+      padding: var(--banner-content-padding, 24px);
+      grid-auto-flow: row;
+      grid-column: 1 / span 12;
+      grid-row: 1;
+      grid-template-columns: repeat(12, 1fr);
+    }
+
+    &__title {
+      margin: var(--banner-title-margin, 16px 0);
+      font-size: var(--banner-title-font-size, 1.953rem);
+      font-weight: var(--banner-title-font-weight, 500);
+      grid-column: var(--banner-title-grid-column, span 6);
+      grid-row: var(--banner-title-grid-row, 1);
+      text-transform: var(--banner-title-text-transform, uppercase);
+    }
+
+    &__description {
+      margin: var(--banner-description-margin, 16px 0);
+      font-weight: var(--banner-description-font-weight, 300);
+      grid-column: var(--banner-description-grid-column, span 6);
+      grid-row: var(--banner-description-grid-row, 2);
     }
 
     &__cta {
       display: grid;
       grid-auto-flow: column;
+      grid-column: var(--banner-cta-grid-column, span 11);
+      grid-row: var(--banner-cta-grid-row, 3);
     }
 
     &__link {
