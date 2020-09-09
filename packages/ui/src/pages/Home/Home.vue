@@ -210,7 +210,7 @@ grid-template-columns: repeat(12, 1fr);"
             :key="event.id"
             :thumbnail="`https://demo.przemyslawspaczek.pl/wp-content/uploads/${event.rest_media.file}`"
             :title="event.title.rendered"
-            :date="{start: '01/09/2020', end: '03/09/2020'}"
+            :date="event.rest_acf.date"
             :location="{name: 'Warszawa'}"
             :audience="{name: 'Wszyscy harcerze'}"
             :type="event.rest_event_type"
@@ -239,7 +239,7 @@ grid-template-columns: repeat(12, 1fr);"
       >
         <ZHeading>Partnerzy organizacji</ZHeading>
         <ZCarousel
-          v-if="logos.length > 0"
+          v-if="partners.length > 0"
           :settings="{
             type: 'carousel',
             perView: 3,
@@ -248,7 +248,7 @@ grid-template-columns: repeat(12, 1fr);"
           }"
         >
           <li
-            v-for="(logo, key) in logos"
+            v-for="(logo, key) in partners"
             :key="key"
             class="glide__slide"
           >
@@ -263,7 +263,7 @@ grid-template-columns: repeat(12, 1fr);"
         </ZCarousel>
         <ZHeading>Partnerzy wyjazdu na WSJ2019</ZHeading>
         <ZCarousel
-          v-if="logos.length > 0"
+          v-if="wsj2019.length > 0"
           :settings="{
             type: 'carousel',
             perView: 3,
@@ -272,7 +272,7 @@ grid-template-columns: repeat(12, 1fr);"
           }"
         >
           <li
-            v-for="(logo, key) in logos"
+            v-for="(logo, key) in wsj2019"
             :key="key"
             class="glide__slide"
           >
@@ -336,12 +336,13 @@ export default {
         { title: 'Bezpieczne #harcerskielato', date: '15.07.2019' },
         { title: 'Kielecki "Wiatraczek" znowu się kręci', date: '15.07.2019' },
       ],
-      logos: [],
+      partners: [],
+      wsj2019: [],
     };
   },
   async created() {
     const { API_URL } = process.env;
-    const params = {
+    let params = {
       per_page: 8,
     };
 
@@ -351,8 +352,17 @@ export default {
     const eventsRes = await axios.get(`${API_URL}/events`, { params });
     this.events = eventsRes.data;
 
-    const logosRes = await axios.get(`${API_URL}/logos`, { params });
-    this.logos = logosRes.data;
+    params = {
+      logo_categories: 27,
+    };
+    const logosPartnersRes = await axios.get(`${API_URL}/logos`, { params });
+    this.partners = logosPartnersRes.data;
+
+    params = {
+      logo_categories: 28,
+    };
+    const logosWsj2019Res = await axios.get(`${API_URL}/logos`, { params });
+    this.wsj2019 = logosWsj2019Res.data;
   },
 };
 </script>
