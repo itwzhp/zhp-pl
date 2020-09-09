@@ -64,40 +64,12 @@
         thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/08/ZHP_WYLOT_JAMBOREE_2019_KAROLINA_PIOTROWSKA-12.jpg"
         style=" height: 288px; grid-column: span 4; grid-template-rows: 1fr 96px;"
       />
-      <div
-        class="z-highlighted"
+      <ZHighlighted
         style="grid-column: span 7;"
-      >
-        <div class="z-highlighted__header">
-          <ZHeading
-            class="z-highlighted__title"
-            v-text="'Warto przeczytać'"
-          />
-          <ZLink
-            to="#"
-            class="z-highlighted__more z-highlighted__link"
-            v-text="'Zobacz więcej'"
-          />
-        </div>
-        <ZList>
-          <template v-for="(item, key) in highlighted">
-            <li
-              :key="key"
-              class="z-highlighted__item"
-            >
-              <ZLink
-                to="#"
-                class="z-highlighted__link"
-                v-text="item.title"
-              />
-              <time
-                :datetime="item.date"
-                v-text="item.date"
-              />
-            </li>
-          </template>
-        </ZList>
-      </div>
+        title="Warto przeczytać"
+        :more="{title: 'Zobacz więcej', href: '#'}"
+        :articles="highlighted"
+      />
     </ZSection>
     <!-- Poznaj ZHP -->
     <ZSection
@@ -274,17 +246,18 @@ import {
   ZEvent,
   ZCard,
   ZHeading,
-  ZList,
   ZLink,
   ZBanner,
   ZButton,
   ZInput,
   ZIcon,
+  ZHighlighted,
 } from '../../../index';
 
 export default {
   name: 'Home',
   components: {
+    ZHighlighted,
     ZButton,
     ZImage,
     ZSection,
@@ -293,7 +266,6 @@ export default {
     ZEvent,
     ZCard,
     ZHeading,
-    ZList,
     ZLink,
     ZBanner,
     ZInput,
@@ -304,11 +276,11 @@ export default {
       posts: [],
       events: [],
       highlighted: [
-        { title: '400 harcerek i harcerzy wyruszyło do USA na Światowy Zlot Ska...', date: '18.07.2019' },
-        { title: 'Oferty pracy w warszawskim biurze Europejskiego Jamboree 2020', date: '16.07.2019' },
-        { title: 'Rekrutacja instruktorów do programu "Dobrze być sobą"', date: '16.07.2019' },
-        { title: 'Bezpieczne #harcerskielato', date: '15.07.2019' },
-        { title: 'Kielecki "Wiatraczek" znowu się kręci', date: '15.07.2019' },
+        { title: '400 harcerek i harcerzy wyruszyło do USA na Światowy Zlot Ska...', date: '2019-07-15 00:00:00', href: '#' },
+        { title: 'Oferty pracy w warszawskim biurze Europejskiego Jamboree 2020', date: '2019-07-16 00:00:00', href: '#' },
+        { title: 'Rekrutacja instruktorów do programu "Dobrze być sobą"', date: '2019-07-16 00:00:00', href: '#' },
+        { title: 'Bezpieczne #harcerskielato', date: '2019-07-16 00:00:00', href: '#' },
+        { title: 'Kielecki "Wiatraczek" znowu się kręci', date: '2019-07-20 00:00:00', href: '#' },
       ],
       partners: [],
       wsj2019: [],
@@ -400,39 +372,6 @@ export default {
       --banner-title-grid-row: 2;
       --banner-title-font-size: 14px;
       --banner-title-text-transform: normal;
-    }
-  }
-
-  .z-highlighted {
-    --link-text-decoration: underline;
-
-    &__header {
-      display: grid;
-      align-items: center;
-      justify-content: space-between;
-      grid-template-columns: repeat(2, auto);
-    }
-
-    &__title {
-      font-weight: 500;
-      text-transform: uppercase;
-    }
-
-    &__more {
-      color: #7ba22e;
-    }
-
-    &__item {
-      display: grid;
-      justify-content: space-between;
-      margin: 16px 0;
-      grid-template-columns: repeat(2, auto);
-    }
-
-    &__link {
-      &:hover {
-        --link-text-decoration: none;
-      }
     }
   }
 

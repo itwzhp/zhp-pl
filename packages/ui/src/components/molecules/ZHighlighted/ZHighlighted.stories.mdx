@@ -1,0 +1,26 @@
+import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
+import { withKnobs, text, object } from '@storybook/addon-knobs';
+import { withA11y } from '@storybook/addon-a11y';
+import ZHighlighted from './ZHighlighted.vue';
+
+<Meta title="Molecules/Highlighted" component={ZHighlighted} />
+
+# Highlighted
+
+<Preview>
+  <Story name="Common">
+    {{
+        components: { ZHighlighted },
+        props: {
+          common: {
+            default: text('common', '')
+          }
+        },
+        template: `<ZHighlighted />`,
+    }}
+  </Story>
+</Preview>
+
+# Props
+
+<Props of={ZHighlighted} />

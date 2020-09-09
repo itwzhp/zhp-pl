@@ -97,7 +97,7 @@
           :audience="{name: 'Wszyscy harcerze'}"
           :type="event.rest_event_type"
           :age-group="event.rest_age_group"
-          style="grid-column: span 3"
+          style="grid-column: span 3;"
         />
       </template>
     </ZSection>
