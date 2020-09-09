@@ -192,7 +192,8 @@ export default {
     &--highlighted {
       --bubble-background: #ce171e;
 
-      grid-row: span 2;
+      grid-column: 4;
+      grid-row: 2 / span 2;
       grid-template-rows: 1fr 128px;
 
       #{$this}__content {

@@ -118,10 +118,18 @@
     column-gap: 8px;
     grid-auto-flow: column;"
     >
-      <ZButton style="--icon-color: #fff; width: 34px; height: 34px;">
+      <ZButton
+        v-if="hasPreviousPage"
+        style="--icon-color: #fff; width: 34px; height: 34px;"
+        @click="updatePage(-1)"
+      >
         <ZIcon name="arrow-left" />
       </ZButton>
-      <ZButton style="--icon-color: #fff; width: 34px; height: 34px;">
+      <ZButton
+        v-if="hasNextPage"
+        style="--icon-color: #fff; width: 34px; height: 34px;"
+        @click="updatePage(1)"
+      >
         <ZIcon name="arrow-right" />
       </ZButton>
     </div>
@@ -145,15 +153,41 @@ export default {
   data() {
     return {
       events: [],
+      page: 1,
+      totalPages: 0,
     };
   },
-  async created() {
-    const { API_URL } = process.env;
-    const params = {
-      per_page: 12,
-    };
-    const eventsRes = await axios.get(`${API_URL}/events`, { params });
-    this.events = eventsRes.data;
+  computed: {
+    mountCarousel() {
+      return this.posts.length > 0;
+    },
+    hasNextPage() {
+      return this.page < this.totalPages;
+    },
+    hasPreviousPage() {
+      return this.page > 1;
+    },
+  },
+  created() {
+    this.requestApi();
+  },
+  methods: {
+    updatePage(direction) {
+      this.requestApi(direction);
+    },
+    async requestApi(direction = 0) {
+      const { API_URL } = process.env;
+      const perPage = 12;
+      const page = this.page + direction;
+      const params = {
+        per_page: perPage,
+        page,
+      };
+      const response = await axios.get(`${API_URL}/events`, { params });
+      this.totalPages = parseInt(response.headers['x-wp-totalpages'], 10);
+      this.events = response.data;
+      this.page = page;
+    },
   },
 };
 </script>
