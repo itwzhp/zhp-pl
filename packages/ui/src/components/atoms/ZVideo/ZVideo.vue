@@ -44,7 +44,6 @@ export default {
       z-index: 10;
       top: 50%;
       left: 50%;
-      margin: 0 0 0 7px;
       transform: translateY(-50%);
 
       --button-box-shadow: 5px 10px 20px 0 rgba(30, 21, 47, 0.12);

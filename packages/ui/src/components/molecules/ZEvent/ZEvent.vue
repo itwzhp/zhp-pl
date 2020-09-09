@@ -17,21 +17,21 @@
         <slot name="date">
           <div class="z-event__date">
             <time
-              :datetime="date.startDate"
+              :datetime="date.begin"
               class="z-calendar"
             >
               <div
                 class="z-calendar__day"
-                v-text="dateCalendar.start.day"
+                v-text="dateCalendar.begin.day"
               />
               <div
                 class="z-calendar__month"
-                v-text="dateCalendar.start.month"
+                v-text="dateCalendar.begin.month"
               />
             </time>
             <div class="z-calendar__between" />
             <time
-              :datetime="date.startDate"
+              :datetime="date.end"
               class="z-calendar"
             >
               <div
@@ -79,15 +79,19 @@
       </div>
     </slot>
     <slot name="type">
-      <ZLink :to="type.href" class="z-event__type">
+      <ZLink
+        :to="type.href"
+        class="z-event__type"
+      >
         <ZBubble>
-          {{type.name}}
+          {{ type.name }}
         </ZBubble>
       </ZLink>
     </slot>
   </component>
 </template>
 <script>
+// import { format } from 'date-fns';
 import ZImage from '../../atoms/ZImage/ZImage.vue';
 import ZHeading from '../../atoms/ZHeading/ZHeading.vue';
 import ZLink from '../../atoms/ZLink/ZLink.vue';
@@ -117,7 +121,7 @@ export default {
     date: {
       type: Object,
       default: () => ({
-        start: '',
+        begin: '',
         end: '',
       }),
     },
@@ -162,28 +166,30 @@ export default {
     },
     dateCalendar() {
       const months = [
-        'Styczeń',
-        'Luty',
-        'Marzec',
-        'Kwiecień',
+        'Sty',
+        'Lut',
+        'Mar',
+        'Kwi',
         'Maj',
-        'Cerwiec',
-        'Lipiec',
-        'Sierpień',
-        'Wrzesień',
-        'Październik',
-        'Listopad',
-        'Grudzień'];
-      const start = this.date.start.split('/'); // todo: ustawić w ACF tak żeby można było użyć new Date()
-      const end = this.date.end.split('/'); // todo: ustawić w ACF tak żeby można było użyć new Date()
+        'Cze',
+        'Lip',
+        'Sie',
+        'Wrz',
+        'Paź',
+        'Lis',
+        'Gru'];
+
+      const beginDate = new Date(this.date.begin);
+      const endDate = new Date(this.date.end);
+
       return {
-        start: {
-          day: start[0],
-          month: months[parseInt(start[1], 10) - 1],
+        begin: {
+          day: beginDate.getDate(),
+          month: months[beginDate.getMonth()],
         },
         end: {
-          day: end[0],
-          month: months[parseInt(end[1], 10) - 1],
+          day: endDate.getDate(),
+          month: months[endDate.getMonth()],
         },
       };
     },

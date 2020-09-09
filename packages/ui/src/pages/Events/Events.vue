@@ -1,5 +1,5 @@
 <template>
-  <div id="articles">
+  <div id="events">
     <!-- Przygoda. Przyjaźń. Wychowanie. -->
     <div style="display: grid; max-width: 1120px; margin: auto; grid-template-columns: repeat(12, 1fr);">
       <ZHeading style="grid-column: 1 / span 4;">
@@ -101,7 +101,7 @@
           :key="event.id"
           :thumbnail="`https://demo.przemyslawspaczek.pl/wp-content/uploads/${event.rest_media.file}`"
           :title="event.title.rendered"
-          :date="{start: '01/09/2020', end: '03/09/2020'}"
+          :date="event.rest_acf.date"
           :location="{name: 'Warszawa'}"
           :audience="{name: 'Wszyscy harcerze'}"
           :type="event.rest_event_type"
@@ -158,5 +158,5 @@ export default {
 };
 </script>
 <style lang="scss">
-  #articles {}
+  #events {}
 </style>
