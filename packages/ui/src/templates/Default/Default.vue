@@ -70,6 +70,7 @@
                 <ZLink
                   :to="item.to"
                   class="z-navigation__link"
+                  @click.native.prevent="component = item.to"
                   v-text="item.name"
                 />
               </li>
