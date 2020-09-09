@@ -90,8 +90,8 @@
     </slot>
   </component>
 </template>
+
 <script>
-// import { format } from 'date-fns';
 import ZImage from '../../atoms/ZImage/ZImage.vue';
 import ZHeading from '../../atoms/ZHeading/ZHeading.vue';
 import ZLink from '../../atoms/ZLink/ZLink.vue';
@@ -196,6 +196,7 @@ export default {
   },
 };
 </script>
+
 <style lang="scss">
   .z-event {
     position: relative;

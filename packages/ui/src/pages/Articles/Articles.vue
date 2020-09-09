@@ -29,15 +29,25 @@
     grid-auto-flow: column;"
             >
               <ZButton
-                style="--icon-color: #fff; --button-min-width: none; --button-padding: 0;
-              --button-width: 34px; --button-height: 34px;"
+                style="
+
+              --icon-color: #fff;
+              --button-min-width: none;
+              --button-padding: 0;
+              --button-width: 34px;
+              --button-height: 34px;"
                 type="button"
               >
                 <ZIcon name="cross" />
               </ZButton>
               <ZButton
-                style="--icon-color: #fff; --button-padding: 0; --button-min-width: none;
-              --button-width: 34px; --button-height: 34px;"
+                style="
+
+              --icon-color: #fff;
+              --button-padding: 0;
+              --button-min-width: none;
+              --button-width: 34px;
+              --button-height: 34px;"
               >
                 <ZIcon name="approved" />
               </ZButton>
@@ -69,15 +79,25 @@ margin: 0 0 0 -14px;
     grid-auto-flow: column;"
             >
               <ZButton
-                style="--icon-color: #fff; --button-min-width: none; --button-padding: 0;
-              --button-width: 34px; --button-height: 34px;"
+                style="
+
+              --icon-color: #fff;
+              --button-min-width: none;
+              --button-padding: 0;
+              --button-width: 34px;
+              --button-height: 34px;"
                 type="button"
               >
                 <ZIcon name="cross" />
               </ZButton>
               <ZButton
-                style="--icon-color: #fff; --button-padding: 0; --button-min-width: none;
-              --button-width: 34px; --button-height: 34px;"
+                style="
+
+              --icon-color: #fff;
+              --button-padding: 0;
+              --button-min-width: none;
+              --button-width: 34px;
+              --button-height: 34px;"
               >
                 <ZIcon name="approved" />
               </ZButton>
@@ -109,15 +129,25 @@ margin: 0 0 0 -14px;
     grid-auto-flow: column;"
             >
               <ZButton
-                style="--icon-color: #fff; --button-min-width: none; --button-padding: 0;
-              --button-width: 34px; --button-height: 34px;"
+                style="
+
+              --icon-color: #fff;
+              --button-min-width: none;
+              --button-padding: 0;
+              --button-width: 34px;
+              --button-height: 34px;"
                 type="button"
               >
                 <ZIcon name="cross" />
               </ZButton>
               <ZButton
-                style="--icon-color: #fff; --button-padding: 0; --button-min-width: none;
-              --button-width: 34px; --button-height: 34px;"
+                style="
+
+              --icon-color: #fff;
+              --button-padding: 0;
+              --button-min-width: none;
+              --button-width: 34px;
+              --button-height: 34px;"
               >
                 <ZIcon name="approved" />
               </ZButton>

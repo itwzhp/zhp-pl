@@ -7,16 +7,16 @@
       <div class="z-section__header">
         <slot name="title">
           <ZHeading
-              v-if="title"
-              class="z-section__title"
-              v-text="title"
+            v-if="title"
+            class="z-section__title"
+            v-text="title"
           />
         </slot>
         <slot name="subtitle">
           <ZText
-              v-if="subtitle"
-              class="z-section__subtitle"
-              v-text="subtitle"
+            v-if="subtitle"
+            class="z-section__subtitle"
+            v-text="subtitle"
           />
         </slot>
       </div>
@@ -57,9 +57,14 @@ export default {
 </script>
 <style lang="scss">
   .z-section {
+    padding: var(--section-padding);
+    margin: var(--section-margin, 90px 0);
+    background: var(--section-background);
+    color: var(--section-color);
+
     &__header {
       display: grid;
-      max-width: 1120px;
+      max-width: var(--section-header-max-width, 1120px);
       margin: 0 auto 24px auto;
       grid-template-columns: repeat(12, 1fr);
     }
@@ -80,7 +85,12 @@ export default {
     }
 
     &__content {
-      grid-column: span 12;
+      display: grid;
+      max-width: var(--section-content-max-width, 1120px);
+      align-items: var(--section-content-align-items);
+      margin: var(--section-content-margin, auto);
+      grid-gap: 20px;
+      grid-template-columns: var(--section-content-grid-template-columns, repeat(12, 1fr));
     }
   }
 </style>

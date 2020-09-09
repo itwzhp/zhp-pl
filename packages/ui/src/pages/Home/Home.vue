@@ -1,7 +1,7 @@
 <template>
   <div id="home">
     <!-- Przygoda. Przyjaźń. Wychowanie. -->
-    <div style="display: grid; max-width: 1120px; margin: auto; grid-template-columns: repeat(12, 1fr);">
+    <ZSection>
       <div class="title">
         Przygoda.
         Przyjaźń.
@@ -25,12 +25,11 @@
           Wyszukaj
         </ZButton>
       </form>
-    </div>
+    </ZSection>
     <!-- Aktualności -->
     <ZSection
       title="Aktualności"
       subtitle="Zobacz, co nowego w ZHP"
-      style="margin: 90px auto;"
     >
       <ZCarousel
         v-if="posts.length > 0"
@@ -59,14 +58,7 @@
       </ZCarousel>
     </ZSection>
     <!-- Warto przeczytać -->
-    <div
-      style="display: grid;
-max-width: 1120px;
-align-items: center;
-margin: 90px auto;
-column-gap: 20px;
-grid-template-columns: repeat(12, 1fr);"
-    >
+    <ZSection>
       <ZCard
         title="Polska reprezentacja na Jamboree 2019 w USA!"
         thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/08/ZHP_WYLOT_JAMBOREE_2019_KAROLINA_PIOTROWSKA-12.jpg"
@@ -106,14 +98,10 @@ grid-template-columns: repeat(12, 1fr);"
           </template>
         </ZList>
       </div>
-    </div>
+    </ZSection>
     <!-- Poznaj ZHP -->
-    <div
-      style="display: grid;
-      max-width: 1235px;
-      margin: 90px auto;
-      column-gap: 20px;
-      grid-template-columns: repeat(12, 1fr);"
+    <ZSection
+      style="--section-content-max-width: 1235px;"
     >
       <ZBanner
         title="Poznaj ZHP"
@@ -123,15 +111,9 @@ grid-template-columns: repeat(12, 1fr);"
         thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/news-DMB.png"
         cover-type="video"
       />
-    </div>
+    </ZSection>
     <!-- Chcesz zapisać swoje dziecko do harcerstwa -->
-    <div
-      style="display: grid;
-      max-width: 1120px;
-      margin: 90px auto;
-      column-gap: 20px;
-      grid-template-columns: repeat(12, 1fr);"
-    >
+    <ZSection>
       <ZBanner
         title="Chcesz zapisać swoje dziecko do harcerstwa?"
         content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam augue nisl, dignissim id metus
@@ -149,16 +131,9 @@ grid-template-columns: repeat(12, 1fr);"
         date="2020-08-30T08:30:31"
         style="grid-column: 10 / span 3; grid-template-rows: 1fr 128px; --article-meta-order: -1;"
       />
-    </div>
+    </ZSection>
     <!-- Stopnie i sprawności -->
-    <div
-      style="display: grid;
-      max-width: 1120px;
-      align-items: end;
-      margin: 90px auto;
-      column-gap: 20px;
-      grid-template-columns: repeat(24, 1fr);"
-    >
+    <ZSection style="--section-content-grid-template-columns: repeat(24, 1fr); --section-content-align-items: end;">
       <ZCard
         title="Stopnie i sprawności"
         thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/01.png"
@@ -184,13 +159,12 @@ grid-template-columns: repeat(12, 1fr);"
         :calls-to-action="{name: 'Przejdź do strony', href: '#'}"
         class="instructor-zone"
       />
-    </div>
+    </ZSection>
     <!-- Wydarzenia -->
     <ZSection
       title="Wydarzenia i przedsięwzięcia"
       subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam augue nisl, dignissim id metus sagittis,
       ultrices consectetur turpis."
-      style="margin: 90px auto;"
     >
       <ZCarousel
         v-if="events.length > 0"
@@ -220,7 +194,7 @@ grid-template-columns: repeat(12, 1fr);"
       </ZCarousel>
     </ZSection>
     <!-- Instagram, Facebook, Partnerzy -->
-    <div style="display: grid; max-width: 1120px; margin: auto; grid-template-columns: repeat(12, 1fr);">
+    <ZSection>
       <div
         class="instagram"
         style="grid-column: span 4;"
@@ -286,7 +260,7 @@ grid-template-columns: repeat(12, 1fr);"
           </li>
         </ZCarousel>
       </div>
-    </div>
+    </ZSection>
   </div>
 </template>
 
@@ -384,20 +358,9 @@ export default {
     }
 
     .carousel {
-      max-width: 1120px;
-      margin: auto;
+      grid-column: span 12;
 
       .glide {
-        @mixin slides-active ($step) {
-          & + .glide__slide {
-            opacity: 1;
-
-            @if $step > 0 {
-              @include slides-active($step - 1);
-            }
-          }
-        }
-
         &__track {
           overflow: visible;
         }

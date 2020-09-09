@@ -1,20 +1,11 @@
 <template>
   <div id="events">
-    <!-- Przygoda. Przyjaźń. Wychowanie. -->
-    <div style="display: grid; max-width: 1120px; margin: auto; grid-template-columns: repeat(12, 1fr);">
-      <ZHeading style="grid-column: 1 / span 4;">
-        Wydarzenia
-        <small
-          style="display: block;
-        margin: 8px 0;
-        font-weight: 400;"
-        >Znajdź wydarzenia dla siebie i swojej drużyny</small>
-      </ZHeading>
-    </div>
-    <!-- Wyróżnione wydarzenie -->
-    <!-- Wydarzenia -->
-    <div style="display: grid; max-width: 1120px; margin: 32px auto; gap: 20px; grid-template-columns: repeat(4, 1fr);">
-      <div style=" display: grid; grid-column: 1; grid-row: span 4; grid-template-rows: repeat(4, 1fr);">
+    <ZSection
+      title="Wydarzenia"
+      subtitle="Znajdź wydarzenia dla siebie i swojej drużyny"
+      style="--section-margin: 0;"
+    >
+      <div style=" display: grid; grid-column: span 3; grid-row: span 4; grid-template-rows: repeat(4, 1fr);">
         <form
           style=" padding: 24px;
         border-radius: 10px;
@@ -106,9 +97,10 @@
           :audience="{name: 'Wszyscy harcerze'}"
           :type="event.rest_event_type"
           :age-group="event.rest_age_group"
+          style="grid-column: span 3"
         />
       </template>
-    </div>
+    </ZSection>
     <!-- Paginacja -->
     <div
       style="display: grid;
@@ -138,12 +130,18 @@
 <script>
 import axios from 'axios';
 import {
-  ZEvent, ZHeading, ZButton, ZIcon, ZText,
+  ZSection,
+  ZEvent,
+  ZHeading,
+  ZButton,
+  ZIcon,
+  ZText,
 } from '../../../index';
 
 export default {
   name: 'Home',
   components: {
+    ZSection,
     ZEvent,
     ZHeading,
     ZButton,
