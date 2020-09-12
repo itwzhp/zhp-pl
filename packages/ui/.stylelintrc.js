@@ -11,7 +11,7 @@ module.exports = {
     }],
     'order/order': [
       'custom-properties',
-      'declaration'
-    ]
+      'declaration',
+    ],
   },
 };

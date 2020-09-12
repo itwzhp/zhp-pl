@@ -64,6 +64,7 @@ export default {
       --button-height: 14px;
       --button-border-radius: 14px;
       --button-border: 0;
+      --button-padding: 0;
     }
   }
 </style>

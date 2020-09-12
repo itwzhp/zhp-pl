@@ -81,7 +81,7 @@ export default {
       position: absolute;
       z-index: 0;
       width: var(--dropdown-content-width, 100%);
-      padding: var(--dropdown-content-padding, 32px 16px);
+      padding: var(--dropdown-content-padding, 32px 8px 16px 8px);
       background: var(--dropdown-content-background, #f7f7f7);
       border-radius: var(--dropdown-content-border-radius, 0 0 10px 10px);
       box-shadow: var(--dropdown-content-box-shadow, 5px 10px 20px 0 rgba(0, 0, 0, 0.13));
