@@ -67,7 +67,7 @@ import {
 } from '../../../index';
 
 export default {
-  name: 'Home',
+  name: 'Articles',
   components: {
     ZArticlesFilters,
     ZArticle,

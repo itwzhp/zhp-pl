@@ -61,7 +61,7 @@ import {
 } from '../../../index';
 
 export default {
-  name: 'Home',
+  name: 'Events',
   components: {
     ZEventsFilters,
     ZSection,

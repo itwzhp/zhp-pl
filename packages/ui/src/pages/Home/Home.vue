@@ -33,12 +33,14 @@
     >
       <ZCarousel
         v-if="posts.length > 0"
+        :peeked="true"
         :settings="{
           type: 'carousel',
           perView: 4,
           gap: 20,
+          autoplay: 3000,
         }"
-        class="carousel"
+        class="z-carousel--peeked carousel"
       >
         <li
           v-for="post in posts"
@@ -144,8 +146,10 @@
           type: 'carousel',
           perView: 4,
           gap: 20,
+          autoplay: 3000,
         }"
-        class="carousel"
+        :peeked="true"
+        class="z-carousel--peeked carousel"
       >
         <li
           v-for="event in events"
@@ -191,6 +195,7 @@
             perView: 3,
             gap: 14,
             peek: { before: 0, after: 50 },
+            autoplay: 2000,
           }"
         >
           <li
@@ -215,6 +220,7 @@
             perView: 3,
             gap: 14,
             peek: { before: 0, after: 50 },
+            autoplay: 2000,
           }"
         >
           <li
@@ -331,22 +337,6 @@ export default {
 
     .carousel {
       grid-column: span 12;
-
-      .glide {
-        &__track {
-          overflow: visible;
-        }
-
-        &__slides {
-          display: grid;
-          padding: 0 0 6px 0;
-          grid-auto-flow: column;
-        }
-
-        &__slide {
-          display: grid;
-        }
-      }
     }
 
     .meet {
@@ -381,6 +371,9 @@ export default {
     justify-items: end;
 
     &__input {
+      --input-background: #a6ce39;
+      --input-color: #fff;
+
       width: 100%;
     }
 

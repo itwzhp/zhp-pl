@@ -276,10 +276,10 @@ export default {
       display: grid;
       align-items: center;
       justify-content: start;
+      margin: 0 0 8px 0;
       column-gap: 4px;
       grid-template-columns: repeat(3, auto);
       transform: translate(8px, -65%);
-      margin: 0 0 8px 0;
     }
 
     &__type {
