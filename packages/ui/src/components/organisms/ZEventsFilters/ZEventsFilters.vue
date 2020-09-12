@@ -89,7 +89,10 @@
         >
           Data Wydarzenia
         </ZText>
-        <div id="date" class="z-field__input">
+        <div
+          id="date"
+          class="z-field__input"
+        >
           range data picker
         </div>
       </div>
