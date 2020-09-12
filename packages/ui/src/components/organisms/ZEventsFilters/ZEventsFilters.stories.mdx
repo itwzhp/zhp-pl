@@ -1,0 +1,26 @@
+import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
+import { withKnobs, text, object } from '@storybook/addon-knobs';
+import { withA11y } from '@storybook/addon-a11y';
+import ZEventsFilters from './ZEventsFilters.vue';
+
+<Meta title="Organisms/EventsFilters" component={ZEventsFilters} />
+
+# EventsFilters
+
+<Preview>
+  <Story name="Common">
+    {{
+        components: { ZEventsFilters },
+        props: {
+          common: {
+            default: text('common', '')
+          }
+        },
+        template: `<ZEventsFilters />`,
+    }}
+  </Story>
+</Preview>
+
+# Props
+
+<Props of={ZEventsFilters} />

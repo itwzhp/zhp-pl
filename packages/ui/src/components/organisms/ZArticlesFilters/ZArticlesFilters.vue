@@ -142,7 +142,7 @@
       </form>
     </ZDropdown>
     <!-- end -->
-    <div style="display: grid; gap: 8px; grid-auto-flow: column; justify-content: start; margin: 24px 0;">
+    <div style="display: grid; justify-content: start; margin: 24px 0; gap: 8px; grid-auto-flow: column;">
       <template v-for="(item, index) in ['Zagranica', '13/04/2017 - 18/04/2018', 'Jakaś trzecia kategoria']">
         <ZBubble
           :key="index"

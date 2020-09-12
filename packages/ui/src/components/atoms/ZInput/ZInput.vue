@@ -21,10 +21,11 @@ export default {
 </script>
 <style lang="scss">
   .z-input {
+    width: var(--input-width, 100%);
     height: var(--input-height, 48px);
     padding: var(--input-padding, 0 16px);
-    border: var(--input-border, 0);
-    background: var(--input-background, #a6ce39);
+    border: var(--input-border, 1px solid #a6ce39);
+    background: var(--input-background);
     border-radius: var(--input-border-radius, 10px);
     color: var(--input-color, #fff);
 
