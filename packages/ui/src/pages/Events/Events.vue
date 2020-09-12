@@ -5,16 +5,10 @@
       subtitle="Znajdź wydarzenia dla siebie i swojej drużyny"
       style="--section-margin: 0;"
     >
-      <div
-        style="
-      display: grid;
-      grid-column: span 3;
-      grid-row: span 4;
-      grid-template-rows: repeat(4, 1fr);"
-      >
+      <div class="sidebar">
         <ZEventsFilters />
       </div>
-      <template v-for="(event) in events">
+      <template v-for="(event, index) in events">
         <ZEvent
           :key="event.id"
           :thumbnail="`https://demo.przemyslawspaczek.pl/wp-content/uploads/${event.rest_media.file}`"
@@ -24,7 +18,9 @@
           :audience="{name: 'Wszyscy harcerze'}"
           :type="event.rest_event_type"
           :age-group="event.rest_age_group"
-          style="grid-column: span 3;"
+          :excerpt="event.excerpt.rendered"
+          class="event"
+          :class="{'z-event--primary': page === 1 && index === 0, 'event--primary': index === 0}"
         />
       </template>
     </ZSection>
@@ -98,22 +94,44 @@ export default {
     updatePage(direction) {
       this.requestApi(direction);
     },
+    async fetchAPI(url, params) {
+      const response = await axios.get(url, { params });
+      return {
+        data: response.data,
+        totalPages: parseInt(response.headers['x-wp-totalpages'], 10),
+      };
+    },
     async requestApi(direction = 0) {
       const { API_URL } = process.env;
-      const perPage = 12;
-      const page = this.page + direction;
-      const params = {
-        per_page: perPage,
-        page,
-      };
-      const response = await axios.get(`${API_URL}/events`, { params });
-      this.totalPages = parseInt(response.headers['x-wp-totalpages'], 10);
-      this.events = response.data;
-      this.page = page;
+
+      const events = await this.fetchAPI(`${API_URL}/events`, {
+        per_page: this.page === 1 ? 13 : 12,
+        page: this.page + direction,
+      });
+      this.events = events.data;
+      this.totalPages = events.totalPages;
+
+      this.page += direction;
     },
   },
 };
 </script>
 <style lang="scss">
-  #events {}
+  #events {
+    .sidebar {
+      display: grid;
+      grid-column: span 3;
+      grid-row: span 4;
+      grid-template-rows: repeat(4, 1fr);
+    }
+
+    .event {
+      grid-column: span 3;
+
+      &--primary {
+        grid-column: span 12;
+        grid-row: -1;
+      }
+    }
+  }
 </style>

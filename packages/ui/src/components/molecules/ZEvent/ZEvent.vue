@@ -56,6 +56,13 @@
             />
           </ZHeading>
         </slot>
+        <slot name="excerpt">
+          <ZText
+            v-if="excerpt"
+            class="z-event__excerpt"
+            v-text="excerpt"
+          />
+        </slot>
         <slot name="meta">
           <div class="z-event__meta">
             <slot name="location">
@@ -96,6 +103,7 @@ import ZImage from '../../atoms/ZImage/ZImage.vue';
 import ZHeading from '../../atoms/ZHeading/ZHeading.vue';
 import ZLink from '../../atoms/ZLink/ZLink.vue';
 import ZBubble from '../../atoms/ZBubble/ZBubble.vue';
+import ZText from '../../atoms/ZText/ZText.vue';
 
 export default {
   name: 'ZEvent',
@@ -104,6 +112,7 @@ export default {
     ZImage,
     ZHeading,
     ZBubble,
+    ZText,
   },
   props: {
     tag: {
@@ -155,6 +164,10 @@ export default {
       type: [Object, String],
       default: () => ({}),
     },
+    excerpt: {
+      type: String,
+      default: '',
+    },
   },
   computed: {
     style() {
@@ -199,6 +212,8 @@ export default {
 
 <style lang="scss">
   .z-event {
+    $this: &;
+
     position: relative;
     display: grid;
     overflow: hidden;
@@ -229,9 +244,13 @@ export default {
     }
 
     &__title {
-      margin: 8px 0;
+      margin: 0 0 8px 0;
       font-size: 14px;
       font-weight: 400;
+    }
+
+    &__excerpt {
+      margin: 0 0 8px 0;
     }
 
     &__meta {
@@ -256,10 +275,11 @@ export default {
       left: 0;
       display: grid;
       align-items: center;
+      justify-content: start;
       column-gap: 4px;
       grid-template-columns: repeat(3, auto);
-      place-self: start;
       transform: translate(8px, -65%);
+      margin: 0 0 8px 0;
     }
 
     &__type {
@@ -270,6 +290,32 @@ export default {
       top: 0;
       right: 0;
       transform: translate(-8px, 8px);
+    }
+
+    &--primary {
+      grid-template-columns: 40% 1r;
+      grid-template-rows: 1fr;
+
+      #{$this}__thumbnail {
+        grid-column: 2;
+        grid-row: 1;
+      }
+
+      #{$this}__content {
+        align-items: end;
+        padding: 32px 40px;
+        grid-column: 1;
+        grid-row: 1;
+      }
+
+      #{$this}__date {
+        position: static;
+        transform: unset;
+      }
+
+      #{$this}__title {
+        font-size: 24px;
+      }
     }
   }
   // todo: przenieść do atomu

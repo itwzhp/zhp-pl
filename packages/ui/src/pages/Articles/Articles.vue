@@ -118,9 +118,14 @@ export default {
       // const categories = await this.fetchAPI(`${API_URL}/categories`);
       // this.categories = categories.data;
 
-      const posts = await this.fetchAPI(`${API_URL}/posts`, { per_page: 16, page: this.page + direction });
+      const posts = await this.fetchAPI(`${API_URL}/posts`, {
+        per_page: 16,
+        page: this.page + direction,
+      });
       this.posts = posts.data;
       this.totalPages = posts.totalPages;
+
+      this.page += direction;
     },
   },
 };

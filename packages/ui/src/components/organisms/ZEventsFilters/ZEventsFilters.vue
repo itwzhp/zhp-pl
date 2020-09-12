@@ -6,7 +6,7 @@
         border-radius: 10px;
         box-shadow: 0 2px 4px 0 rgba(157, 157, 157, 0.5);
         grid-row: span 3;
-        place-self: start"
+        place-self: start;"
   >
     <ZHeading
       :level="3"
