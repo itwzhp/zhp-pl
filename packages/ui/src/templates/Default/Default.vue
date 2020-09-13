@@ -3,7 +3,7 @@
     <header class="z-header">
       <div class="z-header__bar">
         <div class="z-header__actions">
-          <ZDropdown>
+          <ZDropdown class="z-header__mega-menu">
             <template #toggle="{toggle}">
               <ZButton
                 class="z-button--text"
@@ -19,7 +19,6 @@
         <ZLink to="/">
           <ZImage
             src="/assets/brand.svg"
-            :sources="[{srcset: '/assets/brand.svg', src: '/assets/brand.svg'}]"
             class="z-logo"
           />
         </ZLink>
@@ -45,7 +44,7 @@
               </ZButton>
             </template>
           </ZDropdown>
-          <ZDropdown>
+          <ZDropdown class="z-header__mega-menu">
             <template #toggle="{toggle}">
               <ZButton
                 class="z-button--text"
@@ -53,7 +52,7 @@
               >
                 <ZIcon
                   name="wheelchair"
-                /> Zmień serwis
+                /> Dostosuj
               </ZButton>
             </template>
           </ZDropdown>
@@ -200,6 +199,7 @@ export default {
   padding: 0 20px;
 
   &__bar {
+    position: relative;
     display: grid;
     height: 80px;
     align-items: center;
@@ -221,8 +221,17 @@ export default {
   &__navigation {
     display: grid;
     height: 48px;
+    align-items: center;
     justify-content: center;
     grid-template-columns: auto;
+  }
+
+  &__mega-menu {
+    --dropdown-content-top: 100%;
+    --dropdown-content-margin: 0 0 0 -20px;
+    --dropdown-content-width: 100vw;
+
+    position: static;
   }
 }
 
@@ -301,6 +310,8 @@ export default {
 }
 
 .z-navigation {
+  $this: &;
+
   display: grid;
   align-items: center;
   column-gap: 24px;
@@ -309,17 +320,35 @@ export default {
   grid-auto-flow: column;
   line-height: 1;
 
+  &__link {
+    position: relative;
+    border-width: 0 0 2px 0;
+    border-style: solid;
+    border-color: transparent;
+    line-height: 0;
+    transition: border-color 150ms ease-in-out;
+
+    &:hover {
+      --link-text-decoration: none;
+
+      border-color: #1e152f;
+    }
+  }
+
   &--secondary {
     column-gap: 4px;
 
-    .z-navigation {
-      &__link {
-        font-size: 14px;
+    #{$this}__link {
+      border-width: 0;
+      font-size: 14px;
 
-        &::before {
-          margin: 0 4px 0 0;
-          content: "|";
-        }
+      &:hover {
+        --link-text-decoration: underline;
+      }
+
+      &::before {
+        margin: 0 4px 0 0;
+        content: "|";
       }
     }
   }
