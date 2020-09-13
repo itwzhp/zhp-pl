@@ -33,16 +33,17 @@
           v-text="content"
         />
       </slot>
-      <slot name="cta">
-        <div class="z-banner__cta">
+      <slot name="call-to-actions">
+        <div class="z-banner__call-to-actions">
           <template v-for="(action, key) in actions">
             <slot name="link">
               <div
                 :key="key"
-                class="z-banner__link"
+                class="z-banner__call-to-action"
               >
                 <ZLink
                   :to="action.href"
+                  class="z-banner__link"
                   v-text="action.name"
                 />
                 <ZIcon name="chevron" />
@@ -111,7 +112,7 @@ export default {
     display: grid;
     overflow: hidden;
     height: 392px;
-    background: var(--banner-background, linear-gradient(135deg, rgba(123, 162, 46, 1) 8%, rgba(166, 206, 57, 1) 70%));
+    background: var(--banner-background, #78a22f);
     border-radius: var(--banner-border-radius, 10px);
     box-shadow: 5px 5px 20px 0 rgba(0, 0, 0, 0.16);
     color: var(--banner-color, #fff);
@@ -173,24 +174,28 @@ export default {
       grid-row: var(--banner-description-grid-row, 2);
     }
 
-    &__cta {
+    &__call-to-actions {
       display: grid;
       grid-auto-flow: column;
-      grid-column: var(--banner-cta-grid-column, span 11);
-      grid-row: var(--banner-cta-grid-row, 3);
+      grid-column: var(--banner-call-to-actions-grid-column, span 11);
+      grid-row: var(--banner-call-to-actions-grid-row, 3);
     }
 
-    &__link {
+    &__call-to-action {
       --icon-color: #fff;
-      --link-text-decoration: underline;
 
       display: grid;
       align-items: center;
       justify-content: start;
       color: #fff;
       column-gap: 16px;
-      font-size: 16px;
       grid-auto-flow: column;
+    }
+
+    &__link {
+      --link-text-decoration: underline;
+
+      font-size: 16px;
       white-space: nowrap;
 
       &:hover {

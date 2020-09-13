@@ -60,7 +60,7 @@
       </ZCarousel>
     </ZSection>
     <!-- Warto przeczytać -->
-    <ZSection>
+    <ZSection class="highlighted">
       <ZCard
         title="Polska reprezentacja na Jamboree 2019 w USA!"
         thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/08/ZHP_WYLOT_JAMBOREE_2019_KAROLINA_PIOTROWSKA-12.jpg"
@@ -362,6 +362,11 @@ export default {
       --banner-title-grid-row: 2;
       --banner-title-font-size: 14px;
       --banner-title-text-transform: normal;
+      --banner-background: linear-gradient(135deg, rgba(123, 162, 46, 1) 8%, rgba(166, 206, 57, 1) 70%);
+    }
+
+    .highlighted {
+      --section-content-align-items: center;
     }
   }
 
@@ -383,5 +388,4 @@ export default {
       margin: 0 8px 0 0;
     }
   }
-
 </style>

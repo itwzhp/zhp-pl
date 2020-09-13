@@ -293,18 +293,18 @@ export default {
     }
 
     &--primary {
-      grid-template-columns: 40% 1r;
+      grid-template-columns: repeat(12, 1fr);
       grid-template-rows: 1fr;
 
       #{$this}__thumbnail {
-        grid-column: 2;
+        grid-column: 6 / span 7;
         grid-row: 1;
       }
 
       #{$this}__content {
         align-items: end;
         padding: 32px 40px;
-        grid-column: 1;
+        grid-column: 1 / span 5;
         grid-row: 1;
       }
 
