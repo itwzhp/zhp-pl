@@ -3,12 +3,13 @@
     :is="tag"
     class="z-articles-filters"
   >
-    <!-- begin -->
+    <!-- date -->
     <ZDropdown
       name="Wybierz miesiąc"
       class="z-dropdown--has-chevron z-articles-filters__month"
     >
       <form>
+        <ZDatePicker/>
         <div
           style="display: grid;
       max-width: 1120px;
@@ -43,6 +44,7 @@
         </div>
       </form>
     </ZDropdown>
+    <!-- categories -->
     <ZDropdown
       name="Wybierz kategorię"
       class="z-dropdown--has-chevron z-articles-filters__categories"
@@ -89,6 +91,7 @@
         </div>
       </form>
     </ZDropdown>
+    <!-- tags -->
     <ZDropdown
       name="Wybierz tagi"
       class="z-dropdown--has-chevron z-articles-filters__tags"
@@ -141,7 +144,6 @@
         </div>
       </form>
     </ZDropdown>
-    <!-- end -->
     <div style="display: grid; justify-content: start; margin: 24px 0; gap: 8px; grid-auto-flow: column;">
       <template v-for="(item, index) in ['Zagranica', '13/04/2017 - 18/04/2018', 'Jakaś trzecia kategoria']">
         <ZBubble
@@ -156,6 +158,7 @@
 </template>
 
 <script>
+import ZDatePicker from '../../atoms/ZDatePicker/ZDatePicker.vue';
 import ZDropdown from '../../molecules/ZDropdown/ZDropdown.vue';
 import ZButton from '../../atoms/ZButton/ZButton.vue';
 import ZIcon from '../../atoms/ZIcon/ZIcon.vue';
@@ -164,6 +167,7 @@ import ZBubble from '../../atoms/ZBubble/ZBubble.vue';
 export default {
   name: 'ZArticlesFilters',
   components: {
+    ZDatePicker,
     ZDropdown,
     ZButton,
     ZIcon,
