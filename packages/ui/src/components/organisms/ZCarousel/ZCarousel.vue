@@ -33,6 +33,21 @@ export default {
     const { settings } = this;
     this.$nextTick(() => {
       // eslint-disable-next-line no-shadow
+      const ClonesTabindex = (Glide, Components, Events) => ({
+        mount() {
+          this.setTabindex();
+          Events.on('run', () => {
+            this.setTabindex();
+          });
+        },
+        setTabindex() {
+          Components.Clones.items.forEach((clone) => {
+            clone.querySelectorAll('a')
+              .forEach((anchor) => { anchor.setAttribute('tabindex', '-1'); });
+          });
+        },
+      });
+      // eslint-disable-next-line no-shadow
       const VisibleClass = (Glide, Components, Events) => ({
         mount() {
           this.setVisibleClass('=');
@@ -56,7 +71,7 @@ export default {
           }
         },
       });
-      let extensions = {};
+      let extensions = { ClonesTabindex };
       if (this.peeked) {
         extensions = { ...extensions, VisibleClass };
       }
@@ -77,7 +92,7 @@ export default {
 
         &__slides {
           display: grid;
-          padding: 0 0 6px 0;
+          padding: 24px 0;
           grid-auto-flow: column;
         }
 
@@ -88,6 +103,15 @@ export default {
 
           &--visible {
             opacity: 1;
+
+            & > * {
+              transition: transform  300ms ease-in-out;
+
+              &:hover {
+                transform: scale(1.08);
+                transform-origin: center;
+              }
+            }
           }
         }
       }
