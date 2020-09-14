@@ -24,8 +24,7 @@
           />
           <time
             :datetime="article.date"
-            v-text="formattedDate(article.date)"
-          />
+          >{{ article.date | format }}</time>
         </li>
       </template>
     </ZList>
@@ -41,6 +40,14 @@ import ZList from '../../organisms/ZList/ZList.vue';
 export default {
   name: 'ZHighlighted',
   components: { ZHeading, ZLink, ZList },
+  filters: {
+    format(date) {
+      if (!date) {
+        return '';
+      }
+      return format(new Date(date), 'dd.MM.yyyy');
+    },
+  },
   props: {
     tag: {
       type: String,
@@ -57,11 +64,6 @@ export default {
     articles: {
       type: Array,
       default: () => ([]),
-    },
-  },
-  methods: {
-    formattedDate(date) {
-      return format(new Date(date), 'dd.MM.yyyy');
     },
   },
 };

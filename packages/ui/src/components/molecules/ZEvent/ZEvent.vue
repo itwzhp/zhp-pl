@@ -191,17 +191,15 @@ export default {
         'Paź',
         'Lis',
         'Gru'];
-
       const beginDate = new Date(this.date.begin);
       const endDate = new Date(this.date.end);
-
       return {
         begin: {
-          day: beginDate.getDate(),
+          day: beginDate.getDate().toString().padStart(2, '0'),
           month: months[beginDate.getMonth()],
         },
         end: {
-          day: endDate.getDate(),
+          day: endDate.getDate().toString().padStart(2, '0'),
           month: months[endDate.getMonth()],
         },
       };

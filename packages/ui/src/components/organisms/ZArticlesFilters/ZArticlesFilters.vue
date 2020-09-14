@@ -9,7 +9,15 @@
       class="z-dropdown--has-chevron z-articles-filters__month"
     >
       <form>
-        <ZDatePicker/>
+        <ZDatePicker v-model="date" />
+        <div>
+          <ZText>Wybrana data</ZText>
+          <div v-if="date.length === 2">
+            <div>{{ date[0] | format }}</div>
+            <div>-</div>
+            <div>{{ date[1] | format }}</div>
+          </div>
+        </div>
         <div
           style="display: grid;
       max-width: 1120px;
@@ -158,11 +166,13 @@
 </template>
 
 <script>
+import { format } from 'date-fns';
 import ZDatePicker from '../../atoms/ZDatePicker/ZDatePicker.vue';
 import ZDropdown from '../../molecules/ZDropdown/ZDropdown.vue';
 import ZButton from '../../atoms/ZButton/ZButton.vue';
 import ZIcon from '../../atoms/ZIcon/ZIcon.vue';
 import ZBubble from '../../atoms/ZBubble/ZBubble.vue';
+import ZText from '../../atoms/ZText/ZText.vue';
 
 export default {
   name: 'ZArticlesFilters',
@@ -172,6 +182,15 @@ export default {
     ZButton,
     ZIcon,
     ZBubble,
+    ZText,
+  },
+  filters: {
+    format(date) {
+      if (!date) {
+        return '';
+      }
+      return format(new Date(date), 'dd/MM/yyyy');
+    },
   },
   props: {
     tag: {
@@ -186,6 +205,11 @@ export default {
       type: Array,
       default: () => ([]),
     },
+  },
+  data() {
+    return {
+      date: [],
+    };
   },
 };
 </script>

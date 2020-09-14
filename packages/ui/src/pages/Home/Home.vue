@@ -298,6 +298,9 @@ export default {
       per_page: 8,
     };
 
+    const highlightedRes = await axios.get(`${API_URL}/posts`, { params: { per_page: 5 } });
+    this.highlighted = highlightedRes.data.map((post) => ({ ...post, title: post.title.rendered }));
+
     const postsRes = await axios.get(`${API_URL}/posts`, { params });
     this.posts = postsRes.data;
 

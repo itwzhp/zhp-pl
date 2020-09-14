@@ -40,8 +40,7 @@
                 v-if="date"
                 :datetime="date"
                 class="z-article__date"
-                v-text="formattedDate"
-              />
+              >{{ date | format }}</time>
             </slot>
           </div>
         </slot>
@@ -73,6 +72,14 @@ export default {
     ZHeading,
     ZText,
     ZBubble,
+  },
+  filters: {
+    format(date) {
+      if (!date) {
+        return '';
+      }
+      return format(new Date(date), 'dd.MM.yyyy');
+    },
   },
   props: {
     tag: {
