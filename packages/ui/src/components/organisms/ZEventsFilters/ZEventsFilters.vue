@@ -38,92 +38,86 @@
         </template>
       </ul>
     </div>
-    <div class="z-events-filters__section">
-      <div class="z-field">
-        <ZText
-          tag="label"
-          for="eventTypes"
-          class="z-field__label"
-        >
-          Rodzaj wydarzenia
-        </ZText>
-        <ZSelect
-          id="eventTypes"
-          class="z-field__input"
-          :options="[{name:'Obóz'}, {name:'Zlot'}, {name:'Konerencja'}]"
-        />
-      </div>
-      <div class="z-field">
-        <ZText
-          tag="label"
-          for="ageGroups"
-          class="z-field__label"
-        >
-          Metodyka
-        </ZText>
-        <ZSelect
-          id="ageGroups"
-          :options="[{name:'Zuchy'}, {name:'Harcerze'}, {name:'Harcerze Stars'}, {name:'Wędrownicy'}]"
-          class="z-field__input"
-        />
-      </div>
-      <div class="z-field">
-        <ZText
-          tag="label"
-          for="districts"
-          class="z-field__label"
-        >
-          Metodyka
-        </ZText>
-        <ZSelect
-          id="districts"
-          :options="[{name:'Opolskie'}, {name:'Dolnośląskie'}, {name: 'Śląskie'}]"
-          class="z-field__input"
-        />
-      </div>
-      <div class="z-field">
-        <ZText
-          tag="label"
-          for="districts"
-          class="z-field__label"
-        >
-          Data Wydarzenia
-        </ZText>
-        <div
-          id="date"
-          class="z-field__input"
-        >
-          range data picker
+    <ZForm @submit.prevent="submit">
+      <template #content>
+        <div class="z-events-filters__section">
+          <div class="z-field">
+            <ZText
+              tag="label"
+              for="eventTypes"
+              class="z-field__label"
+            >
+              Rodzaj wydarzenia
+            </ZText>
+            <ZSelect
+              id="eventTypes"
+              class="z-field__input"
+              :options="[{name:'Obóz'}, {name:'Zlot'}, {name:'Konerencja'}]"
+            />
+          </div>
+          <div class="z-field">
+            <ZText
+              tag="label"
+              for="ageGroups"
+              class="z-field__label"
+            >
+              Metodyka
+            </ZText>
+            <ZSelect
+              id="ageGroups"
+              :options="[{name:'Zuchy'}, {name:'Harcerze'}, {name:'Harcerze Stars'}, {name:'Wędrownicy'}]"
+              class="z-field__input"
+            />
+          </div>
+          <div class="z-field">
+            <ZText
+              tag="label"
+              for="districts"
+              class="z-field__label"
+            >
+              Metodyka
+            </ZText>
+            <ZSelect
+              id="districts"
+              :options="[{name:'Opolskie'}, {name:'Dolnośląskie'}, {name: 'Śląskie'}]"
+              class="z-field__input"
+            />
+          </div>
+          <div class="z-field">
+            <ZText
+              tag="label"
+              for="districts"
+              class="z-field__label"
+            >
+              Data Wydarzenia
+            </ZText>
+            <div
+              id="date"
+              class="z-field__input"
+            >
+              range data picker
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-    <div class="z-events-filters__section z-events-filters__section--no-border">
-      <div class="z-events-filters__section-header">
-        <ZHeading
-          :level="4"
-          class="z-events-filters__section-header-title"
-        >
-          Tagi
-        </ZHeading>
-        <ZLink
-          to="#"
-          class="z-events-filters__section-header-more"
-        >
-          Zobacz wszystkie
-        </ZLink>
-      </div>
-      <ZInput />
-    </div>
-    <div
-      class="z-form-actions"
-    >
-      <ZButton type="button">
-        <ZIcon name="cross" />
-      </ZButton>
-      <ZButton>
-        <ZIcon name="approved" />
-      </ZButton>
-    </div>
+        <div class="z-events-filters__section z-events-filters__section--no-border">
+          <div class="z-events-filters__section-header">
+            <ZHeading
+              :level="4"
+              class="z-events-filters__section-header-title"
+            >
+              Tagi
+            </ZHeading>
+            <ZLink
+              to="#"
+              class="z-events-filters__section-header-more"
+            >
+              Zobacz wszystkie
+            </ZLink>
+          </div>
+          <ZInput />
+        </div>
+      </template>
+    </ZForm>
   </component>
 </template>
 
@@ -136,6 +130,7 @@ import ZLink from '../../atoms/ZLink/ZLink.vue';
 import ZBubble from '../../atoms/ZBubble/ZBubble.vue';
 import ZSelect from '../../atoms/ZSelect/ZSelect.vue';
 import ZInput from '../../atoms/ZInput/ZInput.vue';
+import ZForm from '../ZForm/ZForm.vue';
 
 export default {
   name: 'ZEventsFilters',
@@ -148,11 +143,17 @@ export default {
     ZHeading,
     ZSelect,
     ZInput,
+    ZForm,
   },
   props: {
     tag: {
       type: String,
       default: 'form',
+    },
+  },
+  methods: {
+    submit() {
+      return true;
     },
   },
 };
@@ -222,17 +223,5 @@ export default {
         color: var(--input-color, #fff);
       }
     }
-  }
-
-  .z-form-actions {
-    --icon-color: #fff;
-    --button-width: 34px;
-    --button-height: 34px;
-
-    display: grid;
-    justify-content: end;
-    margin: 16px 0;
-    column-gap: 8px;
-    grid-auto-flow: column;
   }
 </style>
