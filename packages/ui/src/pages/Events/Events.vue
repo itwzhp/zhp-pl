@@ -24,30 +24,7 @@
         />
       </template>
     </ZSection>
-    <!-- Paginacja -->
-    <div
-      style="display: grid;
-    max-width: 1120px;
-    justify-content: end;
-    margin: 32px auto;
-    column-gap: 8px;
-    grid-auto-flow: column;"
-    >
-      <ZButton
-        v-if="hasPreviousPage"
-        style="--icon-color: #fff; width: 34px; height: 34px;"
-        @click="updatePage(-1)"
-      >
-        <ZIcon name="arrow-left" />
-      </ZButton>
-      <ZButton
-        v-if="hasNextPage"
-        style="--icon-color: #fff; width: 34px; height: 34px;"
-        @click="updatePage(1)"
-      >
-        <ZIcon name="arrow-right" />
-      </ZButton>
-    </div>
+    <ZPagination style=" max-width: 1120px; margin: 32px auto;"  />
   </div>
 </template>
 <script>
@@ -55,9 +32,8 @@ import axios from 'axios';
 import {
   ZSection,
   ZEvent,
-  ZButton,
-  ZIcon,
   ZEventsFilters,
+  ZPagination,
 } from '../../../index';
 
 export default {
@@ -66,8 +42,7 @@ export default {
     ZEventsFilters,
     ZSection,
     ZEvent,
-    ZButton,
-    ZIcon,
+    ZPagination,
   },
   data() {
     return {

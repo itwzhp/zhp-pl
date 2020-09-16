@@ -29,30 +29,12 @@
         />
       </template>
     </div>
-    <!-- Paginacja -->
-    <div
-      style="display: grid;
-    max-width: 1120px;
-    justify-content: end;
-    margin: 32px auto;
-    column-gap: 8px;
-    grid-auto-flow: column;"
-    >
-      <ZButton
-        v-if="hasPreviousPage"
-        style="--icon-color: #fff; width: 34px; height: 34px;"
-        @click="updatePage(-1)"
-      >
-        <ZIcon name="arrow-left" />
-      </ZButton>
-      <ZButton
-        v-if="hasNextPage"
-        style="--icon-color: #fff; width: 34px; height: 34px;"
-        @click="updatePage(1)"
-      >
-        <ZIcon name="arrow-right" />
-      </ZButton>
-    </div>
+    <ZPagination
+      :page="page"
+      :total-pages="totalPages"
+      style="max-width: 1120px; margin: 32px auto;"
+      @change="(page)=>{this.page = page}"
+    />
   </div>
 </template>
 
@@ -61,9 +43,8 @@ import axios from 'axios';
 import {
   ZArticle,
   ZHeading,
-  ZButton,
-  ZIcon,
   ZArticlesFilters,
+  ZPagination,
 } from '../../../index';
 
 export default {
@@ -72,8 +53,7 @@ export default {
     ZArticlesFilters,
     ZArticle,
     ZHeading,
-    ZButton,
-    ZIcon,
+    ZPagination,
   },
   data() {
     return {
