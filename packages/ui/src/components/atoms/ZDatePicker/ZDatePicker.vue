@@ -39,7 +39,6 @@ export default {
   @import '~flatpickr/dist/flatpickr.css';
 
   .z-date-picker {
-
     & + .flatpickr-calendar {
       background: transparent;
       box-shadow: none;
