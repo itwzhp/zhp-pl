@@ -70,7 +70,7 @@
           </ZFormField>
           <ZFormField label="Data Wydarzenia">
             <template #input>
-              <ZDatePicker />
+<!--              <ZDatePicker />-->
             </template>
           </ZFormField>
         </div>

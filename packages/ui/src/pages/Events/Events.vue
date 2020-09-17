@@ -24,7 +24,7 @@
         />
       </template>
     </ZSection>
-    <ZPagination style=" max-width: 1120px; margin: 32px auto;"  />
+    <ZPagination style=" max-width: 1120px; margin: 32px auto;" />
   </div>
 </template>
 <script>
@@ -94,10 +94,8 @@ export default {
 <style lang="scss">
   #events {
     .sidebar {
-      display: grid;
       grid-column: span 3;
       grid-row: span 4;
-      grid-template-rows: repeat(4, 1fr);
     }
 
     .event {

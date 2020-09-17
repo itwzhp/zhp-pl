@@ -63,7 +63,6 @@ export default {
 
 <style lang="scss">
   .z-form-field {
-
     &__label {
       display: block;
       margin: 8px 0;
