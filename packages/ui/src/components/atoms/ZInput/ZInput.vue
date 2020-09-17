@@ -1,13 +1,19 @@
 <template>
   <input
+    v-focus
     :value="value"
     class="z-input"
-    @input="$emit($event.target.value)"
+    @input="$emit('input', $event.target.value)"
   >
 </template>
 <script>
+import { focus } from '../../../directives';
+
 export default {
   name: 'ZInput',
+  directives: {
+    focus,
+  },
   model: {
     prop: 'input',
   },
@@ -27,10 +33,10 @@ export default {
     border: var(--input-border, 1px solid #a6ce39);
     background: var(--input-background);
     border-radius: var(--input-border-radius, 10px);
-    color: var(--input-color, #fff);
+    color: var(--input-color, #1e152f);
 
     &::placeholder {
-      color: var(--input-color, #fff);
+      color: var(--input-color, #1e152f);
     }
   }
 </style>

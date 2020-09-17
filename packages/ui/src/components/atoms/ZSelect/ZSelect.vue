@@ -1,9 +1,9 @@
 <template>
   <select
-    v-model="state"
+    v-focus
     class="z-select"
   >
-    <slot>
+    <slot name="options">
       <option
         v-for="(option, key) in options"
         :key="key"
@@ -15,14 +15,15 @@
   </select>
 </template>
 <script>
+import { focus } from '../../../directives';
+
 export default {
   name: 'ZSelect',
-  model: {
-    prop: 'selected',
-    event: 'change',
+  directives: {
+    focus,
   },
   props: {
-    selected: {
+    value: {
       type: String,
       default: '',
     },
@@ -31,18 +32,20 @@ export default {
       default: () => ({}),
     },
   },
-  data() {
-    return {
-      state: this.selected,
-    };
-  },
-  watch: {
-    state(value) {
-      this.$emit('change', value);
-    },
-  },
 };
 </script>
 <style lang="scss">
-  .z-select {}
+  .z-select {
+    width: var(--select-width, 100%);
+    height: var(--select-height, 48px);
+    padding: var(--select-padding, 0 16px);
+    border: var(--select-border, 1px solid #a6ce39);
+    background: var(--select-background);
+    border-radius: var(--select-border-radius, 10px);
+    color: var(--select-color, #1e152f);
+
+    &::placeholder {
+      color: var(--select-color, #1e152f);
+    }
+  }
 </style>

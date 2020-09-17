@@ -41,63 +41,38 @@
     <ZForm @submit.prevent="submit">
       <template #content>
         <div class="z-events-filters__section">
-          <div class="z-field">
-            <ZText
-              tag="label"
-              for="eventTypes"
-              class="z-field__label"
-            >
-              Rodzaj wydarzenia
-            </ZText>
-            <ZSelect
-              id="eventTypes"
-              class="z-field__input"
-              :options="[{name:'Obóz'}, {name:'Zlot'}, {name:'Konerencja'}]"
-            />
-          </div>
-          <div class="z-field">
-            <ZText
-              tag="label"
-              for="ageGroups"
-              class="z-field__label"
-            >
-              Metodyka
-            </ZText>
-            <ZSelect
-              id="ageGroups"
-              :options="[{name:'Zuchy'}, {name:'Harcerze'}, {name:'Harcerze Stars'}, {name:'Wędrownicy'}]"
-              class="z-field__input"
-            />
-          </div>
-          <div class="z-field">
-            <ZText
-              tag="label"
-              for="districts"
-              class="z-field__label"
-            >
-              Metodyka
-            </ZText>
-            <ZSelect
-              id="districts"
-              :options="[{name:'Opolskie'}, {name:'Dolnośląskie'}, {name: 'Śląskie'}]"
-              class="z-field__input"
-            />
-          </div>
-          <div class="z-field">
-            <ZText
-              tag="label"
-              for="districts"
-              class="z-field__label"
-            >
-              Data Wydarzenia
-            </ZText>
-            <div
-              id="date"
-              class="z-field__input"
-            >
-              range data picker
-            </div>
-          </div>
+          <ZFormField label="Rodzaj wydarzenia">
+            <template #input>
+              <ZSelect
+                id="eventTypes"
+                class="z-field__input"
+                :options="[{name:'Obóz'}, {name:'Zlot'}, {name:'Konerencja'}]"
+              />
+            </template>
+          </ZFormField>
+          <ZFormField label="Metodyka">
+            <template #input>
+              <ZSelect
+                id="ageGroups"
+                :options="[{name:'Zuchy'}, {name:'Harcerze'}, {name:'Harcerze Stars'}, {name:'Wędrownicy'}]"
+                class="z-field__input"
+              />
+            </template>
+          </ZFormField>
+          <ZFormField label="Województwo">
+            <template #input>
+              <ZSelect
+                id="districts"
+                :options="[{name:'Opolskie'}, {name:'Dolnośląskie'}, {name: 'Śląskie'}]"
+                class="z-field__input"
+              />
+            </template>
+          </ZFormField>
+          <ZFormField label="Data Wydarzenia">
+            <template #input>
+              <ZDatePicker />
+            </template>
+          </ZFormField>
         </div>
         <div class="z-events-filters__section z-events-filters__section--no-border">
           <div class="z-events-filters__section-header">
@@ -114,7 +89,7 @@
               Zobacz wszystkie
             </ZLink>
           </div>
-          <ZInput />
+          <ZFormField/>
         </div>
       </template>
     </ZForm>
@@ -131,10 +106,13 @@ import ZBubble from '../../atoms/ZBubble/ZBubble.vue';
 import ZSelect from '../../atoms/ZSelect/ZSelect.vue';
 import ZInput from '../../atoms/ZInput/ZInput.vue';
 import ZForm from '../ZForm/ZForm.vue';
+import ZFormField from '../../molecules/ZFormField/ZFormField.vue';
+import ZDatePicker from '../../atoms/ZDatePicker/ZDatePicker.vue';
 
 export default {
   name: 'ZEventsFilters',
   components: {
+    ZDatePicker,
     ZLink,
     ZButton,
     ZBubble,
@@ -144,6 +122,7 @@ export default {
     ZSelect,
     ZInput,
     ZForm,
+    ZFormField,
   },
   props: {
     tag: {
@@ -192,35 +171,6 @@ export default {
         padding: 0;
         border-width: 0;
         margin: 0;
-      }
-    }
-  }
-
-  .z-field {
-    margin: 0 0 16px 0;
-
-    &:last-child {
-      margin: 0;
-    }
-
-    &__label {
-      display: block;
-      margin: 0 0 8px 0;
-      color: #78a22f;
-      text-transform: uppercase;
-    }
-
-    &__input {
-      width: var(--input-width, 100%);
-      height: var(--input-height, 48px);
-      padding: var(--input-padding, 0 16px);
-      border: var(--input-border, 1px solid #a6ce39);
-      background: var(--input-background);
-      border-radius: var(--input-border-radius, 10px);
-      color: var(--input-color, #fff);
-
-      &::placeholder {
-        color: var(--input-color, #fff);
       }
     }
   }
