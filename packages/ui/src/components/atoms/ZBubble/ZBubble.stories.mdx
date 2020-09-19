@@ -17,7 +17,7 @@ import ZBubble from './ZBubble.vue';
           }
         },
         template: `<div style="display: grid; justify-content: start">
-          <ZBubble>{{ name }}</ZBubble>
+          <ZBubble style="--color: #fff; --background: #78a22f">{{ name }}</ZBubble>
         </div>`,
     }}
   </Story>
@@ -32,8 +32,13 @@ import ZBubble from './ZBubble.vue';
           default: text('name', '13/04/2017 - 18/04/2017')
         }
       },
+      data(){
+        return {
+          checked: true
+        }
+      },
       template: `<div style="display: grid; justify-content: start">
-          <ZBubble type="filter">{{ name }}</ZBubble>
+          <ZBubble v-model="checked" type="filter">{{ name }}</ZBubble>
         </div>`,
     }}
   </Story>

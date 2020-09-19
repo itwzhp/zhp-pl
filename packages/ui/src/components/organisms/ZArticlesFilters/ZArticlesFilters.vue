@@ -69,6 +69,7 @@
       <template v-for="(item, index) in ['Zagranica', '13/04/2017 - 18/04/2018', 'Jakaś trzecia kategoria']">
         <ZBubble
           :key="index"
+          :value="true"
           type="filter"
         >
           {{ item }}

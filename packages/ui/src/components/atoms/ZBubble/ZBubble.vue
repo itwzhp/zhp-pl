@@ -2,25 +2,45 @@
   <component
     :is="tag"
     class="z-bubble"
+    :class="{'z-bubble--is-checked': value, 'z-bubble--is-badge': !isFilter}"
   >
-    <ZButton
-      v-if="hasButton"
-      class="z-bubble__button"
+    <input
+      v-if="isFilter"
+      :id="id"
+      v-focus
+      :checked="value"
+      type="checkbox"
+      class="hidden"
+      @input="$emit('input', $event.target.checked)"
+    >
+    <div
+      v-if="isFilter"
+      class="z-bubble__uncheck"
     >
       <ZIcon name="cross" />
-    </ZButton>
-    <slot />
+    </div>
+    <ZText
+      :for="id"
+      :tag="isFilter ? 'label' : 'span'"
+      class="z-bubble__label"
+    >
+      <slot />
+    </ZText>
   </component>
 </template>
 
 <script>
-import ZButton from '../ZButton/ZButton.vue';
+import { focus } from '../../../directives';
 import ZIcon from '../ZIcon/ZIcon.vue';
+import ZText from '../ZText/ZText.vue';
 
 export default {
   name: 'ZBubble',
+  directives: {
+    focus,
+  },
   components: {
-    ZButton,
+    ZText,
     ZIcon,
   },
   props: {
@@ -30,11 +50,19 @@ export default {
     },
     type: {
       type: String,
-      default: 'label',
+      default: 'badge',
+    },
+    value: {
+      type: Boolean,
+      default: false,
     },
   },
   computed: {
-    hasButton() {
+    id() {
+      // eslint-disable-next-line no-underscore-dangle
+      return this._uid;
+    },
+    isFilter() {
       return this.type === 'filter';
     },
   },
@@ -43,28 +71,71 @@ export default {
 
 <style lang="scss">
   .z-bubble {
-    display: grid;
-    min-width: var(--bubble-min-width, 72px);
-    height: var(--bubble-height, 20px);
-    align-items: center;
-    justify-content: center;
-    padding: var(--bubble-padding, 0 4px);
-    background: var(--bubble-background, #78a22f);
-    border-radius: var(--bubble-border-radius, 10px);
-    color: var(--bubble-color, #fff);
-    column-gap: 4px;
-    font-size: var(--bubble-font-size, 10px);
-    grid-auto-flow: column;
+    position: relative;
 
-    &__button {
+    &:focus-within {
+      --bubble-label-outline: 1px auto -webkit-focus-ring-color;
+    }
+
+    &__uncheck {
       --icon-size: 4px;
       --icon-color: #fff;
-      --button-width: 14px;
-      --button-min-width: 14px;
-      --button-height: 14px;
-      --button-border-radius: 14px;
-      --button-border: 0;
-      --button-padding: 0;
+
+      position: absolute;
+      top: 50%;
+      left: 8px;
+      display: grid;
+      width: 14px;
+      height: 14px;
+      align-items: center;
+      justify-content: center;
+      background: #a6ce39;
+      border-radius: 50%;
+      outline: var(--bubble-uncheck-outline);
+      pointer-events: none;
+      transform: translateY(-50%) scale(var(--bubble-uncheck-scale, 0));
     }
+
+    &__label {
+      display: grid;
+      min-width: var(--bubble-label-min-width, 72px);
+      height: var(--bubble-label-height, 24px);
+      align-items: center;
+      justify-content: center;
+      padding: var(--bubble-label-padding, 0 8px);
+      border: var(--bubble-label-border, 1px solid #a6ce39);
+      background: var(--bubble-label-background, var(--background));
+      border-radius: var(--bubble-label-border-radius, 10px);
+      color: var(--bubble-label-color, var(--color));
+      font-size: var(--bubble-label-font-size, 10px);
+      outline: var(--bubble-label-outline);
+    }
+
+    &--is-checked {
+      --bubble-uncheck-scale: 1;
+      --bubble-label-padding: 0 8px 0 26px;
+      --bubble-label-background: #78a22f;
+      --bubble-label-color: #fff;
+      --bubble-label-border: 1px solid #78a22f;
+
+      &:focus-within {
+        --bubble-uncheck-outline: 1px auto -webkit-focus-ring-color;
+        --bubble-label-outline: none;
+      }
+    }
+
+    &--is-badge {
+      --bubble-label-border: 0;
+    }
+  }
+
+  .hidden {
+    position: absolute;
+    overflow: hidden;
+    width: 1px;
+    height: 1px;
+    clip: rect(1px, 1px, 1px, 1px);
+    clip-path: inset(100%);
+    white-space: nowrap;
   }
 </style>

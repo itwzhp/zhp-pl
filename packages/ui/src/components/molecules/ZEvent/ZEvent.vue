@@ -90,7 +90,7 @@
         :to="type.href"
         class="z-event__type"
       >
-        <ZBubble>
+        <ZBubble class="z-bubble--is-badge">
           {{ type.name }}
         </ZBubble>
       </ZLink>
@@ -283,6 +283,7 @@ export default {
     &__type {
       --bubble-height: 24px;
       --bubble-background: var(--background);
+      --link-text-decoration: none;
 
       position: absolute;
       top: 0;

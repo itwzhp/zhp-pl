@@ -24,15 +24,19 @@
         </ZHeading>
       </div>
       <ul style="display: flex; flex-wrap: wrap; padding: 0; margin: -3px; list-style-type: none;">
-        <template v-for="(item, index) in ['Zagranica', '13/04/2017 - 18/04/2017', 'Jakaś trzecia kategoria']">
+        <template
+          v-for="(item, index) in items"
+        >
           <li
             :key="index"
             style="margin: 3px;"
           >
             <ZBubble
+              :value="true"
               type="filter"
+              @change="unchecked($event)"
             >
-              {{ item }}
+              {{ item.name }}
             </ZBubble>
           </li>
         </template>
@@ -70,7 +74,7 @@
           </ZFormField>
           <ZFormField label="Data Wydarzenia">
             <template #input>
-<!--              <ZDatePicker />-->
+              <!--              <ZDatePicker />-->
             </template>
           </ZFormField>
         </div>
@@ -89,7 +93,7 @@
               Zobacz wszystkie
             </ZLink>
           </div>
-          <ZFormField/>
+          <ZFormField />
         </div>
       </template>
     </ZForm>
@@ -130,9 +134,22 @@ export default {
       default: 'form',
     },
   },
+  data() {
+    return {
+      filters: {},
+      items: [
+        { name: 'Zagranica', checked: true },
+        { name: '13/04/2017 - 18/04/2017', checked: true },
+        { name: 'Jakaś trzecia kategoria', checked: true },
+      ],
+    };
+  },
   methods: {
     submit() {
       return true;
+    },
+    unchecked(state) {
+      console.log(state);
     },
   },
 };
