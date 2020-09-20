@@ -31,13 +31,35 @@
     >
       <ZForm>
         <template #content>
-          <ul>
-            <template v-for="category in categories">
-              <li :key="category.id">
-                {{ category.name }}
-              </li>
-            </template>
-          </ul>
+          <div class="z-articles-filters__form-categories">
+            <ZFormField label="Zespół">
+              <template #input>
+                <ZSelect
+                  id="teams"
+                  :options="[{name:'Wydział zagraniczny'}, {name:'Harcerski instytut badawczy'}]"
+                  class="z-field__input"
+                />
+              </template>
+            </ZFormField>
+            <ZFormField label="Metodyka">
+              <template #input>
+                <ZSelect
+                  id="ageGroups"
+                  :options="[{name:'Zuchy'}, {name:'Harcerze'}, {name:'Harcerze Stars'}, {name:'Wędrownicy'}]"
+                  class="z-field__input"
+                />
+              </template>
+            </ZFormField>
+            <ZFormField label="Jakaś trzecia kategoria">
+              <template #input>
+                <ZSelect
+                  id="thirdOption"
+                  :options="[{name:'opcja A'}, {name:'opcja B'}, {name:'opcja C'}, {name:'opcja D'}]"
+                  class="z-field__input"
+                />
+              </template>
+            </ZFormField>
+          </div>
         </template>
       </ZForm>
     </ZDropdown>
@@ -55,6 +77,7 @@
                 class="z-articles-filters__tag"
               >
                 <ZBubble
+                  type="filter"
                   style="--button-min-width: 14px; --button-padding: 0;"
                 >
                   {{ tag.name }}
@@ -88,6 +111,8 @@ import ZIcon from '../../atoms/ZIcon/ZIcon.vue';
 import ZBubble from '../../atoms/ZBubble/ZBubble.vue';
 import ZText from '../../atoms/ZText/ZText.vue';
 import ZForm from '../ZForm/ZForm.vue';
+import ZFormField from '../../molecules/ZFormField/ZFormField.vue';
+import ZSelect from '../../atoms/ZSelect/ZSelect.vue';
 
 export default {
   name: 'ZArticlesFilters',
@@ -99,6 +124,8 @@ export default {
     ZBubble,
     ZText,
     ZForm,
+    ZFormField,
+    ZSelect,
   },
   filters: {
     format(date) {
@@ -138,19 +165,24 @@ export default {
     --button-box-shadow: 5px 10px 20px 0 rgba(0, 0, 0, 0.13);
 
     &__month {
-      --dropdown-content-width: calc(300% - 37px);
+      --dropdown-content-width: calc(300% - 5px);
     }
 
     &__categories {
-      --dropdown-toggle-background: #78a22f;
-      --dropdown-content-width: calc(200% - 42px);
+      --button-background: #78a22f;
+      --dropdown-content-width: calc(200% - 10px);
 
       margin: 0 0 0 -14px;
     }
 
+    &__form-categories {
+      padding: 0 32px;
+    }
+
     &__tags {
-      --dropdown-toggle-background: #4a7b26;
-      --dropdown-toggle-color: #fff;
+      --button-min-width: 192px;
+      --button-background: #4a7b26;
+      --button-color: #fff;
 
       margin: 0 0 0 -14px;
     }

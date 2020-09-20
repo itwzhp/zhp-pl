@@ -69,12 +69,11 @@ export default {
     display: inline-block;
 
     &__toggle {
+      --button-color: #fff;
+      --button-border: 0;
+
       position: relative;
       z-index: 1;
-
-      --button-color: var(--dropdown-toggle-color, #fff);
-      --button-background: var(--dropdown-toggle-background);
-      --button-border: var(--dropdown-toggle-border, 0);
     }
 
     &__content {
@@ -95,7 +94,7 @@ export default {
         &::after {
           width: 0;
           height: 0;
-          border-top: 5px solid var(--dropdown-toggle-color, #fff);
+          border-top: 5px solid var(--button-color, #fff);
           border-right: 5px solid transparent;
           border-left: 5px solid transparent;
           margin: 0 0 0 8px;

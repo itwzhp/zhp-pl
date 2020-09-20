@@ -37,7 +37,7 @@
             <template #toggle="{toggle}">
               <ZButton
                 class="z-button--text z-dropdown__toggle"
-                style="--dropdown-toggle-color: #78a22f;"
+                style="--button-color: #78a22f;"
                 @click="toggle"
               >
                 Język

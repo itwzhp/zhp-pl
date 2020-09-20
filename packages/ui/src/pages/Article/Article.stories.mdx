@@ -1,0 +1,19 @@
+import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
+import { action } from "@storybook/addon-actions";
+import { linkTo } from '@storybook/addon-links'
+import Article from './Article.vue';
+
+<Meta title="Pages/Article" component={Article} parameters={{layout: 'fullscreen'}}/>
+
+# Home
+
+<Props of={Article} />
+
+<Preview>
+  <Story name="Common">
+    {{
+        components: { Article },
+        template: '<Article />'
+    }}
+  </Story>
+</Preview>

@@ -20,7 +20,7 @@
       <ZIcon name="cross" />
     </div>
     <ZText
-      :for="id"
+      :for="isFilter ? id: undefined"
       :tag="isFilter ? 'label' : 'span'"
       class="z-bubble__label"
     >

@@ -1,7 +1,7 @@
 <template>
   <component
-      :is="tag"
-      class="ComponentNameKebabCase"
+    :is="tag"
+    class="ComponentNameKebabCase"
   />
 </template>
 
