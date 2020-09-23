@@ -1,10 +1,10 @@
 <template>
   <component
     :is="tag"
-    class="z-article"
+    class="z-post"
   >
     <slot name="thumbnail">
-      <div class="z-article__thumbnail">
+      <div class="z-post__thumbnail">
         <ZImage
           :src="thumbnail"
           alt=""
@@ -12,12 +12,12 @@
       </div>
     </slot>
     <slot name="content">
-      <div class="z-article__content">
+      <div class="z-post__content">
         <slot name="heading">
           <ZHeading
             v-if="title"
             :level="3"
-            class="z-article__title"
+            class="z-post__title"
           >
             <ZLink
               :to="to"
@@ -26,12 +26,12 @@
           </ZHeading>
         </slot>
         <slot name="meta">
-          <div class="z-article__meta">
+          <div class="z-post__meta">
             <slot name="author">
               <ZLink
                 v-if="author.name"
                 :to="author.href"
-                class="z-article__author"
+                class="z-post__author"
                 v-text="author.name"
               />
             </slot>
@@ -39,7 +39,7 @@
               <time
                 v-if="date"
                 :datetime="date"
-                class="z-article__date"
+                class="z-post__date"
               >{{ date | format }}</time>
             </slot>
           </div>
@@ -47,7 +47,7 @@
         <slot name="category">
           <ZBubble
             v-if="category"
-            class="z-article__category"
+            class="z-post__category"
           >
             {{ category }}
           </ZBubble>
@@ -122,7 +122,7 @@ export default {
 };
 </script>
 <style lang="scss">
-  .z-article {
+  .z-post {
     $this: &;
 
     position: relative;

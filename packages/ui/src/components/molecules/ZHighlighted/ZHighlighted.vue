@@ -12,7 +12,7 @@
       />
     </div>
     <ZList>
-      <template v-for="(article, key) in articles">
+      <template v-for="(article, key) in Posts">
         <li
           :key="key"
           class="z-highlighted__item"
@@ -61,7 +61,7 @@ export default {
       type: Object,
       default: () => ({}),
     },
-    articles: {
+    Posts: {
       type: Array,
       default: () => ([]),
     },

@@ -1,5 +1,4 @@
-
-export const focus = {
+export const outline = {
   bind(el, binding) {
     el._mouseHandler = function () {
       el.style.outline = 'none';

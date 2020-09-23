@@ -1,5 +1,5 @@
 <template>
-  <div id="article">
+  <div id="post">
     <ZSection tag="div">
       <ZHeading
         :level="1"
@@ -98,7 +98,7 @@ import {
 } from '../../../index';
 
 export default {
-  name: 'Article',
+  name: 'Post',
   components: {
     ZImage,
     ZHeading,

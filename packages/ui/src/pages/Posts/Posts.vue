@@ -1,5 +1,5 @@
 <template>
-  <div id="articles">
+  <div id="posts">
     <!-- Przygoda. Przyjaźń. Wychowanie. -->
     <div style="display: grid; max-width: 1120px; margin: auto; grid-template-columns: repeat(12, 1fr);">
       <ZHeading style="grid-column: 5 / span 7;">
@@ -7,7 +7,7 @@
         <small style="display: block; margin: 8px 0; font-weight: 400;">Sprawdź, co nowego w ZHP</small>
       </zHeading>
       <!-- Wybierz miesiąc, Wybierz kategorię, Wybierz tagi -->
-      <ZArticlesFilters
+      <ZPostsFilters
         style=" margin: 32px 0; grid-column: 5 / span 7;"
         :categories="categories"
         :tags="tags"
@@ -25,7 +25,7 @@
           :sticky="post.sticky"
           :date="post.date"
           :category="post.sticky ? 'Wyróżnione' : page === 1 && index === 0 ? 'Dzieje się' : post.category"
-          :class="{'z-article--highlighted': post.sticky, 'z-article--primary': page === 1 && index === 0 }"
+          :class="{'z-post--highlighted': post.sticky, 'z-post--primary': page === 1 && index === 0 }"
         />
       </template>
     </div>
@@ -43,14 +43,14 @@ import axios from 'axios';
 import {
   ZArticle,
   ZHeading,
-  ZArticlesFilters,
+  ZPostsFilters,
   ZPagination,
 } from '../../../index';
 
 export default {
-  name: 'Articles',
+  name: 'Posts',
   components: {
-    ZArticlesFilters,
+    ZPostsFilters,
     ZArticle,
     ZHeading,
     ZPagination,
@@ -112,5 +112,5 @@ export default {
 </script>
 
 <style lang="scss">
-  #articles {}
+  #posts {}
 </style>

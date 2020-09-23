@@ -69,7 +69,6 @@
                 <ZLink
                   :to="item.to"
                   class="z-navigation__link"
-                  @click.native.prevent="component = item.to"
                   v-text="item.name"
                 />
               </li>
@@ -158,7 +157,7 @@ import {
   ZLink,
   ZImage,
   ZList,
-} from '../../../index';
+} from '../../index';
 
 export default {
   name: 'Default',
@@ -177,7 +176,7 @@ export default {
       component: 'home',
       headerNavigation: [
         { to: 'home', name: 'Strona Główna' },
-        { to: 'articles', name: 'Aktualności' },
+        { to: 'Posts', name: 'Aktualności' },
         { to: 'events', name: 'Wydarzenia' },
         { to: 'home', name: 'Dla mediów' },
         { to: 'home', name: 'Dla rodzica' },

@@ -1,12 +1,12 @@
 <template>
   <component
     :is="tag"
-    class="z-articles-filters"
+    class="z-posts-filters"
   >
     <!-- date -->
     <ZDropdown
       name="Wybierz miesiąc"
-      class="z-dropdown--has-chevron z-articles-filters__month"
+      class="z-dropdown--has-chevron z-posts-filters__month"
     >
       <ZForm>
         <template #content>
@@ -27,11 +27,11 @@
     <!-- categories -->
     <ZDropdown
       name="Wybierz kategorię"
-      class="z-dropdown--has-chevron z-articles-filters__categories"
+      class="z-dropdown--has-chevron z-posts-filters__categories"
     >
       <ZForm>
         <template #content>
-          <div class="z-articles-filters__form-categories">
+          <div class="z-posts-filters__form-categories">
             <ZFormField label="Zespół">
               <template #input>
                 <ZSelect
@@ -66,15 +66,15 @@
     <!-- tags -->
     <ZDropdown
       name="Wybierz tagi"
-      class="z-dropdown--has-chevron z-articles-filters__tags"
+      class="z-dropdown--has-chevron z-posts-filters__tags"
     >
       <ZForm>
         <template #content>
-          <ul class="z-articles-filters__tags-list">
+          <ul class="z-posts-filters__tags-list">
             <template v-for="tag in tags">
               <li
                 :key="tag.id"
-                class="z-articles-filters__tag"
+                class="z-posts-filters__tag"
               >
                 <ZBubble
                   type="filter"
@@ -115,7 +115,7 @@ import ZFormField from '../../molecules/ZFormField/ZFormField.vue';
 import ZSelect from '../../atoms/ZSelect/ZSelect.vue';
 
 export default {
-  name: 'ZArticlesFilters',
+  name: 'ZPostsFilters',
   components: {
     ZDatePicker,
     ZDropdown,
@@ -158,7 +158,7 @@ export default {
 </script>
 
 <style lang="scss">
-  .z-articles-filters {
+  .z-posts-filters {
     --button-height: 40px;
     --button-padding: 8px 32px;
     --button-min-width: 160px;

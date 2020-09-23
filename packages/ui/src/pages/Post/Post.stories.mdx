@@ -1,0 +1,17 @@
+import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
+import Post from './Post.vue';
+
+<Meta title="Pages/Post" component={Post} parameters={{layout: 'fullscreen'}}/>
+
+# Home
+
+<Props of={Post} />
+
+<Preview>
+  <Story name="Common">
+    {{
+        components: { Post },
+        template: '<Post />'
+    }}
+  </Story>
+</Preview>

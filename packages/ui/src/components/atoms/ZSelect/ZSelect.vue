@@ -1,6 +1,6 @@
 <template>
   <select
-    v-focus
+    v-outline
     class="z-select"
   >
     <slot name="options">
@@ -15,12 +15,12 @@
   </select>
 </template>
 <script>
-import { focus } from '../../../directives';
+import { outline } from '../../../directives';
 
 export default {
   name: 'ZSelect',
   directives: {
-    focus,
+    outline,
   },
   props: {
     value: {

@@ -3,10 +3,16 @@
     :is="tag"
     class="z-pagination"
   >
-    <ZButton class="z-pagination__previous" @click="change(-1)">
+    <ZButton
+      class="z-pagination__previous"
+      @click="change(-1)"
+    >
       <ZIcon name="arrow-left" />
     </ZButton>
-    <ZButton class="z-pagination__next" @change="change(1)">
+    <ZButton
+      class="z-pagination__next"
+      @change="change(1)"
+    >
       <ZIcon name="arrow-right" />
     </ZButton>
   </component>

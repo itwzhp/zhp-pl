@@ -1,7 +1,7 @@
 <template>
   <component
     :is="tag"
-    v-focus
+    v-outline
     class="z-button"
     v-on="$listeners"
   >
@@ -9,11 +9,11 @@
   </component>
 </template>
 <script>
-import { focus } from '../../../directives';
+import { outline } from '../../../directives';
 
 export default {
   name: 'ZButton',
-  directives: { focus },
+  directives: { outline },
   props: {
     tag: {
       type: String,

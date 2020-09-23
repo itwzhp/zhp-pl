@@ -70,7 +70,7 @@
         style="grid-column: span 7;"
         title="Warto przeczytać"
         :more="{title: 'Zobacz więcej', href: '#'}"
-        :articles="highlighted"
+        :Posts="highlighted"
       />
     </ZSection>
     <!-- Poznaj ZHP -->

@@ -2,7 +2,7 @@ import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
 import { withKnobs, text, object } from '@storybook/addon-knobs';
 import { withA11y } from '@storybook/addon-a11y';
 import axios from 'axios';
-import ZArticle from './ZArticle.vue';
+import ZArticle from './ZPost.vue';
 
 <Meta title="Molecules/Article" component={ZArticle} decorators={[withKnobs, withA11y]}/>
 
@@ -60,7 +60,7 @@ import ZArticle from './ZArticle.vue';
             author="Przemysław Spaczek"
             :sticky="post.sticky"
             :date="post.date"
-            :class="{'z-article--highlighted': post.sticky, 'z-article--primary': index === 0}"
+            :class="{'z-post--highlighted': post.sticky, 'z-post--primary': index === 0}"
           />
         </div>`,
       async created(){

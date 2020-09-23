@@ -1,18 +1,18 @@
 <template>
   <input
-    v-focus
+    v-outline
     :value="value"
     class="z-input"
     @input="$emit('input', $event.target.value)"
   >
 </template>
 <script>
-import { focus } from '../../../directives';
+import { outline } from '../../../directives';
 
 export default {
   name: 'ZInput',
   directives: {
-    focus,
+    outline,
   },
   model: {
     prop: 'input',

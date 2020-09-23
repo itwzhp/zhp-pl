@@ -7,7 +7,7 @@
     <input
       v-if="isFilter"
       :id="id"
-      v-focus
+      v-outline
       :checked="value"
       type="checkbox"
       class="hidden"
@@ -30,14 +30,14 @@
 </template>
 
 <script>
-import { focus } from '../../../directives';
+import { outline } from '../../../directives';
 import ZIcon from '../ZIcon/ZIcon.vue';
 import ZText from '../ZText/ZText.vue';
 
 export default {
   name: 'ZBubble',
   directives: {
-    focus,
+    outline,
   },
   components: {
     ZText,

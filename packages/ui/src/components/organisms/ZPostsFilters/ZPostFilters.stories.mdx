@@ -1,26 +1,26 @@
 import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
 import { withKnobs, text, object } from '@storybook/addon-knobs';
 import { withA11y } from '@storybook/addon-a11y';
-import ZArticlesFilters from './ZArticlesFilters.vue';
+import ZPostsFilters from './ZPostsFilters.vue';
 
-<Meta title="Organisms/Articles Filters" component={ZArticlesFilters} />
+<Meta title="Organisms/Posts Filters" component={ZPostsFilters} />
 
-# Articlesfilters
+# Posts Filters
 
 <Preview>
   <Story name="Common">
     {{
-        components: { ZArticlesFilters },
+        components: { ZPostsFilters },
         props: {
           common: {
             default: text('common', '')
           }
         },
-        template: `<ZArticlesFilters />`,
+        template: `<ZPostsFilters />`,
     }}
   </Story>
 </Preview>
 
 # Props
 
-<Props of={ZArticlesfilters} />
+<Props of={ZPostsFilters} />
