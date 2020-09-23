@@ -9,7 +9,7 @@
         :key="key"
         :value="option.value"
       >
-        {{ option.name }}
+        {{ option.label }}
       </option>
     </slot>
   </select>

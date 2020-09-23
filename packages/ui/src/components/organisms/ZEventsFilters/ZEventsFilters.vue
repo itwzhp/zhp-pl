@@ -45,33 +45,20 @@
     <ZForm @submit.prevent="submit">
       <template #content>
         <div class="z-events-filters__section">
-          <ZFormField label="Rodzaj wydarzenia">
-            <template #input>
-              <ZSelect
-                id="eventTypes"
-                class="z-field__input"
-                :options="[{name:'Obóz'}, {name:'Zlot'}, {name:'Konerencja'}]"
-              />
-            </template>
-          </ZFormField>
-          <ZFormField label="Metodyka">
-            <template #input>
-              <ZSelect
-                id="ageGroups"
-                :options="[{name:'Zuchy'}, {name:'Harcerze'}, {name:'Harcerze Stars'}, {name:'Wędrownicy'}]"
-                class="z-field__input"
-              />
-            </template>
-          </ZFormField>
-          <ZFormField label="Województwo">
-            <template #input>
-              <ZSelect
-                id="districts"
-                :options="[{name:'Opolskie'}, {name:'Dolnośląskie'}, {name: 'Śląskie'}]"
-                class="z-field__input"
-              />
-            </template>
-          </ZFormField>
+          <template v-for="category in categories">
+            <ZFormField
+              :key="category.key"
+              :label="category.label"
+            >
+              <template #input="{id}">
+                <ZSelect
+                  :id="id"
+                  class="z-field__input"
+                  :options="category.options"
+                />
+              </template>
+            </ZFormField>
+          </template>
           <ZFormField label="Data Wydarzenia">
             <template #input>
               <!--              <ZDatePicker />-->
@@ -132,6 +119,14 @@ export default {
     tag: {
       type: String,
       default: 'form',
+    },
+    categories: {
+      type: Array,
+      default: () => ([]),
+    },
+    tags: {
+      type: Array,
+      default: () => ([]),
     },
   },
   data() {

@@ -32,33 +32,20 @@
       <ZForm>
         <template #content>
           <div class="z-posts-filters__form-categories">
-            <ZFormField label="Zespół">
-              <template #input>
-                <ZSelect
-                  id="teams"
-                  :options="[{name:'Wydział zagraniczny'}, {name:'Harcerski instytut badawczy'}]"
-                  class="z-field__input"
-                />
-              </template>
-            </ZFormField>
-            <ZFormField label="Metodyka">
-              <template #input>
-                <ZSelect
-                  id="ageGroups"
-                  :options="[{name:'Zuchy'}, {name:'Harcerze'}, {name:'Harcerze Stars'}, {name:'Wędrownicy'}]"
-                  class="z-field__input"
-                />
-              </template>
-            </ZFormField>
-            <ZFormField label="Jakaś trzecia kategoria">
-              <template #input>
-                <ZSelect
-                  id="thirdOption"
-                  :options="[{name:'opcja A'}, {name:'opcja B'}, {name:'opcja C'}, {name:'opcja D'}]"
-                  class="z-field__input"
-                />
-              </template>
-            </ZFormField>
+            <template v-for="category in categories">
+              <ZFormField
+                :key="category.id"
+                :label="category.label"
+              >
+                <template #input="{id}">
+                  <ZSelect
+                    :id="id"
+                    :options="category.options"
+                    class="z-field__input"
+                  />
+                </template>
+              </ZFormField>
+            </template>
           </div>
         </template>
       </ZForm>
@@ -80,7 +67,7 @@
                   type="filter"
                   style="--button-min-width: 14px; --button-padding: 0;"
                 >
-                  {{ tag.name }}
+                  {{ tag.label }}
                 </ZBubble>
               </li>
             </template>

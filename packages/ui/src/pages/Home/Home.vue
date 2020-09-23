@@ -99,7 +99,7 @@
         class="enjoy"
         thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/Agnieszka_Madetko-Kurczab_ZHP_21-scaled.jpg"
       />
-      <ZArticle
+      <ZPost
         thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/08/fot.-ZHP-_-Karolina-Piotrowska-18.jpg"
         title="Przewodniczący ZHP i Naczelniczka ZHP: Wychowujemy w zgodzie z wartościami"
         date="2020-08-30T08:30:31"
@@ -248,7 +248,7 @@ import {
   ZImage,
   ZSection,
   ZCarousel,
-  ZArticle,
+  ZPost,
   ZEvent,
   ZCard,
   ZHeading,
@@ -268,7 +268,7 @@ export default {
     ZImage,
     ZSection,
     ZCarousel,
-    ZArticle,
+    ZPost,
     ZEvent,
     ZCard,
     ZHeading,

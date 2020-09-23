@@ -13,7 +13,10 @@
         {{ label }}
       </ZText>
     </slot>
-    <slot name="input">
+    <slot
+      name="input"
+      v-bind="{id}"
+    >
       <ZInput
         :id="id"
         :type="type"
@@ -65,7 +68,7 @@ export default {
   .z-form-field {
     &__label {
       display: block;
-      margin: 8px 0;
+      margin: 15px 0;
       color: var(--form-field-label-color, #84a311);
       text-transform: var(--form-field-label-text-transform, uppercase);
     }

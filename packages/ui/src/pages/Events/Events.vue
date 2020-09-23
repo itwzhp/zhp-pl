@@ -6,7 +6,10 @@
       style="--section-margin: 0;"
     >
       <div class="sidebar">
-        <ZEventsFilters />
+        <ZEventsFilters
+          :categories="categories"
+          :tags="tags"
+        />
       </div>
       <template v-for="(event, index) in events">
         <ZEvent
@@ -27,6 +30,7 @@
     <ZPagination style=" max-width: 1120px; margin: 32px auto;" />
   </div>
 </template>
+
 <script>
 import axios from 'axios';
 import {
@@ -46,6 +50,38 @@ export default {
   },
   data() {
     return {
+      tags: [],
+      categories: [
+        {
+          id: 'eventType',
+          label: 'Rodzaj wydarzenia',
+          options: [
+            { label: 'Obóz' },
+            { label: 'Zlot' },
+            { label: 'Konferencja' },
+          ],
+        },
+        {
+          id: 'ageGroups',
+          label: 'Metodyka',
+          options: [
+            { label: 'Zuchy' },
+            { label: 'Harcerze' },
+            { label: 'Harcerze Stars' },
+            { label: 'Wędrownicy' },
+          ],
+        },
+        {
+          id: 'district',
+          label: 'Województwo',
+          options: [
+            { label: 'Opolskie' },
+            { label: 'Dolnośląskie' },
+            { label: 'Śląskie' },
+            { label: 'Podkarpackie' },
+          ],
+        },
+      ],
       events: [],
       page: 1,
       totalPages: 0,
@@ -91,6 +127,7 @@ export default {
   },
 };
 </script>
+
 <style lang="scss">
   #events {
     .sidebar {

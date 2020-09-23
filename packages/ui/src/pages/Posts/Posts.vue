@@ -1,22 +1,19 @@
 <template>
   <div id="posts">
-    <!-- Przygoda. Przyjaźń. Wychowanie. -->
-    <div style="display: grid; max-width: 1120px; margin: auto; grid-template-columns: repeat(12, 1fr);">
+    <ZSection>
       <ZHeading style="grid-column: 5 / span 7;">
         Aktualności
         <small style="display: block; margin: 8px 0; font-weight: 400;">Sprawdź, co nowego w ZHP</small>
       </zHeading>
-      <!-- Wybierz miesiąc, Wybierz kategorię, Wybierz tagi -->
       <ZPostsFilters
         style=" margin: 32px 0; grid-column: 5 / span 7;"
         :categories="categories"
         :tags="tags"
       />
-    </div>
-    <!-- Aktualności -->
-    <div style="display: grid; max-width: 1120px; margin: 32px auto; gap: 20px; grid-template-columns: repeat(4, 1fr);">
+    </ZSection>
+    <ZSection>
       <template v-for="(post, index) in posts">
-        <ZArticle
+        <ZPost
           :key="post.id"
           :thumbnail="`https://demo.przemyslawspaczek.pl/wp-content/uploads/${post.rest_media.file}`"
           :title="post.title.rendered"
@@ -28,7 +25,7 @@
           :class="{'z-post--highlighted': post.sticky, 'z-post--primary': page === 1 && index === 0 }"
         />
       </template>
-    </div>
+    </ZSection>
     <ZPagination
       :page="page"
       :total-pages="totalPages"
@@ -41,7 +38,8 @@
 <script>
 import axios from 'axios';
 import {
-  ZArticle,
+  ZSection,
+  ZPost,
   ZHeading,
   ZPostsFilters,
   ZPagination,
@@ -50,15 +48,45 @@ import {
 export default {
   name: 'Posts',
   components: {
+    ZSection,
     ZPostsFilters,
-    ZArticle,
+    ZPost,
     ZHeading,
     ZPagination,
   },
   data() {
     return {
       tags: [],
-      categories: [],
+      categories: [
+        {
+          id: 'teams',
+          label: 'Zespół',
+          options: [
+            { label: 'Wydział zagraniczny' },
+            { label: 'Harcerski instytut badawczy' },
+          ],
+        },
+        {
+          id: 'ageGroups',
+          label: 'Metodyka',
+          options: [
+            { label: 'Zuchy' },
+            { label: 'Harcerze' },
+            { label: 'Harcerze Stars' },
+            { label: 'Wędrownicy' },
+          ],
+        },
+        {
+          id: 'thirdOption',
+          label: 'Jakaś trzecia opcja',
+          options: [
+            { label: 'opcja A' },
+            { label: 'opcja B' },
+            { label: 'opcja C' },
+            { label: 'opcja D' },
+          ],
+        },
+      ],
       posts: [],
       page: 1,
       totalPages: 0,
@@ -93,7 +121,7 @@ export default {
       const { API_URL } = process.env;
 
       const tags = await this.fetchAPI(`${API_URL}/tags`);
-      this.tags = tags.data;
+      this.tags = tags.data.map((tag) => ({ label: tag.name }));
 
       // const categories = await this.fetchAPI(`${API_URL}/categories`);
       // this.categories = categories.data;
@@ -112,5 +140,7 @@ export default {
 </script>
 
 <style lang="scss">
-  #posts {}
+  #posts {
+    .top {}
+  }
 </style>
