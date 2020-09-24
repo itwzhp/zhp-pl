@@ -22,7 +22,12 @@
           :sticky="post.sticky"
           :date="post.date"
           :category="post.sticky ? 'Wyróżnione' : page === 1 && index === 0 ? 'Dzieje się' : post.category"
-          :class="{'z-post--highlighted': post.sticky, 'z-post--primary': page === 1 && index === 0 }"
+          class="post"
+          :class="{
+            'z-post--highlighted': post.sticky,
+            'post--highlighted': post.sticky,
+            'z-post--primary': page === 1 && index === 0,
+             'post--primary': page === 1 && index === 0 }"
         />
       </template>
     </ZSection>
@@ -141,6 +146,14 @@ export default {
 
 <style lang="scss">
   #posts {
-    .top {}
+    .post {
+      grid-column: span 3;
+      &--highlighted {
+        grid-column: 10 / span 3;
+      }
+      &--primary {
+        grid-column: span 12;
+      }
+    }
   }
 </style>

@@ -65,7 +65,7 @@ import ZText from '../../atoms/ZText/ZText.vue';
 import ZBubble from '../../atoms/ZBubble/ZBubble.vue';
 
 export default {
-  name: 'ZArticle',
+  name: 'ZPost',
   components: {
     ZImage,
     ZLink,
@@ -163,7 +163,7 @@ export default {
     }
 
     &__title {
-      order: var(--article-title-order);
+      order: var(--post-title-order);
       margin: 8px 0;
       font-size: 14px;
       font-weight: 400;
@@ -173,7 +173,7 @@ export default {
       display: grid;
       align-items: center;
       justify-content: start;
-      order: var(--article-meta-order);
+      order: var(--post-meta-order);
       column-gap: 8px;
       grid-template-columns: repeat(2, auto);
     }
