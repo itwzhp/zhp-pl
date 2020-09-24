@@ -2,12 +2,14 @@
   <select
     v-outline
     class="z-select"
+    @input="$emit('input', $event.target.value)"
   >
     <slot name="options">
       <option
         v-for="(option, key) in options"
         :key="key"
         :value="option.value"
+        :selected="value === option.value"
       >
         {{ option.label }}
       </option>
@@ -40,7 +42,7 @@ export default {
     height: var(--select-height, 48px);
     padding: var(--select-padding, 0 16px);
     border: var(--select-border, 1px solid #a6ce39);
-    background: var(--select-background);
+    background: var(--select-background, #fff);
     border-radius: var(--select-border-radius, 10px);
     color: var(--select-color, #1e152f);
 

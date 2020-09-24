@@ -9,6 +9,10 @@
         style=" margin: 32px 0; grid-column: 5 / span 7;"
         :categories="categories"
         :tags="tags"
+        :selected-filters="selectedFilters"
+        @submit:tags="updateSelectedTags"
+        @submit:categories="()=>(true)"
+        @submit:date="()=>(true)"
       />
     </ZSection>
     <ZSection>
@@ -27,7 +31,7 @@
             'z-post--highlighted': post.sticky,
             'post--highlighted': post.sticky,
             'z-post--primary': page === 1 && index === 0,
-             'post--primary': page === 1 && index === 0 }"
+            'post--primary': page === 1 && index === 0 }"
         />
       </template>
     </ZSection>
@@ -67,31 +71,34 @@ export default {
           id: 'teams',
           label: 'Zespół',
           options: [
-            { label: 'Wydział zagraniczny' },
-            { label: 'Harcerski instytut badawczy' },
+            { label: 'Wydział zagraniczny', value: 'wydzial-zagraniczny' },
+            { label: 'Harcerski instytut badawczy', value: 'instytut-badawczy' },
           ],
         },
         {
           id: 'ageGroups',
           label: 'Metodyka',
           options: [
-            { label: 'Zuchy' },
-            { label: 'Harcerze' },
-            { label: 'Harcerze Stars' },
-            { label: 'Wędrownicy' },
+            { label: 'Zuchy', value: 'zuchy' },
+            { label: 'Harcerze', value: 'harcerze' },
+            { label: 'Harcerze Starsi', value: 'harcerze-starsi' },
+            { label: 'Wędrownicy', value: 'wedrownicy' },
           ],
         },
         {
           id: 'thirdOption',
           label: 'Jakaś trzecia opcja',
           options: [
-            { label: 'opcja A' },
-            { label: 'opcja B' },
-            { label: 'opcja C' },
-            { label: 'opcja D' },
+            { label: 'opcja A', value: 'a' },
+            { label: 'opcja B', value: 'b' },
+            { label: 'opcja C', value: 'c' },
+            { label: 'opcja D', value: 'd' },
           ],
         },
       ],
+      selectedFilters: {
+        tags: [],
+      },
       posts: [],
       page: 1,
       totalPages: 0,
@@ -112,6 +119,10 @@ export default {
     this.requestApi();
   },
   methods: {
+    updateSelectedTags(newValue) {
+      console.log(newValue);
+      this.selectedFilters = { ...this.selectedFilters, tags: newValue };
+    },
     updatePage(direction) {
       this.requestApi(direction);
     },
@@ -126,7 +137,7 @@ export default {
       const { API_URL } = process.env;
 
       const tags = await this.fetchAPI(`${API_URL}/tags`);
-      this.tags = tags.data.map((tag) => ({ label: tag.name }));
+      this.tags = tags.data.map((tag) => ({ id: tag.id, value: tag.id, label: tag.name }));
 
       // const categories = await this.fetchAPI(`${API_URL}/categories`);
       // this.categories = categories.data;
@@ -148,9 +159,11 @@ export default {
   #posts {
     .post {
       grid-column: span 3;
+
       &--highlighted {
         grid-column: 10 / span 3;
       }
+
       &--primary {
         grid-column: span 12;
       }

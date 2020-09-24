@@ -10,14 +10,16 @@
     >
       <ZForm>
         <template #content>
-          <div style="display: grid; grid-auto-flow: column;">
-            <ZDatePicker v-model="date" />
-            <div>
-              <ZText>Wybrana data</ZText>
-              <div v-if="date.length === 2">
-                <div>{{ date[0] | format }}</div>
+          <div style="display: grid; align-items: end; grid-auto-flow: column;">
+            <ZDatePicker v-model="dateRange" />
+            <div class="z-posts-filters__date  -selected">
+              <ZText class="z-posts-filters__date-label">
+                Wybrana data
+              </ZText>
+              <div v-if="dateRange.length === 2">
+                <div>{{ dateRange[0] | format }}</div>
                 <div>-</div>
-                <div>{{ date[1] | format }}</div>
+                <div>{{ dateRange[1] | format }}</div>
               </div>
             </div>
           </div>
@@ -40,8 +42,10 @@
                 <template #input="{id}">
                   <ZSelect
                     :id="id"
+                    :value="selectedCategories[category.id]"
                     :options="category.options"
                     class="z-field__input"
+                    @input="selectedCategories[category.id] = $event"
                   />
                 </template>
               </ZFormField>
@@ -55,7 +59,7 @@
       name="Wybierz tagi"
       class="z-dropdown--has-chevron z-posts-filters__tags"
     >
-      <ZForm>
+      <ZForm @submit.prevent="submitSelectedTags">
         <template #content>
           <ul class="z-posts-filters__tags-list">
             <template v-for="tag in tags">
@@ -64,8 +68,10 @@
                 class="z-posts-filters__tag"
               >
                 <ZBubble
+                  :value="isTagSelected(tag.value)"
                   type="filter"
                   style="--button-min-width: 14px; --button-padding: 0;"
+                  @input="updateCheckedTags($event, tag)"
                 >
                   {{ tag.label }}
                 </ZBubble>
@@ -75,14 +81,14 @@
         </template>
       </ZForm>
     </ZDropdown>
-    <div style="display: grid; justify-content: start; margin: 24px 0; gap: 8px; grid-auto-flow: column;">
-      <template v-for="(item, index) in ['Zagranica', '13/04/2017 - 18/04/2018', 'Jakaś trzecia kategoria']">
+    <div class="z-posts-filters__enabled">
+      <template v-for="(filter, index) in selectedFiltersRendered">
         <ZBubble
           :key="index"
           :value="true"
           type="filter"
         >
-          {{ item }}
+          {{ filter.label }}
         </ZBubble>
       </template>
     </div>
@@ -135,11 +141,44 @@ export default {
       type: Array,
       default: () => ([]),
     },
+    selectedFilters: {
+      type: Object,
+      default: () => ({}),
+    },
   },
   data() {
     return {
-      date: [],
+      selectedCategories: { teams: 'instytut-badawczy' },
+      selectedTags: {},
+      dateRange: ['2020-09-01', '2020-09-24'],
     };
+  },
+  computed: {
+    selectedFiltersRendered() {
+      return Object.keys(this.selectedFilters).reduce((accumulator, filters) => ({
+        ...accumulator,
+        ...this.selectedFilters[filters],
+      }), {});
+    },
+  },
+  methods: {
+    isTagSelected(value) {
+      return !!this.selectedTags[value];
+    },
+    updateCheckedTags(checked, tag) {
+      if (checked) {
+        this.selectedTags = { ...this.selectedTags, [tag.id]: tag };
+      } else {
+        this.selectedTags = Object.keys(this.selectedTags).reduce((accumulator, id) => (id === `${tag.id}`
+          ? accumulator : {
+            ...accumulator,
+            [id]: this.selectedTags[id],
+          }), {});
+      }
+    },
+    submitSelectedTags() {
+      this.$emit('submit:tags', this.selectedTags);
+    },
   },
 };
 </script>
@@ -188,6 +227,29 @@ export default {
 
     &__tag {
       margin: 3px;
+    }
+
+    &__enabled {
+      display: grid;
+      justify-content: start;
+      margin: 24px 0;
+      gap: 8px;
+      grid-auto-flow: column;
+    }
+
+    &__date-selected {
+      padding: 16px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.05);
+      line-height: 1.4;
+      text-align: center;
+    }
+
+    &__date-label {
+      margin: 0 0 8px 0;
+      font-weight: 900;
+      text-transform: uppercase;
     }
   }
 </style>

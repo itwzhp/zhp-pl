@@ -104,7 +104,7 @@ export default {
       justify-content: center;
       padding: var(--bubble-label-padding, 0 8px);
       border: var(--bubble-label-border, 1px solid #a6ce39);
-      background: var(--bubble-label-background, var(--background));
+      background: var(--bubble-label-background, var(--background, #fff));
       border-radius: var(--bubble-label-border-radius, 10px);
       color: var(--bubble-label-color, var(--color));
       font-size: var(--bubble-label-font-size, 10px);

@@ -31,7 +31,7 @@ export default {
     height: var(--input-height, 48px);
     padding: var(--input-padding, 0 16px);
     border: var(--input-border, 1px solid #a6ce39);
-    background: var(--input-background);
+    background: var(--input-background, #fff);
     border-radius: var(--input-border-radius, 10px);
     color: var(--input-color, #1e152f);
 
