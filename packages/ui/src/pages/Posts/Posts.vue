@@ -5,7 +5,7 @@
         Aktualności
         <small style="display: block; margin: 8px 0; font-weight: 400;">Sprawdź, co nowego w ZHP</small>
       </zHeading>
-      <ZPostsFilters
+      <ZFiltersPosts
         style=" margin: 32px 0; grid-column: 5 / span 7;"
         :categories="categories"
         :tags="tags"
@@ -50,7 +50,7 @@ import {
   ZSection,
   ZPost,
   ZHeading,
-  ZPostsFilters,
+  ZFiltersPosts,
   ZPagination,
 } from '../../../index';
 
@@ -58,7 +58,7 @@ export default {
   name: 'Posts',
   components: {
     ZSection,
-    ZPostsFilters,
+    ZFiltersPosts,
     ZPost,
     ZHeading,
     ZPagination,

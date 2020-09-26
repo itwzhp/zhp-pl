@@ -1,19 +1,19 @@
 <template>
   <component
     :is="tag"
-    class="z-posts-filters"
+    class="z-filters-posts"
   >
     <!-- date -->
     <ZDropdown
       name="Wybierz miesiąc"
-      class="z-dropdown--has-chevron z-posts-filters__month"
+      class="z-dropdown--has-chevron z-filters-posts__month"
     >
       <ZForm>
         <template #content>
           <div style="display: grid; align-items: end; grid-auto-flow: column;">
             <ZDatePicker v-model="dateRange" />
-            <div class="z-posts-filters__date  -selected">
-              <ZText class="z-posts-filters__date-label">
+            <div class="z-filters-posts__date  -selected">
+              <ZText class="z-filters-posts__date-label">
                 Wybrana data
               </ZText>
               <div v-if="dateRange.length === 2">
@@ -29,11 +29,11 @@
     <!-- categories -->
     <ZDropdown
       name="Wybierz kategorię"
-      class="z-dropdown--has-chevron z-posts-filters__categories"
+      class="z-dropdown--has-chevron z-filters-posts__categories"
     >
       <ZForm>
         <template #content>
-          <div class="z-posts-filters__form-categories">
+          <div class="z-filters-posts__form-categories">
             <template v-for="category in categories">
               <ZFormField
                 :key="category.id"
@@ -57,15 +57,15 @@
     <!-- tags -->
     <ZDropdown
       name="Wybierz tagi"
-      class="z-dropdown--has-chevron z-posts-filters__tags"
+      class="z-dropdown--has-chevron z-filters-posts__tags"
     >
       <ZForm @submit.prevent="submitSelectedTags">
         <template #content>
-          <ul class="z-posts-filters__tags-list">
+          <ul class="z-filters-posts__tags-list">
             <template v-for="tag in tags">
               <li
                 :key="tag.id"
-                class="z-posts-filters__tag"
+                class="z-filters-posts__tag"
               >
                 <ZBubble
                   :value="isTagSelected(tag.value)"
@@ -81,7 +81,7 @@
         </template>
       </ZForm>
     </ZDropdown>
-    <div class="z-posts-filters__enabled">
+    <div class="z-filters-posts__enabled">
       <template v-for="(filter, index) in selectedFiltersRendered">
         <ZBubble
           :key="index"
@@ -108,7 +108,7 @@ import ZFormField from '../../molecules/ZFormField/ZFormField.vue';
 import ZSelect from '../../atoms/ZSelect/ZSelect.vue';
 
 export default {
-  name: 'ZPostsFilters',
+  name: 'ZFiltersPosts',
   components: {
     ZDatePicker,
     ZDropdown,
@@ -184,7 +184,7 @@ export default {
 </script>
 
 <style lang="scss">
-  .z-posts-filters {
+  .z-filters-posts {
     --button-height: 40px;
     --button-padding: 8px 32px;
     --button-min-width: 160px;

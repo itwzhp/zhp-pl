@@ -6,7 +6,7 @@
       style="--section-margin: 0;"
     >
       <div class="sidebar">
-        <ZEventsFilters
+        <ZFiltersEvents
           :categories="categories"
           :tags="tags"
         />
@@ -36,14 +36,14 @@ import axios from 'axios';
 import {
   ZSection,
   ZEvent,
-  ZEventsFilters,
+  ZFiltersEvents,
   ZPagination,
 } from '../../../index';
 
 export default {
   name: 'Events',
   components: {
-    ZEventsFilters,
+    ZFiltersEvents,
     ZSection,
     ZEvent,
     ZPagination,

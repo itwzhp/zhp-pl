@@ -1,7 +1,7 @@
 <template>
   <component
     :is="tag"
-    class="z-events-filters"
+    class="z-filters-events"
     style=" padding: 24px;
         border-radius: 10px;
         box-shadow: 0 2px 4px 0 rgba(157, 157, 157, 0.5);
@@ -10,15 +10,15 @@
   >
     <ZHeading
       :level="3"
-      class="z-events-filters__title"
+      class="z-filters-events__title"
     >
       Filtry
     </ZHeading>
-    <div class="z-events-filters__section">
-      <div class="z-events-filters__section-header">
+    <div class="z-filters-events__section">
+      <div class="z-filters-events__section-header">
         <ZHeading
           :level="4"
-          class="z-events-filters__section-header-title"
+          class="z-filters-events__section-header-title"
         >
           Aktywne filtry
         </ZHeading>
@@ -44,7 +44,7 @@
     </div>
     <ZForm @submit.prevent="submit">
       <template #content>
-        <div class="z-events-filters__section">
+        <div class="z-filters-events__section">
           <template v-for="category in categories">
             <ZFormField
               :key="category.key"
@@ -65,17 +65,17 @@
             </template>
           </ZFormField>
         </div>
-        <div class="z-events-filters__section z-events-filters__section--no-border">
-          <div class="z-events-filters__section-header">
+        <div class="z-filters-events__section z-filters-events__section--no-border">
+          <div class="z-filters-events__section-header">
             <ZHeading
               :level="4"
-              class="z-events-filters__section-header-title"
+              class="z-filters-events__section-header-title"
             >
               Tagi
             </ZHeading>
             <ZLink
               to="#"
-              class="z-events-filters__section-header-more"
+              class="z-filters-events__section-header-more"
             >
               Zobacz wszystkie
             </ZLink>
@@ -101,7 +101,7 @@ import ZFormField from '../../molecules/ZFormField/ZFormField.vue';
 import ZDatePicker from '../../atoms/ZDatePicker/ZDatePicker.vue';
 
 export default {
-  name: 'ZEventsFilters',
+  name: 'ZFiltersEvents',
   components: {
     ZDatePicker,
     ZLink,
@@ -151,7 +151,7 @@ export default {
 </script>
 
 <style lang="scss">
-  .z-events-filters {
+  .z-filters-events {
     &__title {
       margin: 0 0 8px 0;
     }
