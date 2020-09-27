@@ -7,24 +7,32 @@
     <ZDropdown
       name="Wybierz miesiąc"
       class="z-dropdown--has-chevron z-filters-posts__month"
+      @update:open="selectedDate = selectedFilters.date || []"
     >
-      <ZForm>
-        <template #content>
-          <div style="display: grid; align-items: end; grid-auto-flow: column;">
-            <ZDatePicker v-model="dateRange" />
-            <div class="z-filters-posts__date  -selected">
-              <ZText class="z-filters-posts__date-label">
-                Wybrana data
-              </ZText>
-              <div v-if="dateRange.length === 2">
-                <div>{{ dateRange[0] | format }}</div>
-                <div>-</div>
-                <div>{{ dateRange[1] | format }}</div>
+      <template #default="{toggle}">
+        <ZForm
+          @submit.prevent="submitDate(toggle)"
+          @click:cancel="formCancel(toggle)"
+        >
+          <template #content>
+            <div
+              class="z-filters-posts__date-picker"
+            >
+              <ZDatePicker v-model="selectedDate" />
+              <div class="z-filters-posts__date-selected">
+                <ZText class="z-filters-posts__date-label">
+                  Wybrana data
+                </ZText>
+                <div v-if="selectedDate.length === 2">
+                  <div>{{ selectedDate[0] | format }}</div>
+                  <div>-</div>
+                  <div>{{ selectedDate[1] | format }}</div>
+                </div>
               </div>
             </div>
-          </div>
-        </template>
-      </ZForm>
+          </template>
+        </ZForm>
+      </template>
     </ZDropdown>
     <!-- categories -->
     <ZDropdown
@@ -50,7 +58,7 @@
                       :value="categorySelected(taxonomy)"
                       :options="category.options"
                       class="z-field__input"
-                      @input="()=>(true)"
+                      @input="updateCategory($event, taxonomy)"
                     />
                   </template>
                 </ZFormField>
@@ -95,12 +103,12 @@
     </ZDropdown>
     <div class="z-filters-posts__selected">
       <template v-for="(filters, taxonomy) in selectedBubbles">
-        <template v-for="filter in filters">
+        <template v-for="(filter, type) in filters">
           <ZBubble
             :key="filter.id"
             :value="true"
             type="filter"
-            @input="removeSelectedFilter(filter, taxonomy)"
+            @input="removeSelectedFilter(filter, taxonomy, type)"
           >
             {{ filter.label }}
           </ZBubble>
@@ -165,18 +173,22 @@ export default {
     return {
       selectedCategories: [],
       selectedTags: [],
-      dateRange: ['2020-09-01', '2020-09-24'],
+      selectedDate: [],
     };
   },
   computed: {
     selectedBubbles() {
       const selectedBubbles = {};
+      if (this.selectedFilters.date) {
+        const date = this.selectedFilters.date.map((day) => (this.$options.filters.format(day))).join(' - ');
+        selectedBubbles.date = { date: { id: '', value: this.selectedFilters.date, label: date } };
+      }
       if (Object.keys(this.categories).length) {
-        const categories = this.selectedFilters.categories
-            && Object.keys(this.selectedFilters.categories).map((option) => (
-              this.categories[option].options[this.selectedFilters.categories[option]]
-            ));
-        selectedBubbles.categories = categories;
+        const selectedCategories = { ...this.selectedFilters.categories };
+        Object.keys(selectedCategories).forEach((taxonomy) => {
+          selectedCategories[taxonomy] = this.categories[taxonomy].options[selectedCategories[taxonomy]];
+        });
+        selectedBubbles.categories = selectedCategories;
       }
       if (Object.keys(this.tags).length) {
         const tags = this.selectedFilters.tags
@@ -187,11 +199,20 @@ export default {
     },
   },
   methods: {
+    categorySelected(taxonomy) {
+      return this.selectedCategories[taxonomy];
+    },
     isTagSelected(tag) {
       return this.selectedTags ? this.selectedTags.includes(tag.value) : false;
     },
-    categorySelected(taxonomy) {
-      return this.selectedCategories[taxonomy];
+    updateCategory(id, taxonomy) {
+      let categories = { ...this.selectedCategories };
+      if (parseInt(id, 10)) {
+        categories = { ...categories, [taxonomy]: parseInt(id, 10) };
+      } else {
+        delete categories[taxonomy];
+      }
+      this.selectedCategories = categories;
     },
     updateTag(isChecked, tag) {
       if (isChecked) {
@@ -200,7 +221,10 @@ export default {
         this.selectedTags = this.selectedTags.filter((option) => (option !== tag.value));
       }
     },
-    // todo: refactor to submit - the same ide like on removeSelectedFilters
+    submitDate(toggle) {
+      toggle();
+      this.$emit('submit:date', this.selectedDate);
+    },
     submitTags(toggle) {
       toggle();
       this.$emit('submit:tags', this.selectedTags);
@@ -212,9 +236,19 @@ export default {
     formCancel(toggle) {
       toggle();
     },
-    removeSelectedFilter(filter, taxonomy) {
-      console.log(filter.value, taxonomy);
-      // this.selectedFilters[taxonomy] = this.selectedFilters[taxonomy].filter((option) => (option !== filter.value));
+    removeSelectedFilter(filter, taxonomy, category) {
+      const selectedFilters = { ...this.selectedFilters };
+      switch (taxonomy) {
+        case 'categories':
+          delete selectedFilters.categories[category];
+          break;
+        case 'date':
+          delete selectedFilters.date;
+          break;
+        default:
+          selectedFilters.tags = selectedFilters.tags.filter((tag) => (tag !== filter.value));
+      }
+      this.$emit('update', selectedFilters);
     },
   },
 };
@@ -238,9 +272,7 @@ export default {
       margin: 0 0 0 -14px;
     }
 
-    &__form-categories {
-      padding: 0 32px;
-    }
+    &__form-categories {}
 
     &__tags {
       --button-min-width: 192px;
@@ -272,6 +304,15 @@ export default {
       justify-content: start;
       margin: 24px 0;
       gap: 8px;
+    }
+
+    &__date-picker {
+      display: grid;
+      align-items: end;
+      grid-auto-flow: column;
+      .flatpickr-calendar {
+        grid-column: 1;
+      }
     }
 
     &__date-selected {

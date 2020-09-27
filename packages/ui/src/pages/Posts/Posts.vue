@@ -14,6 +14,7 @@
         @submit:date="updateSelectedDate"
         @submit:categories="updateSelectedCategories"
         @submit:tags="updateSelectedTags"
+        @update="updateFilters"
       />
     </ZSection>
     <ZSection>
@@ -69,12 +70,7 @@ export default {
       date: [],
       tags: {},
       categories: {},
-      selectedFilters: {
-        categories: {
-          teams: 44,
-          age_groups: 23,
-        },
-      },
+      selectedFilters: {},
       posts: [],
       page: 1,
       totalPages: 0,
@@ -111,10 +107,17 @@ export default {
     removeSelectedFilter(state) {
       this.selectedFilters = JSON.parse(JSON.stringify(state));
     },
-    updateSelectedDate() {},
-    updateSelectedCategories() {},
-    updateSelectedTags(newTags) {
-      this.selectedFilters = { ...this.selectedFilters, tags: newTags };
+    updateSelectedDate(date) {
+      this.selectedFilters = { ...this.selectedFilters, date };
+    },
+    updateSelectedCategories(categories) {
+      this.selectedFilters = { ...this.selectedFilters, categories };
+    },
+    updateSelectedTags(tags) {
+      this.selectedFilters = { ...this.selectedFilters, tags };
+    },
+    updateFilters(filters) {
+      this.selectedFilters = { ...filters };
     },
     updatePage(direction) {
       this.requestApi(direction);
@@ -135,8 +138,8 @@ export default {
       const ageGroups = await this.fetchAPI(`${API_URL}/age_groups`);
       const teams = await this.fetchAPI(`${API_URL}/teams`);
       this.categories = {
-        teams: { id: 'teams', label: 'Zespoły', options: teams.data.reduce(this.reduceOptions, {}) },
-        age_groups: { id: 'age_groups', label: 'Metodyki', options: ageGroups.data.reduce(this.reduceOptions, {}) },
+        teams: { id: 'teams', label: 'Zespoły', options: { 0: { id: 0, label: '', value: '' }, ...teams.data.reduce(this.reduceOptions, {}) } },
+        age_groups: { id: 'age_groups', label: 'Metodyki', options: { 0: { id: 0, label: '', value: '' }, ...ageGroups.data.reduce(this.reduceOptions, {}) } },
       };
 
       const posts = await this.fetchAPI(`${API_URL}/posts`, {
