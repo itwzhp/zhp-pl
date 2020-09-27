@@ -138,8 +138,8 @@ export default {
       const ageGroups = await this.fetchAPI(`${API_URL}/age_groups`);
       const teams = await this.fetchAPI(`${API_URL}/teams`);
       this.categories = {
-        teams: { id: 'teams', label: 'Zespoły', options: { 0: { id: 0, label: '', value: '' }, ...teams.data.reduce(this.reduceOptions, {}) } },
-        age_groups: { id: 'age_groups', label: 'Metodyki', options: { 0: { id: 0, label: '', value: '' }, ...ageGroups.data.reduce(this.reduceOptions, {}) } },
+        teams: { id: 'teams', label: 'Zespoły', options: { 0: { id: 0, label: 'Wybierz zespół', value: '' }, ...teams.data.reduce(this.reduceOptions, {}) } },
+        age_groups: { id: 'age_groups', label: 'Metodyki', options: { 0: { id: 0, label: 'Wybierz metodykę', value: '' }, ...ageGroups.data.reduce(this.reduceOptions, {}) } },
       };
 
       const posts = await this.fetchAPI(`${API_URL}/posts`, {
