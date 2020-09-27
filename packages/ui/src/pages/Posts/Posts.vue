@@ -103,6 +103,11 @@ export default {
       return query;
     },
   },
+  watch: {
+    selectedFilters() {
+      this.requestPosts(this.filtersQuery);
+    },
+  },
   created() {
     this.requestApi();
   },
@@ -145,6 +150,16 @@ export default {
         totalPages: parseInt(response.headers['x-wp-totalpages'], 10),
       };
     },
+    async requestPosts(params) {
+      const { API_URL } = process.env;
+      const postParams = {
+        per_page: 16,
+        ...params,
+      };
+      const posts = await this.fetchAPI(`${API_URL}/posts`, postParams);
+      this.posts = posts.data;
+      this.totalPages = posts.totalPages;
+    },
     async requestApi(direction = 0) {
       const { API_URL } = process.env;
 
@@ -157,11 +172,11 @@ export default {
         teams: { id: 'teams', label: 'Zespoły', options: { 0: { id: 0, label: 'Wybierz zespół', value: '' }, ...teams.data.reduce(this.reduceOptions, {}) } },
         age_groups: { id: 'age_groups', label: 'Metodyki', options: { 0: { id: 0, label: 'Wybierz metodykę', value: '' }, ...ageGroups.data.reduce(this.reduceOptions, {}) } },
       };
-
-      const posts = await this.fetchAPI(`${API_URL}/posts`, {
+      const postParams = {
         per_page: 16,
         page: this.page + direction,
-      });
+      };
+      const posts = await this.fetchAPI(`${API_URL}/posts`, postParams);
       this.posts = posts.data;
       this.totalPages = posts.totalPages;
 
