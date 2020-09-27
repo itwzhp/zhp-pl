@@ -31,7 +31,7 @@ export default {
       defaultDate: this.value,
       onValueUpdate: (selectedDates) => {
         if (selectedDates.length === 2) {
-          this.$emit('input', selectedDates);
+          this.$emit('input', selectedDates.map((date) => (new Date(date).toISOString())));
         }
       },
     });

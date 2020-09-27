@@ -86,6 +86,22 @@ export default {
     hasPreviousPage() {
       return this.page > 1;
     },
+    filtersQuery() {
+      let query = {};
+      if (this.selectedFilters.date) {
+        // eslint-disable-next-line prefer-destructuring
+        query.after = this.selectedFilters.date[0];
+        // eslint-disable-next-line prefer-destructuring
+        query.before = this.selectedFilters.date[1];
+      }
+      if (this.selectedFilters.categories) {
+        query = { ...query, ...this.selectedFilters.categories };
+      }
+      if (this.selectedFilters.tags) {
+        query.tags = [...this.selectedFilters.tags];
+      }
+      return query;
+    },
   },
   created() {
     this.requestApi();
