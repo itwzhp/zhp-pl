@@ -197,7 +197,7 @@ export default {
     }
 
     &--highlighted {
-      --bubble-background: #ce171e;
+      --bubble-label-background: #ce171e;
 
       grid-column: 4;
       grid-row: 2 / span 2;
@@ -228,7 +228,7 @@ export default {
     }
 
     &--primary {
-      --bubble-background: #efac1f;
+      --bubble-label-background: #efac1f;
 
       grid-column: span 4;
       grid-template-columns: repeat(4, 1fr);
