@@ -50,6 +50,15 @@ export default {
       isOpen: false,
     };
   },
+  watch: {
+    isOpen(isOpen) {
+      if (isOpen) {
+        this.$emit('update:open');
+      } else {
+        this.$emit('update:close');
+      }
+    },
+  },
   methods: {
     toggle() {
       this.isOpen = !this.isOpen;

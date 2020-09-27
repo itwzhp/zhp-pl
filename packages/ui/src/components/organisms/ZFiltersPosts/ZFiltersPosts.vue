@@ -30,66 +30,81 @@
     <ZDropdown
       name="Wybierz kategorię"
       class="z-dropdown--has-chevron z-filters-posts__categories"
+      @update:open="selectedCategories = selectedFilters.categories || []"
     >
-      <ZForm>
-        <template #content>
-          <div class="z-filters-posts__form-categories">
-            <template v-for="category in categories">
-              <ZFormField
-                :key="category.id"
-                :label="category.label"
-              >
-                <template #input="{id}">
-                  <ZSelect
-                    :id="id"
-                    :value="selectedCategories[category.id]"
-                    :options="category.options"
-                    class="z-field__input"
-                    @input="selectedCategories[category.id] = $event"
-                  />
-                </template>
-              </ZFormField>
-            </template>
-          </div>
-        </template>
-      </ZForm>
+      <template #default="{toggle}">
+        <ZForm
+          @submit.prevent="submitCategories(toggle)"
+          @click:cancel="formCancel(toggle)"
+        >
+          <template #content>
+            <div class="z-filters-posts__form-categories">
+              <template v-for="(category, taxonomy) in categories">
+                <ZFormField
+                  :key="category.id"
+                  :label="category.label"
+                >
+                  <template #input="{id}">
+                    <ZSelect
+                      :id="id"
+                      :value="categorySelected(taxonomy)"
+                      :options="category.options"
+                      class="z-field__input"
+                      @input="()=>(true)"
+                    />
+                  </template>
+                </ZFormField>
+              </template>
+            </div>
+          </template>
+        </ZForm>
+      </template>
     </ZDropdown>
     <!-- tags -->
     <ZDropdown
       name="Wybierz tagi"
       class="z-dropdown--has-chevron z-filters-posts__tags"
+      @update:open="selectedTags = selectedFilters.tags || []"
     >
-      <ZForm @submit.prevent="submitSelectedTags">
-        <template #content>
-          <ul class="z-filters-posts__tags-list">
-            <template v-for="tag in tags">
-              <li
-                :key="tag.id"
-                class="z-filters-posts__tag"
-              >
-                <ZBubble
-                  :value="isTagSelected(tag.value)"
-                  type="filter"
-                  style="--button-min-width: 14px; --button-padding: 0;"
-                  @input="updateCheckedTags($event, tag)"
-                >
-                  {{ tag.label }}
-                </ZBubble>
-              </li>
-            </template>
-          </ul>
-        </template>
-      </ZForm>
-    </ZDropdown>
-    <div class="z-filters-posts__enabled">
-      <template v-for="(filter, index) in selectedFiltersRendered">
-        <ZBubble
-          :key="index"
-          :value="true"
-          type="filter"
+      <template #default="{toggle}">
+        <ZForm
+          @submit.prevent="submitTags(toggle)"
+          @click:cancel="formCancel(toggle)"
         >
-          {{ filter.label }}
-        </ZBubble>
+          <template #content>
+            <ul class="z-filters-posts__tags-list">
+              <template v-for="option in tags">
+                <li
+                  :key="option.id"
+                  class="z-filters-posts__tag"
+                >
+                  <ZBubble
+                    :value="isTagSelected(option)"
+                    type="filter"
+                    style="--button-min-width: 14px; --button-padding: 0;"
+                    @input="updateTag($event, option)"
+                  >
+                    {{ option.label }}
+                  </ZBubble>
+                </li>
+              </template>
+            </ul>
+          </template>
+        </ZForm>
+      </template>
+    </ZDropdown>
+    <div class="z-filters-posts__selected">
+      <template v-for="(filters, taxonomy) in selectedBubbles">
+        <template v-for="filter in filters">
+          <ZBubble
+            :key="filter.id"
+            :value="true"
+            type="filter"
+            @input="removeSelectedFilter(filter, taxonomy)"
+          >
+            {{ filter.label }}
+          </ZBubble>
+        </template>
       </template>
     </div>
   </component>
@@ -134,12 +149,12 @@ export default {
       default: 'div',
     },
     categories: {
-      type: Array,
-      default: () => ([]),
+      type: Object,
+      default: () => ({}),
     },
     tags: {
-      type: Array,
-      default: () => ([]),
+      type: Object,
+      default: () => ({}),
     },
     selectedFilters: {
       type: Object,
@@ -148,36 +163,58 @@ export default {
   },
   data() {
     return {
-      selectedCategories: { teams: 'instytut-badawczy' },
-      selectedTags: {},
+      selectedCategories: [],
+      selectedTags: [],
       dateRange: ['2020-09-01', '2020-09-24'],
     };
   },
   computed: {
-    selectedFiltersRendered() {
-      return Object.keys(this.selectedFilters).reduce((accumulator, filters) => ({
-        ...accumulator,
-        ...this.selectedFilters[filters],
-      }), {});
+    selectedBubbles() {
+      const selectedBubbles = {};
+      if (Object.keys(this.categories).length) {
+        const categories = this.selectedFilters.categories
+            && Object.keys(this.selectedFilters.categories).map((option) => (
+              this.categories[option].options[this.selectedFilters.categories[option]]
+            ));
+        selectedBubbles.categories = categories;
+      }
+      if (Object.keys(this.tags).length) {
+        const tags = this.selectedFilters.tags
+            && this.selectedFilters.tags.map((option) => (this.tags[option]));
+        selectedBubbles.tags = tags;
+      }
+      return selectedBubbles;
     },
   },
   methods: {
-    isTagSelected(value) {
-      return !!this.selectedTags[value];
+    isTagSelected(tag) {
+      return this.selectedTags ? this.selectedTags.includes(tag.value) : false;
     },
-    updateCheckedTags(checked, tag) {
-      if (checked) {
-        this.selectedTags = { ...this.selectedTags, [tag.id]: tag };
+    categorySelected(taxonomy) {
+      return this.selectedCategories[taxonomy];
+    },
+    updateTag(isChecked, tag) {
+      if (isChecked) {
+        this.selectedTags = [...this.selectedTags, tag.value];
       } else {
-        this.selectedTags = Object.keys(this.selectedTags).reduce((accumulator, id) => (id === `${tag.id}`
-          ? accumulator : {
-            ...accumulator,
-            [id]: this.selectedTags[id],
-          }), {});
+        this.selectedTags = this.selectedTags.filter((option) => (option !== tag.value));
       }
     },
-    submitSelectedTags() {
+    // todo: refactor to submit - the same ide like on removeSelectedFilters
+    submitTags(toggle) {
+      toggle();
       this.$emit('submit:tags', this.selectedTags);
+    },
+    submitCategories(toggle) {
+      toggle();
+      this.$emit('submit:categories', this.selectedCategories);
+    },
+    formCancel(toggle) {
+      toggle();
+    },
+    removeSelectedFilter(filter, taxonomy) {
+      console.log(filter.value, taxonomy);
+      // this.selectedFilters[taxonomy] = this.selectedFilters[taxonomy].filter((option) => (option !== filter.value));
     },
   },
 };
@@ -229,12 +266,12 @@ export default {
       margin: 3px;
     }
 
-    &__enabled {
-      display: grid;
+    &__selected {
+      display: flex;
+      flex-wrap: wrap;
       justify-content: start;
       margin: 24px 0;
       gap: 8px;
-      grid-auto-flow: column;
     }
 
     &__date-selected {

@@ -11,6 +11,7 @@
           <ZButton
             type="button"
             class="z-form__cancel"
+            @click="$emit('click:cancel')"
           >
             <ZIcon name="cross" />
           </ZButton>

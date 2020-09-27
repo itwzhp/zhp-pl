@@ -9,10 +9,11 @@
         style=" margin: 32px 0; grid-column: 5 / span 7;"
         :categories="categories"
         :tags="tags"
+        :date="date"
         :selected-filters="selectedFilters"
+        @submit:date="updateSelectedDate"
+        @submit:categories="updateSelectedCategories"
         @submit:tags="updateSelectedTags"
-        @submit:categories="()=>(true)"
-        @submit:date="()=>(true)"
       />
     </ZSection>
     <ZSection>
@@ -65,39 +66,14 @@ export default {
   },
   data() {
     return {
-      tags: [],
-      categories: [
-        {
-          id: 'teams',
-          label: 'Zespół',
-          options: [
-            { label: 'Wydział zagraniczny', value: 'wydzial-zagraniczny' },
-            { label: 'Harcerski instytut badawczy', value: 'instytut-badawczy' },
-          ],
-        },
-        {
-          id: 'ageGroups',
-          label: 'Metodyka',
-          options: [
-            { label: 'Zuchy', value: 'zuchy' },
-            { label: 'Harcerze', value: 'harcerze' },
-            { label: 'Harcerze Starsi', value: 'harcerze-starsi' },
-            { label: 'Wędrownicy', value: 'wedrownicy' },
-          ],
-        },
-        {
-          id: 'thirdOption',
-          label: 'Jakaś trzecia opcja',
-          options: [
-            { label: 'opcja A', value: 'a' },
-            { label: 'opcja B', value: 'b' },
-            { label: 'opcja C', value: 'c' },
-            { label: 'opcja D', value: 'd' },
-          ],
-        },
-      ],
+      date: [],
+      tags: {},
+      categories: {},
       selectedFilters: {
-        tags: [],
+        categories: {
+          teams: 44,
+          age_groups: 23,
+        },
       },
       posts: [],
       page: 1,
@@ -119,9 +95,26 @@ export default {
     this.requestApi();
   },
   methods: {
-    updateSelectedTags(newValue) {
-      console.log(newValue);
-      this.selectedFilters = { ...this.selectedFilters, tags: newValue };
+    reduceOptions(accumulator, option) {
+      return {
+        ...accumulator,
+        [option.id]: this.mapOption(option),
+      };
+    },
+    mapOption(option) {
+      return {
+        id: option.id,
+        label: option.name,
+        value: option.id,
+      };
+    },
+    removeSelectedFilter(state) {
+      this.selectedFilters = JSON.parse(JSON.stringify(state));
+    },
+    updateSelectedDate() {},
+    updateSelectedCategories() {},
+    updateSelectedTags(newTags) {
+      this.selectedFilters = { ...this.selectedFilters, tags: newTags };
     },
     updatePage(direction) {
       this.requestApi(direction);
@@ -137,10 +130,14 @@ export default {
       const { API_URL } = process.env;
 
       const tags = await this.fetchAPI(`${API_URL}/tags`);
-      this.tags = tags.data.map((tag) => ({ id: tag.id, value: tag.id, label: tag.name }));
+      this.tags = tags.data.reduce(this.reduceOptions, {});
 
-      // const categories = await this.fetchAPI(`${API_URL}/categories`);
-      // this.categories = categories.data;
+      const ageGroups = await this.fetchAPI(`${API_URL}/age_groups`);
+      const teams = await this.fetchAPI(`${API_URL}/teams`);
+      this.categories = {
+        teams: { id: 'teams', label: 'Zespoły', options: teams.data.reduce(this.reduceOptions, {}) },
+        age_groups: { id: 'age_groups', label: 'Metodyki', options: ageGroups.data.reduce(this.reduceOptions, {}) },
+      };
 
       const posts = await this.fetchAPI(`${API_URL}/posts`, {
         per_page: 16,

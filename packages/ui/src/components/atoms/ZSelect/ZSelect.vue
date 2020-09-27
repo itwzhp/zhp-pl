@@ -26,11 +26,11 @@ export default {
   },
   props: {
     value: {
-      type: String,
+      type: [String, Number],
       default: '',
     },
     options: {
-      type: Array,
+      type: [Array, Object],
       default: () => ({}),
     },
   },
@@ -42,6 +42,7 @@ export default {
     height: var(--select-height, 48px);
     padding: var(--select-padding, 0 16px);
     border: var(--select-border, 1px solid #a6ce39);
+    -webkit-appearance: none;
     background: var(--select-background, #fff);
     border-radius: var(--select-border-radius, 10px);
     color: var(--select-color, #1e152f);

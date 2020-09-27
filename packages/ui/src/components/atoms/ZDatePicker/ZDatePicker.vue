@@ -137,7 +137,7 @@ export default {
       &.inRange {
         &,
         &.nextMonthDay:not(.endRange),
-        &.prevMonthDay:not(.endRange){
+        &.prevMonthDay:not(.endRange) {
           border: 0;
           background: #fff;
           box-shadow: -5px 0 0 #fff, 5px 0 0 #fff;
