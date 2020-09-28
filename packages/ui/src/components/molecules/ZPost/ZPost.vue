@@ -229,14 +229,14 @@ export default {
 
     &--primary {
       --bubble-label-background: #efac1f;
+      --bubble-label-color: #fff;
 
-      grid-column: span 4;
-      grid-template-columns: repeat(4, 1fr);
-      grid-template-rows: repeat(2, calc(345px / 2));
+      grid-template-columns: repeat(12, 1fr);
+      grid-template-rows: 345px;
 
       #{$this}__thumbnail {
-        grid-column: 1 / span 4;
-        grid-row: 1 / span 2;
+        grid-column: 1 / span 12;
+        grid-row: 1;
 
         &::after {
           content: none;
@@ -247,9 +247,9 @@ export default {
         z-index: 1;
         padding: 40px;
         color: #fff;
-        grid-column: 1 / span 2;
-        grid-row: 2;
-        place-self: start;
+        grid-column: 1 / span 6;
+        grid-row: 1;
+        place-self: end;
       }
 
       #{$this}__title {
