@@ -14,7 +14,10 @@
     >
       Filtry
     </ZHeading>
-    <div class="z-filters-events__section">
+    <!-- todo: hide section for non selected filters-->
+    <div
+      class="z-filters-events__section"
+    >
       <div class="z-filters-events__section-header">
         <ZHeading
           :level="4"
@@ -23,45 +26,49 @@
           Aktywne filtry
         </ZHeading>
       </div>
-      <ul style="display: flex; flex-wrap: wrap; padding: 0; margin: -3px; list-style-type: none;">
-        <template
-          v-for="(item, index) in items"
-        >
-          <li
-            :key="index"
-            style="margin: 3px;"
-          >
+      <div class="z-filters-events__selected">
+        <template v-for="(filters, taxonomy) in selectedBubbles">
+          <template v-for="(filter, type) in filters">
             <ZBubble
+              :key="filter.id"
               :value="true"
               type="filter"
-              @change="unchecked($event)"
+              @input="removeSelectedFilter(filter, taxonomy, type)"
             >
-              {{ item.name }}
+              {{ filter.label }}
             </ZBubble>
-          </li>
+          </template>
         </template>
-      </ul>
+      </div>
     </div>
-    <ZForm @submit.prevent="submit">
+    <ZForm @submit.prevent="submitFilters">
       <template #content>
         <div class="z-filters-events__section">
-          <template v-for="category in categories">
+          <template v-for="(category, taxonomy) in categories">
             <ZFormField
-              :key="category.key"
+              :key="category.id"
               :label="category.label"
             >
               <template #input="{id}">
                 <ZSelect
                   :id="id"
+                  :value="categorySelected(taxonomy)"
                   class="z-field__input"
                   :options="category.options"
+                  @input="updateCategory($event, taxonomy)"
                 />
               </template>
             </ZFormField>
           </template>
+          <!-- todo: ACF integration -->
           <ZFormField label="Data Wydarzenia">
             <template #input>
-              <!--              <ZDatePicker />-->
+              <ZDatePicker
+                v-model="selectedDate"
+                tag="input"
+                :settings="{inline: false, dateFormat: 'd/m/Y'}"
+                class="z-input"
+              />
             </template>
           </ZFormField>
         </div>
@@ -80,6 +87,7 @@
               Zobacz wszystkie
             </ZLink>
           </div>
+          <!-- todo: add new field component the same like in WordPress tags  -->
           <ZFormField />
         </div>
       </template>
@@ -88,6 +96,7 @@
 </template>
 
 <script>
+import { format } from 'date-fns';
 import ZButton from '../../atoms/ZButton/ZButton.vue';
 import ZIcon from '../../atoms/ZIcon/ZIcon.vue';
 import ZText from '../../atoms/ZText/ZText.vue';
@@ -115,36 +124,103 @@ export default {
     ZForm,
     ZFormField,
   },
+  filters: {
+    format(date) {
+      if (!date) {
+        return '';
+      }
+      return format(new Date(date), 'dd/MM/yyyy');
+    },
+  },
   props: {
     tag: {
       type: String,
       default: 'form',
     },
     categories: {
-      type: Array,
-      default: () => ([]),
+      type: Object,
+      default: () => ({}),
     },
     tags: {
-      type: Array,
-      default: () => ([]),
+      type: Object,
+      default: () => ({}),
+    },
+    selectedFilters: {
+      type: Object,
+      default: () => ({}),
     },
   },
   data() {
     return {
-      filters: {},
-      items: [
-        { name: 'Zagranica', checked: true },
-        { name: '13/04/2017 - 18/04/2017', checked: true },
-        { name: 'Jakaś trzecia kategoria', checked: true },
-      ],
+      selectedCategories: {},
+      selectedTags: [],
+      selectedDate: [],
     };
   },
+  computed: {
+    selectedBubbles() {
+      const selectedBubbles = {};
+      if (this.selectedFilters.date) {
+        const date = this.selectedFilters.date.map((day) => (this.$options.filters.format(day))).join(' - ');
+        selectedBubbles.date = { date: { id: '', value: this.selectedFilters.date, label: date } };
+      }
+      if (Object.keys(this.categories).length) {
+        const selectedCategories = { ...this.selectedFilters.categories };
+        Object.keys(selectedCategories).forEach((taxonomy) => {
+          selectedCategories[taxonomy] = this.categories[taxonomy].options[selectedCategories[taxonomy]];
+        });
+        selectedBubbles.categories = selectedCategories;
+      }
+      if (Object.keys(this.tags).length) {
+        const tags = this.selectedFilters.tags
+            && this.selectedFilters.tags.map((option) => (this.tags[option]));
+        selectedBubbles.tags = tags;
+      }
+      return selectedBubbles;
+    },
+  },
   methods: {
-    submit() {
-      return true;
+    categorySelected(taxonomy) {
+      return this.selectedCategories[taxonomy];
+    },
+    updateCategory(id, taxonomy) {
+      let categories = { ...this.selectedCategories };
+      if (parseInt(id, 10)) {
+        categories = { ...categories, [taxonomy]: parseInt(id, 10) };
+      } else {
+        delete categories[taxonomy];
+      }
+      this.selectedCategories = categories;
+    },
+    submitFilters() {
+      const selectedFilters = {};
+      if (Object.keys(this.selectedCategories)) {
+        selectedFilters.categories = { ...this.selectedCategories };
+      }
+      if (this.selectedDate.length === 2) {
+        selectedFilters.date = [...this.selectedDate];
+      }
+      if (this.selectedTags.length > 0) {
+        selectedFilters.tags = [...this.selectedTags];
+      }
+      this.$emit('submit', selectedFilters);
     },
     unchecked(state) {
       console.log(state);
+    },
+    removeSelectedFilter(filter, taxonomy, category) {
+      const selectedFilters = { ...this.selectedFilters };
+      switch (taxonomy) {
+        case 'categories':
+          delete selectedFilters.categories[category];
+          break;
+        case 'date':
+          delete selectedFilters.date;
+          break;
+        default:
+          selectedFilters.tags = selectedFilters.tags.filter((tag) => (tag !== filter.value));
+      }
+      this.$emit('update', selectedFilters);
     },
   },
 };
@@ -184,6 +260,14 @@ export default {
         border-width: 0;
         margin: 0;
       }
+    }
+
+    &__selected {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: start;
+      margin: 24px 0;
+      gap: 8px;
     }
   }
 </style>

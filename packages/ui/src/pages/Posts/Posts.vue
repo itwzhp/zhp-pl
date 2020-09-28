@@ -163,11 +163,11 @@ export default {
     async requestApi(direction = 0) {
       const { API_URL } = process.env;
 
-      const tags = await this.fetchAPI(`${API_URL}/tags`);
+      const tags = await this.fetchAPI(`${API_URL}/tags`, { hide_empty: true });
       this.tags = tags.data.reduce(this.reduceOptions, {});
 
-      const ageGroups = await this.fetchAPI(`${API_URL}/age_groups`);
-      const teams = await this.fetchAPI(`${API_URL}/teams`);
+      const ageGroups = await this.fetchAPI(`${API_URL}/age_groups`, { hide_empty: true });
+      const teams = await this.fetchAPI(`${API_URL}/teams`, { hide_empty: true });
       this.categories = {
         teams: { id: 'teams', label: 'Zespoły', options: { 0: { id: 0, label: 'Wybierz zespół', value: '' }, ...teams.data.reduce(this.reduceOptions, {}) } },
         age_groups: { id: 'age_groups', label: 'Metodyki', options: { 0: { id: 0, label: 'Wybierz metodykę', value: '' }, ...ageGroups.data.reduce(this.reduceOptions, {}) } },

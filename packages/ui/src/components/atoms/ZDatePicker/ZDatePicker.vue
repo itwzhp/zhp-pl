@@ -20,21 +20,33 @@ export default {
       type: Array,
       default: () => ([]),
     },
+    settings: {
+      type: Object,
+      default: () => ({}),
+    },
   },
   mounted() {
-    flatpickr(this.$el, {
-      minDate: '2020',
-      maxDate: new Date(),
-      locale: Polish,
-      inline: true,
-      mode: 'range',
-      defaultDate: this.value,
-      onValueUpdate: (selectedDates) => {
-        if (selectedDates.length === 2) {
-          this.$emit('input', selectedDates.map((date) => (new Date(date).toISOString())));
-        }
+    const flatpickrConfig = {
+      ...{
+        minDate: '2020',
+        maxDate: new Date(),
+        locale: Polish,
+        inline: true,
+        mode: 'range',
+        defaultDate: this.value,
+        onReady(selectedDate, dateStr, instance) {
+          // eslint-disable-next-line no-param-reassign
+          instance.l10n.rangeSeparator = ' - ';
+        },
+        onValueUpdate: (selectedDates) => {
+          if (selectedDates.length === 2) {
+            this.$emit('input', selectedDates.map((date) => (new Date(date).toISOString())));
+          }
+        },
       },
-    });
+      ...this.settings,
+    };
+    flatpickr(this.$el, flatpickrConfig);
   },
 };
 </script>

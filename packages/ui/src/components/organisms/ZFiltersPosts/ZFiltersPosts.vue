@@ -3,7 +3,6 @@
     :is="tag"
     class="z-filters-posts"
   >
-    <!-- date -->
     <ZDropdown
       name="Wybierz miesiąc"
       class="z-dropdown--has-chevron z-filters-posts__month"
@@ -34,7 +33,6 @@
         </ZForm>
       </template>
     </ZDropdown>
-    <!-- categories -->
     <ZDropdown
       name="Wybierz kategorię"
       class="z-dropdown--has-chevron z-filters-posts__categories"
@@ -46,7 +44,7 @@
           @click:cancel="formCancel(toggle)"
         >
           <template #content>
-            <div class="z-filters-posts__form-categories">
+            <div>
               <template v-for="(category, taxonomy) in categories">
                 <ZFormField
                   :key="category.id"
@@ -68,7 +66,6 @@
         </ZForm>
       </template>
     </ZDropdown>
-    <!-- tags -->
     <ZDropdown
       name="Wybierz tagi"
       class="z-dropdown--has-chevron z-filters-posts__tags"
@@ -272,8 +269,6 @@ export default {
       margin: 0 0 0 -14px;
     }
 
-    &__form-categories {}
-
     &__tags {
       --button-min-width: 192px;
       --button-background: #4a7b26;
@@ -310,6 +305,7 @@ export default {
       display: grid;
       align-items: end;
       grid-auto-flow: column;
+
       .flatpickr-calendar {
         grid-column: 1;
       }
