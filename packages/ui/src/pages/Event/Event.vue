@@ -1,26 +1,26 @@
 <template>
-  <div id="post">
+  <div id="event">
     <ZSection tag="div">
       <ZHeading
         :level="1"
         class="title"
       >
-        {{ post.title.rendered }}
+        {{ event.title.rendered }}
       </ZHeading>
       <ZMeta
-        :author="{name: post.rest_author.name, avatarUrl: post.rest_author['avatar_url']}"
-        :reading-time="post.rest_reading_time"
-        :date="post.date"
-        :categories="post.categories"
+        :author="{name: event.rest_author.name, avatarUrl: event.rest_author['avatar_url']}"
+        :reading-time="event.rest_reading_time"
+        :date="event.date"
+        :categories="event.categories"
         class="meta"
       />
       <ZImage
-        :src="`https://demo.przemyslawspaczek.pl/wp-content/uploads/${post.rest_media.file}`"
+        :src="`https://demo.przemyslawspaczek.pl/wp-content/uploads/${event.rest_media.file}`"
         class="cover"
       />
       <div
         class="content"
-        v-html="post.content.rendered"
+        v-html="event.content.rendered"
       />
       <div class="z-files files">
         <!-- linki i dokumenty powiązane z artykułem -->
@@ -33,7 +33,7 @@
           </ZLink>
         </ZHeading>
         <ZList class="z-files__files">
-          <template v-for="(file, key) in post.files">
+          <template v-for="(file, key) in event.files">
             <li :key="key">
               <div class="z-file">
                 <div class="z-file__type">
@@ -55,14 +55,14 @@
           </template>
         </ZList>
       </div>
-      <div class="sidebar"></div>
+      <div class="sidebar" />
     </ZSection>
     <ZSection class="related">
       <ZHeading class="related__title">
         Mogą Cię także zainteresować:
       </ZHeading>
       <ZCarousel
-        v-if="relatedPosts.length > 0"
+        v-if="relatedEvents.length > 0"
         :peeked="true"
         :settings="{
           type: 'carousel',
@@ -73,18 +73,19 @@
         class="z-carousel--peeked related__carousel"
       >
         <li
-          v-for="post in relatedPosts"
-          :key="post.id"
+          v-for="event in relatedEvents"
+          :key="event.id"
           class="glide__slide"
         >
-          <ZPost
-            :key="post.id"
-            :thumbnail="`https://demo.przemyslawspaczek.pl/wp-content/uploads/${post.rest_media.file}`"
-            :title="post.title.rendered"
-            :to="post.link"
-            :author="post.rest_author"
-            :sticky="post.sticky"
-            :date="post.date"
+          <ZEvent
+            :key="event.id"
+            :thumbnail="`https://demo.przemyslawspaczek.pl/wp-content/uploads/${event.rest_media.file}`"
+            :title="event.title.rendered"
+            :date="event.rest_acf.date"
+            :location="{name: 'Warszawa'}"
+            :audience="{name: 'Wszyscy harcerze'}"
+            :type="event.rest_event_type"
+            :age-group="event.rest_age_group"
           />
         </li>
       </ZCarousel>
@@ -99,14 +100,14 @@ import {
   ZHeading,
   ZCarousel,
   ZImage,
-  ZPost,
+  ZEvent,
   ZMeta,
   ZList,
   ZLink,
 } from '../../../index';
 
 export default {
-  name: 'Post',
+  name: 'Event',
   components: {
     ZLink,
     ZMeta,
@@ -114,12 +115,12 @@ export default {
     ZHeading,
     ZSection,
     ZCarousel,
-    ZPost,
+    ZEvent,
     ZList,
   },
   data() {
     return {
-      post: {
+      event: {
         date: '',
         title: { rendered: '' },
         content: { rendered: '' },
@@ -129,12 +130,12 @@ export default {
         files: [],
       },
       categories: [],
-      relatedPosts: [],
+      relatedEvents: [],
     };
   },
   async created() {
     const { API_URL } = process.env;
-    const post = await this.fetchAPI(`${API_URL}/posts`, { slug: 'rekrutacja-szefa-szefowej-zespolu-ds-wspolpracy-zagranicznej-w-hufcach-i-choragwiach' });
+    const event = await this.fetchAPI(`${API_URL}/events`, { slug: 'hal-2020' });
     const files = [
       { type: 'Link', name: 'Rejestracja patroli', url: '#' },
       {
@@ -145,11 +146,11 @@ export default {
       },
     ];
     // eslint-disable-next-line prefer-destructuring
-    this.post = { ...post.data[0], files };
+    this.post = { ...event.data[0], files };
     // todo: pobranie kategori to każdorazowe zapytanie API?
     // todo: pobranie kategori to zwrócenie kategorii w tym obiekcie
-    const relatedPosts = await this.fetchAPI(`${API_URL}/posts`, { per_page: 8 });
-    this.relatedPosts = relatedPosts.data;
+    const relatedEvents = await this.fetchAPI(`${API_URL}/events`, { per_page: 8 });
+    this.relatedEvents = relatedEvents.data;
   },
   methods: {
     async fetchAPI(url, params) {
@@ -166,7 +167,7 @@ export default {
 </script>
 
 <style lang="scss">
-#post {
+#event {
   overflow: hidden;
 
   .title {

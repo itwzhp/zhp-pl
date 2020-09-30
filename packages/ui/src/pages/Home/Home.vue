@@ -47,7 +47,7 @@
           :key="post.id"
           class="glide__slide"
         >
-          <ZArticle
+          <ZPost
             :key="post.id"
             :thumbnail="`https://demo.przemyslawspaczek.pl/wp-content/uploads/${post.rest_media.file}`"
             :title="post.title.rendered"
