@@ -18,9 +18,9 @@
         :src="`https://demo.przemyslawspaczek.pl/wp-content/uploads/${post.rest_media.file}`"
         class="cover"
       />
-      <div
-        class="content"
-        v-html="post.content.rendered"
+      <Compiler
+          class="content"
+          :html="post.content.rendered"
       />
       <div class="z-files files">
         <!-- linki i dokumenty powiązane z artykułem -->
@@ -55,7 +55,7 @@
           </template>
         </ZList>
       </div>
-      <div class="sidebar"></div>
+      <div class="sidebar" />
     </ZSection>
     <ZSection class="related">
       <ZHeading class="related__title">
@@ -94,6 +94,7 @@
 
 <script>
 import axios from 'axios';
+import Compiler from '../../helpers/Compiler.vue';
 import {
   ZSection,
   ZHeading,
@@ -108,6 +109,7 @@ import {
 export default {
   name: 'Post',
   components: {
+    Compiler,
     ZLink,
     ZMeta,
     ZImage,

@@ -65,8 +65,8 @@ export default {
       default: '',
     },
     readingTime: {
-      type: String,
-      default: '',
+      type: Number,
+      default: 0,
     },
     categories: {
       type: Array,
