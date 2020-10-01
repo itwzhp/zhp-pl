@@ -41,7 +41,7 @@ export default {
       default: 'div',
     },
     name: {
-      String,
+      type: String,
       default: '',
     },
   },

@@ -15,12 +15,12 @@
         class="meta"
       />
       <ZImage
-        :src="`https://demo.przemyslawspaczek.pl/wp-content/uploads/${post.rest_media.file}`"
+        :src="post.rest_media"
         class="cover"
       />
       <Compiler
-          class="content"
-          :html="post.content.rendered"
+        class="content"
+        :html="post.content.rendered"
       />
       <div class="z-files files">
         <!-- linki i dokumenty powiązane z artykułem -->
@@ -73,18 +73,18 @@
         class="z-carousel--peeked related__carousel"
       >
         <li
-          v-for="post in relatedPosts"
-          :key="post.id"
+          v-for="relatedPost in relatedPosts"
+          :key="relatedPost.id"
           class="glide__slide"
         >
           <ZPost
-            :key="post.id"
-            :thumbnail="`https://demo.przemyslawspaczek.pl/wp-content/uploads/${post.rest_media.file}`"
-            :title="post.title.rendered"
-            :to="post.link"
-            :author="post.rest_author"
-            :sticky="post.sticky"
-            :date="post.date"
+            :key="relatedPost.id"
+            :thumbnail="relatedPost.rest_media"
+            :title="relatedPost.title.rendered"
+            :to="relatedPost.link"
+            :author="relatedPost.rest_author"
+            :sticky="relatedPost.sticky"
+            :date="relatedPost.date"
           />
         </li>
       </ZCarousel>

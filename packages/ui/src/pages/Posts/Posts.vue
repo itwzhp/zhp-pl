@@ -21,7 +21,7 @@
       <template v-for="(post, index) in posts">
         <ZPost
           :key="post.id"
-          :thumbnail="`https://demo.przemyslawspaczek.pl/wp-content/uploads/${post.rest_media.file}`"
+          :thumbnail="post.rest_media"
           :title="post.title.rendered"
           :to="post.link"
           author="Przemysław Spaczek"
@@ -41,7 +41,7 @@
       :page="page"
       :total-pages="totalPages"
       style="max-width: 1120px; margin: 32px auto;"
-      @change="(page)=>{this.page = page}"
+      @change="()=>(true)"
     />
   </div>
 </template>

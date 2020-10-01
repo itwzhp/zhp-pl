@@ -3,6 +3,7 @@ node_modules
 dist
 storybook-static
 wordpress
+prod
 
 # local env files
 .env.local

@@ -49,7 +49,7 @@
         >
           <ZPost
             :key="post.id"
-            :thumbnail="`https://demo.przemyslawspaczek.pl/wp-content/uploads/${post.rest_media.file}`"
+            :thumbnail="post.rest_media"
             :title="post.title.rendered"
             :to="post.link"
             :author="post.rest_author"
@@ -70,7 +70,7 @@
         style="grid-column: span 7;"
         title="Warto przeczytać"
         :more="{title: 'Zobacz więcej', href: '#'}"
-        :Posts="highlighted"
+        :posts="highlighted"
       />
     </ZSection>
     <!-- Poznaj ZHP -->
@@ -158,7 +158,7 @@
         >
           <ZEvent
             :key="event.id"
-            :thumbnail="`https://demo.przemyslawspaczek.pl/wp-content/uploads/${event.rest_media.file}`"
+            :thumbnail="event.rest_media"
             :title="event.title.rendered"
             :date="event.rest_acf.date"
             :location="{name: 'Warszawa'}"
@@ -207,7 +207,7 @@
               to="#"
             >
               <ZImage
-                :src="`https://demo.przemyslawspaczek.pl/wp-content/uploads/${logo.rest_media.file}`"
+                :src="logo.rest_media"
               />
             </ZLink>
           </li>
@@ -232,7 +232,7 @@
               to="#"
             >
               <ZImage
-                :src="`https://demo.przemyslawspaczek.pl/wp-content/uploads/${logo.rest_media.file}`"
+                :src="logo.rest_media"
               />
             </ZLink>
           </li>

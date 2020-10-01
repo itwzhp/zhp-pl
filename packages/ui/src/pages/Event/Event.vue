@@ -15,12 +15,12 @@
         class="meta"
       />
       <ZImage
-        :src="`https://demo.przemyslawspaczek.pl/wp-content/uploads/${event.rest_media.file}`"
+        :src="event.rest_media"
         class="cover"
       />
-      <div
+      <Compiler
         class="content"
-        v-html="event.content.rendered"
+        :html="event.content.rendered"
       />
       <div class="z-files files">
         <!-- linki i dokumenty powiązane z artykułem -->
@@ -73,19 +73,19 @@
         class="z-carousel--peeked related__carousel"
       >
         <li
-          v-for="event in relatedEvents"
-          :key="event.id"
+          v-for="relatedEvent in relatedEvents"
+          :key="relatedEvent.id"
           class="glide__slide"
         >
           <ZEvent
-            :key="event.id"
-            :thumbnail="`https://demo.przemyslawspaczek.pl/wp-content/uploads/${event.rest_media.file}`"
-            :title="event.title.rendered"
-            :date="event.rest_acf.date"
+            :key="relatedEvent.id"
+            :thumbnail="relatedEvent.rest_media"
+            :title="relatedEvent.title.rendered"
+            :date="relatedEvent.rest_acf.date"
             :location="{name: 'Warszawa'}"
             :audience="{name: 'Wszyscy harcerze'}"
-            :type="event.rest_event_type"
-            :age-group="event.rest_age_group"
+            :type="relatedEvent.rest_event_type"
+            :age-group="relatedEvent.rest_age_group"
           />
         </li>
       </ZCarousel>
@@ -95,6 +95,7 @@
 
 <script>
 import axios from 'axios';
+import Compiler from '../../helpers/Compiler.vue';
 import {
   ZSection,
   ZHeading,
@@ -109,6 +110,7 @@ import {
 export default {
   name: 'Event',
   components: {
+    Compiler,
     ZLink,
     ZMeta,
     ZImage,

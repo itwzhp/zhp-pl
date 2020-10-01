@@ -17,7 +17,7 @@
       <template v-for="(event, index) in events">
         <ZEvent
           :key="event.id"
-          :thumbnail="`https://demo.przemyslawspaczek.pl/wp-content/uploads/${event.rest_media.file}`"
+          :thumbnail="event.rest_media"
           :title="event.title.rendered"
           :date="event.rest_acf.date"
           :location="{name: 'Warszawa'}"

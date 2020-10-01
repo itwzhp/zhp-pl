@@ -206,7 +206,7 @@ export default {
       this.$emit('submit', selectedFilters);
     },
     unchecked(state) {
-      console.log(state);
+      return state;
     },
     removeSelectedFilter(filter, taxonomy, category) {
       const selectedFilters = { ...this.selectedFilters };
