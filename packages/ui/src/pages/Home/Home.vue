@@ -1,14 +1,16 @@
 <template>
   <div id="home">
-    <!-- Przygoda. Przyjaźń. Wychowanie. -->
-    <ZSection>
-      <div class="title">
+    <ZSection class="hero">
+      <ZHeading
+        :level="1"
+        class="hero__title"
+      >
         Przygoda.
         Przyjaźń.
         Wychowanie.
-      </div>
+      </ZHeading>
       <!-- Czego dzisiaj chcesz się dowiedzieć o ZHP? ZSearch -->
-      <form class="z-search search">
+      <form class="z-search hero__search">
         <ZInput
           type="text"
           placeholder="Czego dzisiaj chcsz się dowiedzieć o ZHP?"
@@ -26,7 +28,6 @@
         </ZButton>
       </form>
     </ZSection>
-    <!-- Aktualności -->
     <ZSection
       title="Aktualności"
       subtitle="Zobacz, co nowego w ZHP"
@@ -39,6 +40,11 @@
           perView: 4,
           gap: 20,
           autoplay: 3000,
+          breakpoints: {
+            480: {
+              perView: 1
+            }
+          }
         }"
         class="z-carousel--peeked carousel"
       >
@@ -59,21 +65,19 @@
         </li>
       </ZCarousel>
     </ZSection>
-    <!-- Warto przeczytać -->
     <ZSection class="highlighted">
       <ZCard
         title="Polska reprezentacja na Jamboree 2019 w USA!"
         thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/08/ZHP_WYLOT_JAMBOREE_2019_KAROLINA_PIOTROWSKA-12.jpg"
-        style=" height: 288px; grid-column: span 4; grid-template-rows: 1fr 96px;"
+        class="highlighted__post"
       />
       <ZHighlighted
-        style="grid-column: span 7;"
         title="Warto przeczytać"
         :more="{title: 'Zobacz więcej', href: '#'}"
         :posts="highlighted"
+        class="highlighted__posts"
       />
     </ZSection>
-    <!-- Poznaj ZHP -->
     <ZSection
       style="--section-content-max-width: 1235px;"
     >
@@ -86,8 +90,7 @@
         cover-type="video"
       />
     </ZSection>
-    <!-- Chcesz zapisać swoje dziecko do harcerstwa -->
-    <ZSection>
+    <ZSection class="registration">
       <ZBanner
         title="Chcesz zapisać swoje dziecko do harcerstwa?"
         content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam augue nisl, dignissim id metus
@@ -96,45 +99,42 @@
           {name:'Jak zacząć', href: '#'},
           {name:'Ile kosztuje harcerstwo?', href: '#'},
           {name:'Gdzie się zapisać?', href: '#'}]"
-        class="enjoy"
         thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/Agnieszka_Madetko-Kurczab_ZHP_21-scaled.jpg"
+        class="registration__banner"
       />
       <ZPost
         thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/08/fot.-ZHP-_-Karolina-Piotrowska-18.jpg"
         title="Przewodniczący ZHP i Naczelniczka ZHP: Wychowujemy w zgodzie z wartościami"
         date="2020-08-30T08:30:31"
-        style="grid-column: 10 / span 3; grid-template-rows: 1fr 128px; --article-meta-order: -1;"
+        class="registration__post"
       />
     </ZSection>
-    <!-- Stopnie i sprawności -->
-    <ZSection style="--section-content-grid-template-columns: repeat(24, 1fr); --section-content-align-items: end;">
+    <ZSection
+      class="instructor"
+    >
       <ZCard
         title="Stopnie i sprawności"
         thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/01.png"
-        class="z-card--uppercase"
-        style="grid-column: 2 / span 5; grid-template-rows: 360px 1fr;"
+        class="z-card--uppercase instructor__rank"
       />
       <ZCard
         title="Piony metodyczne"
         thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/02.png"
-        class="z-card--uppercase"
-        style="grid-column: span 5; grid-template-rows: 376px 96px; transform: translateY(16px);"
+        class="z-card--uppercase instructor__age-groups"
       />
       <ZCard
         title="Status ZHP i Władze ZHP"
         thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/03.png"
-        class="z-card--uppercase"
-        style="grid-column: span 5; grid-template-rows: 360px 1fr;"
+        class="z-card--uppercase instructor__management"
       />
       <!-- CTA / BANNER-->
       <ZBanner
         title="Sprawdź Strefę Instruktora"
         content="Szukasz pomysłu na zajęcia? Inspiracji do pracy z harcerzami?"
         :calls-to-action="{name: 'Przejdź do strony', href: '#'}"
-        class="instructor-zone"
+        class="instructor__zone"
       />
     </ZSection>
-    <!-- Wydarzenia -->
     <ZSection
       title="Wydarzenia i przedsięwzięcia"
       subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam augue nisl, dignissim id metus sagittis,
@@ -147,6 +147,11 @@
           perView: 4,
           gap: 20,
           autoplay: 3000,
+          breakpoints: {
+            480: {
+              perView: 1
+            }
+          }
         }"
         :peeked="true"
         class="z-carousel--peeked carousel"
@@ -169,25 +174,27 @@
         </li>
       </ZCarousel>
     </ZSection>
-    <!-- Instagram, Facebook, Partnerzy -->
-    <ZSection>
+    <ZSection class="social">
       <div
-        class="instagram"
-        style="grid-column: span 4;"
+        class="social__instagram"
       >
-        <ZHeading>#instagram</ZHeading>
+        <ZHeading class="z-heading--uppercase">
+          #instagram
+        </ZHeading>
       </div>
       <div
-        class="facebook"
-        style="grid-column: span 3;"
+        class="social__facebook"
       >
-        <ZHeading>facebook</ZHeading>
+        <ZHeading class="z-heading--uppercase">
+          facebook
+        </ZHeading>
       </div>
       <div
-        class="partners"
-        style="grid-column: span 5;"
+        class="social__partners"
       >
-        <ZHeading>Partnerzy organizacji</ZHeading>
+        <ZHeading class="z-heading--uppercase">
+          Partnerzy organizacji
+        </ZHeading>
         <ZCarousel
           v-if="partners.length > 0"
           :settings="{
@@ -212,7 +219,9 @@
             </ZLink>
           </li>
         </ZCarousel>
-        <ZHeading>Partnerzy wyjazdu na WSJ2019</ZHeading>
+        <ZHeading class="z-heading--uppercase">
+          Partnerzy wyjazdu na WSJ2019
+        </ZHeading>
         <ZCarousel
           v-if="wsj2019.length > 0"
           :settings="{
@@ -326,16 +335,25 @@ export default {
   #home {
     overflow: hidden;
 
-    .title {
-      margin: 24px 0;
-      font-size: 50px;
-      font-weight: 500;
-      grid-column: 6 / span 4;
-    }
+    .hero {
+      &__title {
+        margin: 24px 0;
+        grid-column: span 12;
 
-    .search {
-      grid-column: 6 / span 6;
-      grid-row: 2;
+        @media (min-width: 480px) {
+          grid-column: 6 / span 4;
+          grid-row: 1;
+        }
+      }
+
+      &__search {
+        grid-column: span 12;
+
+        @media (min-width: 480px) {
+          grid-column: 6 / span 6;
+          grid-row: 2;
+        }
+      }
     }
 
     .carousel {
@@ -350,26 +368,109 @@ export default {
       grid-column: span 12;
     }
 
-    .enjoy {
-      grid-column: span 9;
-    }
-
-    .instructor-zone {
-      grid-column: span 5;
-
-      --banner-title-margin: 0 0 32px 0;
-      --banner-description-grid-row: 1;
-      --banner-description-grid-column: span 12;
-      --banner-title-grid-column: span 12;
-      --banner-cta-grid-column: span 12;
-      --banner-title-grid-row: 2;
-      --banner-title-font-size: 14px;
-      --banner-title-text-transform: normal;
-      --banner-background: linear-gradient(135deg, rgba(123, 162, 46, 1) 8%, rgba(166, 206, 57, 1) 70%);
-    }
-
     .highlighted {
       --section-content-align-items: center;
+
+      &__post {
+        grid-column: span 12;
+
+        @media (min-width: 480px) {
+          grid-column: span 4;
+        }
+      }
+
+      &__posts {
+        grid-column: span 12;
+
+        @media (min-width: 480px) {
+          grid-column: span 7;
+        }
+      }
+    }
+
+    .registration {
+      &__banner {
+        grid-column: span 12;
+
+        @media (min-width: 480px) {
+          grid-column: span 9;
+        }
+      }
+
+      &__post {
+        --post-grid-template-rows: 1fr auto;
+        --article-meta-order: -1;
+
+        grid-column: span 12;
+
+        @media (min-width: 480px) {
+          grid-column: span 3;
+        }
+      }
+    }
+
+    .instructor {
+      --section-content-align-items: end;
+
+      @media (min-width: 480px) {
+        --section-content-grid-template-columns: repeat(24, minmax(auto, 1fr));
+      }
+
+      &__rank,
+      &__management,
+      &__age-groups,
+      &__zone {
+        grid-column: span 12;
+
+        @media (min-width: 480px) {
+          grid-column: span 5;
+        }
+      }
+
+      &__age-groups {
+        @media (min-width: 480px) {
+          height: calc(100% + 2rem);
+          transform: translateY(16px);
+        }
+      }
+
+      &__zone {
+        --banner-title-margin: 0 0 32px 0;
+        --banner-description-grid-row: 1;
+        --banner-description-grid-column: span 12;
+        --banner-title-grid-column: span 12;
+        --banner-cta-grid-column: span 12;
+        --banner-title-grid-row: 2;
+        --banner-title-font-size: 14px;
+        --banner-title-text-transform: normal;
+        --banner-background: linear-gradient(135deg, rgba(123, 162, 46, 1) 8%, rgba(166, 206, 57, 1) 70%);
+      }
+    }
+
+    .social {
+      &__instagram,
+      &__facebook,
+      &__partners {
+        grid-column: span 12;
+      }
+
+      &__instagram {
+        @media (min-width: 480px) {
+          grid-column: span 4;
+        }
+      }
+
+      &__facebook {
+        @media (min-width: 480px) {
+          grid-column: span 3;
+        }
+      }
+
+      &__partners {
+        @media (min-width: 480px) {
+          grid-column: span 5;
+        }
+      }
     }
   }
 

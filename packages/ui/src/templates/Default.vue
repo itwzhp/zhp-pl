@@ -77,6 +77,7 @@
         </nav>
       </div>
     </header>
+    <slot />
     <footer class="z-footer">
       <ZSection
         class="z-footer__content"
@@ -251,9 +252,10 @@ export default {
   color: #fff;
 
   &__content {
-    height: 120px;
-    align-items: center;
-    background: #78a22f;
+    --section-margin: 0 auto;
+    --section-background: #78a22f;
+    --section-content-height: 120px;
+    --section-content-align-items: center;
   }
 
   &__did-you-know {

@@ -1,4 +1,5 @@
 import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
+import Default from '../../templates/Default';
 import Event from './Event.vue';
 
 <Meta title="Pages/Event" component={Event} parameters={{layout: 'fullscreen'}}/>
@@ -10,8 +11,10 @@ import Event from './Event.vue';
 <Preview>
   <Story name="Common">
     {{
-        components: { Event },
-        template: '<Event />'
+        components: { Default, Event },
+        template: `<Default>
+          <Event />
+        </Default>`
     }}
   </Story>
 </Preview>

@@ -1,6 +1,5 @@
 import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
-import { action } from "@storybook/addon-actions";
-import { linkTo } from '@storybook/addon-links'
+import Default from '../../templates/Default';
 import Posts from './Posts.vue';
 
 <Meta title="Pages/Posts" component={Posts} parameters={{layout: 'fullscreen'}}/>
@@ -12,8 +11,10 @@ import Posts from './Posts.vue';
 <Preview>
   <Story name="Common">
     {{
-        components: { Posts },
-        template: '<Posts />'
+        components: { Default, Posts },
+        template: `<Default>
+          <Posts />
+        </Default>`
     }}
   </Story>
 </Preview>

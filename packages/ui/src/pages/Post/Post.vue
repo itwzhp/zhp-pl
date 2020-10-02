@@ -58,7 +58,7 @@
       <div class="sidebar" />
     </ZSection>
     <ZSection class="related">
-      <ZHeading class="related__title">
+      <ZHeading class="z-heading--uppercase related__title">
         Mogą Cię także zainteresować:
       </ZHeading>
       <ZCarousel

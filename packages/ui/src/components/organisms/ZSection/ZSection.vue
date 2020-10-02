@@ -71,8 +71,12 @@ export default {
     --section-grid-template-columns: repeat(12, minmax(auto, 1fr));
 
     padding: var(--section-padding);
-    margin: var(--section-margin, 5.5rem 0);
+    margin: var(--section-margin, 2.25rem 0);
     background: var(--section-background);
+
+    @media (min-width: 480px) {
+      --section-margin: 5.5rem 0;
+    }
 
     &__header {
       display: grid;
@@ -88,17 +92,26 @@ export default {
 
     &__title {
       margin: var(--section-title-margin, 0 0 0.75rem 0);
-      grid-column: var(--section-title-grid-column, span 4);
+      grid-column: var(--section-title-grid-column, span 12);
       grid-row: var(--section-title-grid-row, 1);
       text-transform: var(--section-title-text-transform, uppercase);
+
+      @media (min-width: 480px) {
+        --section-title-grid-column: span 4;
+      }
     }
 
     &__subtitle {
-      grid-column: var(--section-subtitle-grid-column, span 5);
+      grid-column: var(--section-subtitle-grid-column, span 12);
       grid-row: var(--section-subtitle-grid-row, 2);
+
+      @media (min-width: 480px) {
+        --section-subtitle-grid-column: span 5;
+      }
     }
 
     &__content {
+      height: var(--section-content-height);
       display: grid;
       max-width: var(--section-content-max-width, var(--section-max-width));
       align-items: var(--section-content-align-items);
