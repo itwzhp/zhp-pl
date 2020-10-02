@@ -65,6 +65,7 @@ export default {
     &__header {
       display: grid;
       max-width: var(--section-header-max-width, 1120px);
+      padding: var(--section-header-padding, 0 1rem);
       margin: 0 auto 24px auto;
       grid-template-columns: repeat(12, 1fr);
     }
@@ -89,6 +90,7 @@ export default {
       max-width: var(--section-content-max-width, 1120px);
       align-items: var(--section-content-align-items);
       margin: var(--section-content-margin, auto);
+      padding: var(--section-content-padding, 0 1rem);
       grid-gap: 20px;
       grid-template-columns: var(--section-content-grid-template-columns, repeat(12, 1fr));
     }

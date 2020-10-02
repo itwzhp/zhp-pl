@@ -5,8 +5,8 @@
   "scripts": {
     "create-index": "node scripts/create-index-file.js",
     "test:unit": "vue-cli-service test:unit",
-    "lint:js": "vue-cli-service lint",
-    "lint:scss": "stylelint 'src/**/*.{vue,htm,html,css,sss,less,scss}'",
+    "lint:js": "vue-cli-service lint --fix",
+    "lint:scss": "stylelint 'src/**/*.{vue,htm,html,css,sss,less,scss}' --fix",
     "storybook:build": "yarn create-index && vue-cli-service storybook:build -s ./public -c config/storybook",
     "storybook:serve": "yarn create-index && vue-cli-service storybook:serve -s ./public -p 6006 -c config/storybook"
   },

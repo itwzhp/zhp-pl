@@ -61,7 +61,7 @@
       <div class="z-header__navigation">
         <nav>
           <ZList class="z-navigation">
-            <template v-for="(item, key) in headerNavigation">
+            <template v-for="(item, key) in headerMenu">
               <li
                 :key="key"
                 class="z-navigation__item"
@@ -77,7 +77,6 @@
         </nav>
       </div>
     </header>
-    <slot v-bind="{component}" />
     <footer class="z-footer">
       <div style="background: #78a22f; color: #fff;">
         <div class="z-footer__content">
@@ -129,7 +128,7 @@
         <ZText v-text="'Copyright © 1997-2020 Związek Harcerstwa Polskiego'" />
         <nav class="z-footer__navigation">
           <ZList class="z-navigation z-navigation--secondary">
-            <template v-for="(item, key) in footerNavigation">
+            <template v-for="(item, key) in footerMenu">
               <li
                 :key="key"
                 class="z-navigation__item"
@@ -148,6 +147,7 @@
   </div>
 </template>
 <script>
+import axios from 'axios';
 import {
   ZDropdown,
   ZHeading,
@@ -173,23 +173,28 @@ export default {
   },
   data() {
     return {
-      component: 'home',
-      headerNavigation: [
-        { to: 'home', name: 'Strona Główna' },
-        { to: 'Posts', name: 'Aktualności' },
-        { to: 'events', name: 'Wydarzenia' },
-        { to: 'home', name: 'Dla mediów' },
-        { to: 'home', name: 'Dla rodzica' },
-        { to: 'home', name: '1% dla ZHP' },
-        { to: 'home', name: 'Kontakt' },
-      ],
-      footerNavigation: [
-        { to: '#', name: 'Informacje i uwagi prawne' },
-        { to: '#', name: 'Polityka prywatności' },
-        { to: '#', name: 'Biuletyn Informacji Publicznej' },
-        { to: '#', name: 'RSS' },
-      ],
+      headerMenu: [],
+      footerMenu: [],
     };
+  },
+  async created() {
+    const { API_URL } = process.env;
+    const menusRes = await axios.get(`${API_URL}/menus`);
+    const menus = menusRes.data;
+    menus.forEach((menu) => {
+      if (menu.location === 'header-menu') {
+        this.headerMenu = menu.items.map((item) => ({
+          name: item.title,
+          to: item.url,
+        }));
+      }
+      if (menu.location === 'footer-menu') {
+        this.footerMenu = menu.items.map((item) => ({
+          name: item.title,
+          to: item.url,
+        }));
+      }
+    });
   },
 };
 </script>
