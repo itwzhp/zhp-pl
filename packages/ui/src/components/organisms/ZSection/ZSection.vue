@@ -4,10 +4,14 @@
     class="z-section"
   >
     <slot name="header">
-      <div class="z-section__header">
+      <div
+        v-if="hasHeader"
+        class="z-section__header"
+      >
         <slot name="title">
           <ZHeading
             v-if="title"
+            v-bind="headingProps"
             class="z-section__title"
             v-text="title"
           />
@@ -48,51 +52,60 @@ export default {
       type: String,
       default: '',
     },
-    levelHeading: {
-      type: [String, Number],
-      default: '2',
+    headingProps: {
+      type: Object,
+      default: () => ({}),
+    },
+  },
+  computed: {
+    hasHeader() {
+      return true;
     },
   },
 };
 </script>
 <style lang="scss">
   .z-section {
+    --section-max-width: 1140px;
+    --section-padding: 0 1.25rem;
+    --section-grid-template-columns: repeat(12, minmax(auto, 1fr));
+
     padding: var(--section-padding);
-    margin: var(--section-margin, 90px 0);
+    margin: var(--section-margin, 5.5rem 0);
     background: var(--section-background);
-    color: var(--section-color);
 
     &__header {
       display: grid;
-      max-width: var(--section-header-max-width, 1120px);
-      padding: var(--section-header-padding, 0 1rem);
-      margin: 0 auto 24px auto;
-      grid-template-columns: repeat(12, 1fr);
+      max-width: var(--section-header-max-width, var(--section-max-width));
+      padding: var(--section-header-padding, var(--section-padding));
+      margin: var(--section-header-margin, 0 auto 1.5rem auto);
+      grid-template-columns: var(--section-header-grid-template-columns, var(--section-grid-template-columns));
+
+      &:empty {
+        --section-header-margin: 0;
+      }
     }
 
     &__title {
-      margin: var(--section--title-margin, 0 0 8px 0);
-      font-size: 32px;
-      font-weight: 900;
-      grid-column: span 4;
-      text-transform: uppercase;
+      margin: var(--section-title-margin, 0 0 0.75rem 0);
+      grid-column: var(--section-title-grid-column, span 4);
+      grid-row: var(--section-title-grid-row, 1);
+      text-transform: var(--section-title-text-transform, uppercase);
     }
 
     &__subtitle {
-      margin: var(--section--subtitle-margin);
-      font-size: 16px;
-      grid-column: span 5;
-      grid-row: 2;
+      grid-column: var(--section-subtitle-grid-column, span 5);
+      grid-row: var(--section-subtitle-grid-row, 2);
     }
 
     &__content {
       display: grid;
-      max-width: var(--section-content-max-width, 1120px);
+      max-width: var(--section-content-max-width, var(--section-max-width));
       align-items: var(--section-content-align-items);
-      padding: var(--section-content-padding, 0 1rem);
+      padding: var(--section-content-padding, var(--section-padding));
       margin: var(--section-content-margin, auto);
-      grid-gap: 20px;
-      grid-template-columns: var(--section-content-grid-template-columns, repeat(12, 1fr));
+      gap: 1.25rem;
+      grid-template-columns: var(--section-content-grid-template-columns, var(--section-grid-template-columns));
     }
   }
 </style>

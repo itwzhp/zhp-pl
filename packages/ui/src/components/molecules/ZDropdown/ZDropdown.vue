@@ -27,6 +27,7 @@
     </slot>
   </component>
 </template>
+
 <script>
 import ZButton from '../../atoms/ZButton/ZButton.vue';
 import { clickOutside } from '../../../directives';
@@ -69,12 +70,13 @@ export default {
   },
 };
 </script>
+
 <style lang="scss">
   .z-dropdown {
     $this: &;
 
     position: relative;
-    z-index: 1;
+    z-index: 100;
     display: inline-block;
 
     &__toggle {
