@@ -89,8 +89,8 @@ export default {
       display: grid;
       max-width: var(--section-content-max-width, 1120px);
       align-items: var(--section-content-align-items);
-      margin: var(--section-content-margin, auto);
       padding: var(--section-content-padding, 0 1rem);
+      margin: var(--section-content-margin, auto);
       grid-gap: 20px;
       grid-template-columns: var(--section-content-grid-template-columns, repeat(12, 1fr));
     }

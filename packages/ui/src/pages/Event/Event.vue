@@ -250,8 +250,8 @@ export default {
   justify-content: space-between;
   padding: 32px 16px;
   border: 1px solid #a6ce39;
-  grid-template-columns: repeat(2, auto);
   border-radius: 2px;
+  grid-template-columns: repeat(2, auto);
   &__name {}
 
   &__type {

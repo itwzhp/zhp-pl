@@ -78,52 +78,52 @@
       </div>
     </header>
     <footer class="z-footer">
-      <div style="background: #78a22f; color: #fff;">
-        <div class="z-footer__content">
-          <div class="z-did-you-know z-footer__did-you-know">
-            <ZIcon
-              name="question-marks"
-              class="z-did-you-know__question-marks"
-            />
-            <ZHeading
-              level="3"
-              class="z-heading--uppercase z-did-you-know__title"
-            >
-              Czy wiesz że...
-            </ZHeading>
-            <ZText>
-              Drużynowi ZHP przepracowują społecznie łącznie 8 mln godzin w ciągu roku.
-              Jeżeli przeliczyć to na złotówki, wartość pracy wolontariackiej wyniosłaby 136 mln zł.
-            </ZText>
-          </div>
-          <div class="z-world-logos z-footer__world-logos">
-            <ZLink to="https://www.wagggs.org/">
-              <ZImage
-                src="/assets/brand.svg"
-                :sources="[
-                  {
-                    srcset: '/assets/wagggs.png',
-                    src: '/assets/wagggs.png'
-                  }
-                ]"
-                class="z-worlds-logos__logo"
-              />
-            </ZLink>
-            <ZLink to="https://www.scout.org/">
-              <ZImage
-                src="/assets/brand.svg"
-                :sources="[
-                  {
-                    srcset: '/assets/wosm.png',
-                    src: '/assets/wosm.png'
-                  }
-                ]"
-                class="z-worlds-logos__logo"
-              />
-            </ZLink>
-          </div>
+      <ZSection
+        class="z-footer__content"
+      >
+        <div class="z-did-you-know z-footer__did-you-know">
+          <ZIcon
+            name="question-marks"
+            class="z-did-you-know__question-marks"
+          />
+          <ZHeading
+            level="3"
+            class="z-heading--uppercase z-did-you-know__title"
+          >
+            Czy wiesz że...
+          </ZHeading>
+          <ZText>
+            Drużynowi ZHP przepracowują społecznie łącznie 8 mln godzin w ciągu roku.
+            Jeżeli przeliczyć to na złotówki, wartość pracy wolontariackiej wyniosłaby 136 mln zł.
+          </ZText>
         </div>
-      </div>
+        <div class="z-world-logos z-footer__world-logos">
+          <ZLink to="https://www.wagggs.org/">
+            <ZImage
+              src="/assets/brand.svg"
+              :sources="[
+                {
+                  srcset: '/assets/wagggs.png',
+                  src: '/assets/wagggs.png'
+                }
+              ]"
+              class="z-worlds-logos__logo"
+            />
+          </ZLink>
+          <ZLink to="https://www.scout.org/">
+            <ZImage
+              src="/assets/brand.svg"
+              :sources="[
+                {
+                  srcset: '/assets/wosm.png',
+                  src: '/assets/wosm.png'
+                }
+              ]"
+              class="z-worlds-logos__logo"
+            />
+          </ZLink>
+        </div>
+      </ZSection>
       <div class="z-footer__bar">
         <ZText v-text="'Copyright © 1997-2020 Związek Harcerstwa Polskiego'" />
         <nav class="z-footer__navigation">
@@ -157,6 +157,7 @@ import {
   ZLink,
   ZImage,
   ZList,
+  ZSection,
 } from '../../index';
 
 export default {
@@ -170,6 +171,7 @@ export default {
     ZLink,
     ZImage,
     ZList,
+    ZSection,
   },
   data() {
     return {
@@ -249,20 +251,17 @@ export default {
   color: #fff;
 
   &__content {
-    display: grid;
-    max-width: 1120px;
     height: 120px;
     align-items: center;
-    margin: 0 auto;
-    grid-template-columns: repeat(3, calc(100% / 3));
+    background: #78a22f;
   }
 
   &__did-you-know {
-    grid-column: span 1;
+    grid-column: span 4;
   }
 
   &__world-logos {
-    grid-column: 3 / span 1;
+    grid-column: 9 / span 4;
   }
 
   &__bar {
