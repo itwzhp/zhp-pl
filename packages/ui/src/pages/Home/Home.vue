@@ -90,7 +90,7 @@
         cover-type="video"
       />
     </ZSection>
-    <ZSection class="registration">
+    <ZSection class="enjoy">
       <ZBanner
         title="Chcesz zapisać swoje dziecko do harcerstwa?"
         content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam augue nisl, dignissim id metus
@@ -100,13 +100,13 @@
           {name:'Ile kosztuje harcerstwo?', href: '#'},
           {name:'Gdzie się zapisać?', href: '#'}]"
         thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/Agnieszka_Madetko-Kurczab_ZHP_21-scaled.jpg"
-        class="registration__banner"
+        class="enjoy__banner"
       />
       <ZPost
         thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/08/fot.-ZHP-_-Karolina-Piotrowska-18.jpg"
         title="Przewodniczący ZHP i Naczelniczka ZHP: Wychowujemy w zgodzie z wartościami"
         date="2020-08-30T08:30:31"
-        class="registration__post"
+        class="enjoy__post"
       />
     </ZSection>
     <ZSection
@@ -388,7 +388,7 @@ export default {
       }
     }
 
-    .registration {
+    .enjoy {
       &__banner {
         grid-column: span 12;
 

@@ -1,21 +1,22 @@
 <template>
   <div id="home">
-    <!-- Przygoda. Przyjaźń. Wychowanie. -->
-    <div style="display: grid; max-width: 1120px; margin: auto; grid-template-columns: repeat(12, 1fr);">
-      <div class="title">
+    <ZSection class="hero">
+      <ZHeading
+        :level="1"
+        class="hero__title"
+      >
         Przygoda.
         Przyjaźń.
         Wychowanie.
-      </div>
-      <!-- Czego dzisiaj chcesz się dowiedzieć o ZHP? ZSearch -->
-      <form class="z-search search">
+      </ZHeading>
+      <form class="z-search hero__search">
         <ZInput
           type="text"
           placeholder="Czego dzisiaj chcsz się dowiedzieć o ZHP?"
           class="z-search__input"
         />
         <ZButton
-          style="--button-text-transform: uppercase;"
+          style="--button-text-transform: uppercase; --button-min-width: 168px;"
           class="z-search__submit"
         >
           <ZIcon
@@ -25,22 +26,35 @@
           Wyszukaj
         </ZButton>
       </form>
-    </div>
-    <!-- Aktualności -->
+    </ZSection>
     <ZSection
       title="Aktualności"
       subtitle="Zobacz, co nowego w ZHP"
-      style="margin: 90px auto;"
     >
-      <ZCarousel v-if="posts.length > 0">
+      <ZCarousel
+        v-if="posts.length > 0"
+        :peeked="true"
+        :settings="{
+          type: 'carousel',
+          perView: 4,
+          gap: 20,
+          autoplay: 3000,
+          breakpoints: {
+            480: {
+              perView: 1
+            }
+          }
+        }"
+        class="z-carousel--peeked carousel"
+      >
         <li
           v-for="post in posts"
           :key="post.id"
           class="glide__slide"
         >
-          <ZArticle
+          <ZPost
             :key="post.id"
-            :thumbnail="`https://demo.przemyslawspaczek.pl/wp-content/uploads/${post.rest_media.file}`"
+            :thumbnail="post.rest_media"
             :title="post.title.rendered"
             :to="post.link"
             :author="post.rest_author"
@@ -50,78 +64,32 @@
         </li>
       </ZCarousel>
     </ZSection>
-    <!-- Warto przeczytać -->
-    <div
-      style="display: grid;
-max-width: 1120px;
-align-items: center;
-margin: 90px auto;
-column-gap: 20px;
-grid-template-columns: repeat(12, 1fr);"
-    >
+    <ZSection class="highlighted">
       <ZCard
         title="Polska reprezentacja na Jamboree 2019 w USA!"
         thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/08/ZHP_WYLOT_JAMBOREE_2019_KAROLINA_PIOTROWSKA-12.jpg"
-        style=" height: 288px; grid-column: span 4; grid-template-rows: 1fr 96px;"
+        class="highlighted__post"
       />
-      <div
-        class="z-highlighted"
-        style="grid-column: span 7;"
-      >
-        <div class="z-highlighted__header">
-          <ZHeading
-            class="z-highlighted__title"
-            v-text="'Warto przeczytać'"
-          />
-          <ZLink
-            to="#"
-            class="z-highlighted__more z-highlighted__link"
-            v-text="'Zobacz więcej'"
-          />
-        </div>
-        <ZList>
-          <template v-for="(item, key) in highlighted">
-            <li
-              :key="key"
-              class="z-highlighted__item"
-            >
-              <ZLink
-                to="#"
-                class="z-highlighted__link"
-                v-text="item.title"
-              />
-              <time
-                :datetime="item.date"
-                v-text="item.date"
-              />
-            </li>
-          </template>
-        </ZList>
-      </div>
-    </div>
-    <!-- Poznaj ZHP -->
-    <div
-      style="display: grid;
-      max-width: 1235px;
-      margin: 90px auto;
-      column-gap: 20px;
-      grid-template-columns: repeat(12, 1fr);"
+      <ZHighlighted
+        title="Warto przeczytać"
+        :more="{title: 'Zobacz więcej', href: '#'}"
+        :posts="highlightedPosts"
+        class="highlighted__posts"
+      />
+    </ZSection>
+    <ZSection
+      style="--section-content-max-width: 1235px;"
     >
       <ZBanner
         title="Poznaj ZHP"
         content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam augue nisl, dignissim id metus
         sagittis, ultrices consectetur turpis. Quisque maximus metus purus, vitae convallis mi tempus eu."
-        style="grid-column: span 12;"
+        class="meet"
+        thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/news-DMB.png"
+        cover-type="video"
       />
-    </div>
-    <!-- Chcesz zapisać swoje dziecko do harcerstwa -->
-    <div
-      style="display: grid;
-      max-width: 1120px;
-      margin: 90px auto;
-      column-gap: 20px;
-      grid-template-columns: repeat(12, 1fr);"
-    >
+    </ZSection>
+    <ZSection class="enjoy">
       <ZBanner
         title="Chcesz zapisać swoje dziecko do harcerstwa?"
         content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam augue nisl, dignissim id metus
@@ -130,63 +98,62 @@ grid-template-columns: repeat(12, 1fr);"
           {name:'Jak zacząć', href: '#'},
           {name:'Ile kosztuje harcerstwo?', href: '#'},
           {name:'Gdzie się zapisać?', href: '#'}]"
-        style="grid-column: span 9;"
+        thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/Agnieszka_Madetko-Kurczab_ZHP_21-scaled.jpg"
+        class="enjoy__banner"
       />
-      <ZArticle
+      <ZPost
         thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/08/fot.-ZHP-_-Karolina-Piotrowska-18.jpg"
         title="Przewodniczący ZHP i Naczelniczka ZHP: Wychowujemy w zgodzie z wartościami"
         date="2020-08-30T08:30:31"
-        style="grid-column: 10 / span 3; grid-template-rows: 1fr 128px; --article-meta-order: -1;"
+        class="enjoy__post"
       />
-    </div>
-    <!-- Stopnie i sprawności -->
-    <div
-      style="display: grid;
-      max-width: 1120px;
-      align-items: end;
-      margin: 90px auto;
-      column-gap: 20px;
-      grid-template-columns: repeat(24, 1fr);"
+    </ZSection>
+    <ZSection
+      class="instructor"
     >
       <ZCard
         title="Stopnie i sprawności"
         thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/01.png"
-        class="z-card--uppercase"
-        style="grid-column: 2 / span 5; grid-template-rows: 360px 1fr;"
+        class="z-card--uppercase instructor__rank"
       />
       <ZCard
         title="Piony metodyczne"
         thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/02.png"
-        class="z-card--uppercase"
-        style="grid-column: span 5; grid-template-rows: 376px 96px; transform: translateY(16px);"
+        class="z-card--uppercase instructor__age-groups"
       />
       <ZCard
         title="Status ZHP i Władze ZHP"
         thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/03.png"
-        class="z-card--uppercase"
-        style="grid-column: span 5; grid-template-rows: 360px 1fr;"
+        class="z-card--uppercase instructor__management"
       />
-      <!-- CTA / BANNER-->
       <ZBanner
         title="Sprawdź Strefę Instruktora"
         content="Szukasz pomysłu na zajęcia? Inspiracji do pracy z harcerzami?"
         :calls-to-action="{name: 'Przejdź do strony', href: '#'}"
-        style="grid-column: span 5;
-
-        --banner-title-margin: 0 0 32px 0;
-        --banner-content-order: -1;
-        --banner-title-font-size: 14px;
-        --banner-title-text-transform: normal;"
+        class="instructor__zone"
       />
-    </div>
-    <!-- Wydarzenia -->
+    </ZSection>
     <ZSection
       title="Wydarzenia i przedsięwzięcia"
       subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam augue nisl, dignissim id metus sagittis,
       ultrices consectetur turpis."
-      style="margin: 90px auto;"
     >
-      <ZCarousel v-if="events.length > 0">
+      <ZCarousel
+        v-if="events.length > 0"
+        :settings="{
+          type: 'carousel',
+          perView: 4,
+          gap: 20,
+          autoplay: 3000,
+          breakpoints: {
+            480: {
+              perView: 1
+            }
+          }
+        }"
+        :peeked="true"
+        class="z-carousel--peeked carousel"
+      >
         <li
           v-for="event in events"
           :key="event.id"
@@ -194,181 +161,203 @@ grid-template-columns: repeat(12, 1fr);"
         >
           <ZEvent
             :key="event.id"
-            :thumbnail="`https://demo.przemyslawspaczek.pl/wp-content/uploads/${event.rest_media.file}`"
+            :thumbnail="event.rest_media"
             :title="event.title.rendered"
-            :date="{start: '01/09/2020', end: '03/09/2020'}"
+            :date="event.rest_acf.date"
             :location="{name: 'Warszawa'}"
             :audience="{name: 'Wszyscy harcerze'}"
-            :type="{name: 'Zlot'}"
-            :age-group="{name: 'Harcerze Starsi', color: '#ffffff', background: '#084da1'}"
+            :type="event.rest_event_type"
+            :age-group="event.rest_age_group"
           />
         </li>
       </ZCarousel>
     </ZSection>
-    <!-- Instagram, Facebook, Partnerzy -->
-    <div style="display: grid; max-width: 1120px; margin: auto; grid-template-columns: repeat(12, 1fr);">
-      <div
-        class="instagram"
-        style="grid-column: span 4;"
-      >
-        <ZHeading>#instagram</ZHeading>
-      </div>
-      <div
-        class="facebook"
-        style="grid-column: span 3;"
-      >
-        <ZHeading>facebook</ZHeading>
-      </div>
-      <div
-        class="partners"
-        style="grid-column: span 5;"
-      >
-        <ZHeading>Partnerzy organizacji</ZHeading>
-        <ZCarousel
-          v-if="partners.length > 0"
-          :settings="{
-            type: 'carousel',
-            perView: 3,
-            gap: 14,
-            peek: { before: 0, after: 50 },
-          }"
-        >
-          <li
-            v-for="(partner, key) in partners"
-            :key="key"
-            class="glide__slide"
-          >
-            <ZImage
-              :src="`https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/${partner}.png`"
-            />
-          </li>
-        </ZCarousel>
-        <ZHeading>Partnerzy wyjazdu na WSJ2019</ZHeading>
-        <ZCarousel
-          v-if="wsj2019Partners.length > 0"
-          :settings="{
-            type: 'carousel',
-            perView: 3,
-            gap: 14,
-            peek: { before: 0, after: 50 },
-          }"
-        >
-          <li
-            v-for="(partner, key) in wsj2019Partners"
-            :key="key"
-            class="glide__slide"
-          >
-            <ZImage
-              :src="`https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/${partner}.png`"
-            />
-          </li>
-        </ZCarousel>
-      </div>
-    </div>
+    <!-- #instagram | facebook | organization partners  -->
   </div>
 </template>
 
 <script>
 import {
-  ZImage,
   ZSection,
-  ZCarousel,
- ZPosts,
-  ZEvent,
-  ZCard,
   ZHeading,
-  ZList,
-  ZLink,
-  ZBanner,
-  ZButton,
   ZInput,
-  ZIcon
+  ZButton,
+  ZBanner,
+  ZCarousel,
+  ZPost,
+  ZCard,
+  ZHighlighted,
+  ZEvent
 } from '@nowa-zhp/ui'
 
 export default {
   components: {
-    ZButton,
-    ZImage,
     ZSection,
-    ZCarousel,
-   ZPosts,
-    ZEvent,
-    ZCard,
     ZHeading,
-    ZList,
-    ZLink,
-    ZBanner,
     ZInput,
-    ZIcon
+    ZButton,
+    ZBanner,
+    ZCarousel,
+    ZPost,
+    ZCard,
+    ZHighlighted,
+    ZEvent
   },
-  async asyncData ({ params, $axios }) {
-    params = { ...params, per_page: 8 }
-    const postsRes = await $axios.get('posts', { params })
+  async asyncData ({ $axios }) {
+    // last 8 post for posts ZCarousel
+    const postsRes = await $axios.get('posts', { params: { per_page: 8 } })
     const posts = postsRes.data
-    const eventsRes = await $axios.get('events', { params })
+    // last 5 posts for ZHighlighted component
+    const highlightedPostsRes = await $axios.get('posts', { params: { per_page: 5 } })
+    const highlightedPosts = highlightedPostsRes.data.map(post => ({ ...post, title: post.title.rendered }))
+    // last 8 events for events ZCarousel
+    const eventsRes = await $axios.get('events', { params: { per_page: 8 } })
     const events = eventsRes.data
-    return { posts, events }
-  },
-  data () {
-    return {
-      highlighted: [
-        { title: '400 harcerek i harcerzy wyruszyło do USA na Światowy Zlot Ska...', date: '18.07.2019' },
-        { title: 'Oferty pracy w warszawskim biurze Europejskiego Jamboree 2020', date: '16.07.2019' },
-        { title: 'Rekrutacja instruktorów do programu "Dobrze być sobą"', date: '16.07.2019' },
-        { title: 'Bezpieczne #harcerskielato', date: '15.07.2019' },
-        { title: 'Kielecki "Wiatraczek" znowu się kręci', date: '15.07.2019' }
-      ],
-      partners: ['greenpeace', 'wwf', 'mop', 'ufs'],
-      wsj2019Partners: ['mbank', 'wsb', 'brand', 'pko']
-    }
+
+    return { posts, highlightedPosts, events }
   }
 }
 </script>
 
 <style lang="scss">
 #home {
-  .title {
-    margin: 24px 0;
-    font-size: 50px;
-    font-weight: 500;
-    grid-column: 6 / span 4;
+  overflow: hidden;
+
+  .hero {
+    &__title {
+      margin: 24px 0;
+      grid-column: span 12;
+
+      @media (min-width: 480px) {
+        grid-column: 6 / span 4;
+        grid-row: 1;
+      }
+    }
+
+    &__search {
+      grid-column: span 12;
+
+      @media (min-width: 480px) {
+        grid-column: 6 / span 6;
+        grid-row: 2;
+      }
+    }
   }
 
-  .search {
-    grid-column: 6 / span 6;
-    grid-row: 2;
-  }
-}
-
-.z-highlighted {
-  --link-text-decoration: underline;
-
-  &__header {
-    display: grid;
-    align-items: center;
-    justify-content: space-between;
-    grid-template-columns: repeat(2, auto);
+  .carousel {
+    grid-column: span 12;
   }
 
-  &__title {
-    font-weight: 500;
-    text-transform: uppercase;
+  .meet {
+    --banner-content-padding: 64px;
+    --banner-description-grid-column: span 5;
+    --banner-title-grid-column: span 5;
+
+    grid-column: span 12;
   }
 
-  &__more {
-    color: #7ba22e;
+  .highlighted {
+    --section-content-align-items: center;
+
+    &__post {
+      grid-column: span 12;
+
+      @media (min-width: 480px) {
+        grid-column: span 4;
+      }
+    }
+
+    &__posts {
+      grid-column: span 12;
+
+      @media (min-width: 480px) {
+        grid-column: span 7;
+      }
+    }
   }
 
-  &__item {
-    display: grid;
-    justify-content: space-between;
-    margin: 16px 0;
-    grid-template-columns: repeat(2, auto);
+  .enjoy {
+    &__banner {
+      grid-column: span 12;
+
+      @media (min-width: 480px) {
+        grid-column: span 9;
+      }
+    }
+
+    &__post {
+      --post-grid-template-rows: 1fr auto;
+      --article-meta-order: -1;
+
+      grid-column: span 12;
+
+      @media (min-width: 480px) {
+        grid-column: span 3;
+      }
+    }
   }
 
-  &__link {
-    &:hover {
-      --link-text-decoration: none;
+  .instructor {
+    --section-content-align-items: end;
+
+    @media (min-width: 480px) {
+      --section-content-grid-template-columns: repeat(24, minmax(auto, 1fr));
+    }
+
+    &__rank,
+    &__management,
+    &__age-groups,
+    &__zone {
+      grid-column: span 12;
+
+      @media (min-width: 480px) {
+        grid-column: span 5;
+      }
+    }
+
+    &__age-groups {
+      @media (min-width: 480px) {
+        height: calc(100% + 2rem);
+        transform: translateY(16px);
+      }
+    }
+
+    &__zone {
+      --banner-title-margin: 0 0 32px 0;
+      --banner-description-grid-row: 1;
+      --banner-description-grid-column: span 12;
+      --banner-title-grid-column: span 12;
+      --banner-cta-grid-column: span 12;
+      --banner-title-grid-row: 2;
+      --banner-title-font-size: 14px;
+      --banner-title-text-transform: normal;
+      --banner-background: linear-gradient(135deg, rgba(123, 162, 46, 1) 8%, rgba(166, 206, 57, 1) 70%);
+    }
+  }
+
+  .social {
+    &__instagram,
+    &__facebook,
+    &__partners {
+      grid-column: span 12;
+    }
+
+    &__instagram {
+      @media (min-width: 480px) {
+        grid-column: span 4;
+      }
+    }
+
+    &__facebook {
+      @media (min-width: 480px) {
+        grid-column: span 3;
+      }
+    }
+
+    &__partners {
+      @media (min-width: 480px) {
+        grid-column: span 5;
+      }
     }
   }
 }
@@ -379,6 +368,9 @@ export default {
   justify-items: end;
 
   &__input {
+    --input-background: #a6ce39;
+    --input-color: #fff;
+
     width: 100%;
   }
 
@@ -387,9 +379,5 @@ export default {
 
     margin: 0 8px 0 0;
   }
-}
-
-.glide__slide {
-  max-width: 248px;
 }
 </style>
