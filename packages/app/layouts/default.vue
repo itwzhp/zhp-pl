@@ -3,42 +3,65 @@
     <header class="z-header">
       <div class="z-header__bar">
         <div class="z-header__actions">
-          <ZButton class="z-button--text">
-            <ZIcon
-              name="shuffle"
-            /> Zmień serwis
-          </ZButton>
+          <ZDropdown class="z-header__mega-menu">
+            <template #toggle="{toggle}">
+              <ZButton
+                class="z-button--text"
+                @click="toggle"
+              >
+                <ZIcon
+                  name="shuffle"
+                /> Zmień serwis
+              </ZButton>
+            </template>
+          </ZDropdown>
         </div>
         <ZLink to="/">
           <ZImage
-            src="/assets/brand.svg"
-            :sources="[
-              {
-                srcset: require('~/assets/brand.svg'),
-                src: require('~/assets/brand.svg')
-              }
-            ]"
+            :src="require('~/assets/brand.svg')"
             class="z-logo"
           />
         </ZLink>
         <div class="z-header__actions">
-          <ZButton class="z-button--text">
-            Wyszukaj
-          </ZButton>
-          <ZButton class="z-button--text">
-            Język
-          </ZButton>
-          <ZButton class="z-button--text">
-            <ZIcon
-              name="wheelchair"
-            /> Zmień serwis
-          </ZButton>
+          <ZDropdown>
+            <template #toggle="{toggle}">
+              <ZButton
+                class="z-button--text"
+                @click="toggle"
+              >
+                Wyszukaj
+              </ZButton>
+            </template>
+          </ZDropdown>
+          <ZDropdown class="z-dropdown--has-chevron">
+            <template #toggle="{toggle}">
+              <ZButton
+                class="z-button--text z-dropdown__toggle"
+                style="--button-color: #78a22f;"
+                @click="toggle"
+              >
+                Język
+              </ZButton>
+            </template>
+          </ZDropdown>
+          <ZDropdown class="z-header__mega-menu">
+            <template #toggle="{toggle}">
+              <ZButton
+                class="z-button--text"
+                @click="toggle"
+              >
+                <ZIcon
+                  name="wheelchair"
+                /> Dostosuj
+              </ZButton>
+            </template>
+          </ZDropdown>
         </div>
       </div>
       <div class="z-header__navigation">
         <nav>
           <ZList class="z-navigation">
-            <template v-for="(item, key) in headerNavigation">
+            <template v-for="(item, key) in headerMenu">
               <li
                 :key="key"
                 class="z-navigation__item"
@@ -56,53 +79,45 @@
     </header>
     <Nuxt />
     <footer class="z-footer">
-      <div style="background: #78a22f; color: #fff;">
-        <div class="z-footer__content">
-          <div class="z-did-you-know z-footer__did-you-know">
-            <ZHeading
-              level="3"
-              class="z-heading--uppercase z-did-you-know__title"
-            >
-              Czy wiesz że...
-            </ZHeading>
-            <ZText>
-              Drużynowi ZHP przepracowują społecznie łącznie 8 mln godzin w ciągu roku.
-              Jeżeli przeliczyć to na złotówki, wartość pracy wolontariackiej wyniosłaby 136 mln zł.
-            </ZText>
-          </div>
-          <div class="z-world-logos z-footer__world-logos">
-            <ZLink to="https://www.wagggs.org/">
-              <ZImage
-                src="~/assets/brand.svg"
-                :sources="[
-                  {
-                    srcset: require('~/assets/wagggs.png'),
-                    src: require('~/assets/wagggs.png')
-                  }
-                ]"
-                class="z-worlds-logos__logo"
-              />
-            </ZLink>
-            <ZLink to="https://www.scout.org/">
-              <ZImage
-                src="/assets/brand.svg"
-                :sources="[
-                  {
-                    srcset: require('~/assets/wosm.png'),
-                    src: require('~/assets/wosm.png')
-                  }
-                ]"
-                class="z-worlds-logos__logo"
-              />
-            </ZLink>
-          </div>
+      <ZSection
+        class="z-footer__content"
+      >
+        <div class="z-did-you-know z-footer__did-you-know">
+          <ZIcon
+            name="question-marks"
+            class="z-did-you-know__question-marks"
+          />
+          <ZHeading
+            level="3"
+            class="z-heading--uppercase z-did-you-know__title"
+          >
+            Czy wiesz że...
+          </ZHeading>
+          <ZText>
+            Drużynowi ZHP przepracowują społecznie łącznie 8 mln godzin w ciągu roku.
+            Jeżeli przeliczyć to na złotówki, wartość pracy wolontariackiej wyniosłaby 136 mln zł.
+          </ZText>
         </div>
-      </div>
+        <div class="z-world-logos z-footer__world-logos">
+          <ZLink to="https://www.wagggs.org/">
+            <ZImage
+              :src="require('~/assets/wagggs.png')"
+              class="z-worlds-logos__logo"
+            />
+          </ZLink>
+          <ZLink to="https://www.scout.org/">
+            <ZImage
+              :src="require('~/assets/wosm.png')"
+              class="z-worlds-logos__logo"
+            />
+          </ZLink>
+        </div>
+      </ZSection>
       <div class="z-footer__bar">
         <ZText v-text="'Copyright © 1997-2020 Związek Harcerstwa Polskiego'" />
         <nav class="z-footer__navigation">
           <ZList class="z-navigation z-navigation--secondary">
-            <template v-for="(item, key) in footerNavigation">
+            <template v-for="(item, key) in footerMenu">
               <li
                 :key="key"
                 class="z-navigation__item"
@@ -121,40 +136,60 @@
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex'
 import {
-  ZButton, ZIcon, ZLink, ZImage, ZText, ZHeading, ZList
+  ZDropdown,
+  ZHeading,
+  ZText,
+  ZButton,
+  ZIcon,
+  ZLink,
+  ZImage,
+  ZList,
+  ZSection
 } from '@nowa-zhp/ui'
-
 export default {
   name: 'Default',
   components: {
+    ZDropdown,
     ZHeading,
     ZText,
     ZButton,
     ZIcon,
     ZLink,
     ZImage,
-    ZList
+    ZList,
+    ZSection
   },
-  data () {
-    return {
-      component: 'home',
-      headerNavigation: [
-        { to: 'home', name: 'Strona Główna' },
-        { to: 'Posts', name: 'Aktualności' },
-        { to: 'events', name: 'Wydarzenia' },
-        { to: 'home', name: 'Dla mediów' },
-        { to: 'home', name: 'Dla rodzica' },
-        { to: 'home', name: '1% dla ZHP' },
-        { to: 'home', name: 'Kontakt' }
-      ],
-      footerNavigation: [
-        { to: '#', name: 'Informacje i uwagi prawne' },
-        { to: '#', name: 'Polityka prywatności' },
-        { to: '#', name: 'Biuletyn Informacji Publicznej' },
-        { to: '#', name: 'RSS' }
-      ]
-    }
+  async middleware ({ store, $axios }) {
+    // story is required to get data on server-side
+    const menusRes = await $axios.get('menus')
+    const menus = menusRes.data
+    menus.forEach((menu) => {
+      switch (menu.location) {
+        case 'header-menu':
+          store.commit('menus/update', {
+            location: 'headerMenu',
+            items: menu.items.map(item => ({
+              name: item.title,
+              to: item.url
+            }))
+          })
+          break
+        case 'footer-menu':
+          store.commit('menus/update', {
+            location: 'footerMenu',
+            items: menu.items.map(item => ({
+              name: item.title,
+              to: item.url
+            }))
+          })
+          break
+      }
+    })
+  },
+  computed: {
+    ...mapGetters({ headerMenu: 'menus/headerMenu', footerMenu: 'menus/footerMenu' })
   }
 }
 </script>
@@ -181,6 +216,7 @@ body {
   padding: 0 20px;
 
   &__bar {
+    position: relative;
     display: grid;
     height: 80px;
     align-items: center;
@@ -202,8 +238,17 @@ body {
   &__navigation {
     display: grid;
     height: 48px;
+    align-items: center;
     justify-content: center;
     grid-template-columns: auto;
+  }
+
+  &__mega-menu {
+    --dropdown-content-top: 100%;
+    --dropdown-content-margin: 0 0 0 -20px;
+    --dropdown-content-width: 100vw;
+
+    position: static;
   }
 }
 
@@ -217,20 +262,18 @@ body {
   color: #fff;
 
   &__content {
-    display: grid;
-    max-width: 1120px;
-    height: 120px;
-    align-items: center;
-    margin: 0 auto;
-    grid-template-columns: repeat(3, calc(100% / 3));
+    --section-margin: 0 auto;
+    --section-background: #78a22f;
+    --section-content-height: 120px;
+    --section-content-align-items: center;
   }
 
   &__did-you-know {
-    grid-column: span 1;
+    grid-column: span 4;
   }
 
   &__world-logos {
-    grid-column: 3 / span 1;
+    grid-column: 9 / span 4;
   }
 
   &__bar {
@@ -251,6 +294,25 @@ body {
 .z-did-you-know {
   --heading-font-size: 12px;
   --text-font-size: 12px;
+
+  position: relative;
+
+  & > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  &__question-marks {
+    --icon-size: 100px;
+
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    left: 0;
+    fill: #4a7b26;
+    opacity: 0.4;
+    transform: translate(-66%, -34%);
+  }
 }
 
 .z-world-logos {
@@ -260,25 +322,45 @@ body {
 }
 
 .z-navigation {
+  $this: &;
+
   display: grid;
-  column-gap: 24px;
   align-items: center;
-  line-height: 1;
+  column-gap: 24px;
   font-size: 18px;
   font-weight: 500;
   grid-auto-flow: column;
+  line-height: 1;
+
+  &__link {
+    position: relative;
+    border-width: 0 0 2px 0;
+    border-style: solid;
+    border-color: transparent;
+    line-height: 0;
+    transition: border-color 150ms ease-in-out;
+
+    &:hover {
+      --link-text-decoration: none;
+
+      border-color: #1e152f;
+    }
+  }
 
   &--secondary {
     column-gap: 4px;
 
-    .z-navigation {
-      &__link {
-        font-size: 14px;
+    #{$this}__link {
+      border-width: 0;
+      font-size: 14px;
 
-        &::before {
-          content: "|";
-          margin: 0 4px 0 0;
-        }
+      &:hover {
+        --link-text-decoration: underline;
+      }
+
+      &::before {
+        margin: 0 4px 0 0;
+        content: "|";
       }
     }
   }
