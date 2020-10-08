@@ -65,6 +65,7 @@ export default {
     ZPagination
   },
   async asyncData ({ $axios }) {
+    // helpers
     const reduce = (accumulator, option) => ({
       ...accumulator,
       [option.id]: map(option)
@@ -74,18 +75,19 @@ export default {
       label: option.name,
       value: option.id
     })
-
     // posts
-    const postsRes = await $axios.get('posts', { per_page: 16 })
+    const postsRes = await $axios.get('posts', { params: { per_page: 16 } })
     const posts = postsRes.data
     // tags
     const tagsRes = await $axios('tags', {})
     const tags = tagsRes.data.reduce(reduce, {})
-    // categories
+    // age_groups
     const ageGroupsRes = await $axios('age_groups', {})
     const ageGroups = ageGroupsRes.data.reduce(reduce, {})
+    // teams
     const teamsRes = await $axios('teams', {})
     const teams = teamsRes.data.reduce(reduce, {})
+    // categories
     const categories = {
       teams: {
         id: 'teams',
