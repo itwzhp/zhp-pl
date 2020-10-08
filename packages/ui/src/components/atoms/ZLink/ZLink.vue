@@ -7,6 +7,7 @@
     <slot />
   </component>
 </template>
+
 <script>
 export default {
   name: 'ZLink',
@@ -33,7 +34,7 @@ export default {
     },
     isExternal() {
       const { to } = this;
-      return typeof to === 'string' && !to.search(/(^\/)/g) > -1;
+      return typeof to === 'string' && to.search(/(^\/)/g) === -1;
     },
     routerTag() {
       const { isExternal } = this;
@@ -48,6 +49,7 @@ export default {
   },
 };
 </script>
+
 <style lang="scss">
   .z-link {
     color: var(--link-color, inherit);
