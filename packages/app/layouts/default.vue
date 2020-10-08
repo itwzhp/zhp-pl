@@ -94,8 +94,7 @@
             Czy wiesz że...
           </ZHeading>
           <ZText>
-            Drużynowi ZHP przepracowują społecznie łącznie 8 mln godzin w ciągu roku.
-            Jeżeli przeliczyć to na złotówki, wartość pracy wolontariackiej wyniosłaby 136 mln zł.
+            {{ randomText }}
           </ZText>
         </div>
         <div class="z-world-logos z-footer__world-logos">
@@ -187,9 +186,12 @@ export default {
           break
       }
     })
+    const randomTextRes = await $axios.get('random')
+    const randomText = randomTextRes.data
+    store.commit('random/update', randomText.text)
   },
   computed: {
-    ...mapGetters({ headerMenu: 'menus/headerMenu', footerMenu: 'menus/footerMenu' })
+    ...mapGetters({ headerMenu: 'menus/headerMenu', footerMenu: 'menus/footerMenu', randomText: 'random/text' })
   }
 }
 </script>
