@@ -56,7 +56,7 @@
             :key="post.id"
             :thumbnail="post.rest_media"
             :title="post.title.rendered"
-            :to="post.link"
+            :to="`/posts/${post.slug}`"
             :author="post.rest_author"
             :sticky="post.sticky"
             :date="post.date"
@@ -187,10 +187,12 @@ import {
   ZPost,
   ZCard,
   ZHighlighted,
-  ZEvent
+  ZEvent,
+  ZIcon
 } from '@nowa-zhp/ui'
 
 export default {
+  name: 'Home',
   components: {
     ZSection,
     ZHeading,
@@ -201,17 +203,18 @@ export default {
     ZPost,
     ZCard,
     ZHighlighted,
-    ZEvent
+    ZEvent,
+    ZIcon
   },
   async asyncData ({ $axios }) {
     // last 8 post for posts ZCarousel
-    const postsRes = await $axios.get('posts', { params: { per_page: 8 } })
+    const postsRes = await $axios.get('posts', { per_page: 8 })
     const posts = postsRes.data
     // last 5 posts for ZHighlighted component
-    const highlightedPostsRes = await $axios.get('posts', { params: { per_page: 5 } })
+    const highlightedPostsRes = await $axios.get('posts', { per_page: 5 })
     const highlightedPosts = highlightedPostsRes.data.map(post => ({ ...post, title: post.title.rendered }))
     // last 8 events for events ZCarousel
-    const eventsRes = await $axios.get('events', { params: { per_page: 8 } })
+    const eventsRes = await $axios.get('events', { per_page: 8 })
     const events = eventsRes.data
 
     return { posts, highlightedPosts, events }
