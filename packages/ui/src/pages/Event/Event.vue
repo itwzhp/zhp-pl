@@ -18,9 +18,9 @@
         :src="event.rest_media"
         class="cover"
       />
-      <Compiler
+      <div
         class="content"
-        :html="event.content.rendered"
+        v-html="event.content.rendered"
       />
       <div class="z-files files">
         <!-- linki i dokumenty powiązane z artykułem -->
@@ -95,7 +95,6 @@
 
 <script>
 import axios from 'axios';
-import Compiler from '../../helpers/Compiler.vue';
 import {
   ZSection,
   ZHeading,
@@ -110,7 +109,6 @@ import {
 export default {
   name: 'Event',
   components: {
-    Compiler,
     ZLink,
     ZMeta,
     ZImage,

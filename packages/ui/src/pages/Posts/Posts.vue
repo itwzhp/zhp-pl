@@ -1,7 +1,7 @@
 <template>
   <div id="posts">
     <ZSection>
-      <ZHeading style="grid-column: 5 / span 7;">
+      <ZHeading syle="grid-column: 5 / span 7;">
         Aktualności
         <small style="display: block; margin: 8px 0; font-weight: 400;">Sprawdź, co nowego w ZHP</small>
       </zHeading>

@@ -18,9 +18,9 @@
         :src="post.rest_media"
         class="cover"
       />
-      <Compiler
+      <div
         class="content"
-        :html="post.content.rendered"
+        html="post.content.rendered"
       />
       <div class="z-files files">
         <!-- linki i dokumenty powiązane z artykułem -->
@@ -94,7 +94,6 @@
 
 <script>
 import axios from 'axios';
-import Compiler from '../../helpers/Compiler.vue';
 import {
   ZSection,
   ZHeading,
@@ -109,7 +108,6 @@ import {
 export default {
   name: 'Post',
   components: {
-    Compiler,
     ZLink,
     ZMeta,
     ZImage,
