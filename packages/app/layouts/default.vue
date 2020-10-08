@@ -81,6 +81,7 @@
     <footer class="z-footer">
       <ZSection
         class="z-footer__content"
+        style="--section-margin: 0 auto;"
       >
         <div class="z-did-you-know z-footer__did-you-know">
           <ZIcon
