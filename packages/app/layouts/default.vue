@@ -69,8 +69,7 @@
                 <ZLink
                   :to="item.to"
                   class="z-navigation__link"
-                  v-text="item.name"
-                />
+                >{{item.name}}</ZLink>
               </li>
             </template>
           </ZList>
@@ -90,7 +89,7 @@
           />
           <ZHeading
             level="3"
-            class="z-heading--uppercase z-did-you-know__title"
+            class="z-did-you-know__title"
           >
             Czy wiesz że...
           </ZHeading>
@@ -114,7 +113,7 @@
         </div>
       </ZSection>
       <div class="z-footer__bar">
-        <ZText v-text="'Copyright © 1997-2020 Związek Harcerstwa Polskiego'" />
+        <ZText>Copyright © 1997-2020 Związek Harcerstwa Polskiego</ZText>
         <nav class="z-footer__navigation">
           <ZList class="z-navigation z-navigation--secondary">
             <template v-for="(item, key) in footerMenu">
@@ -125,8 +124,7 @@
                 <ZLink
                   :to="item.to"
                   class="z-navigation__link"
-                  v-text="item.name"
-                />
+                >{{item.name}}</ZLink>
               </li>
             </template>
           </ZList>

@@ -18,9 +18,5 @@ export default {
 };
 </script>
 <style lang="scss">
-  .z-heading {
-    &--uppercase {
-      text-transform: uppercase;
-    }
-  }
+  .z-heading {}
 </style>

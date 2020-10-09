@@ -20,8 +20,7 @@
           >
             <ZLink
               :to="to"
-              v-text="title"
-            />
+            >{{title}}</ZLink>
           </ZHeading>
         </slot>
       </div>
@@ -102,10 +101,6 @@ export default {
   &__title {
     color: #78a22f;
     text-transform: var(--text-transform);
-  }
-
-  &--uppercase {
-    --text-transform: uppercase;
   }
 }
 </style>

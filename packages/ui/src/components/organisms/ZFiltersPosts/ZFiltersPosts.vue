@@ -321,7 +321,6 @@ export default {
 
     &__date-label {
       margin: 0 0 8px 0;
-      text-transform: uppercase;
     }
   }
 </style>

@@ -3,7 +3,7 @@
     <ZSection>
       <ZHeading style="grid-column: 5 / span 7;">
         Aktualności
-        <small style="display: block; margin: 8px 0; font-weight: 400;">Sprawdź, co nowego w ZHP</small>
+        <small style="display: block; margin: 8px 0;">Sprawdź, co nowego w ZHP</small>
       </zHeading>
       <ZFiltersPosts
         style=" margin: 32px 0; grid-column: 5 / span 7;"

@@ -21,8 +21,7 @@
           >
             <ZLink
               :to="to"
-              v-text="title"
-            />
+            >{{title}}</ZLink>
           </ZHeading>
         </slot>
         <slot name="meta">
@@ -32,8 +31,7 @@
                 v-if="author.name"
                 :to="author.href"
                 class="z-post__author"
-                v-text="author.name"
-              />
+              >{{author.name}}</ZLink>
             </slot>
             <slot name="date">
               <time
@@ -175,9 +173,7 @@ export default {
       grid-template-columns: repeat(2, auto);
     }
 
-    &__author {
-      text-transform: uppercase;
-    }
+    &__author {}
 
     &__date {}
 
@@ -186,7 +182,6 @@ export default {
 
       order: -1;
       place-self: start;
-      text-transform: uppercase;
     }
 
     &--highlighted {

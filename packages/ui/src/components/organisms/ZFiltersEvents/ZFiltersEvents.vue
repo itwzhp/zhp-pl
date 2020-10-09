@@ -245,9 +245,7 @@ export default {
         margin: 16px 0;
         grid-template-columns: repeat(2, auto);
 
-        &-title {
-          text-transform: uppercase;
-        }
+        &-title {}
 
         &-more {
           color: #7ba22e;

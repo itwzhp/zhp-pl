@@ -4,12 +4,11 @@
     class="z-highlighted"
   >
     <div class="z-highlighted__header">
-      <ZHeading v-text="title" />
+      <ZHeading>{{title}}</ZHeading>
       <ZLink
         :to="more.href"
         class="z-highlighted__more z-highlighted__link"
-        v-text="more.title"
-      />
+      >{{more.title}}</ZLink>
     </div>
     <ZList>
       <template v-for="(article, key) in posts">
@@ -20,8 +19,7 @@
           <ZLink
             to="#"
             class="z-highlighted__link"
-            v-text="article.title"
-          />
+          >{{article.title}}</ZLink>
           <time
             :datetime="article.date"
           >{{ article.date | format }}</time>
@@ -80,9 +78,7 @@ export default {
       grid-template-columns: repeat(2, auto);
     }
 
-    &__title {
-      text-transform: uppercase;
-    }
+    &__title {}
 
     &__more {
       color: #7ba22e;

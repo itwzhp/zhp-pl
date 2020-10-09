@@ -182,7 +182,6 @@ export default {
       .flatpickr-monthDropdown-months,
       .numInputWrapper {
         background: transparent;
-        text-transform: uppercase;
 
         &:hover {
           background: transparent;

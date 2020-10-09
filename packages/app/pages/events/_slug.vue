@@ -56,19 +56,18 @@
           <ZText>
             T: <ZLink to="tel:+48 221 231 214">
               +48 221 231 214<ZLink />
-            </zlink>
+            </Zlink>
           </ZText>
           <ZText>
             @: <ZLink to="maito: jan.kowalski@gmail.com">
               jan.kowalski@gmail.com<ZLink />
-            </zlink>
+            </Zlink>
           </ZText>
         </div>
       </div>
-      </zimage>
     </ZSection>
     <ZSection class="related">
-      <ZHeading class="z-heading--uppercase related__title">
+      <ZHeading class="related__title">
         Mogą Cię także zainteresować:
       </ZHeading>
       <ZCarousel

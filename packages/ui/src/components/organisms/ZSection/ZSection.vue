@@ -13,15 +13,13 @@
             v-if="title"
             v-bind="headingProps"
             class="z-section__title"
-            v-text="title"
-          />
+          >{{title}}</ZHeading>
         </slot>
         <slot name="subtitle">
           <ZText
             v-if="subtitle"
             class="z-section__subtitle"
-            v-text="subtitle"
-          />
+          >{{subtitle}}</ZText>
         </slot>
       </div>
     </slot>
@@ -94,7 +92,6 @@ export default {
       margin: var(--section-title-margin, 0 0 0.75rem 0);
       grid-column: var(--section-title-grid-column, span 12);
       grid-row: var(--section-title-grid-row, 1);
-      text-transform: var(--section-title-text-transform, uppercase);
 
       @media (min-width: 480px) {
         --section-title-grid-column: span 4;

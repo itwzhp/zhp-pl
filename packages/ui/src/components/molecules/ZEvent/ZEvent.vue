@@ -22,12 +22,10 @@
             >
               <div
                 class="z-calendar__day"
-                v-text="dateCalendar.begin.day"
-              />
+              >{{dateCalendar.begin.day}}</div>
               <div
                 class="z-calendar__month"
-                v-text="dateCalendar.begin.month"
-              />
+              >{{dateCalendar.begin.month}}</div>
             </time>
             <div class="z-calendar__between" />
             <time
@@ -36,12 +34,10 @@
             >
               <div
                 class="z-calendar__day"
-                v-text="dateCalendar.end.day"
-              />
+              >{{dateCalendar.end.day}}</div>
               <div
                 class="z-calendar__month"
-                v-text="dateCalendar.end.month"
-              />
+              >{{dateCalendar.end.month}}</div>
             </time>
           </div>
         </slot>
@@ -52,16 +48,14 @@
           >
             <ZLink
               :to="to"
-              v-text="title"
-            />
+            >{{title}}</ZLink>
           </ZHeading>
         </slot>
         <slot name="excerpt">
           <ZText
             v-if="excerpt"
             class="z-event__excerpt"
-            v-text="excerpt"
-          />
+          >{{excerpt}}</ZText>
         </slot>
         <slot name="meta">
           <div class="z-event__meta">
@@ -69,16 +63,14 @@
               <ZLink to="#">
                 <div
                   class="z-event__location"
-                  v-text="location.name"
-                />
+                >{{location.name}}</div>
               </ZLink>
             </slot>
             <slot name="audience">
               <ZLink to="#">
                 <div
                   class="z-event__audience"
-                  v-text="audience.name"
-                />
+                >{{audience.name}}</div>
               </ZLink>
             </slot>
           </div>

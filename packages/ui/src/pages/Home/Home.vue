@@ -17,7 +17,7 @@
           class="z-search__input"
         />
         <ZButton
-          style="--button-text-transform: uppercase; --button-min-width: 168px;"
+          style="--button-min-width: 168px;"
           class="z-search__submit"
         >
           <ZIcon
@@ -115,17 +115,17 @@
       <ZCard
         title="Stopnie i sprawności"
         thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/01.png"
-        class="z-card--uppercase instructor__rank"
+        class="instructor__rank"
       />
       <ZCard
         title="Piony metodyczne"
         thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/02.png"
-        class="z-card--uppercase instructor__age-groups"
+        class="instructor__age-groups"
       />
       <ZCard
         title="Status ZHP i Władze ZHP"
         thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/03.png"
-        class="z-card--uppercase instructor__management"
+        class="instructor__management"
       />
       <!-- CTA / BANNER-->
       <ZBanner
@@ -178,21 +178,21 @@
       <div
         class="social__instagram"
       >
-        <ZHeading class="z-heading--uppercase">
+        <ZHeading>
           #instagram
         </ZHeading>
       </div>
       <div
         class="social__facebook"
       >
-        <ZHeading class="z-heading--uppercase">
+        <ZHeading>
           facebook
         </ZHeading>
       </div>
       <div
         class="social__partners"
       >
-        <ZHeading class="z-heading--uppercase">
+        <ZHeading>
           Partnerzy organizacji
         </ZHeading>
         <ZCarousel
@@ -219,7 +219,7 @@
             </ZLink>
           </li>
         </ZCarousel>
-        <ZHeading class="z-heading--uppercase">
+        <ZHeading>
           Partnerzy wyjazdu na WSJ2019
         </ZHeading>
         <ZCarousel

@@ -70,7 +70,6 @@ export default {
       display: block;
       margin: 15px 0;
       color: var(--form-field-label-color, #84a311);
-      text-transform: var(--form-field-label-text-transform, uppercase);
     }
 
     &__input {}

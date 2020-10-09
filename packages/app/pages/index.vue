@@ -16,7 +16,7 @@
           class="z-search__input"
         />
         <ZButton
-          style="--button-text-transform: uppercase; --button-min-width: 168px;"
+          style="--button-min-width: 168px;"
           class="z-search__submit"
         >
           <ZIcon
@@ -114,17 +114,17 @@
       <ZCard
         title="Stopnie i sprawności"
         thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/01.png"
-        class="z-card--uppercase instructor__rank"
+        class="instructor__rank"
       />
       <ZCard
         title="Piony metodyczne"
         thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/02.png"
-        class="z-card--uppercase instructor__age-groups"
+        class="instructor__age-groups"
       />
       <ZCard
         title="Status ZHP i Władze ZHP"
         thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/03.png"
-        class="z-card--uppercase instructor__management"
+        class="instructor__management"
       />
       <ZBanner
         title="Sprawdź Strefę Instruktora"
