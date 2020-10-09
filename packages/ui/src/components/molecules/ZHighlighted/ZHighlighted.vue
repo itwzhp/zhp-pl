@@ -81,7 +81,6 @@ export default {
     }
 
     &__title {
-      font-weight: 500;
       text-transform: uppercase;
     }
 

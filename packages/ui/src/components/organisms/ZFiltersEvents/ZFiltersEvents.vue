@@ -246,7 +246,6 @@ export default {
         grid-template-columns: repeat(2, auto);
 
         &-title {
-          font-weight: 500;
           text-transform: uppercase;
         }
 

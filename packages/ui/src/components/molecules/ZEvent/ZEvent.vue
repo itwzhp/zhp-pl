@@ -222,7 +222,6 @@ export default {
     &__thumbnail {
       position: relative;
       overflow: hidden;
-      line-height: 0;
 
       img {
         width: 100%;
@@ -243,8 +242,6 @@ export default {
 
     &__title {
       margin: 0 0 8px 0;
-      font-size: 14px;
-      font-weight: 400;
     }
 
     &__excerpt {
@@ -259,13 +256,9 @@ export default {
       grid-template-columns: repeat(2, auto);
     }
 
-    &__location {
-      font-size: 10px;
-    }
+    &__location {}
 
-    &__audience {
-      font-size: 10px;
-    }
+    &__audience {}
 
     &__date {
       position: absolute;
@@ -312,9 +305,7 @@ export default {
         transform: unset;
       }
 
-      #{$this}__title {
-        font-size: 24px;
-      }
+      #{$this}__title {}
     }
   }
   // todo: przenieść do atomu
@@ -329,12 +320,10 @@ export default {
     grid-template-rows: repeat(2, auto);
 
     &__day {
-      font-size: 14px;
       place-self: center;
     }
 
     &__month {
-      font-size: 10px;
       place-self: center;
     }
 

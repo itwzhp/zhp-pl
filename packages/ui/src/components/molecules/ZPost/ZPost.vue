@@ -135,7 +135,6 @@ export default {
     &__thumbnail {
       position: relative;
       overflow: hidden;
-      line-height: 0;
 
       &::after {
         position: absolute;
@@ -165,8 +164,6 @@ export default {
     &__title {
       order: var(--post-title-order);
       margin: 8px 0;
-      font-size: 14px;
-      font-weight: 400;
     }
 
     &__meta {
@@ -179,19 +176,15 @@ export default {
     }
 
     &__author {
-      font-size: 10px;
       text-transform: uppercase;
     }
 
-    &__date {
-      font-size: 10px;
-    }
+    &__date {}
 
     &__category {
       --bubble-height: 24px;
 
       order: -1;
-      font-weight: 300;
       place-self: start;
       text-transform: uppercase;
     }
@@ -252,9 +245,7 @@ export default {
         place-self: end;
       }
 
-      #{$this}__title {
-        font-size: 24px;
-      }
+      #{$this}__title {}
     }
   }
 </style>

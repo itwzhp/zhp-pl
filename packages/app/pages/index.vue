@@ -333,7 +333,6 @@ export default {
       --banner-title-grid-column: span 12;
       --banner-cta-grid-column: span 12;
       --banner-title-grid-row: 2;
-      --banner-title-font-size: 14px;
       --banner-title-text-transform: normal;
       --banner-background: linear-gradient(135deg, rgba(123, 162, 46, 1) 8%, rgba(166, 206, 57, 1) 70%);
     }

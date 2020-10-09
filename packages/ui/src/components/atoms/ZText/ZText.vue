@@ -18,7 +18,5 @@ export default {
 };
 </script>
 <style lang="scss">
-  .z-text {
-    font-size: var(--text-font-size);
-  }
+  .z-text {}
 </style>

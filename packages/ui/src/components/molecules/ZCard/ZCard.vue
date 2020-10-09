@@ -73,7 +73,6 @@ export default {
   &__thumbnail {
     position: relative;
     overflow: hidden;
-    line-height: 0;
 
     &::after {
       position: absolute;
@@ -102,8 +101,6 @@ export default {
 
   &__title {
     color: #78a22f;
-    font-size: 20px;
-    font-weight: 500;
     text-transform: var(--text-transform);
   }
 

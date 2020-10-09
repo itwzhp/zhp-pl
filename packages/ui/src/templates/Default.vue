@@ -282,9 +282,6 @@ export default {
 }
 
 .z-did-you-know {
-  --heading-font-size: 12px;
-  --text-font-size: 12px;
-
   position: relative;
 
   & > * {
@@ -320,17 +317,13 @@ export default {
   display: grid;
   align-items: center;
   column-gap: 24px;
-  font-size: 18px;
-  font-weight: 500;
   grid-auto-flow: column;
-  line-height: 1;
 
   &__link {
     position: relative;
     border-width: 0 0 2px 0;
     border-style: solid;
     border-color: transparent;
-    line-height: 0;
     transition: border-color 150ms ease-in-out;
 
     &:hover {
@@ -345,7 +338,6 @@ export default {
 
     #{$this}__link {
       border-width: 0;
-      font-size: 14px;
 
       &:hover {
         --link-text-decoration: underline;

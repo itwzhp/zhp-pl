@@ -316,13 +316,11 @@ export default {
       background: #fff;
       border-radius: 10px;
       box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.05);
-      line-height: 1.4;
       text-align: center;
     }
 
     &__date-label {
       margin: 0 0 8px 0;
-      font-weight: 900;
       text-transform: uppercase;
     }
   }

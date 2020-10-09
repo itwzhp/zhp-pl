@@ -107,7 +107,6 @@ export default {
       background: var(--bubble-label-background, var(--background, #fff));
       border-radius: var(--bubble-label-border-radius, 10px);
       color: var(--bubble-label-color, var(--color));
-      font-size: var(--bubble-label-font-size, 10px);
       outline: var(--bubble-label-outline);
     }
 

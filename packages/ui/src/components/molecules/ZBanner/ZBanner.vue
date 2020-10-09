@@ -124,7 +124,6 @@ export default {
       margin: -1px;
       grid-column: 7 / span 6;
       grid-row: 1;
-      line-height: 0;
     }
 
     &__mask {
@@ -160,8 +159,6 @@ export default {
 
     &__title {
       margin: var(--banner-title-margin, 16px 0);
-      font-size: var(--banner-title-font-size, 1.953rem);
-      font-weight: var(--banner-title-font-weight, 500);
       grid-column: var(--banner-title-grid-column, span 6);
       grid-row: var(--banner-title-grid-row, 1);
       text-transform: var(--banner-title-text-transform, uppercase);
@@ -169,7 +166,6 @@ export default {
 
     &__description {
       margin: var(--banner-description-margin, 16px 0);
-      font-weight: var(--banner-description-font-weight, 300);
       grid-column: var(--banner-description-grid-column, span 6);
       grid-row: var(--banner-description-grid-row, 2);
     }
@@ -195,7 +191,6 @@ export default {
     &__link {
       --link-text-decoration: underline;
 
-      font-size: 16px;
       white-space: nowrap;
 
       &:hover {

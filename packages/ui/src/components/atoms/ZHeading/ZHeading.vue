@@ -2,7 +2,6 @@
   <component
     :is="`h${level}`"
     class="z-heading"
-    :class="`h${level}`"
   >
     <slot />
   </component>
@@ -19,16 +18,6 @@ export default {
 };
 </script>
 <style lang="scss">
-  $sizes: 2.441rem, 1.953rem, 1.563rem, 1.25rem, 1rem, 0.8rem;
-
-  @each $size in $sizes {
-    $i: index($sizes, $size);
-
-    .h#{$i} {
-      font-size: var(--heading-font-size, $size);
-    }
-  }
-
   .z-heading {
     &--uppercase {
       text-transform: uppercase;

@@ -256,8 +256,6 @@ export default {
     position: absolute;
     top: 8px;
     left: 8px;
-    font-size: 12px;
-    font-weight: 100;
   }
 
   &__meta {
