@@ -87,7 +87,7 @@
     </slot>
     <slot name="type">
       <ZLink
-        :to="type.href"
+        :to="to"
         class="z-event__type"
       >
         <ZBubble class="z-bubble--is-badge">

@@ -168,6 +168,7 @@
             :audience="{name: 'Wszyscy harcerze'}"
             :type="event.rest_event_type"
             :age-group="event.rest_age_group"
+            :to="`/events/${event.slug}`"
           />
         </li>
       </ZCarousel>

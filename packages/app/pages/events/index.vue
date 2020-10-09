@@ -24,6 +24,7 @@
           :type="event.rest_event_type"
           :age-group="event.rest_age_group"
           :excerpt="event.excerpt.rendered"
+          :to="`/events/${event.slug}`"
           class="event"
           :class="{'z-event--primary': page === 1 && index === 0, 'event--primary': index === 0}"
         />
