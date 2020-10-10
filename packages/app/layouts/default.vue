@@ -69,7 +69,9 @@
                 <ZLink
                   :to="item.to"
                   class="z-navigation__link"
-                >{{item.name}}</ZLink>
+                >
+                  {{ item.name }}
+                </ZLink>
               </li>
             </template>
           </ZList>
@@ -82,21 +84,7 @@
         class="z-footer__content"
         style="--section-margin: 0 auto;"
       >
-        <div class="z-did-you-know z-footer__did-you-know">
-          <ZIcon
-            name="question-marks"
-            class="z-did-you-know__question-marks"
-          />
-          <ZHeading
-            level="3"
-            class="z-did-you-know__title"
-          >
-            Czy wiesz że...
-          </ZHeading>
-          <ZText>
-            {{ randomText }}
-          </ZText>
-        </div>
+        <ZDidYouKnow :random-text="randomText" class="z-footer__did-you-know" />
         <div class="z-world-logos z-footer__world-logos">
           <ZLink to="https://www.wagggs.org/">
             <ZImage
@@ -124,7 +112,9 @@
                 <ZLink
                   :to="item.to"
                   class="z-navigation__link"
-                >{{item.name}}</ZLink>
+                >
+                  {{ item.name }}
+                </ZLink>
               </li>
             </template>
           </ZList>
@@ -133,31 +123,33 @@
     </footer>
   </div>
 </template>
+
 <script>
 import { mapGetters } from 'vuex'
 import {
   ZDropdown,
-  ZHeading,
   ZText,
   ZButton,
   ZIcon,
   ZLink,
   ZImage,
   ZList,
-  ZSection
+  ZSection,
+  ZDidYouKnow
 } from '@nowa-zhp/ui'
+
 export default {
   name: 'Default',
   components: {
     ZDropdown,
-    ZHeading,
     ZText,
     ZButton,
     ZIcon,
     ZLink,
     ZImage,
     ZList,
-    ZSection
+    ZSection,
+    ZDidYouKnow
   },
   async middleware ({ store, $axios }) {
     // story is required to get data on server-side
@@ -194,25 +186,9 @@ export default {
   }
 }
 </script>
+
 <style lang="scss">
-*,
-*::before,
-*::after {
-  box-sizing: inherit;
-  padding: 0;
-  margin: 0;
-}
-
-html {
-  font-size: 16px;
-}
-
-body {
-  box-sizing: border-box;
-  font-family: 'Museo-Sans', sans-serif;
-  font-size: 1rem;
-}
-
+// other
 .z-header {
   padding: 0 20px;
 
@@ -289,27 +265,6 @@ body {
 
   &__navigation {
     margin: 0 0 0 4px;
-  }
-}
-
-.z-did-you-know {
-  position: relative;
-
-  & > * {
-    position: relative;
-    z-index: 1;
-  }
-
-  &__question-marks {
-    --icon-size: 100px;
-
-    position: absolute;
-    z-index: 0;
-    top: 0;
-    left: 0;
-    fill: #4a7b26;
-    opacity: 0.4;
-    transform: translate(-66%, -34%);
   }
 }
 

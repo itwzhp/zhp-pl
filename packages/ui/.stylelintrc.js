@@ -7,7 +7,7 @@ module.exports = {
   rules: {
     'selector-max-id': 1,
     'at-rule-no-unknown': [true, {
-      ignoreAtRules: ['function', 'if', 'each', 'include', 'mixin'],
+      ignoreAtRules: ['function', 'if', 'each', 'include', 'mixin', 'for'],
     }],
     'order/order': [
       'custom-properties',

@@ -35,6 +35,7 @@ export default {
   ** Global CSS
   */
   css: [
+    '@nowa-zhp/ui/src/styles/styles.scss'
   ],
   /*
   ** Plugins to load before mounting the App

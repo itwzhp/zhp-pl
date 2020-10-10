@@ -3,29 +3,13 @@
     <ZSection class="hero">
       <ZHeading
         :level="1"
-        class="hero__title"
+        class="hero__title t3"
       >
         Przygoda.
         Przyjaźń.
         Wychowanie.
       </ZHeading>
-      <form class="z-search hero__search">
-        <ZInput
-          type="text"
-          placeholder="Czego dzisiaj chcsz się dowiedzieć o ZHP?"
-          class="z-search__input"
-        />
-        <ZButton
-          style="--button-min-width: 168px;"
-          class="z-search__submit"
-        >
-          <ZIcon
-            name="search"
-            class="z-search__icon"
-          />
-          Wyszukaj
-        </ZButton>
-      </form>
+      <ZSearch class="hero__search" />
     </ZSection>
     <ZSection
       title="Aktualności"
@@ -114,17 +98,17 @@
       <ZCard
         title="Stopnie i sprawności"
         thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/01.png"
-        class="instructor__rank"
+        class="instructor__rank z-card--uppercase"
       />
       <ZCard
         title="Piony metodyczne"
         thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/02.png"
-        class="instructor__age-groups"
+        class="instructor__age-groups z-card--uppercase"
       />
       <ZCard
         title="Status ZHP i Władze ZHP"
         thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/03.png"
-        class="instructor__management"
+        class="instructor__management z-card--uppercase"
       />
       <ZBanner
         title="Sprawdź Strefę Instruktora"
@@ -181,15 +165,13 @@
 import {
   ZSection,
   ZHeading,
-  ZInput,
-  ZButton,
   ZBanner,
   ZCarousel,
   ZPost,
   ZCard,
   ZHighlighted,
   ZEvent,
-  ZIcon
+  ZSearch
 } from '@nowa-zhp/ui'
 
 export default {
@@ -197,25 +179,23 @@ export default {
   components: {
     ZSection,
     ZHeading,
-    ZInput,
-    ZButton,
     ZBanner,
     ZCarousel,
     ZPost,
     ZCard,
     ZHighlighted,
     ZEvent,
-    ZIcon
+    ZSearch
   },
   async asyncData ({ $axios }) {
     // last 8 post for posts ZCarousel
-    const postsRes = await $axios.get('posts', { per_page: 8 })
+    const postsRes = await $axios.get('posts', { params: { per_page: 8 } })
     const posts = postsRes.data
     // last 5 posts for ZHighlighted component
-    const highlightedPostsRes = await $axios.get('posts', { per_page: 5 })
+    const highlightedPostsRes = await $axios.get('posts', { params: { per_page: 5 } })
     const highlightedPosts = highlightedPostsRes.data.map(post => ({ ...post, title: post.title.rendered }))
     // last 8 events for events ZCarousel
-    const eventsRes = await $axios.get('events', { per_page: 8 })
+    const eventsRes = await $axios.get('events', { params: { per_page: 8 } })
     const events = eventsRes.data
 
     return { posts, highlightedPosts, events }
@@ -362,25 +342,6 @@ export default {
         grid-column: span 5;
       }
     }
-  }
-}
-
-.z-search {
-  display: grid;
-  grid-row-gap: 16px;
-  justify-items: end;
-
-  &__input {
-    --input-background: #a6ce39;
-    --input-color: #fff;
-
-    width: 100%;
-  }
-
-  &__icon {
-    --icon-color: #fff;
-
-    margin: 0 8px 0 0;
   }
 }
 </style>

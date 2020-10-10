@@ -22,10 +22,10 @@
             >
               <div
                 class="z-calendar__day"
-              >{{dateCalendar.begin.day}}</div>
+              >{{ dateCalendar.begin.day }}</div>
               <div
                 class="z-calendar__month"
-              >{{dateCalendar.begin.month}}</div>
+              >{{ dateCalendar.begin.month }}</div>
             </time>
             <div class="z-calendar__between" />
             <time
@@ -34,43 +34,45 @@
             >
               <div
                 class="z-calendar__day"
-              >{{dateCalendar.end.day}}</div>
+              >{{ dateCalendar.end.day }}</div>
               <div
                 class="z-calendar__month"
-              >{{dateCalendar.end.month}}</div>
+              >{{ dateCalendar.end.month }}</div>
             </time>
           </div>
         </slot>
         <slot name="heading">
-          <ZHeading
+          <ZLink
+            :to="to"
             class="z-event__title"
-            :level="3"
           >
-            <ZLink
-              :to="to"
-            >{{title}}</ZLink>
-          </ZHeading>
+            {{ title }}
+          </ZLink>
         </slot>
         <slot name="excerpt">
           <ZText
             v-if="excerpt"
             class="z-event__excerpt"
-          >{{excerpt}}</ZText>
+          >
+            {{ excerpt }}
+          </ZText>
         </slot>
         <slot name="meta">
           <div class="z-event__meta">
             <slot name="location">
-              <ZLink to="#">
-                <div
-                  class="z-event__location"
-                >{{location.name}}</div>
+              <ZLink
+                to="#"
+                class="z-event__location caption"
+              >
+                {{ location.name }}
               </ZLink>
             </slot>
             <slot name="audience">
-              <ZLink to="#">
-                <div
-                  class="z-event__audience"
-                >{{audience.name}}</div>
+              <ZLink
+                to="#"
+                class="z-event__audience caption"
+              >
+                {{ audience.name }}
               </ZLink>
             </slot>
           </div>

@@ -18,5 +18,11 @@ export default {
 };
 </script>
 <style lang="scss">
-  .z-heading {}
+  .z-heading {
+    @for $i from 1 through 6 {
+      h#{$i} {
+        font-size: 1rem;
+      }
+    }
+  }
 </style>

@@ -14,15 +14,13 @@
     <slot name="content">
       <div class="z-post__content">
         <slot name="heading">
-          <ZHeading
+          <ZLink
             v-if="title"
-            :level="3"
+            :to="to"
             class="z-post__title"
           >
-            <ZLink
-              :to="to"
-            >{{title}}</ZLink>
-          </ZHeading>
+            {{ title }}
+          </ZLink>
         </slot>
         <slot name="meta">
           <div class="z-post__meta">
@@ -30,14 +28,16 @@
               <ZLink
                 v-if="author.name"
                 :to="author.href"
-                class="z-post__author"
-              >{{author.name}}</ZLink>
+                class="z-post__author overline"
+              >
+                {{ author.name }}
+              </ZLink>
             </slot>
             <slot name="date">
               <time
                 v-if="date"
                 :datetime="date"
-                class="z-post__date"
+                class="z-post__date overline"
               >{{ date | format }}</time>
             </slot>
           </div>

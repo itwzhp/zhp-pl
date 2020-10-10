@@ -4,7 +4,7 @@
     class="z-highlighted"
   >
     <div class="z-highlighted__header">
-      <ZHeading>{{title}}</ZHeading>
+      <ZHeading class="h5 uppercase">{{title}}</ZHeading>
       <ZLink
         :to="more.href"
         class="z-highlighted__more z-highlighted__link"
@@ -92,6 +92,10 @@ export default {
     }
 
     &__link {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
       &:hover {
         --link-text-decoration: none;
       }

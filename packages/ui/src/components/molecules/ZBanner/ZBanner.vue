@@ -23,7 +23,7 @@
     <div class="z-banner__content">
       <slot name="title">
         <ZHeading
-          class="z-banner__title"
+          class="z-banner__title t4 uppercase"
         >{{title}}</ZHeading>
       </slot>
       <slot name="content">
@@ -43,7 +43,7 @@
                   :to="action.href"
                   class="z-banner__link"
                 >{{action.name}}</ZLink>
-                <ZIcon name="chevron" />
+                <ZIcon name="chevron" style="--icon-size: 0.876rem"/>
               </div>
             </slot>
           </template>

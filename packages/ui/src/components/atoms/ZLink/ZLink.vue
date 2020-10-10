@@ -2,7 +2,7 @@
   <component
     :is="tagComputed"
     v-bind="toComputed"
-    class="z-link"
+    class="z-link button"
   >
     <slot />
   </component>

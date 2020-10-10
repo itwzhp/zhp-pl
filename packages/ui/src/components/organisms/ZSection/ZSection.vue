@@ -12,13 +12,13 @@
           <ZHeading
             v-if="title"
             v-bind="headingProps"
-            class="z-section__title"
+            class="z-section__title t4 uppercase"
           >{{title}}</ZHeading>
         </slot>
         <slot name="subtitle">
           <ZText
             v-if="subtitle"
-            class="z-section__subtitle"
+            class="z-section__subtitle subtitle-1"
           >{{subtitle}}</ZText>
         </slot>
       </div>
@@ -30,6 +30,7 @@
     </slot>
   </component>
 </template>
+
 <script>
 import ZHeading from '../../atoms/ZHeading/ZHeading.vue';
 import ZText from '../../atoms/ZText/ZText.vue';
@@ -62,6 +63,7 @@ export default {
   },
 };
 </script>
+
 <style lang="scss">
   .z-section {
     --section-max-width: 1140px;
@@ -108,9 +110,9 @@ export default {
     }
 
     &__content {
-      height: var(--section-content-height);
       display: grid;
       max-width: var(--section-content-max-width, var(--section-max-width));
+      height: var(--section-content-height);
       align-items: var(--section-content-align-items);
       padding: var(--section-content-padding, var(--section-padding));
       margin: var(--section-content-margin, auto);

@@ -14,14 +14,12 @@
     <slot name="content">
       <div class="z-card__content">
         <slot name="heading">
-          <ZHeading
-            class="z-card__title"
-            :level="3"
+          <ZLink
+            :to="to"
+            class="z-card__title t6"
           >
-            <ZLink
-              :to="to"
-            >{{title}}</ZLink>
-          </ZHeading>
+            {{ title }}
+          </ZLink>
         </slot>
       </div>
     </slot>
@@ -101,6 +99,10 @@ export default {
   &__title {
     color: #78a22f;
     text-transform: var(--text-transform);
+  }
+
+  &--uppercase {
+    text-transform: uppercase;
   }
 }
 </style>
