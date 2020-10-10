@@ -217,7 +217,8 @@ export default {
       position: relative;
       overflow: hidden;
 
-      img {
+      & .z-image,
+      & img {
         width: 100%;
         height: 100%;
         object-fit: cover;

@@ -22,6 +22,7 @@
           >{{article.title}}</ZLink>
           <time
             :datetime="article.date"
+            class="body-2"
           >{{ article.date | format }}</time>
         </li>
       </template>
@@ -89,6 +90,7 @@ export default {
       justify-content: space-between;
       margin: 16px 0;
       grid-template-columns: repeat(2, auto);
+      grid-column-gap: 2rem;
     }
 
     &__link {

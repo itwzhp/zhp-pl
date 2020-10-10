@@ -51,9 +51,18 @@
       />
       <ZHighlighted
         title="Warto przeczytać"
-        :more="{title: 'Zobacz więce', to:'/posts'}"
+        :more="{title: 'Zobacz więcje', to:'/posts'}"
         :posts="highlightedPosts"
         class="section-highlighted__posts"
+      />
+    </ZSection>
+    <ZSection class="section-about-us">
+      <ZBanner
+        thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/news-DMB.png"
+        title="Poznaj ZHP"
+        content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam augue nisl, dignissim id metus
+        sagittis, ultrices consectetur turpis. Quisque maximus metus purus, vitae convallis mi tempus eu."
+        class="section-about-us__banner"
       />
     </ZSection>
     <ZSection class="section-join-us">
@@ -210,6 +219,17 @@ export default {
       @media (min-width: 480px) {
         grid-column: span 7;
       }
+    }
+  }
+
+  .section-about-us {
+    --section-content-max-width: 1235px;
+
+    &__banner {
+      --banner-title-grid-column: span 6;
+      --banner-description-grid-column: span 6;
+
+      grid-column: span 12;
     }
   }
 
