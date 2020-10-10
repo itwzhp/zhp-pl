@@ -185,11 +185,11 @@ export default {
 
   &__bar {
     display: grid;
+    height: 5rem;
     align-items: center;
-    grid-template-columns: repeat(3, auto);
     justify-content: space-between;
     padding: 0 1.25rem;
-    height: 5rem;
+    grid-template-columns: repeat(3, auto);
   }
 
   &__actions {
@@ -202,8 +202,8 @@ export default {
       --button-color: var(--color-primary);
 
       display: grid;
-      grid-auto-flow: column;
       gap: 1rem;
+      grid-auto-flow: column;
     }
   }
 
@@ -234,27 +234,27 @@ export default {
   }
 
   &__random-text {
+    margin: 1rem 0;
     color: #fff;
     grid-column: span 12;
-    margin: 1rem 0;
 
     @media (min-width: 480px) {
       --section-margin: 0 auto;
 
-      grid-column: span 4;
       margin: 1.87rem 0;
+      grid-column: span 4;
     }
   }
 
   &__scouting {
-    order: -1;
     display: grid;
-    grid-column: span 12;
+    order: -1;
     margin: 1rem 0;
+    grid-column: span 12;
 
     @media (min-width: 480px) {
-      margin: 0;
       order: 0;
+      margin: 0;
       grid-auto-flow: column;
       grid-column: 9 / span 4;
     }
@@ -264,15 +264,15 @@ export default {
     display: grid;
     max-width: 1140px;
     padding: 1rem 1.25rem;
-    color: #fff;
     margin: 0 auto;
+    color: #fff;
 
     @media (min-width: 480px) {
-      padding: 0 1.25rem;
-      justify-content: center;
-      align-items: center;
-      grid-auto-flow: column;
       height: 3rem;
+      align-items: center;
+      justify-content: center;
+      padding: 0 1.25rem;
+      grid-auto-flow: column;
     }
   }
 }
@@ -281,13 +281,13 @@ export default {
   --link-font-size: var(--font-size-h6);
 
   display: grid;
-  grid-auto-flow: row;
   align-items: center;
   gap: var(--menu-gap, 1.5rem);
+  grid-auto-flow: row;
 
   @media (min-width: 480px) {
-    grid-auto-flow: column;
     justify-content: center;
+    grid-auto-flow: column;
   }
 
   &--secondary {
