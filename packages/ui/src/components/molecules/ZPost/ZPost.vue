@@ -28,10 +28,8 @@
               <ZLink
                 v-if="author.name"
                 :to="author.href"
-                class="z-post__author overline"
-              >
-                {{ author.name }}
-              </ZLink>
+                class="z-post__author overline uppercase"
+              >{{ author.name }}</ZLink>
             </slot>
             <slot name="date">
               <time
@@ -170,11 +168,15 @@ export default {
       align-items: center;
       justify-content: start;
       order: var(--post-meta-order);
-      column-gap: 8px;
+      column-gap: 4px;
       grid-template-columns: repeat(2, auto);
     }
 
-    &__author {}
+    &__author {
+      &::after {
+        content: ",";
+      }
+    }
 
     &__date {}
 

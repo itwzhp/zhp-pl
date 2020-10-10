@@ -33,6 +33,7 @@ export default {
     border: var(--input-border, 1px solid #a6ce39);
     background: var(--input-background, #fff);
     border-radius: var(--input-border-radius, 10px);
+    box-shadow: 5px 10px 20px 0 rgba(30, 21, 47, 0.12);
     color: var(--input-color, #1e152f);
 
     &::placeholder {

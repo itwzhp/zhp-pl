@@ -1,37 +1,6 @@
 <template>
   <div id="home">
     <ZSection
-      style="--section-content-max-width: 1235px;"
-    >
-      <ZBanner
-        title="Poznaj ZHP"
-        content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam augue nisl, dignissim id metus
-        sagittis, ultrices consectetur turpis. Quisque maximus metus purus, vitae convallis mi tempus eu."
-        class="meet"
-        thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/news-DMB.png"
-        cover-type="video"
-      />
-    </ZSection>
-    <ZSection class="enjoy">
-      <ZBanner
-        title="Chcesz zapisać swoje dziecko do harcerstwa?"
-        content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam augue nisl, dignissim id metus
-        sagittis, ultrices consectetur turpis. Quisque maximus metus purus, vitae convallis mi tempus eu."
-        :calls-to-action="[
-          {name:'Jak zacząć', href: '#'},
-          {name:'Ile kosztuje harcerstwo?', href: '#'},
-          {name:'Gdzie się zapisać?', href: '#'}]"
-        thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/Agnieszka_Madetko-Kurczab_ZHP_21-scaled.jpg"
-        class="enjoy__banner"
-      />
-      <ZPost
-        thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/08/fot.-ZHP-_-Karolina-Piotrowska-18.jpg"
-        title="Przewodniczący ZHP i Naczelniczka ZHP: Wychowujemy w zgodzie z wartościami"
-        date="2020-08-30T08:30:31"
-        class="enjoy__post"
-      />
-    </ZSection>
-    <ZSection
       class="instructor"
     >
       <ZCard

@@ -84,6 +84,29 @@
         class="section-join-us__post"
       />
     </ZSection>
+    <ZSection class="section-mission">
+      <ZCard
+        title="Stopnie i sprawności"
+        thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/01.png"
+        class="section-mission__card"
+      />
+      <ZCard
+        title="Piony metodyczne"
+        thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/02.png"
+        class="section-mission__card section-mission__card--bigger"
+      />
+      <ZCard
+        title="Status ZHP i Władze ZHP"
+        thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/03.png"
+        class="section-mission__card"
+      />
+      <ZBanner
+        title="Sprawedź Strefę Instruktora"
+        content="Szukasz pomysłu na zajęcia? Inspiracji do pracy z harcerzami?"
+        :calls-to-action="{name: 'Przejdź do strony', to: '/strefa-instruktora'}"
+        class="section-mission__banner"
+      />
+    </ZSection>
     <ZSection
       title="Wydarzenia i przedsięwzięcia"
       subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam augue nisl, dignissim id metus sagittis,
@@ -226,10 +249,12 @@ export default {
     --section-content-max-width: 1235px;
 
     &__banner {
-      --banner-title-grid-column: span 6;
-      --banner-description-grid-column: span 6;
-
       grid-column: span 12;
+
+      @media (min-width: 480px) {
+        --banner-title-grid-column: span 6;
+        --banner-description-grid-column: span 6;
+      }
     }
   }
 
@@ -250,6 +275,48 @@ export default {
 
       @media (min-width: 480px) {
         grid-column: span 3;
+      }
+    }
+  }
+
+  .section-mission {
+    --section-content-align-items: end;
+
+    @media (min-width: 480px) {
+      --section-content-grid-template-columns: repeat(24, minmax(auto, 1fr));
+    }
+
+    &__card {
+      grid-column: span 12;
+
+      @media (min-width: 480px) {
+        grid-column: span 5;
+      }
+
+      &--bigger {
+        overflow: hidden;
+
+        @media (min-width: 480px) {
+          height: calc(100% + 2rem);
+          transform: translateY(16px);
+        }
+      }
+    }
+
+    &__banner {
+      --banner-description-grid-row: 1;
+      --banner-description-grid-column: span 12;
+      --banner-title-grid-row: 2;
+      --banner-title-grid-column: span 12;
+      --banner-title-margin: 0 0 2rem 0;
+      --banner-title-font-size: var(--font-size-subtitle-1);
+      --banner-title-text-transform: normal;
+      --banner-cta-grid-column: span 12;
+
+      grid-column: span 12;
+
+      @media (min-width: 480px) {
+        grid-column: span 5;
       }
     }
   }

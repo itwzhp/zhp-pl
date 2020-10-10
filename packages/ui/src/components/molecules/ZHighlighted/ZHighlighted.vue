@@ -89,8 +89,8 @@ export default {
       display: grid;
       justify-content: space-between;
       margin: 16px 0;
-      grid-template-columns: repeat(2, auto);
       grid-column-gap: 2rem;
+      grid-template-columns: repeat(2, auto);
     }
 
     &__link {
