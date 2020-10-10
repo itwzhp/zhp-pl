@@ -72,6 +72,7 @@
         </nav>
       </div>
     </header>
+    <Nuxt />
     <footer class="z-footer">
       <ZSection class="z-footer__content">
         <ZDidYouKnow
@@ -91,7 +92,7 @@
       </ZSection>
       <div class="z-footer__bar">
         <ZText class="subtitle-2">
-          Copyright © 1997-{{ year }} Związek Harcerstwa Polskiego
+          Copyright © 1997-{{ year }}<span class="z-footer__br" /> Związek Harcerstwa Polskiego
         </ZText>
         <nav class="z-menu z-menu--secondary z-footer__menu">
           <template v-for="(item, key) in footerMenu">
@@ -266,13 +267,23 @@ export default {
     padding: 1rem 1.25rem;
     margin: 0 auto;
     color: #fff;
+    gap: 1rem;
 
     @media (min-width: 480px) {
       height: 3rem;
       align-items: center;
       justify-content: center;
       padding: 0 1.25rem;
+      gap: 0;
       grid-auto-flow: column;
+    }
+  }
+
+  &__br {
+    display: block;
+
+    @media (min-width: 480px) {
+      display: inline;
     }
   }
 }
@@ -292,7 +303,12 @@ export default {
 
   &--secondary {
     --link-font-size: var(--font-size-subtitle-2);
-    --menu-gap: 0;
+    --link-font-weight: 300;
+    --menu-gap: 1rem;
+
+    @media (min-width: 480px) {
+      --menu-gap: 0;
+    }
 
     .z-menu {
       &__item {

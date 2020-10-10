@@ -28,7 +28,7 @@
       </slot>
       <slot name="content">
         <ZText
-          class="z-banner__description"
+          class="z-banner__description subtitle-1"
         >{{content}}</ZText>
       </slot>
       <slot name="call-to-actions">
@@ -40,7 +40,7 @@
                 class="z-banner__call-to-action"
               >
                 <ZLink
-                  :to="action.href"
+                  :to="action.to"
                   class="z-banner__link"
                 >{{action.name}}</ZLink>
                 <ZIcon name="chevron" style="--icon-size: 0.876rem;"/>
@@ -155,14 +155,14 @@ export default {
     }
 
     &__title {
-      margin: var(--banner-title-margin, 16px 0);
-      grid-column: var(--banner-title-grid-column, span 6);
+      margin: var(--banner-title-margin, 0 0 1rem 0);
+      grid-column: var(--banner-title-grid-column, span 8);
       grid-row: var(--banner-title-grid-row, 1);
     }
 
     &__description {
-      margin: var(--banner-description-margin, 16px 0);
-      grid-column: var(--banner-description-grid-column, span 6);
+      margin: var(--banner-description-margin, 0 0 2rem 0);
+      grid-column: var(--banner-description-grid-column, span 8);
       grid-row: var(--banner-description-grid-row, 2);
     }
 

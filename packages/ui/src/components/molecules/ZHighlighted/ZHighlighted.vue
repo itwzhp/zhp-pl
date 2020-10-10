@@ -6,7 +6,7 @@
     <div class="z-highlighted__header">
       <ZHeading class="h5 uppercase">{{title}}</ZHeading>
       <ZLink
-        :to="more.href"
+        :to="more.to"
         class="z-highlighted__more z-highlighted__link"
       >{{more.title}}</ZLink>
     </div>

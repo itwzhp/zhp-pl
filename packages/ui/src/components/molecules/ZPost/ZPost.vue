@@ -145,10 +145,8 @@ export default {
         transform: translateY(-8px);
       }
 
-      img {
-        width: 100%;
+      & > * {
         height: 100%;
-        object-fit: cover;
       }
     }
 

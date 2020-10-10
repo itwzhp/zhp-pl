@@ -29,5 +29,10 @@ export default {
       max-width: 100%;
       height: var(--image-height, auto);
     }
+
+    &--has-overlay {
+      background: var(--color-primary);
+      opacity: 0.4;
+    }
   }
 </style>

@@ -54,7 +54,7 @@ export default {
   .z-link {
     color: var(--link-color, inherit);
     font-size: var(--link-font-size, 0.876rem);
-    font-weight: 500;
+    font-weight: var(--link-font-weight);
     line-height: 1.2;
     text-decoration: var(--link-text-decoration, inherit);
 

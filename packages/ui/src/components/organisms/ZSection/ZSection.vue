@@ -13,13 +13,17 @@
             v-if="title"
             v-bind="headingProps"
             class="z-section__title t4 uppercase"
-          >{{title}}</ZHeading>
+          >
+            {{ title }}
+          </ZHeading>
         </slot>
         <slot name="subtitle">
           <ZText
             v-if="subtitle"
             class="z-section__subtitle subtitle-1"
-          >{{subtitle}}</ZText>
+          >
+            {{ subtitle }}
+          </ZText>
         </slot>
       </div>
     </slot>

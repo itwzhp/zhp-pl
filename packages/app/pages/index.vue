@@ -1,15 +1,11 @@
 <template>
   <div id="home">
-    <ZSection class="hero">
-      <ZHeading
-        :level="1"
-        class="hero__title t3"
-      >
-        Przygoda.
-        Przyjaźń.
-        Wychowanie.
+    <ZSection class="section-hero">
+      <div class="section-hero__picture" />
+      <ZHeading :level="1" class="section-hero__title t3">
+        Przygoda. Przyjaźń. Wychowanie
       </ZHeading>
-      <ZSearch class="hero__search" />
+      <ZSearch class="section-hero__search" />
     </ZSection>
     <ZSection
       title="Aktualności"
@@ -19,102 +15,64 @@
         v-if="posts.length > 0"
         :peeked="true"
         :settings="{
-          type: 'carousel',
-          perView: 4,
-          gap: 20,
-          autoplay: 3000,
           breakpoints: {
             480: {
-              perView: 1
+              perView: 1,
+              peek: {
+                before: 0,
+                after: 20
+              }
             }
           }
         }"
-        class="z-carousel--peeked carousel"
+        class="carousel"
       >
-        <li
-          v-for="post in posts"
-          :key="post.id"
-          class="glide__slide"
-        >
-          <ZPost
+        <template v-for="post in posts">
+          <li
             :key="post.id"
-            :thumbnail="post.rest_media"
-            :title="post.title.rendered"
-            :to="`/posts/${post.slug}`"
-            :author="post.rest_author"
-            :sticky="post.sticky"
-            :date="post.date"
-          />
-        </li>
+            class="glide__slide"
+          >
+            <ZPost
+              :thumbnail="post.rest_media"
+              :title="post.title && post.title.rendered"
+              :to="`/posts/${post.slug}`"
+              :author="post.rest_author"
+              :date="post.date"
+            />
+          </li>
+        </template>
       </ZCarousel>
     </ZSection>
-    <ZSection class="highlighted">
+    <ZSection class="section-highlighted">
       <ZCard
         title="Polska reprezentacja na Jamboree 2019 w USA!"
         thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/08/ZHP_WYLOT_JAMBOREE_2019_KAROLINA_PIOTROWSKA-12.jpg"
-        class="highlighted__post"
+        class="section-highlighted__card"
       />
       <ZHighlighted
         title="Warto przeczytać"
-        :more="{title: 'Zobacz więcej', href: '#'}"
+        :more="{title: 'Zobacz więce', to:'/posts'}"
         :posts="highlightedPosts"
-        class="highlighted__posts"
+        class="section-highlighted__posts"
       />
     </ZSection>
-    <ZSection
-      style="--section-content-max-width: 1235px;"
-    >
+    <ZSection class="section-join-us">
       <ZBanner
-        title="Poznaj ZHP"
-        content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam augue nisl, dignissim id metus
-        sagittis, ultrices consectetur turpis. Quisque maximus metus purus, vitae convallis mi tempus eu."
-        class="meet"
-        thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/news-DMB.png"
-        cover-type="video"
-      />
-    </ZSection>
-    <ZSection class="enjoy">
-      <ZBanner
+        thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/Agnieszka_Madetko-Kurczab_ZHP_21-scaled.jpg"
         title="Chcesz zapisać swoje dziecko do harcerstwa?"
         content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam augue nisl, dignissim id metus
         sagittis, ultrices consectetur turpis. Quisque maximus metus purus, vitae convallis mi tempus eu."
         :calls-to-action="[
-          {name:'Jak zacząć', href: '#'},
-          {name:'Ile kosztuje harcerstwo?', href: '#'},
-          {name:'Gdzie się zapisać?', href: '#'}]"
-        thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/Agnieszka_Madetko-Kurczab_ZHP_21-scaled.jpg"
-        class="enjoy__banner"
+          {name:'Jak zacząć', to: '/jak-zaczac'},
+          {name:'Ile kosztuje harcerstwo?', to: '/ile-kosztuje-harcerstwo'},
+          {name:'Gdzie się zapisać?', to: '/gdzie-sie-zapisac'}]"
+        class="section-join-us__banner"
       />
       <ZPost
         thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/08/fot.-ZHP-_-Karolina-Piotrowska-18.jpg"
         title="Przewodniczący ZHP i Naczelniczka ZHP: Wychowujemy w zgodzie z wartościami"
-        date="2020-08-30T08:30:31"
-        class="enjoy__post"
-      />
-    </ZSection>
-    <ZSection
-      class="instructor"
-    >
-      <ZCard
-        title="Stopnie i sprawności"
-        thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/01.png"
-        class="instructor__rank z-card--uppercase"
-      />
-      <ZCard
-        title="Piony metodyczne"
-        thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/02.png"
-        class="instructor__age-groups z-card--uppercase"
-      />
-      <ZCard
-        title="Status ZHP i Władze ZHP"
-        thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/03.png"
-        class="instructor__management z-card--uppercase"
-      />
-      <ZBanner
-        title="Sprawdź Strefę Instruktora"
-        content="Szukasz pomysłu na zajęcia? Inspiracji do pracy z harcerzami?"
-        :calls-to-action="{name: 'Przejdź do strony', href: '#'}"
-        class="instructor__zone"
+        date="2020-08-30"
+        class="section-join-us__post"
       />
     </ZSection>
     <ZSection
@@ -124,68 +82,68 @@
     >
       <ZCarousel
         v-if="events.length > 0"
+        :peeked="true"
         :settings="{
-          type: 'carousel',
-          perView: 4,
-          gap: 20,
-          autoplay: 3000,
           breakpoints: {
             480: {
-              perView: 1
+              perView: 1,
+              peek: {
+                before: 0,
+                after: 20
+              }
             }
           }
         }"
-        :peeked="true"
-        class="z-carousel--peeked carousel"
+        class="carousel"
       >
-        <li
-          v-for="event in events"
-          :key="event.id"
-          class="glide__slide"
-        >
-          <ZEvent
+        <template v-for="event in events">
+          <li
             :key="event.id"
-            :thumbnail="event.rest_media"
-            :title="event.title.rendered"
-            :date="event.rest_acf.date"
-            :location="{name: 'Warszawa'}"
-            :audience="{name: 'Wszyscy harcerze'}"
-            :type="event.rest_event_type"
-            :age-group="event.rest_age_group"
-            :to="`/events/${event.slug}`"
-          />
-        </li>
+            class="glide__slide"
+          >
+            <ZEvent
+              :thumbnail="event.rest_media"
+              :title="event.title && event.title.rendered"
+              :to="`/events/${event.slug}`"
+              :author="event.rest_author"
+              :date="event.rest_acf.date"
+              :location="{name: 'Warszawa'}"
+              :audience="{name: 'Wszyscy harcerze'}"
+              :type="event.rest_event_type"
+              :age-group="event.rest_age_group"
+            />
+          </li>
+        </template>
       </ZCarousel>
     </ZSection>
-    <!-- #instagram | facebook | organization partners  -->
   </div>
 </template>
 
 <script>
 import {
-  ZSection,
-  ZHeading,
   ZBanner,
-  ZCarousel,
-  ZPost,
   ZCard,
-  ZHighlighted,
+  ZCarousel,
   ZEvent,
-  ZSearch
+  ZHeading,
+  ZHighlighted,
+  ZPost,
+  ZSearch,
+  ZSection
 } from '@nowa-zhp/ui'
 
 export default {
   name: 'Home',
   components: {
-    ZSection,
-    ZHeading,
     ZBanner,
-    ZCarousel,
-    ZPost,
     ZCard,
-    ZHighlighted,
+    ZCarousel,
     ZEvent,
-    ZSearch
+    ZHeading,
+    ZHighlighted,
+    ZPost,
+    ZSearch,
+    ZSection
   },
   async asyncData ({ $axios }) {
     // last 8 post for posts ZCarousel
@@ -207,14 +165,22 @@ export default {
 #home {
   overflow: hidden;
 
-  .hero {
-    &__title {
-      margin: 24px 0;
+  .section-hero {
+    &__picture {
       grid-column: span 12;
 
       @media (min-width: 480px) {
-        grid-column: 6 / span 4;
-        grid-row: 1;
+        grid-column: span 6;
+        grid-row: span 2;
+      }
+    }
+
+    &__title {
+      margin: 0 0 1.5rem 0;
+      grid-column: span 12;
+
+      @media (min-width: 480px) {
+        grid-column: span 4;
       }
     }
 
@@ -222,28 +188,15 @@ export default {
       grid-column: span 12;
 
       @media (min-width: 480px) {
-        grid-column: 6 / span 6;
-        grid-row: 2;
+        grid-column: span 6;
       }
     }
   }
 
-  .carousel {
-    grid-column: span 12;
-  }
-
-  .meet {
-    --banner-content-padding: 64px;
-    --banner-description-grid-column: span 5;
-    --banner-title-grid-column: span 5;
-
-    grid-column: span 12;
-  }
-
-  .highlighted {
+  .section-highlighted {
     --section-content-align-items: center;
 
-    &__post {
+    &__card {
       grid-column: span 12;
 
       @media (min-width: 480px) {
@@ -260,7 +213,7 @@ export default {
     }
   }
 
-  .enjoy {
+  .section-join-us {
     &__banner {
       grid-column: span 12;
 
@@ -271,7 +224,7 @@ export default {
 
     &__post {
       --post-grid-template-rows: 1fr auto;
-      --article-meta-order: -1;
+      --post-meta-order: -1;
 
       grid-column: span 12;
 
@@ -281,67 +234,8 @@ export default {
     }
   }
 
-  .instructor {
-    --section-content-align-items: end;
-
-    @media (min-width: 480px) {
-      --section-content-grid-template-columns: repeat(24, minmax(auto, 1fr));
-    }
-
-    &__rank,
-    &__management,
-    &__age-groups,
-    &__zone {
-      grid-column: span 12;
-
-      @media (min-width: 480px) {
-        grid-column: span 5;
-      }
-    }
-
-    &__age-groups {
-      @media (min-width: 480px) {
-        height: calc(100% + 2rem);
-        transform: translateY(16px);
-      }
-    }
-
-    &__zone {
-      --banner-title-margin: 0 0 32px 0;
-      --banner-description-grid-row: 1;
-      --banner-description-grid-column: span 12;
-      --banner-title-grid-column: span 12;
-      --banner-cta-grid-column: span 12;
-      --banner-title-grid-row: 2;
-      --banner-title-text-transform: normal;
-      --banner-background: linear-gradient(135deg, rgba(123, 162, 46, 1) 8%, rgba(166, 206, 57, 1) 70%);
-    }
-  }
-
-  .social {
-    &__instagram,
-    &__facebook,
-    &__partners {
-      grid-column: span 12;
-    }
-
-    &__instagram {
-      @media (min-width: 480px) {
-        grid-column: span 4;
-      }
-    }
-
-    &__facebook {
-      @media (min-width: 480px) {
-        grid-column: span 3;
-      }
-    }
-
-    &__partners {
-      @media (min-width: 480px) {
-        grid-column: span 5;
-      }
-    }
+  .carousel {
+    grid-column: span 12;
   }
 }
 </style>

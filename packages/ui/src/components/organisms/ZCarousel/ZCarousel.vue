@@ -1,5 +1,8 @@
 <template>
-  <div class="glide">
+  <div
+    class="glide"
+    :class="{'z-carousel--peeked': peeked}"
+  >
     <div
       class="glide__track"
       data-glide-el="track"
@@ -29,8 +32,24 @@ export default {
       }),
     },
   },
+  data() {
+    return {
+      default: {
+        type: 'carousel',
+        perView: 4,
+        gap: 20,
+      },
+    };
+  },
+  computed: {
+    options() {
+      return {
+        ...this.default,
+        ...this.settings,
+      };
+    },
+  },
   mounted() {
-    const { settings } = this;
     this.$nextTick(() => {
       // eslint-disable-next-line no-shadow
       const ClonesTabindex = (Glide, Components, Events) => ({
@@ -75,7 +94,7 @@ export default {
       if (this.peeked) {
         extensions = { ...extensions, VisibleClass };
       }
-      new Glide(this.$el, settings).mount(extensions);
+      new Glide(this.$el, this.options).mount(extensions);
     });
   },
 };
