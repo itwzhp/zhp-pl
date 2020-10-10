@@ -53,7 +53,7 @@ export default {
 <style lang="scss">
   .z-link {
     color: var(--link-color, inherit);
-    font-size: var(--link-font-size, 0.876rem);
+    font-size: var(--link-font-size, var(--font-size-button));
     font-weight: var(--link-font-weight);
     line-height: 1.2;
     text-decoration: var(--link-text-decoration, inherit);

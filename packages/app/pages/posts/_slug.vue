@@ -3,7 +3,7 @@
     <ZSection tag="div">
       <ZHeading
         :level="1"
-        class="title"
+        class="title t3"
       >
         {{ post.title.rendered }}
       </ZHeading>
@@ -18,32 +18,28 @@
         :src="post.rest_media"
         class="cover"
       />
-      <div class="content" v-html="post.content.rendered" />
+      <ZWordPress :html="post.content && post.content.rendered" class="content" />
       <div v-if="filesMock" class="z-files files">
         <!-- linki i dokumenty powiązane z artykułem -->
         <ZHeading
           :level="3"
-          class="z-files__title"
+          class="z-files__title body-1"
         >
-          <ZLink to="$">
-            Linki i dokumenty powiązane z artykułem
-          </ZLink>
+          Linki i dokumenty powiązane z artykułem
         </ZHeading>
         <ZList class="z-files__files">
           <template v-for="(file, key) in filesMock">
             <li :key="key">
               <div class="z-file">
-                <div class="z-file__type">
+                <div class="z-file__type caption">
                   {{ file.type }}
                 </div>
-                <ZHeading
-                  :level="4"
-                  class="z-file__name"
+                <ZLink
+                  :to="file.url"
+                  class="z-file__name t6"
                 >
-                  <ZLink :to="file.url">
-                    {{ file.name }}
-                  </ZLink>
-                </ZHeading>
+                  {{ file.name }}
+                </ZLink>
                 <div class="z-file__meta">
                   {{ file.mimeType }}, {{ file.date }}
                 </div>
@@ -57,19 +53,24 @@
       </div>
     </ZSection>
     <ZSection class="related">
-      <ZHeading class="related__title">
+      <ZHeading class="related__title t4 uppercase">
         Mogą Cię także zainteresować:
       </ZHeading>
       <ZCarousel
         v-if="relatedPosts.length > 0"
         :peeked="true"
         :settings="{
-          type: 'carousel',
-          perView: 4,
-          gap: 20,
-          autoplay: 3000,
+          breakpoints: {
+            480: {
+              perView: 1,
+              peek: {
+                before: 0,
+                after: 20
+              }
+            }
+          }
         }"
-        class="z-carousel--peeked related__carousel"
+        class="related__carousel"
       >
         <template v-for="relatedPost in relatedPosts">
           <li
@@ -101,7 +102,8 @@ import {
   ZCarousel,
   ZPost,
   ZLink,
-  ZList
+  ZList,
+  ZWordPress
 } from '@nowa-zhp/ui'
 
 export default {
@@ -114,7 +116,8 @@ export default {
     ZCarousel,
     ZPost,
     ZLink,
-    ZList
+    ZList,
+    ZWordPress
   },
   async asyncData ({ $axios, params, query }) {
     // posts
@@ -151,8 +154,12 @@ export default {
 
   .meta {
     margin: 0 0 24px 0;
-    grid-column: span 8;
+    grid-column: span 12;
     grid-row: 2;
+
+    @media (min-width: 480px) {
+      grid-column: span 8;
+    }
   }
 
   .cover {
@@ -160,28 +167,47 @@ export default {
     overflow: hidden;
     height: 396px;
     border-radius: 10px;
-    grid-column: span 8;
+    grid-column: span 12;
     grid-row: 3;
 
-    img {
+    & .z-image,
+    & img {
+      width: 100%;
+      height: 100%;
       object-fit: cover;
+    }
+
+    @media (min-width: 480px) {
+      grid-column: span 8;
     }
   }
 
   .content {
     margin: 0 0 48px 0;
-    grid-column: span 8;
+    grid-column: span 12;
     grid-row: 4;
+
+    @media (min-width: 480px) {
+      grid-column: span 8;
+    }
   }
 
   .sidebar {
-    grid-column: span 4;
-    grid-row: 3 / span 3;
+    grid-column: span 12;
+
+    @media (min-width: 480px) {
+      grid-column: span 4;
+      grid-row: 3 / span 3;
+    }
   }
 
   .files {
-    grid-column: span 8;
-    grid-row: 5;
+    grid-column: span 12;
+
+    @media (min-width: 480px) {
+      grid-column: span 8;
+      grid-row: 5;
+    }
   }
 
   .related {
@@ -193,10 +219,6 @@ export default {
     &__carousel {
       grid-column: span 12;
     }
-  }
-
-  p {
-    margin: 20px 0;
   }
 
   .image {

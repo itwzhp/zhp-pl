@@ -1,0 +1,26 @@
+import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
+import { withKnobs, text, object } from '@storybook/addon-knobs';
+import { withA11y } from '@storybook/addon-a11y';
+import ZWordPress from './ZWordPress.vue';
+
+<Meta title="Organisms/WordPress" component={ZWordPress} />
+
+# WordPress
+
+<Preview>
+  <Story name="Common">
+    {{
+        components: { ZWordPress },
+        props: {
+          common: {
+            default: text('common', '')
+          }
+        },
+        template: `<ZWordPress />`,
+    }}
+  </Story>
+</Preview>
+
+# Props
+
+<Props of={ZWordPress} />

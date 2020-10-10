@@ -18,10 +18,10 @@
         </ZLink>
       </template>
     </div>
-    <div class="z-meta__date">
+    <div class="z-meta__date button">
       {{ date | format }}
     </div>
-    <div class="z-meta__reading">
+    <div class="z-meta__reading button">
       ~ {{ readingTime }} min czytania
     </div>
   </component>

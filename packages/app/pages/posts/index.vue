@@ -22,18 +22,22 @@
         <ZPost
           :key="post.id"
           :thumbnail="post.rest_media"
-          :title="post.title.rendered"
+          :title="post.title && post.title.rendered"
           :to="`/posts/${post.slug}`"
-          author="Przemysław Spaczek"
-          :sticky="post.sticky"
+          :author="post.rest_author"
           :date="post.date"
-          :category="post.sticky ? 'Wyróżnione' : page === 1 && index === 0 ? 'Dzieje się' : post.category"
+          :category="post.sticky
+            ? 'Wyróżnione'
+            : page === 1 && index === 0
+              ? 'Dzieje się'
+              : post.category"
           class="post"
           :class="{
             'z-post--highlighted': post.sticky,
-            'post--highlighted': post.sticky,
             'z-post--primary': page === 1 && index === 0,
-            'post--primary': page === 1 && index === 0 }"
+            'post--highlighted': post.sticky,
+            'post--primary': page === 1 && index === 0
+          }"
         />
       </template>
     </ZSection>

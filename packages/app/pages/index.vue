@@ -34,7 +34,7 @@
           >
             <ZPost
               :thumbnail="post.rest_media"
-              :title="post.title && post.title.rendered"
+              :title="post.title.rendered"
               :to="`/posts/${post.slug}`"
               :author="post.rest_author"
               :date="post.date"
@@ -88,7 +88,7 @@
       <ZCard
         title="Stopnie i sprawności"
         thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/01.png"
-        class="section-mission__card"
+        class="section-mission__card section-mission__card--first"
       />
       <ZCard
         title="Piony metodyczne"
@@ -191,7 +191,7 @@ export default {
     return { posts, highlightedPosts, events }
   }
 }
-</script>
+</script>x
 
 <style lang="scss">
 #home {
@@ -299,6 +299,12 @@ export default {
         @media (min-width: 480px) {
           height: calc(100% + 2rem);
           transform: translateY(16px);
+        }
+      }
+
+      &--first {
+        @media (min-width: 480px) {
+          grid-column: 3 / span 5;
         }
       }
     }

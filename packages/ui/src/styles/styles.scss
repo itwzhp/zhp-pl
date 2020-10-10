@@ -2,8 +2,6 @@
 *::before,
 *::after {
   box-sizing: inherit;
-  padding: 0;
-  margin: 0;
 }
 
 html {
@@ -12,8 +10,16 @@ html {
 
 body {
   box-sizing: border-box;
+  padding: 0;
+  margin: 0;
   font-family: 'Museo-Sans', sans-serif;
   font-size: 1rem;
+}
+
+@for $i from 1 through 6 {
+  h#{$i} {
+    font-size: 1rem;
+  }
 }
 
 :root {
@@ -22,7 +28,7 @@ body {
   --color-primary-darken: #78a22f;
   --font-size-h4: 2.125rem;
   --font-size-h6: 1.25rem;
-  --font-size-button: 0.876rem;
+  --font-size-button: 0.875rem;
   --font-size-overline: 0.625rem;
   --font-size-subtitle-1: 1rem;
   --font-size-subtitle-2: 0.875rem;
