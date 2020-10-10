@@ -69,7 +69,9 @@
                 <ZLink
                   :to="item.to"
                   class="z-navigation__link"
-                >{{item.name}}</ZLink>
+                >
+                  {{ item.name }}
+                </ZLink>
               </li>
             </template>
           </ZList>
@@ -136,7 +138,9 @@
                 <ZLink
                   :to="item.to"
                   class="z-navigation__link"
-                >{{item.name}}</ZLink>
+                >
+                  {{ item.name }}
+                </ZLink>
               </li>
             </template>
           </ZList>

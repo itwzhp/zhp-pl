@@ -259,14 +259,19 @@ export default {
     --button-box-shadow: 5px 10px 20px 0 rgba(0, 0, 0, 0.13);
 
     &__month {
-      --dropdown-content-width: calc(300% - 5px);
+      @media (min-width: 480px) {
+        --dropdown-content-width: calc(300% - 5px);
+      }
     }
 
     &__categories {
       --button-background: #78a22f;
-      --dropdown-content-width: calc(200% - 10px);
 
-      margin: 0 0 0 -14px;
+      @media (min-width: 480px) {
+        margin: 0 0 0 -14px;
+
+        --dropdown-content-width: calc(200% - 10px);
+      }
     }
 
     &__tags {
@@ -274,7 +279,9 @@ export default {
       --button-background: #4a7b26;
       --button-color: #fff;
 
-      margin: 0 0 0 -14px;
+      @media (min-width: 480px) {
+        margin: 0 0 0 -14px;
+      }
     }
 
     &__tags-list {

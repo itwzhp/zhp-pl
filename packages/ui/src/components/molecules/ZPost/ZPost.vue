@@ -29,7 +29,9 @@
                 v-if="author.name"
                 :to="author.href"
                 class="z-post__author overline uppercase"
-              >{{ author.name }}</ZLink>
+              >
+                {{ author.name }}
+              </ZLink>
             </slot>
             <slot name="date">
               <time
@@ -153,6 +155,7 @@ export default {
 
     &__content {
       display: grid;
+      align-items: end;
       justify-content: space-between;
       padding: 16px 8px;
       grid-template-rows: 1fr auto;
@@ -236,11 +239,15 @@ export default {
 
       #{$this}__content {
         z-index: 1;
-        padding: 40px;
         color: #fff;
-        grid-column: 1 / span 6;
+        grid-column: 1 / span 12;
         grid-row: 1;
         place-self: end;
+
+        @media (min-width: 480px) {
+          padding: 40px;
+          grid-column: 1 / span 6;
+        }
       }
 
       #{$this}__title {}

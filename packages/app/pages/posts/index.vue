@@ -6,7 +6,7 @@
         <small style="display: block; margin: 8px 0;">Sprawdź, co nowego w ZHP</small>
       </zHeading>
       <ZFiltersPosts
-        style=" margin: 32px 0; grid-column: 5 / span 7;"
+        class="filters"
         :categories="categories"
         :tags="tags"
         :date="[]"
@@ -40,7 +40,7 @@
     <ZPagination
       :page="1"
       :total-pages="10"
-      style="max-width: 1120px; margin: 32px auto;"
+      class="pagination"
       @change="()=>(true)"
     />
   </div>
@@ -121,16 +121,39 @@ export default {
 
 <style lang="scss">
 #posts {
+  .filters {
+    margin: 32px 0;
+    grid-column: span 12;
+
+    @media (min-width: 480px) {
+      grid-column: 5 / span 7;
+    }
+  }
+
   .post {
-    grid-column: span 3;
+    grid-column: span 12;
+
+    @media (min-width: 480px) {
+      grid-column: span 3;
+    }
 
     &--highlighted {
-      grid-column: 10 / span 3;
+      @media (min-width: 480px) {
+        grid-column: 10 / span 3;
+      }
     }
 
     &--primary {
-      grid-column: span 12;
+      @media (min-width: 480px) {
+        grid-column: span 12;
+      }
     }
+  }
+
+  .pagination {
+    max-width: 1140px;
+    padding: 0 1.25rem;
+    margin: 32px auto;
   }
 }
 </style>

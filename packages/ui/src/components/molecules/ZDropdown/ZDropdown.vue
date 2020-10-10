@@ -10,7 +10,9 @@
       <ZButton
         class="z-dropdown__toggle"
         @click="toggle"
-      >{{name}}</ZButton>
+      >
+        {{ name }}
+      </ZButton>
     </slot>
     <slot
       name="content"

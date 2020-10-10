@@ -54,8 +54,8 @@ export default {
   .z-pagination {
     display: grid;
     justify-content: end;
-    grid-auto-flow: column;
     grid-column-gap: 8px;
+    grid-template-columns: repeat(2, 34px);
 
     &__previous,
     &__next {
@@ -63,6 +63,14 @@ export default {
       --button-min-width: none;
       --button-width: 34px;
       --button-height: 34px;
+    }
+
+    &__next {
+      grid-column: 2;
+    }
+
+    &__previous {
+      grid-column: 1;
     }
   }
 </style>

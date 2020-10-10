@@ -4,11 +4,15 @@
     class="z-highlighted"
   >
     <div class="z-highlighted__header">
-      <ZHeading class="h5 uppercase">{{title}}</ZHeading>
+      <ZHeading class="h5 uppercase">
+        {{ title }}
+      </ZHeading>
       <ZLink
         :to="more.to"
         class="z-highlighted__more z-highlighted__link"
-      >{{more.title}}</ZLink>
+      >
+        {{ more.title }}
+      </ZLink>
     </div>
     <ZList>
       <template v-for="(article, key) in posts">
@@ -19,7 +23,9 @@
           <ZLink
             to="#"
             class="z-highlighted__link"
-          >{{article.title}}</ZLink>
+          >
+            {{ article.title }}
+          </ZLink>
           <time
             :datetime="article.date"
             class="body-2"
