@@ -3,7 +3,7 @@
     <header class="z-header">
       <div class="z-header__bar">
         <div class="z-header__actions">
-          <ZDropdown class="z-header__mega-menu">
+          <ZDropdown>
             <template #toggle="{toggle}">
               <ZButton
                 class="z-button--text"
@@ -20,6 +20,7 @@
           <ZImage
             :src="require('~/assets/brand.svg')"
             class="z-logo"
+            style="--image-width: 8.75rem;"
           />
         </ZLink>
         <div class="z-header__actions">
@@ -33,18 +34,17 @@
               </ZButton>
             </template>
           </ZDropdown>
-          <ZDropdown class="z-dropdown--has-chevron">
+          <ZDropdown>
             <template #toggle="{toggle}">
               <ZButton
-                class="z-button--text z-dropdown__toggle"
-                style="--button-color: #78a22f;"
+                class="z-button--text"
                 @click="toggle"
               >
                 Język
               </ZButton>
             </template>
           </ZDropdown>
-          <ZDropdown class="z-header__mega-menu">
+          <ZDropdown>
             <template #toggle="{toggle}">
               <ZButton
                 class="z-button--text"
@@ -59,65 +59,50 @@
         </div>
       </div>
       <div class="z-header__navigation">
-        <nav>
-          <ZList class="z-navigation">
-            <template v-for="(item, key) in headerMenu">
-              <li
-                :key="key"
-                class="z-navigation__item"
-              >
-                <ZLink
-                  :to="item.to"
-                  class="z-navigation__link"
-                >
-                  {{ item.name }}
-                </ZLink>
-              </li>
-            </template>
-          </ZList>
+        <nav class="z-menu z-header__menu">
+          <template v-for="(item, key) in headerMenu">
+            <ZLink
+              :key="key"
+              :to="item.to"
+              class="z-menu__item"
+            >
+              {{ item.name }}
+            </ZLink>
+          </template>
         </nav>
       </div>
     </header>
-    <Nuxt />
     <footer class="z-footer">
-      <ZSection
-        class="z-footer__content"
-        style="--section-margin: 0 auto;"
-      >
-        <ZDidYouKnow :random-text="randomText" class="z-footer__did-you-know" />
-        <div class="z-world-logos z-footer__world-logos">
-          <ZLink to="https://www.wagggs.org/">
-            <ZImage
-              :src="require('~/assets/wagggs.png')"
-              class="z-worlds-logos__logo"
-            />
-          </ZLink>
-          <ZLink to="https://www.scout.org/">
-            <ZImage
-              :src="require('~/assets/wosm.png')"
-              class="z-worlds-logos__logo"
-            />
-          </ZLink>
+      <ZSection class="z-footer__content">
+        <ZDidYouKnow
+          :random-text="randomText"
+          class="z-footer__random-text"
+        />
+        <div class="z-footer__scouting">
+          <ZImage
+            :src="require('~/assets/wagggs.png')"
+            class=""
+          />
+          <ZImage
+            :src="require('~/assets/wosm.png')"
+            class=""
+          />
         </div>
       </ZSection>
       <div class="z-footer__bar">
-        <ZText>Copyright © 1997-2020 Związek Harcerstwa Polskiego</ZText>
-        <nav class="z-footer__navigation">
-          <ZList class="z-navigation z-navigation--secondary">
-            <template v-for="(item, key) in footerMenu">
-              <li
-                :key="key"
-                class="z-navigation__item"
-              >
-                <ZLink
-                  :to="item.to"
-                  class="z-navigation__link"
-                >
-                  {{ item.name }}
-                </ZLink>
-              </li>
-            </template>
-          </ZList>
+        <ZText class="subtitle-2">
+          Copyright © 1997-{{ year }} Związek Harcerstwa Polskiego
+        </ZText>
+        <nav class="z-menu z-menu--secondary z-footer__menu">
+          <template v-for="(item, key) in footerMenu">
+            <ZLink
+              :key="key"
+              :to="item.to"
+              class="z-menu__item"
+            >
+              {{ item.name }}
+            </ZLink>
+          </template>
         </nav>
       </div>
     </footer>
@@ -127,13 +112,12 @@
 <script>
 import { mapGetters } from 'vuex'
 import {
+  ZImage,
+  ZLink,
   ZDropdown,
-  ZText,
   ZButton,
   ZIcon,
-  ZLink,
-  ZImage,
-  ZList,
+  ZText,
   ZSection,
   ZDidYouKnow
 } from '@nowa-zhp/ui'
@@ -141,18 +125,17 @@ import {
 export default {
   name: 'Default',
   components: {
+    ZImage,
+    ZLink,
     ZDropdown,
-    ZText,
     ZButton,
     ZIcon,
-    ZLink,
-    ZImage,
-    ZList,
+    ZText,
     ZSection,
     ZDidYouKnow
   },
   async middleware ({ store, $axios }) {
-    // story is required to get data on server-side
+    // vuex store is required to get data on server-side
     const menusRes = await $axios.get('menus')
     const menus = menusRes.data
     menus.forEach((menu) => {
@@ -182,133 +165,143 @@ export default {
     store.commit('random/update', randomText.text)
   },
   computed: {
-    ...mapGetters({ headerMenu: 'menus/headerMenu', footerMenu: 'menus/footerMenu', randomText: 'random/text' })
+    ...mapGetters(
+      {
+        headerMenu: 'menus/headerMenu',
+        footerMenu: 'menus/footerMenu',
+        randomText: 'random/text'
+      }),
+    year () {
+      const today = new Date()
+      return today.getFullYear()
+    }
   }
 }
 </script>
 
 <style lang="scss">
-// other
 .z-header {
-  padding: 0 20px;
+  overflow: hidden;
 
   &__bar {
-    position: relative;
     display: grid;
-    height: 80px;
     align-items: center;
-    justify-content: space-between;
     grid-template-columns: repeat(3, auto);
+    justify-content: space-between;
+    padding: 0 1.25rem;
+    height: 5rem;
   }
 
   &__actions {
-    --button-color: #78a22f;
-    --icon-color: #78a22f;
-    --icon-margin: 0 1rem 0 0;
+    display: none;
 
-    display: grid;
-    align-items: center;
-    grid-column-gap: 0.5rem;
-    grid-template-columns: repeat(3, auto);
+    @media (min-width: 480px) {
+      --icon-size: var(--font-size-button);
+      --icon-margin: 0 1rem 0 0;
+      --icon-color: var(--color-primary);
+      --button-color: var(--color-primary);
+
+      display: grid;
+      grid-auto-flow: column;
+      gap: 1rem;
+    }
   }
 
   &__navigation {
-    display: grid;
-    height: 48px;
-    align-items: center;
-    justify-content: center;
-    grid-template-columns: auto;
+    display: none;
+
+    @media (min-width: 480px) {
+      display: block;
+    }
   }
 
-  &__mega-menu {
-    --dropdown-content-top: 100%;
-    --dropdown-content-margin: 0 0 0 -20px;
-    --dropdown-content-width: 100vw;
-
-    position: static;
+  &__menu {
+    height: 3rem;
   }
-}
-
-.z-logo {
-  --image-width: 140px;
 }
 
 .z-footer {
-  padding: 16px 0 0 0;
-  background: #a6ce39;
-  color: #fff;
+  padding: 1rem 0 0 0;
+  background: var(--color-primary-lighten);
 
   &__content {
     --section-margin: 0 auto;
-    --section-background: #78a22f;
-    --section-content-height: 120px;
-    --section-content-align-items: center;
+    --section-background: var(--color-primary-darken);
+
+    @media (min-width: 480px) {
+      --section-margin: 0 auto;
+    }
   }
 
-  &__did-you-know {
-    grid-column: span 4;
+  &__random-text {
+    color: #fff;
+    grid-column: span 12;
+    margin: 1rem 0;
+
+    @media (min-width: 480px) {
+      --section-margin: 0 auto;
+
+      grid-column: span 4;
+      margin: 1.87rem 0;
+    }
   }
 
-  &__world-logos {
-    grid-column: 9 / span 4;
+  &__scouting {
+    order: -1;
+    display: grid;
+    grid-column: span 12;
+    margin: 1rem 0;
+
+    @media (min-width: 480px) {
+      margin: 0;
+      order: 0;
+      grid-auto-flow: column;
+      grid-column: 9 / span 4;
+    }
   }
 
   &__bar {
     display: grid;
-    max-width: 1120px;
-    height: 48px;
-    align-items: center;
-    justify-content: center;
+    max-width: 1140px;
+    padding: 1rem 1.25rem;
+    color: #fff;
     margin: 0 auto;
-    grid-auto-flow: column;
-  }
 
-  &__navigation {
-    margin: 0 0 0 4px;
-  }
-}
-
-.z-world-logos {
-  display: grid;
-  align-items: center;
-  grid-template-columns: repeat(2, auto);
-}
-
-.z-navigation {
-  $this: &;
-
-  display: grid;
-  align-items: center;
-  column-gap: 24px;
-  grid-auto-flow: column;
-
-  &__link {
-    position: relative;
-    border-width: 0 0 2px 0;
-    border-style: solid;
-    border-color: transparent;
-    transition: border-color 150ms ease-in-out;
-
-    &:hover {
-      --link-text-decoration: none;
-
-      border-color: #1e152f;
+    @media (min-width: 480px) {
+      padding: 0 1.25rem;
+      justify-content: center;
+      align-items: center;
+      grid-auto-flow: column;
+      height: 3rem;
     }
+  }
+}
+
+.z-menu {
+  --link-font-size: var(--font-size-h6);
+
+  display: grid;
+  grid-auto-flow: row;
+  align-items: center;
+  gap: var(--menu-gap, 1.5rem);
+
+  @media (min-width: 480px) {
+    grid-auto-flow: column;
+    justify-content: center;
   }
 
   &--secondary {
-    column-gap: 4px;
+    --link-font-size: var(--font-size-subtitle-2);
+    --menu-gap: 0;
 
-    #{$this}__link {
-      border-width: 0;
-
-      &:hover {
-        --link-text-decoration: underline;
-      }
-
-      &::before {
-        margin: 0 4px 0 0;
-        content: "|";
+    .z-menu {
+      &__item {
+        &::before {
+          @media (min-width: 480px) {
+            margin: 0 0.25rem;
+            content: "|";
+          }
+        }
       }
     }
   }

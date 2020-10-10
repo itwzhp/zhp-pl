@@ -58,7 +58,7 @@ export default {
   },
   computed: {
     hasHeader() {
-      return true;
+      return this.title || this.subtitle;
     },
   },
 };
@@ -70,7 +70,6 @@ export default {
     --section-padding: 0 1.25rem;
     --section-grid-template-columns: repeat(12, minmax(auto, 1fr));
 
-    padding: var(--section-padding);
     margin: var(--section-margin, 2.25rem 0);
     background: var(--section-background);
 
@@ -84,10 +83,6 @@ export default {
       padding: var(--section-header-padding, var(--section-padding));
       margin: var(--section-header-margin, 0 auto 1.5rem auto);
       grid-template-columns: var(--section-header-grid-template-columns, var(--section-grid-template-columns));
-
-      &:empty {
-        --section-header-margin: 0;
-      }
     }
 
     &__title {

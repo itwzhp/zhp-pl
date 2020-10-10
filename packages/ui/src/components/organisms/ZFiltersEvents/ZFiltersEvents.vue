@@ -107,7 +107,7 @@ import ZSelect from '../../atoms/ZSelect/ZSelect.vue';
 import ZInput from '../../atoms/ZInput/ZInput.vue';
 import ZForm from '../ZForm/ZForm.vue';
 import ZFormField from '../../molecules/ZFormField/ZFormField.vue';
-import ZDatePicker from '../../atoms/ZDatePicker/ZDatePicker.vue';
+import ZDatePicker from '../../molecules/ZDatePicker/ZDatePicker.vue';
 
 export default {
   name: 'ZFiltersEvents',

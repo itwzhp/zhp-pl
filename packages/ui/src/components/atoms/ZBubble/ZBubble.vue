@@ -22,7 +22,7 @@
     <ZText
       :for="isFilter ? id: undefined"
       :tag="isFilter ? 'label' : 'span'"
-      class="z-bubble__label"
+      class="z-bubble__label caption"
     >
       <slot />
     </ZText>

@@ -7,7 +7,8 @@
   },
   "scripts": {
     "create-component": "node ./scripts/create-component.js && cd packages/ui && yarn create-index",
-    "storybook:serve": "cd packages/ui && yarn storybook:serve"
+    "storybook:serve": "cd packages/ui && yarn storybook:serve",
+    "nuxt:dev": "cd packages/app && yarn dev"
   },
   "repository": {
     "type": "git",

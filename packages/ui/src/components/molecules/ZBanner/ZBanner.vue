@@ -43,7 +43,7 @@
                   :to="action.href"
                   class="z-banner__link"
                 >{{action.name}}</ZLink>
-                <ZIcon name="chevron" style="--icon-size: 0.876rem"/>
+                <ZIcon name="chevron" style="--icon-size: 0.876rem;"/>
               </div>
             </slot>
           </template>

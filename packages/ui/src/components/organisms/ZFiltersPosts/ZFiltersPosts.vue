@@ -117,7 +117,7 @@
 
 <script>
 import { format } from 'date-fns';
-import ZDatePicker from '../../atoms/ZDatePicker/ZDatePicker.vue';
+import ZDatePicker from '../../molecules/ZDatePicker/ZDatePicker.vue';
 import ZDropdown from '../../molecules/ZDropdown/ZDropdown.vue';
 import ZButton from '../../atoms/ZButton/ZButton.vue';
 import ZIcon from '../../atoms/ZIcon/ZIcon.vue';

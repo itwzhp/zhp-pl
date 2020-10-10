@@ -16,6 +16,16 @@ body {
   font-size: 1rem;
 }
 
+:root{
+  --color-primary: #78a22f;
+  --color-primary-lighten: #a6ce39;
+  --color-primary-darken: #78a22f;
+  --font-size-h6: 1.25rem;
+  --font-size-button: 0.876rem;
+  --font-size-overline: 0.625rem;
+  --font-size-subtitle-2: 0.875rem;
+}
+
 .t1 {
   font-size: 6rem;
 }
@@ -54,18 +64,18 @@ body {
   line-height: 1.2;
 }
 
-.button {
-  font-size: 0.876rem;
-  font-weight: 500;
-  line-height: 1.2;
-}
-
 .body-1 {
   font-size: 1rem;
 }
 
 .body-2 {
   font-size: 0.875rem;
+}
+
+.button {
+  font-size: 0.876rem;
+  font-weight: 500;
+  line-height: 1.2;
 }
 
 .caption {

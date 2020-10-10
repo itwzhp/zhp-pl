@@ -2,7 +2,7 @@
   <component
     :is="tagComputed"
     v-bind="toComputed"
-    class="z-link button"
+    class="z-link"
   >
     <slot />
   </component>
@@ -53,6 +53,9 @@ export default {
 <style lang="scss">
   .z-link {
     color: var(--link-color, inherit);
+    font-size: var(--link-font-size, 0.876rem);
+    font-weight: 500;
+    line-height: 1.2;
     text-decoration: var(--link-text-decoration, inherit);
 
     &:hover {
