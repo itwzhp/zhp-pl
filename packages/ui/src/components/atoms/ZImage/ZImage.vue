@@ -1,12 +1,15 @@
 <template>
   <div class="z-image">
     <img
-      :src="src"
+      ref="img"
+      :data-src="src"
       v-bind="$attrs"
     >
   </div>
 </template>
 <script>
+import lozad from 'lozad';
+
 export default {
   name: 'ZImage',
   inheritAttrs: false,
@@ -15,6 +18,11 @@ export default {
       type: String,
       default: '',
     },
+  },
+  mounted() {
+    const { img } = this.$refs;
+    const observer = lozad(img);
+    observer.observe();
   },
 };
 </script>
