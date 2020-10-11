@@ -10,12 +10,18 @@
     <div class="z-meta-event__content">
       <div class="z-meta-event__calendar">
         <ZDate date="2020-06-20" />
-        <div class="z-date__separator"></div>
+        <div class="z-date__separator" />
         <ZDate date="2020-06-20" />
       </div>
-      <ZLink>Warszawa</ZLink>
-      <ZLink>Obóz</ZLink>
-      <ZLink>Wszyscy harcerze</ZLink>
+      <ZLink to="#">
+        {{ location.name }}
+      </ZLink>
+      <ZLink to="#">
+        {{ type.name }}
+      </ZLink>
+      <ZLink to="#">
+        {{ audience.name }}
+      </ZLink>
     </div>
   </component>
 </template>
@@ -36,6 +42,33 @@ export default {
     thumbnail: {
       type: String,
       default: '',
+    },
+    date: {
+      type: Object,
+      default: () => ({
+        begin: '',
+        end: '',
+      }),
+    },
+    location: {
+      type: Object,
+      default: () => ({
+        name: '',
+      }),
+    },
+    type: {
+      type: Object,
+      default: () => ({
+        name: '',
+      }),
+    },
+    audience: {
+      type: Object,
+      default: () => ({
+        name: '',
+        background: '',
+        color: '',
+      }),
     },
   },
 };
@@ -68,11 +101,11 @@ export default {
     align-items: center;
     justify-content: start;
     padding: 1.5rem;
-    gap: 1rem;
+    gap: 0.5rem;
     grid-auto-flow: column;
 
     @media (min-width: 480px) {
-      gap: 0.5rem;
+      gap: 2.5rem;
     }
   }
 
@@ -80,9 +113,9 @@ export default {
     --date-background: #f7f7f7;
 
     display: grid;
+    align-items: center;
     gap: 0.25rem;
     grid-auto-flow: column;
-    align-items: center;
   }
 }
 </style>

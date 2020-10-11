@@ -22,7 +22,10 @@
             >
               {{ file.name }}
             </ZLink>
-            <div class="z-file__meta">
+            <div
+              v-if="file.mimeType || file.date"
+              class="z-file__meta"
+            >
               {{ file.mimeType }}, {{ file.date }}
             </div>
           </div>

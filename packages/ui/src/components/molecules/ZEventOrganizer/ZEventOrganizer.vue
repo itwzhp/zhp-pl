@@ -9,21 +9,25 @@
     >
       Organizator:
     </ZHeading>
-    <ZText>Główna Kwatera ZHP</ZText>
-    <ZText>Jan Kowalski</ZText>
-    <ZText>
-      T: <ZLink to="tel:+48 221 231 214">
-        +48 221 231 214
+    <ZText v-if="organizer.unit">
+      {{ organizer.unit }}
+    </ZText>
+    <ZText v-if="organizer.person">
+      {{ organizer.person }}
+    </ZText>
+    <ZText v-if="organizer.phone">
+      T: <ZLink :to="`tel:${organizer.phone}`">
+        {{ organizer.phone }}
+      </ZLink>
+    </ZText>
+    <ZText v-if="organizer.mail">
+      @: <ZLink :to="`maito:${organizer.mail}`">
+        {{ organizer.mail }}
       </ZLink>
     </ZText>
     <ZText>
-      @: <ZLink to="maito: jan.kowalski@gmail.com">
-        jan.kowalski@gmail.com
-      </ZLink>
-    </ZText>
-    <ZText>
-      <ZLink to="www.ej2020.zhp.pl">
-        www.ej2020.zhp.pl
+      <ZLink :to="web">
+        {{ web }}
       </ZLink>
     </ZText>
     <ZButton>Skontaktuj się</ZButton>
@@ -48,6 +52,19 @@ export default {
     tag: {
       type: String,
       default: 'div',
+    },
+    organizer: {
+      type: Object,
+      default: () => ({
+        unit: '',
+        person: '',
+        phone: '',
+        mail: '',
+      }),
+    },
+    web: {
+      type: String,
+      default: '',
     },
   },
 };

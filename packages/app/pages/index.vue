@@ -143,9 +143,8 @@
               :author="event.rest_author"
               :date="event.rest_acf.date"
               :location="{name: 'Warszawa'}"
-              :audience="{name: 'Wszyscy harcerze'}"
               :type="event.rest_event_type"
-              :age-group="event.rest_age_group"
+              :audience="event.rest_age_group"
             />
           </li>
         </template>

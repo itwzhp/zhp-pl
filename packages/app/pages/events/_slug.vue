@@ -10,10 +10,17 @@
       <!-- ZMetaPost<- for event -->
       <ZMetaEvent
         :thumbnail="event.rest_media"
+        :date="event.rest_acf.date"
+        :location="{name: 'Warszawa', to:'#'}"
+        :type="event.rest_event_type"
+        :audience="event.rest_age_group"
         class="meta"
       />
       <div class="sidebar">
-        <ZEventOrganizer />
+        <ZEventOrganizer
+          :organizer="event.rest_acf.organizer"
+          :web="event.rest_acf.web"
+        />
       </div>
       <ZWordPress
         class="content"
@@ -56,10 +63,9 @@
               :thumbnail="relatedEvent.rest_media"
               :title="relatedEvent.title.rendered"
               :date="relatedEvent.rest_acf.date"
-              :location="{name: 'Warszawa'}"
-              :audience="{name: 'Wszyscy harcerze'}"
+              :location="{name: 'Warszawa', to:'#'}"
               :type="relatedEvent.rest_event_type"
-              :age-group="relatedEvent.rest_age_group"
+              :audience="relatedEvent.rest_age_group"
               :to="`/events/${relatedEvent.slug}`"
             />
           </li>

@@ -17,7 +17,7 @@
         <slot name="date">
           <div class="z-event__date">
             <ZDate :date="date.begin" />
-            <div class="z-date__separator"></div>
+            <div class="z-date__separator" />
             <ZDate :date="date.end" />
           </div>
         </slot>
@@ -30,18 +30,18 @@
           </ZLink>
         </slot>
         <slot name="excerpt">
-          <!--          <ZText-->
-          <!--            v-if="excerpt"-->
-          <!--            class="z-event__excerpt"-->
-          <!--          >-->
-          <!--            {{ excerpt }}-->
-          <!--          </ZText>-->
+          <ZText
+            v-if="excerpt"
+            class="z-event__excerpt"
+          >
+            {{ excerpt }}
+          </ZText>
         </slot>
         <slot name="meta">
           <div class="z-event__meta">
             <slot name="location">
               <ZLink
-                to="#"
+                :to="location.to"
                 class="z-event__location caption"
               >
                 {{ location.name }}
@@ -120,20 +120,14 @@ export default {
       type: Object,
       default: () => ({
         name: '',
+        background: '',
+        color: '',
       }),
     },
     type: {
       type: Object,
       default: () => ({
         name: '',
-      }),
-    },
-    ageGroup: {
-      type: Object,
-      default: () => ({
-        name: '',
-        background: '',
-        color: '',
       }),
     },
     to: {
@@ -147,7 +141,7 @@ export default {
   },
   computed: {
     style() {
-      const { color, background } = this.ageGroup;
+      const { color, background } = this.audience;
       return {
         '--color': color,
         '--background': background,
