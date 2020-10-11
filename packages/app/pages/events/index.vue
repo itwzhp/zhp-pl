@@ -3,6 +3,7 @@
     <ZSection
       title="Wydarzenia"
       subtitle="Znajdź wydarzenia dla siebie i swojej drużyny"
+      class="section"
     >
       <div class="sidebar">
         <ZFiltersEvents
@@ -162,6 +163,12 @@ export default {
     max-width: 1140px;
     padding: 0 1.25rem;
     margin: 32px auto;
+  }
+
+  .section {
+    @media (min-width: 480px) {
+      --section-margin: 3rem 0;
+    }
   }
 }
 </style>

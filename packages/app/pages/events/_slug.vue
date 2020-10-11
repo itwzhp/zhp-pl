@@ -1,6 +1,8 @@
 <template>
   <div id="event">
-    <ZSection tag="div">
+    <ZSection
+      tag="div"
+    >
       <ZHeading
         :level="1"
         class="title t3"
@@ -176,12 +178,5 @@ export default {
       grid-column: span 12;
     }
   }
-}
-
-.z-box {
-  padding: 1.25rem;
-  background: #f7f7f7;
-  border-radius: 10px;
-  box-shadow: 0 10px 30px 0 rgba(209, 213, 223, 0.5);
 }
 </style>
