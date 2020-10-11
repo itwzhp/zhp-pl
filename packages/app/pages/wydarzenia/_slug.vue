@@ -68,7 +68,7 @@
               :location="{name: 'Warszawa', to:'#'}"
               :type="relatedEvent.rest_event_type"
               :audience="relatedEvent.rest_age_group"
-              :to="`/events/${relatedEvent.slug}`"
+              :to="`/wydarzenia/${relatedEvent.slug}`"
             />
           </li>
         </template>

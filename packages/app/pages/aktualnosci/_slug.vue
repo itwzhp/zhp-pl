@@ -61,7 +61,7 @@
               :key="relatedPost.id"
               :thumbnail="relatedPost.rest_media"
               :title="relatedPost.title.rendered"
-              :to="`/posts/${relatedPost.slug}`"
+              :to="`/aktualnosci/${relatedPost.slug}`"
               :author="relatedPost.rest_author"
               :sticky="relatedPost.sticky"
               :date="relatedPost.date"

@@ -38,7 +38,7 @@
             <ZPost
               :thumbnail="post.rest_media"
               :title="post.title.rendered"
-              :to="`/posts/${post.slug}`"
+              :to="`/aktualnosci/${post.slug}`"
               :author="post.rest_author"
               :date="post.date"
             />
@@ -54,7 +54,7 @@
       />
       <ZHighlighted
         title="Warto przeczytać"
-        :more="{title: 'Zobacz więcje', to:'/posts'}"
+        :more="{title: 'Zobacz więcje', to:'/aktualnosci'}"
         :posts="highlightedPosts"
         class="section-highlighted__posts"
       />
@@ -139,7 +139,7 @@
             <ZEvent
               :thumbnail="event.rest_media"
               :title="event.title && event.title.rendered"
-              :to="`/events/${event.slug}`"
+              :to="`/wydarzenia/${event.slug}`"
               :author="event.rest_author"
               :date="event.rest_acf.date"
               :location="{name: 'Warszawa'}"

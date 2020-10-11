@@ -23,7 +23,7 @@
           :key="post.id"
           :thumbnail="post.rest_media"
           :title="post.title && post.title.rendered"
-          :to="`/posts/${post.slug}`"
+          :to="`/aktualnosci/${post.slug}`"
           :author="post.rest_author"
           :date="post.date"
           :category="post.sticky
