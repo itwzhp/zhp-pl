@@ -2,7 +2,10 @@
   <div id="home">
     <ZSection class="section-hero">
       <div class="section-hero__picture" />
-      <ZHeading :level="1" class="section-hero__title t3">
+      <ZHeading
+        :level="1"
+        class="section-hero__title t3"
+      >
         Przygoda. Przyjaźń. Wychowanie
       </ZHeading>
       <ZSearch class="section-hero__search" />

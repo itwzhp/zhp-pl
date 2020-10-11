@@ -33,7 +33,7 @@
     <ZPagination
       :page="1"
       :total-pages="10"
-      style="max-width: 1120px; margin: 32px auto;"
+      class="pagination"
       @change="()=>(true)"
     />
   </div>
@@ -136,17 +136,33 @@ export default {
   overflow: hidden;
 
   .sidebar {
-    grid-column: span 3;
-    grid-row: span 4;
+    grid-column: span 12;
+
+    @media (min-width: 480px) {
+      grid-column: span 3;
+      grid-row: span 4;
+    }
   }
 
   .event {
-    grid-column: span 3;
+    grid-column: span 12;
+
+    @media (min-width: 480px) {
+      grid-column: span 3;
+    }
 
     &--primary {
-      grid-column: span 12;
-      grid-row: -1;
+      @media (min-width: 480px) {
+        grid-column: span 12;
+        grid-row: -1;
+      }
     }
+  }
+
+  .pagination {
+    max-width: 1140px;
+    padding: 0 1.25rem;
+    margin: 32px auto;
   }
 }
 </style>

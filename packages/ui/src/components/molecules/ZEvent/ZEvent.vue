@@ -16,29 +16,9 @@
       <div class="z-event__content">
         <slot name="date">
           <div class="z-event__date">
-            <time
-              :datetime="date.begin"
-              class="z-calendar"
-            >
-              <div
-                class="z-calendar__day"
-              >{{ dateCalendar.begin.day }}</div>
-              <div
-                class="z-calendar__month"
-              >{{ dateCalendar.begin.month }}</div>
-            </time>
-            <div class="z-calendar__between" />
-            <time
-              :datetime="date.end"
-              class="z-calendar"
-            >
-              <div
-                class="z-calendar__day"
-              >{{ dateCalendar.end.day }}</div>
-              <div
-                class="z-calendar__month"
-              >{{ dateCalendar.end.month }}</div>
-            </time>
+            <ZDate :date="date.begin" />
+            <div class="z-date__separator"></div>
+            <ZDate :date="date.end" />
           </div>
         </slot>
         <slot name="heading">
@@ -50,12 +30,12 @@
           </ZLink>
         </slot>
         <slot name="excerpt">
-          <ZText
-            v-if="excerpt"
-            class="z-event__excerpt"
-          >
-            {{ excerpt }}
-          </ZText>
+          <!--          <ZText-->
+          <!--            v-if="excerpt"-->
+          <!--            class="z-event__excerpt"-->
+          <!--          >-->
+          <!--            {{ excerpt }}-->
+          <!--          </ZText>-->
         </slot>
         <slot name="meta">
           <div class="z-event__meta">
@@ -98,6 +78,7 @@ import ZHeading from '../../atoms/ZHeading/ZHeading.vue';
 import ZLink from '../../atoms/ZLink/ZLink.vue';
 import ZBubble from '../../atoms/ZBubble/ZBubble.vue';
 import ZText from '../../atoms/ZText/ZText.vue';
+import ZDate from '../../atoms/ZDate/ZDate.vue';
 
 export default {
   name: 'ZEvent',
@@ -107,6 +88,7 @@ export default {
     ZHeading,
     ZBubble,
     ZText,
+    ZDate,
   },
   props: {
     tag: {
@@ -241,6 +223,11 @@ export default {
 
     &__excerpt {
       margin: 0 0 8px 0;
+      font-size: var(--font-size-subtitle-2);
+
+      @media (min-width: 480px) {
+        font-size: var(--font-size-body-1);
+      }
     }
 
     &__meta {
@@ -284,15 +271,23 @@ export default {
       grid-template-rows: 1fr;
 
       #{$this}__thumbnail {
-        grid-column: 6 / span 7;
-        grid-row: 1;
+        grid-column: span 12;
+
+        @media (min-width: 480px) {
+          grid-column: 6 / span 7;
+          grid-row: 1;
+        }
       }
 
       #{$this}__content {
-        align-items: end;
-        padding: 32px 40px;
-        grid-column: 1 / span 5;
-        grid-row: 1;
+        grid-column: span 12;
+
+        @media (min-width: 480px) {
+          align-items: end;
+          padding: 32px 40px;
+          grid-column: 1 / span 5;
+          grid-row: 1;
+        }
       }
 
       #{$this}__date {
@@ -300,33 +295,11 @@ export default {
         transform: unset;
       }
 
-      #{$this}__title {}
-    }
-  }
-  // todo: przenieść do atomu
-  .z-calendar {
-    display: grid;
-    width: 40px;
-    height: 48px;
-    padding: 4px 0;
-    background: #fff;
-    border-radius: 5px;
-    color: #1e152f;
-    grid-template-rows: repeat(2, auto);
-
-    &__day {
-      place-self: center;
-    }
-
-    &__month {
-      place-self: center;
-    }
-
-    &__between {
-      width: 16px;
-      height: 4px;
-      background: #fff;
-      border-radius: 2px;
+      #{$this}__title {
+        @media (min-width: 480px) {
+          font-size: 2.125rem;
+        }
+      }
     }
   }
 </style>

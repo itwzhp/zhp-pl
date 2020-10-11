@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "nuxt",
+    "dev": "nuxt --hostname 0.0.0.0 --post 3000",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",

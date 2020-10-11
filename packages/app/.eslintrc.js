@@ -9,11 +9,18 @@ module.exports = {
   },
   extends: [
     '@nuxtjs',
-    'plugin:nuxt/recommended',
-    'plugin:vue/recommended'
+    'plugin:nuxt/recommended'
   ],
   plugins: [
   ],
   // add your custom rules here
-  rules: {}
+  rules: {
+    'vue/max-attributes-per-line': ['error', {
+      singleline: 1,
+      multiline: {
+        max: 1,
+        allowFirstLine: false
+      }
+    }]
+  }
 }

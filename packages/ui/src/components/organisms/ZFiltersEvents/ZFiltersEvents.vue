@@ -14,11 +14,13 @@
     >
       Filtry
     </ZHeading>
-    <!-- todo: hide section for non selected filters-->
     <div
       class="z-filters-events__section"
     >
-      <div class="z-filters-events__section-header">
+      <div
+        v-if="hasActiveFilters"
+        class="z-filters-events__section-header"
+      >
         <ZHeading
           :level="4"
           class="z-filters-events__section-header-title"
@@ -26,7 +28,10 @@
           Aktywne filtry
         </ZHeading>
       </div>
-      <div class="z-filters-events__selected">
+      <div
+        v-if="hasActiveFilters"
+        class="z-filters-events__selected"
+      >
         <template v-for="(filters, taxonomy) in selectedBubbles">
           <template v-for="(filter, type) in filters">
             <ZBubble
@@ -87,7 +92,6 @@
               Zobacz wszystkie
             </ZLink>
           </div>
-          <!-- todo: add new field component the same like in WordPress tags  -->
           <ZFormField />
         </div>
       </template>
@@ -135,7 +139,7 @@ export default {
   props: {
     tag: {
       type: String,
-      default: 'form',
+      default: 'div',
     },
     categories: {
       type: Object,
@@ -177,6 +181,9 @@ export default {
         selectedBubbles.tags = tags;
       }
       return selectedBubbles;
+    },
+    hasActiveFilters() {
+      return Object.keys(this.selectedBubbles.categories).length > 0 && this.selectedBubbles.tags;
     },
   },
   methods: {

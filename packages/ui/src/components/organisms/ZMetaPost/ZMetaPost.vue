@@ -34,7 +34,7 @@ import ZLink from '../../atoms/ZLink/ZLink.vue';
 import ZAuthor from '../../molecules/ZAuthor/ZAuthor.vue';
 
 export default {
-  name: 'ZMeta',
+  name: 'ZMetaPost',
   filters: {
     format(date) {
       if (!date) {

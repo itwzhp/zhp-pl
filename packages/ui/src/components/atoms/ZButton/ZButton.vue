@@ -30,7 +30,7 @@ export default {
     height: var(--button-height, 2rem);
     align-items: center;
     justify-content: center;
-    padding: var(--button-padding);
+    padding: var(--button-padding, 0.5rem 2rem);
     border: var(--button-border, 1px solid #7ba22e);
     background: var(--button-background, #a6ce39);
     border-radius: var(--button-border-radius, 0.625rem);

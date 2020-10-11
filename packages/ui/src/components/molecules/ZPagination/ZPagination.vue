@@ -63,6 +63,7 @@ export default {
       --button-min-width: none;
       --button-width: 34px;
       --button-height: 34px;
+      --button-padding: 0;
     }
 
     &__next {
