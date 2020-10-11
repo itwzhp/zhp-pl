@@ -226,11 +226,11 @@ export default {
   background: var(--color-primary-lighten);
 
   &__content {
-    --section-margin: 0 auto;
+    --section-margin: 0 auto!important;
     --section-background: var(--color-primary-darken);
 
     @media (min-width: 480px) {
-      --section-margin: 0 auto;
+      --section-margin: 0 auto!important;
     }
   }
 
