@@ -4,7 +4,7 @@
     class="z-form"
     v-on="$listeners"
   >
-    <slot/>
+    <slot />
     <slot name="knobs">
       <div class="z-form__knobs">
         <slot name="cancel">
