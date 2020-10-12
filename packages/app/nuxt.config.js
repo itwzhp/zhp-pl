@@ -84,6 +84,11 @@ export default {
     meta: {
       name: 'Związek Harcerstwa Polskiego',
       theme_color: '#78a22f'
+    },
+    manifest: {
+      name: 'Związek Harcerstwa Polskiego',
+      lang: 'pl',
+      useWebmanifestExtension: false
     }
   }
 }
