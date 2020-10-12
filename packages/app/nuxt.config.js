@@ -79,5 +79,11 @@ export default {
   */
   build: {
     transpile: [/^@nowa-zhp/]
+  },
+  pwa: {
+    meta: {
+      name: 'Związek Harcerstwa Polskiego',
+      theme_color: '#78a22f'
+    }
   }
 }
