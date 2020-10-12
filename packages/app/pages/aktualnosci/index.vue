@@ -11,7 +11,8 @@
       <ZFiltersPosts
         class="filters"
         :tags="tags"
-        :selected="selectedFilters"
+        :categories="categories"
+        :selected="{...selectedFilters}"
         @submit="submitHandler"
       />
     </ZSection>
@@ -76,7 +77,7 @@ export default {
     const map = option => ({
       id: option.id,
       label: option.name,
-      value: option.id
+      value: `${option.id}`
     })
     // posts
     const postsRes = await $axios.get('posts', { params: { per_page: 16, ...query } })
@@ -117,10 +118,10 @@ export default {
         }
       }
     }
-    const filtersKeys = ['tags']
+    const filtersKeys = ['tags', 'age_groups', 'teams']
     const selectedFilters = Object.keys(query).reduce((accumulator, param) => {
       if (filtersKeys.includes(param)) {
-        return { ...accumulator, [param]: query[param].split(',') }
+        return { ...accumulator, [param]: query[param] }
       } else {
         return accumulator
       }

@@ -10,15 +10,38 @@
     <ZDropdown
       name="Wybierz kategorie"
       class="z-dropdown--has-chevron z-filters-posts__categories"
-    />
-    <ZDropdown
-      name="Wybierz tagi"
-      class="z-dropdown--has-chevron z-filters-posts__tags"
-      @update:open="update('selectedTags', selected.tags)"
+      @update:open="updateCategories(selected, categories)"
     >
       <template #default="{ toggle }">
         <ZForm
-          @submit.prevent="submit('tags', selectedTags, toggle)"
+          @submit="submit(selectedCategories, toggle)"
+          @clik:cancel="toggle"
+        >
+          <template v-for="category in categories">
+            <ZFormField
+              :key="category.id"
+              :label="category.label"
+            >
+              <template #input="{id}">
+                <ZSelect
+                  :id="id"
+                  v-model="selectedCategories[category.id]"
+                  :options="category.options"
+                />
+              </template>
+            </ZFormField>
+          </template>
+        </ZForm>
+      </template>
+    </ZDropdown>
+    <ZDropdown
+      name="Wybierz tagi"
+      class="z-dropdown--has-chevron z-filters-posts__tags"
+      @update:open="update('selectedTags', selected.tags.split(','))"
+    >
+      <template #default="{ toggle }">
+        <ZForm
+          @submit.prevent="submit({tags: selectedTags.join(',')}, toggle)"
           @click:cancel="toggle"
         >
           <template>
@@ -50,6 +73,8 @@
 import ZDropdown from '../../molecules/ZDropdown/ZDropdown.vue';
 import ZForm from '../ZForm/ZForm.vue';
 import ZBubble from '../../atoms/ZBubble/ZBubble.vue';
+import ZFormField from '../../molecules/ZFormField/ZFormField.vue';
+import ZSelect from '../../atoms/ZSelect/ZSelect.vue';
 
 export default {
   name: 'ZFiltersPosts',
@@ -57,6 +82,8 @@ export default {
     ZDropdown,
     ZForm,
     ZBubble,
+    ZFormField,
+    ZSelect,
   },
   props: {
     tag: {
@@ -64,6 +91,10 @@ export default {
       default: 'div',
     },
     tags: {
+      type: Object,
+      default: () => ({}),
+    },
+    categories: {
       type: Object,
       default: () => ({}),
     },
@@ -75,17 +106,26 @@ export default {
   data() {
     return {
       selectedTags: [],
+      selectedCategories: [],
     };
   },
   computed: {},
   methods: {
+    updateCategories(selected, categories) {
+      this.selectedCategories = Object.keys(categories).reduce((accumulator, category) => {
+        if (selected[category]) {
+          return { ...accumulator, [category]: selected[category] };
+        }
+        return accumulator;
+      }, {});
+    },
     update(fieldset, selected) {
       this[fieldset] = selected
         ? [...selected]
         : [];
     },
-    submit(taxonomy, selected, toggle) {
-      this.$emit('submit', { [taxonomy]: selected.join(',') });
+    submit(query, toggle) {
+      this.$emit('submit', query);
       toggle();
     },
   },
@@ -95,10 +135,11 @@ export default {
 <style lang="scss">
   .z-filters-posts {
     --button-text-transform: none;
+
     display: grid;
-    grid-auto-flow: column;
-    justify-content: left;
     align-items: center;
+    justify-content: left;
+    grid-auto-flow: column;
 
     &__date {
 
