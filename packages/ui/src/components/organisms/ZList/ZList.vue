@@ -20,6 +20,7 @@ export default {
 <style lang="scss">
   .z-list {
     padding: 0;
+    margin: 0;
     list-style: none;
   }
 </style>

@@ -14,6 +14,7 @@
         :categories="categories"
         :selected="{...selectedFilters}"
         @submit="submitHandler"
+        @unselect="submitHandler"
       />
     </ZSection>
     <ZSection>
@@ -77,7 +78,10 @@ export default {
     const map = option => ({
       id: option.id,
       label: option.name,
-      value: `${option.id}`
+      value: `${option.id}`,
+      taxonomy: option.taxonomy === 'post_tag'
+        ? 'tags'
+        : option.taxonomy
     })
     // posts
     const postsRes = await $axios.get('posts', { params: { per_page: 16, ...query } })
@@ -121,12 +125,17 @@ export default {
     const filtersKeys = ['tags', 'age_groups', 'teams']
     const selectedFilters = Object.keys(query).reduce((accumulator, param) => {
       if (filtersKeys.includes(param)) {
-        return { ...accumulator, [param]: query[param] }
+        return {
+          ...accumulator,
+          [param]: param === 'tags'
+            ? query[param].split(',')
+            : query[param]
+        }
       } else {
         return accumulator
       }
     }, {})
-    return { posts, page: 1, tags, categories, selectedFilters }
+    return { posts, page: 1, tags, categories, selectedFilters, query }
   },
   methods: {
     submitHandler (query) {
