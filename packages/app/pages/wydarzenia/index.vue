@@ -10,8 +10,8 @@
           :categories="categories"
           :tags="tags"
           :selected-filters="selectedFilters"
-          @submit="()=>(true)"
-          @update="()=>(true)"
+          @submit="updateFilters"
+          @update="updateFilters"
         />
       </div>
       <template v-for="(event, index) in events">
@@ -49,13 +49,14 @@ import {
 
 export default {
   name: 'Events',
+  watchQuery: true,
   components: {
     ZSection,
     ZPagination,
     ZFiltersEvents,
     ZEvent
   },
-  async asyncData ({ $axios }) {
+  async asyncData ({ $axios, params, query }) {
     // helpers
     const reduce = (accumulator, option) => ({
       ...accumulator,
@@ -67,7 +68,7 @@ export default {
       value: option.id
     })
     // events
-    const eventsRes = await $axios.get('events', { params: { per_page: 13 } })
+    const eventsRes = await $axios.get('events', { params: { per_page: 13, ...query } })
     const events = eventsRes.data
     // tags
     const tagsRes = await $axios('tags', {})
@@ -120,12 +121,32 @@ export default {
         }
       }
     }
+
     return {
       events,
       categories,
       tags,
       selectedFilters: {},
-      page: 1
+      page: 1,
+      query
+    }
+  },
+  methods: {
+    updateFilters (filters) {
+      const filtersQuery = (filters) => {
+        let query = {}
+        if (filters.date) {
+          // TODO: add support for ACF date
+        }
+        if (filters.categories) {
+          query = { ...query, ...filters.categories }
+        }
+        if (filters.tags) {
+          query.tags = [...filters.tags]
+        }
+        return query
+      }
+      this.$router.push({ path: this.$route.path, query: filtersQuery(filters) })
     }
   }
 }

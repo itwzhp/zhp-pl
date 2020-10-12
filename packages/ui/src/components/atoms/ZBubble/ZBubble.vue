@@ -2,16 +2,16 @@
   <component
     :is="tag"
     class="z-bubble"
-    :class="{'z-bubble--is-checked': value, 'z-bubble--is-badge': !isFilter}"
+    :class="{'z-bubble--is-checked': isChecked, 'z-bubble--is-badge': !isFilter}"
   >
     <input
       v-if="isFilter"
       :id="id"
       v-outline
-      :checked="value"
+      :checked="isChecked"
       type="checkbox"
       class="hidden"
-      @input="$emit('input', $event.target.checked)"
+      @input="changeHandler"
     >
     <div
       v-if="isFilter"
@@ -43,6 +43,10 @@ export default {
     ZText,
     ZIcon,
   },
+  model: {
+    prop: 'checked',
+    event: 'change',
+  },
   props: {
     tag: {
       type: String,
@@ -52,9 +56,13 @@ export default {
       type: String,
       default: 'badge',
     },
-    value: {
-      type: Boolean,
+    checked: {
+      type: [Boolean, Array],
       default: false,
+    },
+    value: {
+      type: [String, Number],
+      default: '',
     },
   },
   computed: {
@@ -64,6 +72,22 @@ export default {
     },
     isFilter() {
       return this.type === 'filter';
+    },
+    isChecked() {
+      return typeof this.checked === 'boolean'
+        ? this.checked
+        : this.checked.includes(this.value);
+    },
+  },
+  methods: {
+    changeHandler() {
+      if (typeof this.checked === 'boolean') {
+        this.$emit('change', !this.checked);
+      } else if (this.checked.includes(this.value)) {
+        this.$emit('change', this.checked.filter((item) => (item !== this.value)));
+      } else {
+        this.$emit('change', [...this.checked, `${this.value}`]);
+      }
     },
   },
 };

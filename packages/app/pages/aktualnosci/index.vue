@@ -1,20 +1,18 @@
 <template>
   <div id="posts">
     <ZSection>
-      <ZHeading style="grid-column: 5 / span 7;">
+      <ZHeading
+        style="grid-column: 5 / span 7;"
+        class="t3"
+      >
         Aktualności
         <small style="display: block; margin: 8px 0;">Sprawdź, co nowego w ZHP</small>
       </zHeading>
       <ZFiltersPosts
         class="filters"
-        :categories="categories"
         :tags="tags"
-        :date="[]"
-        :selected-filters="[]"
-        @submit:date="()=>(true)"
-        @submit:categories="()=>(true)"
-        @submit:tags="()=>(true)"
-        @update="()=>(true)"
+        :selected="selectedFilters"
+        @submit="submitHandler"
       />
     </ZSection>
     <ZSection>
@@ -61,6 +59,7 @@ import {
 
 export default {
   name: 'Posts',
+  watchQuery: true,
   components: {
     ZSection,
     ZFiltersPosts,
@@ -68,7 +67,7 @@ export default {
     ZHeading,
     ZPagination
   },
-  async asyncData ({ $axios }) {
+  async asyncData ({ $axios, params, query }) {
     // helpers
     const reduce = (accumulator, option) => ({
       ...accumulator,
@@ -80,18 +79,18 @@ export default {
       value: option.id
     })
     // posts
-    const postsRes = await $axios.get('posts', { params: { per_page: 16 } })
+    const postsRes = await $axios.get('posts', { params: { per_page: 16, ...query } })
     const posts = postsRes.data
-    // tags
-    const tagsRes = await $axios('tags', {})
+    // TODO: move tags to vuex
+    const tagsRes = await $axios('tags', { params: { per_page: 99 } })
     const tags = tagsRes.data.reduce(reduce, {})
-    // age_groups
+    // TODO: move age_groups to vuex
     const ageGroupsRes = await $axios('age_groups', {})
     const ageGroups = ageGroupsRes.data.reduce(reduce, {})
-    // teams
+    // TODO: move teams to vuex
     const teamsRes = await $axios('teams', {})
     const teams = teamsRes.data.reduce(reduce, {})
-    // categories
+    // FIXME: do categories more descriptive -> categoriesFields?
     const categories = {
       teams: {
         id: 'teams',
@@ -118,7 +117,20 @@ export default {
         }
       }
     }
-    return { posts, page: 1, tags, categories }
+    const filtersKeys = ['tags']
+    const selectedFilters = Object.keys(query).reduce((accumulator, param) => {
+      if (filtersKeys.includes(param)) {
+        return { ...accumulator, [param]: query[param].split(',') }
+      } else {
+        return accumulator
+      }
+    }, {})
+    return { posts, page: 1, tags, categories, selectedFilters }
+  },
+  methods: {
+    submitHandler (query) {
+      this.$router.push({ path: this.$route.path, query: { ...this.$route.query, ...query } })
+    }
   }
 }
 </script>
