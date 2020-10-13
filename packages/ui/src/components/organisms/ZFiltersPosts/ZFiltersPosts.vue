@@ -5,10 +5,17 @@
   >
     <div class="z-filters-posts__selectors">
       <ZDropdown
-        name="Wybierz miesiąc"
         class="z-dropdown--has-chevron z-filters-posts__date"
         @update:open="updateDate(selected)"
       >
+        <template #toggle="{ toggle }">
+          <ZButton
+            class="z-dropdown__toggle z-filters-posts__date-toggle"
+            @click="toggle"
+          >
+            Wybierz miesiąc
+          </ZButton>
+        </template>
         <template #default="{ toggle }">
           <ZForm
             @submit="submit({after: selectedDate[0], before: selectedDate[1]}, toggle)"
@@ -46,6 +53,14 @@
         class="z-dropdown--has-chevron z-filters-posts__categories"
         @update:open="updateCategories(selected, categories)"
       >
+        <template #toggle="{ toggle }">
+          <ZButton
+            class="z-dropdown__toggle z-filters-posts__categories-toggle"
+            @click="toggle"
+          >
+            Wybierz miesiąc
+          </ZButton>
+        </template>
         <template #default="{ toggle }">
           <ZForm
             @submit="submit(selectedCategories, toggle)"
@@ -69,10 +84,17 @@
         </template>
       </ZDropdown>
       <ZDropdown
-        name="Wybierz tagi"
         class="z-dropdown--has-chevron z-filters-posts__tags"
         @update:open="updateTags(selected.tags)"
       >
+        <template #toggle="{ toggle }">
+          <ZButton
+            class="z-dropdown__toggle z-filters-posts__tags-toggle"
+            @click="toggle"
+          >
+            Wybierz tagi
+          </ZButton>
+        </template>
         <template #default="{ toggle }">
           <ZForm
             @submit.prevent="submit({tags: selectedTags.join(',')}, toggle)"
@@ -139,6 +161,7 @@ import ZSelect from '../../atoms/ZSelect/ZSelect.vue';
 import ZList from '../ZList/ZList.vue';
 import ZDatePicker from '../../molecules/ZDatePicker/ZDatePicker.vue';
 import ZText from '../../atoms/ZText/ZText.vue';
+import ZButton from '../../atoms/ZButton/ZButton.vue';
 
 export default {
   name: 'ZFiltersPosts',
@@ -151,6 +174,7 @@ export default {
     ZFormField,
     ZSelect,
     ZList,
+    ZButton,
   },
   filters: {
     format(date) {
@@ -215,7 +239,7 @@ export default {
   },
   methods: {
     updateDate(selected) {
-      this.selectedDate = [selected.after, selected.before];
+      this.selectedDate = [selected.after, selected.before].filter((date) => (date));
     },
     updateCategories(selected, categories) {
       this.selectedCategories = Object.keys(categories).reduce((accumulator, category) => {
@@ -258,11 +282,21 @@ export default {
 
     &__selectors {
       display: flex;
+      flex-wrap: wrap;
       justify-content: flex-start;
     }
 
     &__date {
-      --dropdown-content-width: calc(300%);
+      @media (min-width: 480px) {
+        --dropdown-content-width: calc(300% - 0.75rem);
+      }
+    }
+
+    &__date-toggle {
+      @media (min-width: 480px) {
+        --button-height: 40px;
+        --button-border-radius: 0.625rem 0 0 0.625rem;
+      }
     }
 
     &__date-picker {
@@ -301,14 +335,32 @@ export default {
 
     &__categories {
       @media (min-width: 480px) {
+        --dropdown-content-width: calc(200% - 0.125rem);
+
+        margin: 0 0 0 -0.625rem;
+      }
+    }
+
+    &__categories-toggle {
+      --button-background: #78a22f;
+
+      @media (min-width: 480px) {
+        --button-height: 40px;
+        --button-border-radius: 0.625rem 0 0 0.625rem;
       }
     }
 
     &__tags {
-      --button-min-width: 12rem;
-
       @media (min-width: 480px) {
+        --button-height: 40px;
+        --button-min-width: 12rem;
+
+        margin: 0 0 0 -0.625rem;
       }
+    }
+
+    &__tags-toggle {
+      --button-background: #4a7b26;
     }
 
     &__tags-list {
