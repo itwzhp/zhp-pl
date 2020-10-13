@@ -18,6 +18,7 @@
       />
     </ZSection>
     <ZSection>
+      <!-- FIXME: fallback for posts.length === 0, I can show last 5 posts  -->
       <template v-for="(post, index) in posts">
         <ZPost
           :key="post.id"
