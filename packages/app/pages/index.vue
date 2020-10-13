@@ -191,9 +191,14 @@ export default {
     const events = eventsRes.data
 
     return { posts, highlightedPosts, events }
+  },
+  methods: {
+    search () {
+      // https://developer.wordpress.org/rest-api/reference/search-results/
+    }
   }
 }
-</script>x
+</script>
 
 <style lang="scss">
 #home {

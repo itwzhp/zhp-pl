@@ -6,8 +6,41 @@
     <div class="z-filters-posts__selectors">
       <ZDropdown
         name="Wybierz miesiąc"
-        class="z-dropdown--has-chevron z-filters-post__date"
-      />
+        class="z-dropdown--has-chevron z-filters-posts__date"
+        @update:open="updateDate(selected)"
+      >
+        <template #default="{ toggle }">
+          <ZForm
+            @submit="submit({after: selectedDate[0], before: selectedDate[1]}, toggle)"
+            @click:cancel="toggle"
+          >
+            <div class="z-filters-posts__date-picker">
+              <ZDatePicker v-model="selectedDate" />
+              <div class="z-filters-posts__date-selected">
+                <ZText class="z-filters-posts__date-label">
+                  Wybrana data
+                </ZText>
+                <div class="z-filters-posts__date-value">
+                  <template v-if="selectedDate.length === 2">
+                    <ZText tag="div">
+                      {{ selectedDate[0] | format }}
+                    </ZText>
+                    <ZText tag="div">
+                      -
+                    </ZText>
+                    <ZText tag="div">
+                      {{ selectedDate[1] | format }}
+                    </ZText>
+                  </template>
+                  <template v-else>
+                    Nie wybrano żadnej daty
+                  </template>
+                </div>
+              </div>
+            </div>
+          </ZForm>
+        </template>
+      </ZDropdown>
       <ZDropdown
         name="Wybierz kategorie"
         class="z-dropdown--has-chevron z-filters-posts__categories"
@@ -16,7 +49,7 @@
         <template #default="{ toggle }">
           <ZForm
             @submit="submit(selectedCategories, toggle)"
-            @clik:cancel="toggle"
+            @click:cancel="toggle"
           >
             <template v-for="category in categories">
               <ZFormField
@@ -69,16 +102,24 @@
       </ZDropdown>
     </div>
     <ZList
-      v-if="mapped.length > 0"
+      v-if="mappedDate.length === 2 || mappedTaxonomies.length > 0"
       class="z-filters-posts__selected"
     >
-      <!-- date -->
-      <template v-for="select in mapped">
+      <li v-if="mappedDate.length === 2">
+        <ZBubble
+          :checked="true"
+          type="filter"
+          @change="unselectDate"
+        >
+          {{ mappedDate.join(' - ') }}
+        </ZBubble>
+      </li>
+      <template v-for="select in mappedTaxonomies">
         <li :key="select">
           <ZBubble
             :checked="true"
             type="filter"
-            @change="unselect(taxonomies[select])"
+            @change="unselectTaxonomies(taxonomies[select])"
           >
             {{ taxonomies[select] && taxonomies[select].label }}
           </ZBubble>
@@ -89,22 +130,35 @@
 </template>
 
 <script>
+import { format } from 'date-fns';
 import ZDropdown from '../../molecules/ZDropdown/ZDropdown.vue';
 import ZForm from '../ZForm/ZForm.vue';
 import ZBubble from '../../atoms/ZBubble/ZBubble.vue';
 import ZFormField from '../../molecules/ZFormField/ZFormField.vue';
 import ZSelect from '../../atoms/ZSelect/ZSelect.vue';
 import ZList from '../ZList/ZList.vue';
+import ZDatePicker from '../../molecules/ZDatePicker/ZDatePicker.vue';
+import ZText from '../../atoms/ZText/ZText.vue';
 
 export default {
   name: 'ZFiltersPosts',
   components: {
+    ZText,
+    ZDatePicker,
     ZDropdown,
     ZForm,
     ZBubble,
     ZFormField,
     ZSelect,
     ZList,
+  },
+  filters: {
+    format(date) {
+      if (!date) {
+        return '';
+      }
+      return format(new Date(date), 'dd/MM/yyyy');
+    },
   },
   props: {
     tag: {
@@ -128,6 +182,7 @@ export default {
     return {
       selectedTags: [],
       selectedCategories: [],
+      selectedDate: [],
     };
   },
   computed: {
@@ -142,16 +197,26 @@ export default {
         ),
       };
     },
-    mapped() {
+    mappedDate() {
+      const after = this.selected && this.$options.filters.format(this.selected.after);
+      const before = this.selected && this.$options.filters.format(this.selected.before);
+
+      return [after, before].filter((date) => (date));
+    },
+    mappedTaxonomies() {
+      const exclude = ['after', 'before'];
       return Object.keys(this.selected).reduce((accumulator, option) => {
         if (typeof this.selected[option] === 'object') {
           return [...accumulator, ...this.selected[option]];
         }
-        return [...accumulator, this.selected[option]];
+        return exclude.includes(option) ? accumulator : [...accumulator, this.selected[option]];
       }, []);
     },
   },
   methods: {
+    updateDate(selected) {
+      this.selectedDate = [selected.after, selected.before];
+    },
     updateCategories(selected, categories) {
       this.selectedCategories = Object.keys(categories).reduce((accumulator, category) => {
         if (selected[category]) {
@@ -163,7 +228,10 @@ export default {
     updateTags(selected) {
       this.selectedTags = selected || [];
     },
-    unselect(option) {
+    unselectDate() {
+      this.$emit('unselect', { after: '', before: '' });
+    },
+    unselectTaxonomies(option) {
       let query;
       switch (option.taxonomy) {
         case 'tags':
@@ -194,6 +262,41 @@ export default {
     }
 
     &__date {
+      --dropdown-content-width: calc(300%);
+    }
+
+    &__date-picker {
+      display: grid;
+      align-items: end;
+      grid-template-columns: auto 180px;
+
+      .flatpickr-calendar {
+        grid-column: 1;
+      }
+    }
+
+    &__date-selected {
+      display: grid;
+      justify-content: center;
+      padding: 1rem;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.05);
+      font-size: var(--font-size-body-2);
+      grid-column: 2;
+      grid-template-rows: auto 3.25rem;
+    }
+
+    &__date-label {
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    &__date-value {
+      display: grid;
+      align-items: center;
+      grid-auto-flow: row;
+      justify-items: center;
     }
 
     &__categories {

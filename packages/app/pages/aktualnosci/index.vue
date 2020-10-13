@@ -80,8 +80,8 @@ export default {
       label: option.name,
       value: `${option.id}`,
       taxonomy: option.taxonomy === 'post_tag'
-        ? 'tags'
-        : option.taxonomy
+        ? 'tags' // FIXME: hack for differences from rest request and taxonomy name
+        : `${option.taxonomy}s` // FIXME: hack for differences from taxonomy name and rest_base
     })
     // posts
     const postsRes = await $axios.get('posts', { params: { per_page: 16, ...query } })
@@ -122,7 +122,7 @@ export default {
         }
       }
     }
-    const filtersKeys = ['tags', 'age_groups', 'teams']
+    const filtersKeys = ['tags', 'age_groups', 'teams', 'before', 'after']
     const selectedFilters = Object.keys(query).reduce((accumulator, param) => {
       if (filtersKeys.includes(param)) {
         return {
@@ -139,7 +139,15 @@ export default {
   },
   methods: {
     submitHandler (query) {
-      this.$router.push({ path: this.$route.path, query: { ...this.$route.query, ...query } })
+      const requestQuery = { ...this.$route.query, ...query }
+      this.$router.push({
+        path: this.$route.path,
+        query: Object.keys(requestQuery).reduce((accumulator, param) => {
+          return requestQuery[param]
+            ? { ...accumulator, [param]: requestQuery[param] }
+            : accumulator
+        }, {})
+      })
     }
   }
 }
