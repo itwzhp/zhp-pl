@@ -49,7 +49,6 @@
         </template>
       </ZDropdown>
       <ZDropdown
-        name="Wybierz kategorie"
         class="z-dropdown--has-chevron z-filters-posts__categories"
         @update:open="updateCategories(selected, categories)"
       >
@@ -58,7 +57,7 @@
             class="z-dropdown__toggle z-filters-posts__categories-toggle"
             @click="toggle"
           >
-            Wybierz miesiąc
+            Wybierz kategorię
           </ZButton>
         </template>
         <template #default="{ toggle }">
