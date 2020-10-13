@@ -71,7 +71,7 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-    baseURL: 'https://demo.przemyslawspaczek.pl/wp-json/wp/v2'
+    baseURL: 'https://prod.przemyslawspaczek.pl/wp-json/wp/v2'
   },
   /*
   ** Build configuration
