@@ -259,8 +259,8 @@ export default {
       grid-column: span 12;
 
       @media (min-width: 480px) {
-        --banner-title-grid-column: span 6;
-        --banner-description-grid-column: span 6;
+        --banner-title-grid-column: span 5;
+        --banner-description-grid-column: span 5;
       }
     }
   }

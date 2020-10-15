@@ -61,6 +61,7 @@
     </div>
   </component>
 </template>
+
 <script>
 
 import ZHeading from '../../atoms/ZHeading/ZHeading.vue';
@@ -113,6 +114,7 @@ export default {
   },
 };
 </script>
+
 <style lang="scss">
   .z-banner {
     display: grid;
@@ -200,7 +202,7 @@ export default {
       text-transform: var(--banner-title-text-transform, uppercase);
 
       @media (min-width: 480px) {
-        --banner-title-grid-column: span 8;
+        grid-column: var(--banner-title-grid-column, span 8);
       }
     }
 
@@ -212,7 +214,7 @@ export default {
       grid-row: var(--banner-description-grid-row, 2);
 
       @media (min-width: 480px) {
-        --banner-description-grid-column: span 8;
+        grid-column: var(--banner-description-grid-column, span 8);
       }
     }
 
@@ -223,9 +225,8 @@ export default {
       grid-row: var(--banner-call-to-actions-grid-row, 3);
 
       @media (min-width: 480px) {
-        --banner-call-to-actions-grid-column: span 11;
-
         grid-auto-flow: column;
+        grid-column: var(--banner-call-to-actions-grid-column, span 11);
       }
     }
 
