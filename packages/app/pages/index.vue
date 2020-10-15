@@ -54,7 +54,7 @@
       />
       <ZHighlighted
         title="Warto przeczytać"
-        :more="{title: 'Zobacz więcje', to:'/aktualnosci'}"
+        more="Zobacz więcje"
         :posts="highlightedPosts"
         class="section-highlighted__posts"
       />

@@ -8,10 +8,10 @@
         {{ title }}
       </ZHeading>
       <ZLink
-        :to="more.to"
+        :to="`/${slug}`"
         class="z-highlighted__more z-highlighted__link"
       >
-        {{ more.title }}
+        {{ more }}
       </ZLink>
     </div>
     <ZList>
@@ -21,7 +21,7 @@
           class="z-highlighted__item"
         >
           <ZLink
-            to="#"
+            :to="`${slug}/${article.slug}`"
             class="z-highlighted__link"
           >
             {{ article.title }}
@@ -63,12 +63,16 @@ export default {
       default: '',
     },
     more: {
-      type: Object,
-      default: () => ({}),
+      type: String,
+      default: 'Zobacz więcej',
     },
     posts: {
       type: Array,
       default: () => ([]),
+    },
+    slug: {
+      type: String,
+      default: 'aktualnosci',
     },
   },
 };
