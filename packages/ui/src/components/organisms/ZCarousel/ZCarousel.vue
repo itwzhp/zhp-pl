@@ -15,6 +15,7 @@
 </template>
 <script>
 import Glide from '@glidejs/glide';
+import lozad from 'lozad';
 
 export default {
   name: 'ZCarousel',
@@ -63,6 +64,11 @@ export default {
           Components.Clones.items.forEach((clone) => {
             clone.querySelectorAll('a')
               .forEach((anchor) => { anchor.setAttribute('tabindex', '-1'); });
+            clone.querySelectorAll('img')
+              .forEach((img) => {
+                const observer = lozad(img);
+                observer.observe();
+              });
           });
         },
       });
