@@ -9,9 +9,8 @@
         <ZFiltersEvents
           :categories="categories"
           :tags="tags"
-          :selected-filters="selectedFilters"
-          @submit="updateFilters"
-          @update="updateFilters"
+          :selected="selectedFilters"
+          @submit="submitHandler"
         />
       </div>
       <template v-for="(event, index) in events">
@@ -23,7 +22,7 @@
           :location="{name: 'Warszawa', to:'#'}"
           :type="event.rest_event_type"
           :audience="event.rest_age_group"
-          :excerpt="page === 1 && index === 0 && event.excerpt.rendered"
+          :excerpt="page === 1 && index === 0 ? event.excerpt.rendered : ''"
           :to="`/wydarzenia/${event.slug}`"
           class="event"
           :class="{'z-event--primary': page === 1 && index === 0, 'event--primary': index === 0}"
@@ -65,7 +64,10 @@ export default {
     const map = option => ({
       id: option.id,
       label: option.name,
-      value: option.id
+      value: `${option.id}`,
+      taxonomy: option.taxonomy === 'post_tag'
+        ? 'tags' // FIXME: hack for differences from rest request and taxonomy name
+        : `${option.taxonomy}s` // FIXME: hack for differences from taxonomy name and rest_base
     })
     // events
     const eventsRes = await $axios.get('events', { params: { per_page: 13, ...query } })
@@ -121,32 +123,39 @@ export default {
         }
       }
     }
-
+    const filtersKeys = ['tags', 'event_types', 'age_groups', 'districts', 'before', 'after']
+    const selectedFilters = Object.keys(query).reduce((accumulator, param) => {
+      if (filtersKeys.includes(param)) {
+        return {
+          ...accumulator,
+          [param]: param === 'tags'
+            ? query[param].split(',')
+            : query[param]
+        }
+      } else {
+        return accumulator
+      }
+    }, {})
     return {
       events,
       categories,
       tags,
-      selectedFilters: {},
+      selectedFilters,
       page: 1,
       query
     }
   },
   methods: {
-    updateFilters (filters) {
-      const filtersQuery = (filters) => {
-        let query = {}
-        if (filters.date) {
-          // TODO: add support for ACF date
-        }
-        if (filters.categories) {
-          query = { ...query, ...filters.categories }
-        }
-        if (filters.tags) {
-          query.tags = [...filters.tags]
-        }
-        return query
-      }
-      this.$router.push({ path: this.$route.path, query: filtersQuery(filters) })
+    submitHandler (query) {
+      const requestQuery = { ...this.$route.query, ...query }
+      this.$router.push({
+        path: this.$route.path,
+        query: Object.keys(requestQuery).reduce((accumulator, param) => {
+          return requestQuery[param]
+            ? { ...accumulator, [param]: requestQuery[param] }
+            : accumulator
+        }, {})
+      })
     }
   }
 }

@@ -2,54 +2,60 @@
   <component
     :is="tag"
     class="z-filters-events"
-    style=" padding: 24px;
-        border-radius: 10px;
-        box-shadow: 0 2px 4px 0 rgba(157, 157, 157, 0.5);
-        grid-row: span 3;
-        place-self: start;"
   >
     <ZHeading
       :level="3"
-      class="z-filters-events__title"
+      class="z-filters-events__title t6 uppercase"
     >
       Filtry
     </ZHeading>
-    <div
-      class="z-filters-events__section"
-    >
+    <div class="z-filters-events__section">
       <div
-        v-if="hasActiveFilters"
+        v-if="mappedDate.length === 2 || mappedTaxonomies.length > 0"
         class="z-filters-events__section-header"
       >
         <ZHeading
           :level="4"
-          class="z-filters-events__section-header-title"
+          class="uppercase z-filters-events__section-title"
         >
           Aktywne filtry
         </ZHeading>
       </div>
-      <div
-        v-if="hasActiveFilters"
+      <ZList
+        v-if="mappedDate.length === 2 || mappedTaxonomies.length > 0"
         class="z-filters-events__selected"
       >
-        <template v-for="(filters, taxonomy) in selectedBubbles">
-          <template v-for="(filter, type) in filters">
+        <template v-if="mappedDate.length === 2">
+          <li>
             <ZBubble
-              :key="filter.id"
-              :value="true"
+              :checked="true"
               type="filter"
-              @input="removeSelectedFilter(filter, taxonomy, type)"
+              @change="unselectDate"
             >
-              {{ filter.label }}
+              {{ mappedDate.join(' - ') }}
             </ZBubble>
-          </template>
+          </li>
         </template>
-      </div>
+        <template
+          v-for="select in mappedTaxonomies"
+        >
+          <li :key="select">
+            <ZBubble
+              :checked="true"
+              type="filter"
+              @change="unselectTaxonomies(taxonomies[select])"
+            >
+              {{ taxonomies[select] && taxonomies[select].label }}
+            </ZBubble>
+          </li>
+        </template>
+      </ZList>
     </div>
-    <ZForm @submit.prevent="submitFilters">
-      <template #content>
+    <ZForm @submit.prevent="submit">
+      <template>
         <div class="z-filters-events__section">
-          <template v-for="(category, taxonomy) in categories">
+          <!-- categories -->
+          <template v-for="category in categories">
             <ZFormField
               :key="category.id"
               :label="category.label"
@@ -57,41 +63,46 @@
               <template #input="{id}">
                 <ZSelect
                   :id="id"
-                  :value="categorySelected(taxonomy)"
-                  class="z-field__input"
+                  v-model="selectedCategories[category.id]"
                   :options="category.options"
-                  @input="updateCategory($event, taxonomy)"
+                  class="z-form-field__input"
                 />
               </template>
             </ZFormField>
           </template>
-          <!-- todo: ACF integration -->
-          <ZFormField label="Data Wydarzenia">
+          <!-- TODO: include it to API request; ACF integration -->
+          <ZFormField label="Data wydarzenia">
             <template #input>
               <ZDatePicker
                 v-model="selectedDate"
                 tag="input"
-                :settings="{inline: false, dateFormat: 'd/m/Y'}"
+                placeholder="Wybierz przedział"
+                :settings="{
+                  inline: false,
+                  dateFormat: 'd/m/Y',
+                }"
                 class="z-input"
               />
             </template>
           </ZFormField>
         </div>
+        <!-- tags -->
         <div class="z-filters-events__section z-filters-events__section--no-border">
           <div class="z-filters-events__section-header">
             <ZHeading
               :level="4"
-              class="z-filters-events__section-header-title"
+              class="uppercase z-filters-events__section-title"
             >
               Tagi
             </ZHeading>
             <ZLink
               to="#"
-              class="z-filters-events__section-header-more"
+              class="z-filters-events__section-more"
             >
               Zobacz wszystkie
             </ZLink>
           </div>
+          <!-- TODO: should looks like WordPress tags selector -->
           <ZFormField />
         </div>
       </template>
@@ -101,32 +112,26 @@
 
 <script>
 import { format } from 'date-fns';
-import ZButton from '../../atoms/ZButton/ZButton.vue';
-import ZIcon from '../../atoms/ZIcon/ZIcon.vue';
-import ZText from '../../atoms/ZText/ZText.vue';
 import ZHeading from '../../atoms/ZHeading/ZHeading.vue';
-import ZLink from '../../atoms/ZLink/ZLink.vue';
-import ZBubble from '../../atoms/ZBubble/ZBubble.vue';
-import ZSelect from '../../atoms/ZSelect/ZSelect.vue';
-import ZInput from '../../atoms/ZInput/ZInput.vue';
+import ZList from '../ZList/ZList.vue';
 import ZForm from '../ZForm/ZForm.vue';
 import ZFormField from '../../molecules/ZFormField/ZFormField.vue';
+import ZSelect from '../../atoms/ZSelect/ZSelect.vue';
 import ZDatePicker from '../../molecules/ZDatePicker/ZDatePicker.vue';
+import ZLink from '../../atoms/ZLink/ZLink.vue';
+import ZBubble from '../../atoms/ZBubble/ZBubble.vue';
 
 export default {
   name: 'ZFiltersEvents',
   components: {
-    ZDatePicker,
-    ZLink,
-    ZButton,
-    ZBubble,
-    ZIcon,
-    ZText,
     ZHeading,
-    ZSelect,
-    ZInput,
+    ZList,
     ZForm,
     ZFormField,
+    ZSelect,
+    ZDatePicker,
+    ZLink,
+    ZBubble,
   },
   filters: {
     format(date) {
@@ -141,93 +146,97 @@ export default {
       type: String,
       default: 'div',
     },
-    categories: {
-      type: Object,
-      default: () => ({}),
-    },
     tags: {
       type: Object,
       default: () => ({}),
     },
-    selectedFilters: {
+    categories: {
+      type: Object,
+      default: () => ({}),
+    },
+    selected: {
       type: Object,
       default: () => ({}),
     },
   },
   data() {
     return {
-      selectedCategories: {},
       selectedTags: [],
+      selectedCategories: {},
       selectedDate: [],
     };
   },
   computed: {
-    selectedBubbles() {
-      const selectedBubbles = {};
-      if (this.selectedFilters.date) {
-        const date = this.selectedFilters.date.map((day) => (this.$options.filters.format(day))).join(' - ');
-        selectedBubbles.date = { date: { id: '', value: this.selectedFilters.date, label: date } };
-      }
-      if (Object.keys(this.categories).length) {
-        const selectedCategories = { ...this.selectedFilters.categories };
-        Object.keys(selectedCategories).forEach((taxonomy) => {
-          selectedCategories[taxonomy] = this.categories[taxonomy].options[selectedCategories[taxonomy]];
-        });
-        selectedBubbles.categories = selectedCategories;
-      }
-      if (Object.keys(this.tags).length) {
-        const tags = this.selectedFilters.tags
-            && this.selectedFilters.tags.map((option) => (this.tags[option]));
-        selectedBubbles.tags = tags;
-      }
-      return selectedBubbles;
+    taxonomies() {
+      return {
+        ...Object.keys(this.categories).reduce(
+          (accumulator, category) => ({
+            ...accumulator, ...this.categories[category].options,
+          }), {},
+        ),
+      };
     },
-    hasActiveFilters() {
-      return Object.keys(this.selectedBubbles.categories).length > 0 && this.selectedBubbles.tags;
+    mappedDate() {
+      const after = this.selected && this.$options.filters.format(this.selected.after);
+      const before = this.selected && this.$options.filters.format(this.selected.before);
+
+      return [after, before].filter((date) => (date));
+    },
+    mappedTaxonomies() {
+      const exclude = ['after', 'before'];
+      return Object.keys(this.selected).reduce((accumulator, option) => {
+        if (typeof this.selected[option] === 'object') {
+          return [...accumulator, ...this.selected[option]];
+        }
+        return exclude.includes(option) ? accumulator : [...accumulator, this.selected[option]];
+      }, []);
+    },
+  },
+  watch: {
+    // hack to keep data consistency
+    selected: {
+      handler() {
+        this.updateDate(this.selected);
+        this.updateCategories(this.selected, this.categories);
+        this.updateTags(this.selected.tags);
+      },
+      immediate: true,
     },
   },
   methods: {
-    categorySelected(taxonomy) {
-      return this.selectedCategories[taxonomy];
+    updateDate(selected) {
+      this.selectedDate = [selected.after, selected.before].filter((date) => (date));
     },
-    updateCategory(id, taxonomy) {
-      let categories = { ...this.selectedCategories };
-      if (parseInt(id, 10)) {
-        categories = { ...categories, [taxonomy]: parseInt(id, 10) };
-      } else {
-        delete categories[taxonomy];
-      }
-      this.selectedCategories = categories;
+    updateCategories(selected, categories) {
+      this.selectedCategories = Object.keys(categories).reduce((accumulator, category) => {
+        if (selected[category]) {
+          return { ...accumulator, [category]: selected[category] };
+        }
+        return accumulator;
+      }, {});
     },
-    submitFilters() {
-      const selectedFilters = {};
-      if (Object.keys(this.selectedCategories)) {
-        selectedFilters.categories = { ...this.selectedCategories };
-      }
-      if (this.selectedDate.length === 2) {
-        selectedFilters.date = [...this.selectedDate];
-      }
-      if (this.selectedTags.length > 0) {
-        selectedFilters.tags = [...this.selectedTags];
-      }
-      this.$emit('submit', selectedFilters);
+    updateTags(selected) {
+      this.selectedTags = selected || [];
     },
-    unchecked(state) {
-      return state;
+    unselectDate() {
+      this.$emit('submit', { after: '', before: '' });
     },
-    removeSelectedFilter(filter, taxonomy, category) {
-      const selectedFilters = { ...this.selectedFilters };
-      switch (taxonomy) {
-        case 'categories':
-          delete selectedFilters.categories[category];
-          break;
-        case 'date':
-          delete selectedFilters.date;
+    unselectTaxonomies(option) {
+      let query;
+      switch (option.taxonomy) {
+        case 'tags':
+          query = { [option.taxonomy]: this.selected.tags.filter((tag) => (tag !== option.value)).join(',') };
           break;
         default:
-          selectedFilters.tags = selectedFilters.tags.filter((tag) => (tag !== filter.value));
+          query = {
+            [option.taxonomy]: '',
+          };
       }
-      this.$emit('update', selectedFilters);
+      this.$emit('submit', query);
+    },
+    submit() {
+      const date = { after: this.selectedDate[0] || '', before: this.selectedDate[1] || '' };
+      this.$emit('submit', { ...this.selectedTags, ...this.selectedCategories, ...date });
     },
   },
 };
@@ -235,8 +244,12 @@ export default {
 
 <style lang="scss">
   .z-filters-events {
+    padding: 24px;
+    border-radius: 10px;
+    box-shadow: rgba(157, 157, 157, 0.5) 0 2px 4px 0;
+
     &__title {
-      margin: 0 0 8px 0;
+      margin: 0 0 1.5rem 0;
     }
 
     &__section {
@@ -245,20 +258,6 @@ export default {
       border-width: 0 0 2px 0;
       margin: 0 0 24px 0;
 
-      &-header {
-        display: grid;
-        align-items: center;
-        justify-content: space-between;
-        margin: 16px 0;
-        grid-template-columns: repeat(2, auto);
-
-        &-title {}
-
-        &-more {
-          color: #7ba22e;
-        }
-      }
-
       &--no-border {
         padding: 0;
         border-width: 0;
@@ -266,12 +265,27 @@ export default {
       }
     }
 
+    &__section-header {
+      display: grid;
+      align-items: center;
+      justify-content: space-between;
+      margin: 0 0 8px 0;
+      grid-template-columns: repeat(2, auto);
+    }
+
+    &__section-more {
+      --link-color: var(--color-primary);
+    }
+
     &__selected {
       display: flex;
       flex-wrap: wrap;
-      justify-content: start;
-      margin: 24px 0;
-      gap: 8px;
+      justify-content: flex-start;
+      margin: 1rem -4px;
+
+      & > * {
+        margin: 4px;
+      }
     }
   }
 </style>

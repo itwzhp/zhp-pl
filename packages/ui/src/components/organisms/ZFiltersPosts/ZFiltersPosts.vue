@@ -75,6 +75,7 @@
                     :id="id"
                     v-model="selectedCategories[category.id]"
                     :options="category.options"
+                    class="z-form-field__input"
                   />
                 </template>
               </ZFormField>
@@ -126,15 +127,17 @@
       v-if="mappedDate.length === 2 || mappedTaxonomies.length > 0"
       class="z-filters-posts__selected"
     >
-      <li v-if="mappedDate.length === 2">
-        <ZBubble
-          :checked="true"
-          type="filter"
-          @change="unselectDate"
-        >
-          {{ mappedDate.join(' - ') }}
-        </ZBubble>
-      </li>
+      <template v-if="mappedDate.length === 2">
+        <li>
+          <ZBubble
+            :checked="true"
+            type="filter"
+            @change="unselectDate"
+          >
+            {{ mappedDate.join(' - ') }}
+          </ZBubble>
+        </li>
+      </template>
       <template v-for="select in mappedTaxonomies">
         <li :key="select">
           <ZBubble
@@ -204,7 +207,7 @@ export default {
   data() {
     return {
       selectedTags: [],
-      selectedCategories: [],
+      selectedCategories: {},
       selectedDate: [],
     };
   },
@@ -252,7 +255,7 @@ export default {
       this.selectedTags = selected || [];
     },
     unselectDate() {
-      this.$emit('unselect', { after: '', before: '' });
+      this.$emit('submit', { after: '', before: '' });
     },
     unselectTaxonomies(option) {
       let query;
@@ -265,7 +268,7 @@ export default {
             [option.taxonomy]: '',
           };
       }
-      this.$emit('unselect', query);
+      this.$emit('submit', query);
     },
     submit(query, toggle) {
       this.$emit('submit', query);
@@ -287,7 +290,7 @@ export default {
 
     &__date {
       @media (min-width: 480px) {
-        --dropdown-content-width: calc(300% - 0.75rem);
+        --dropdown-content-width: calc(300% - 0.125rem);
       }
     }
 
@@ -334,7 +337,8 @@ export default {
 
     &__categories {
       @media (min-width: 480px) {
-        --dropdown-content-width: calc(200% - 0.125rem);
+        --dropdown-content-width: calc(200% - 0.75rem);
+        --dropdown-content-padding: 32px 32px 16px 32px;
 
         margin: 0 0 0 -0.625rem;
       }
@@ -382,7 +386,7 @@ export default {
     &__selected {
       display: flex;
       flex-wrap: wrap;
-      justify-content: start;
+      justify-content: flex-start;
       margin: 1rem -4px;
 
       & > * {

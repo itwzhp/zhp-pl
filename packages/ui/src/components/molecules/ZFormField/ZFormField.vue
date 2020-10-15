@@ -8,7 +8,7 @@
         v-if="label"
         :for="id"
         tag="label"
-        class="z-form-field__label"
+        class="z-form-field__label uppercase"
       >
         {{ label }}
       </ZText>
@@ -68,10 +68,12 @@ export default {
   .z-form-field {
     &__label {
       display: block;
-      margin: 15px 0;
+      margin: 0 0 8px 0;
       color: var(--form-field-label-color, #84a311);
     }
 
-    &__input {}
+    &__input {
+      margin: 0 0 16px 0;
+    }
   }
 </style>

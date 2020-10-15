@@ -14,7 +14,6 @@
         :categories="categories"
         :selected="{...selectedFilters}"
         @submit="submitHandler"
-        @unselect="submitHandler"
       />
     </ZSection>
     <ZSection>
@@ -136,7 +135,7 @@ export default {
         return accumulator
       }
     }, {})
-    return { posts, page: 1, tags, categories, selectedFilters, query }
+    return { posts, page: 1, tags, categories, selectedFilters }
   },
   methods: {
     submitHandler (query) {
