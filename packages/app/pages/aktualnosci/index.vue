@@ -13,7 +13,7 @@
         :tags="tags"
         :categories="categories"
         :selected="{...selectedFilters}"
-        @submit="submitHandler"
+        @submit="updateQuery"
       />
     </ZSection>
     <ZSection>
@@ -42,10 +42,10 @@
       </template>
     </ZSection>
     <ZPagination
-      :page="1"
-      :total-pages="10"
+      :page="page"
+      :total-pages="totalPages"
       class="pagination"
-      @change="()=>(true)"
+      @change="updateQuery({page: $event})"
     />
   </div>
 </template>
@@ -84,8 +84,9 @@ export default {
         : `${option.taxonomy}s` // FIXME: hack for differences from taxonomy name and rest_base
     })
     // posts
-    const postsRes = await $axios.get('posts', { params: { per_page: 16, ...query } })
+    const postsRes = await $axios.get('posts', { params: { per_page: 16, page: 1, ...query } })
     const posts = postsRes.data
+    const totalPages = postsRes.headers['x-wp-totalpages']
     // TODO: move tags to vuex
     const tagsRes = await $axios('tags', { params: { per_page: 99 } })
     const tags = tagsRes.data.reduce(reduce, {})
@@ -135,18 +136,27 @@ export default {
         return accumulator
       }
     }, {})
-    return { posts, page: 1, tags, categories, selectedFilters }
+    return { posts, page: query.page || '1', totalPages, tags, categories, selectedFilters }
   },
   methods: {
-    submitHandler (query) {
+    updateQuery (query) {
       const requestQuery = { ...this.$route.query, ...query }
       this.$router.push({
         path: this.$route.path,
-        query: Object.keys(requestQuery).reduce((accumulator, param) => {
-          return requestQuery[param]
-            ? { ...accumulator, [param]: requestQuery[param] }
-            : accumulator
-        }, {})
+        query: Object.keys(requestQuery)
+          .filter((param) => {
+            switch (param) {
+              case 'page':
+                return parseInt(requestQuery[param], 10) > 1
+              default:
+                return true
+            }
+          })
+          .reduce((accumulator, param) => {
+            return requestQuery[param]
+              ? { ...accumulator, [param]: requestQuery[param] }
+              : accumulator
+          }, {})
       })
     }
   }

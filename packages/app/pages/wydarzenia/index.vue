@@ -10,7 +10,7 @@
           :categories="categories"
           :tags="tags"
           :selected="selectedFilters"
-          @submit="submitHandler"
+          @submit="updateQuery"
         />
       </div>
       <template v-for="(event, index) in events">
@@ -30,10 +30,10 @@
       </template>
     </ZSection>
     <ZPagination
-      :page="1"
-      :total-pages="10"
+      :page="page"
+      :total-pages="totalPages"
       class="pagination"
-      @change="()=>(true)"
+      @change="updateQuery({page: $event})"
     />
   </div>
 </template>
@@ -70,8 +70,9 @@ export default {
         : `${option.taxonomy}s` // FIXME: hack for differences from taxonomy name and rest_base
     })
     // events
-    const eventsRes = await $axios.get('events', { params: { per_page: 13, ...query } })
+    const eventsRes = await $axios.get('events', { params: { per_page: 13, page: 1, ...query } })
     const events = eventsRes.data
+    const totalPages = eventsRes.headers['x-wp-totalpages']
     // tags
     const tagsRes = await $axios('tags', {})
     const tags = tagsRes.data.reduce(reduce, {})
@@ -141,20 +142,29 @@ export default {
       categories,
       tags,
       selectedFilters,
-      page: 1,
-      query
+      page: query.page || '1',
+      totalPages
     }
   },
   methods: {
-    submitHandler (query) {
+    updateQuery (query) {
       const requestQuery = { ...this.$route.query, ...query }
       this.$router.push({
         path: this.$route.path,
-        query: Object.keys(requestQuery).reduce((accumulator, param) => {
-          return requestQuery[param]
-            ? { ...accumulator, [param]: requestQuery[param] }
-            : accumulator
-        }, {})
+        query: Object.keys(requestQuery)
+          .filter((param) => {
+            switch (param) {
+              case 'page':
+                return parseInt(requestQuery[param], 10) > 1
+              default:
+                return true
+            }
+          })
+          .reduce((accumulator, param) => {
+            return requestQuery[param]
+              ? { ...accumulator, [param]: requestQuery[param] }
+              : accumulator
+          }, {})
       })
     }
   }

@@ -4,14 +4,16 @@
     class="z-pagination"
   >
     <ZButton
+      v-if="previousUnavailable"
       class="z-pagination__previous"
       @click="change(-1)"
     >
       <ZIcon name="arrow-left" />
     </ZButton>
     <ZButton
+      v-if="nextUnavailable"
       class="z-pagination__next"
-      @change="change(1)"
+      @click="change(1)"
     >
       <ZIcon name="arrow-right" />
     </ZButton>
@@ -34,17 +36,27 @@ export default {
       default: 'div',
     },
     page: {
-      type: Number,
+      type: [Number, String],
       default: 0,
     },
     totalPages: {
-      type: Number,
+      type: [Number, String],
       default: 0,
+    },
+  },
+  computed: {
+    nextUnavailable() {
+      return parseInt(this.page, 10) < parseInt(this.totalPages, 10);
+    },
+    previousUnavailable() {
+      return parseInt(this.page, 10) > 1;
     },
   },
   methods: {
     change(direction) {
-      this.$emit('change', this.page + direction);
+      console.log(direction);
+      const newPage = parseInt(this.page, 10) + direction;
+      this.$emit('change', `${newPage}`);
     },
   },
 };
