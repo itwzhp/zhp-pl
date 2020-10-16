@@ -15,7 +15,7 @@
         :date="event.rest_acf.date"
         :location="{name: 'Warszawa', to:'#'}"
         :type="event.rest_event_type"
-        :audience="event.rest_age_group"
+        :audiences="event.age_groups.map((ageGroup)=>(ageGroups[ageGroup]))"
         class="meta"
       />
       <div class="sidebar">
@@ -67,7 +67,7 @@
               :date="relatedEvent.rest_acf.date"
               :location="{name: 'Warszawa', to:'#'}"
               :type="relatedEvent.rest_event_type"
-              :audience="relatedEvent.rest_age_group"
+              :audiences="event.age_groups.map((ageGroup)=>(ageGroups[ageGroup]))"
               :to="`/wydarzenia/${relatedEvent.slug}`"
             />
           </li>
@@ -120,6 +120,11 @@ export default {
     ]
 
     return { event, relatedEvents, filesMock }
+  },
+  computed: {
+    ageGroups () {
+      return this.$store.getters['taxonomies/taxonomy']('age_groups')
+    }
   }
 }
 </script>

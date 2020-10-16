@@ -164,6 +164,11 @@ export default {
     const randomTextRes = await $axios.get('random')
     const randomText = randomTextRes.data
     store.commit('random/update', randomText.text)
+    const taxonomies = ['age_groups']
+    taxonomies.forEach(async (taxonomy) => {
+      const items = await $axios.get(taxonomy, { params: { per_page: 99 } })
+      store.commit('taxonomies/update', { name: taxonomy, items: items.data })
+    })
   },
   computed: {
     ...mapGetters(

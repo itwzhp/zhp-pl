@@ -96,7 +96,6 @@ export default {
     // TODO: move teams to vuex
     const teamsRes = await $axios('teams', {})
     const teams = teamsRes.data.reduce(reduce, {})
-    // FIXME: do categories more descriptive -> categoriesFields?
     const categories = {
       teams: {
         id: 'teams',

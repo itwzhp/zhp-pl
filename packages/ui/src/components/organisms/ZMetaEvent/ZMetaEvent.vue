@@ -9,9 +9,9 @@
     />
     <div class="z-meta-event__content">
       <div class="z-meta-event__calendar">
-        <ZDate date="2020-06-20" />
+        <ZDate :date="date.begin" />
         <div class="z-date__separator" />
-        <ZDate date="2020-06-20" />
+        <ZDate :date="date.end" />
       </div>
       <ZLink to="#">
         {{ location.name }}
@@ -19,9 +19,14 @@
       <ZLink to="#">
         {{ type.name }}
       </ZLink>
-      <ZLink to="#">
-        {{ audience.name }}
-      </ZLink>
+      <template v-for="audience in audiences">
+        <ZLink
+          :key="audience.id"
+          to="#"
+        >
+          {{ audience.name }}
+        </ZLink>
+      </template>
     </div>
   </component>
 </template>
@@ -62,13 +67,9 @@ export default {
         name: '',
       }),
     },
-    audience: {
-      type: Object,
-      default: () => ({
-        name: '',
-        background: '',
-        color: '',
-      }),
+    audiences: {
+      type: Array,
+      default: () => ([]),
     },
   },
 };

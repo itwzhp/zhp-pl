@@ -48,12 +48,15 @@
               </ZLink>
             </slot>
             <slot name="audience">
-              <ZLink
-                to="#"
-                class="z-event__audience caption"
-              >
-                {{ audience.name }}
-              </ZLink>
+              <template v-for="audience in audiences">
+                <ZLink
+                  :key="audience.id"
+                  to="#"
+                  class="z-event__audience caption"
+                >
+                  {{ audience.name }}
+                </ZLink>
+              </template>
             </slot>
           </div>
         </slot>
@@ -116,13 +119,9 @@ export default {
         name: '',
       }),
     },
-    audience: {
-      type: Object,
-      default: () => ({
-        name: '',
-        background: '',
-        color: '',
-      }),
+    audiences: {
+      type: Array,
+      default: () => ([]),
     },
     type: {
       type: Object,
@@ -141,37 +140,12 @@ export default {
   },
   computed: {
     style() {
-      const { color, background } = this.audience;
-      return {
-        '--color': color,
-        '--background': background,
-      };
-    },
-    dateCalendar() {
-      const months = [
-        'Sty',
-        'Lut',
-        'Mar',
-        'Kwi',
-        'Maj',
-        'Cze',
-        'Lip',
-        'Sie',
-        'Wrz',
-        'Paź',
-        'Lis',
-        'Gru'];
-      const beginDate = new Date(this.date.begin);
-      const endDate = new Date(this.date.end);
-      return {
-        begin: {
-          day: beginDate.getDate().toString().padStart(2, '0'),
-          month: months[beginDate.getMonth()],
-        },
-        end: {
-          day: endDate.getDate().toString().padStart(2, '0'),
-          month: months[endDate.getMonth()],
-        },
+      return this.audiences.length === 1 ? {
+        '--color': this.audiences[0].rest_acf.color,
+        '--background': this.audiences[0].rest_acf.background,
+      } : {
+        '--color': '#fff',
+        '--background': '#7ba22e',
       };
     },
   },
@@ -206,7 +180,7 @@ export default {
       display: grid;
       justify-content: space-between;
       padding: 32px 8px 16px 8px;
-      background: var(--background, #efac1f);
+      background: var(--background, #7ba22e);
       color: var(--color, #fff);
       grid-template-rows: 1fr auto;
     }

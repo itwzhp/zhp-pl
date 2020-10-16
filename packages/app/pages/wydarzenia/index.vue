@@ -21,11 +21,11 @@
           :date="event.rest_acf.date"
           :location="{name: 'Warszawa', to:'#'}"
           :type="event.rest_event_type"
-          :audience="event.rest_age_group"
-          :excerpt="page === 1 && index === 0 ? event.excerpt.rendered : ''"
+          :audiences="event.age_groups.map((ageGroup)=>(ageGroups[ageGroup]))"
+          :excerpt="page === '1' && index === 0 ? event.excerpt.rendered : ''"
           :to="`/wydarzenia/${event.slug}`"
           class="event"
-          :class="{'z-event--primary': page === 1 && index === 0, 'event--primary': index === 0}"
+          :class="{'z-event--primary': page === '1' && index === 0, 'event--primary': index === 0}"
         />
       </template>
     </ZSection>
@@ -61,6 +61,7 @@ export default {
       ...accumulator,
       [option.id]: map(option)
     })
+    // FIXME: remove this mapping, base on native taxonomies fields or exclude it in Vuex
     const map = option => ({
       id: option.id,
       label: option.name,
@@ -73,19 +74,18 @@ export default {
     const eventsRes = await $axios.get('events', { params: { per_page: 13, page: 1, ...query } })
     const events = eventsRes.data
     const totalPages = eventsRes.headers['x-wp-totalpages']
-    // tags
+    // TODO: move tags to vuex
     const tagsRes = await $axios('tags', {})
     const tags = tagsRes.data.reduce(reduce, {})
-    // event_types
+    // TODO: move event_types to vuex
     const eventTypesRes = await $axios('event_types', {})
     const eventTypes = eventTypesRes.data.reduce(reduce, {})
-    // age_groups
-    const ageGroupsRes = await $axios('age_groups', {})
+    // TODO: base on age_groups from vuex
+    const ageGroupsRes = await $axios('age_groups', { params: { per_page: 99 } })
     const ageGroups = ageGroupsRes.data.reduce(reduce, {})
-    // districts
+    // TODO: move district to vuex
     const districtsRes = await $axios('districts', {})
     const districts = districtsRes.data.reduce(reduce, {})
-    // categories
     const categories = {
       event_types: {
         id: 'event_types',
@@ -144,6 +144,11 @@ export default {
       selectedFilters,
       page: query.page || '1',
       totalPages
+    }
+  },
+  computed: {
+    ageGroups () {
+      return this.$store.getters['taxonomies/taxonomy']('age_groups')
     }
   },
   methods: {

@@ -144,7 +144,7 @@
               :date="event.rest_acf.date"
               :location="{name: 'Warszawa'}"
               :type="event.rest_event_type"
-              :audience="event.rest_age_group"
+              :audiences="event.age_groups.map((ageGroup)=>(ageGroups[ageGroup]))"
             />
           </li>
         </template>
@@ -191,6 +191,11 @@ export default {
     const events = eventsRes.data
 
     return { posts, highlightedPosts, events }
+  },
+  computed: {
+    ageGroups () {
+      return this.$store.getters['taxonomies/taxonomy']('age_groups')
+    }
   },
   methods: {
     search () {
