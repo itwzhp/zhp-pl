@@ -1,7 +1,9 @@
 <template>
   <div id="home">
     <ZSection class="section-hero">
-      <div class="section-hero__picture" />
+      <div class="section-hero__picture">
+        <ZClipPath></ZClipPath>
+      </div>
       <ZHeading
         :level="1"
         class="section-hero__title t3"
@@ -166,7 +168,8 @@ import {
   ZHighlighted,
   ZPost,
   ZSearch,
-  ZSection
+  ZSection,
+  ZClipPath
 } from '@nowa-zhp/ui'
 
 export default {
@@ -180,7 +183,8 @@ export default {
     ZHighlighted,
     ZPost,
     ZSearch,
-    ZSection
+    ZSection,
+    ZClipPath
   },
   async asyncData ({ $axios }) {
     // last 8 post for posts ZCarousel

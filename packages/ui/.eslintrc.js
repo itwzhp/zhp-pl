@@ -9,7 +9,9 @@ module.exports = {
   ],
   rules: {
     'no-multiple-empty-lines': ['error', { max: 1 }],
-    'max-len': ['error', { code: 120, ignoreStrings: true, ignoreUrls: true }],
+    'max-len': ['error', {
+      code: 120, ignoreStrings: true, ignoreUrls: true, ignorePattern: '<path|d=',
+    }],
   },
   parserOptions: {
     parser: 'babel-eslint',
