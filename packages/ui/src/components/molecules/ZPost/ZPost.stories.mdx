@@ -4,14 +4,14 @@ import { withA11y } from '@storybook/addon-a11y';
 import axios from 'axios';
 import ZPost from './ZPost.vue';
 
-<Meta title="Molecules/Article" component={ZPost} decorators={[withKnobs, withA11y]}/>
+<Meta title="Molecules/Post" component={ZPost} decorators={[withKnobs, withA11y]}/>
 
 # Article
 
 <Preview>
   <Story name="Common">
     {{
-        components: {ZPosts },
+        components: { ZPosts },
         props: {
           tag: {
             default: text('tag', 'div')
@@ -29,7 +29,7 @@ import ZPost from './ZPost.vue';
             default: text('date', '2020-09-09T00:00:00')
           }
         },
-        template: `<ZArticle
+        template: `<ZPosts
           :thumbnail="thumbnail"
           :title="title"
           to="https://zhp.pl"
@@ -51,7 +51,7 @@ import ZPost from './ZPost.vue';
           }
         },
         template: `<div style="display: grid; grid-template-columns: repeat(4, 1fr); column-gap: 20px; row-gap: 20px; max-width: 1071px; margin: 0 auto">
-          <ZArticle
+          <ZPost
             v-for="(post, index) in posts"
             :key="post.id"
             :thumbnail="post.rest_media"

@@ -54,6 +54,7 @@
     </slot>
   </component>
 </template>
+
 <script>
 import { format } from 'date-fns';
 import ZImage from '../../atoms/ZImage/ZImage.vue';
@@ -119,6 +120,7 @@ export default {
   },
 };
 </script>
+
 <style lang="scss">
   .z-post {
     $this: &;
@@ -155,7 +157,7 @@ export default {
 
     &__content {
       display: grid;
-      align-items: end;
+      align-items: start;
       justify-content: space-between;
       padding: 16px 8px;
       grid-template-rows: 1fr auto;
@@ -199,6 +201,7 @@ export default {
 
       #{$this}__content {
         z-index: 1;
+        align-items: end;
         color: #fff;
         grid-column: 1;
         grid-row: 2;

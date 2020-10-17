@@ -61,6 +61,8 @@ export default {
 
 <style lang="scss">
 .z-card {
+  $this: &;
+
   display: grid;
   overflow: hidden;
   border-radius: 10px;
@@ -104,6 +106,43 @@ export default {
 
   &--uppercase {
     text-transform: uppercase;
+  }
+
+  &--pictured {
+    #{$this}__title {
+      color: #fff;
+    }
+    #{$this}__thumbnail {
+      grid-column: 1;
+      grid-row: 1 / span 2;
+
+      &::after {
+        content: none;
+      }
+    }
+    #{$this}__content {
+      z-index: 1;
+      align-items: end;
+      grid-column: 1;
+      grid-row: 2;
+    }
+  }
+
+  &--overlayed {
+    #{$this}__thumbnail {
+      position: relative;
+
+      &::before {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: #78a22f;
+        content: "";
+        opacity: 0.4;
+      }
+    }
   }
 }
 </style>

@@ -59,6 +59,12 @@
         </div>
       </div>
       <div class="z-header__navigation">
+        <ZButton class="z-header__mobile z-button--text">
+          <ZIcon
+            name="menu"
+            style="--icon-color: #7ba22e; --icon-size: 1.5rem;"
+          />
+        </ZButton>
         <nav class="z-menu z-header__menu">
           <template v-for="(item, key) in headerMenu">
             <ZLink
@@ -187,7 +193,24 @@ export default {
 
 <style lang="scss">
 .z-header {
+  display: grid;
   overflow: hidden;
+  align-items: center;
+  justify-content: space-between;
+  grid-auto-flow: column;
+
+  @media (min-width: 480px) {
+    justify-content: unset;
+    grid-auto-flow: row;
+  }
+
+  &__mobile {
+    margin: 0 1.25rem;
+
+    @media (min-width: 480px) {
+      display: none;
+    }
+  }
 
   &__bar {
     display: grid;
@@ -213,16 +236,15 @@ export default {
     }
   }
 
-  &__navigation {
-    display: none;
-
-    @media (min-width: 480px) {
-      display: block;
-    }
-  }
+  //&__navigation {}
 
   &__menu {
-    height: 3rem;
+    display: none !important;
+
+    @media (min-width: 480px) {
+      display: grid !important;
+      height: 3rem;
+    }
   }
 }
 
