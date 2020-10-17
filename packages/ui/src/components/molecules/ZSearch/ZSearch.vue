@@ -2,8 +2,10 @@
   <component
     :is="tag"
     class="z-search"
+    @submit.prevent="$emit('submit', search)"
   >
     <ZInput
+      v-model="search"
       type="text"
       placeholder="Czego dzisiaj chcsz się dowiedzieć o ZHP?"
       class="z-search__input"
@@ -38,6 +40,11 @@ export default {
       type: String,
       default: 'form',
     },
+  },
+  data() {
+    return {
+      search: '',
+    };
   },
 };
 </script>

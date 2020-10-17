@@ -8,7 +8,10 @@
       >
         Przygoda. Przyjaźń. Wychowanie
       </ZHeading>
-      <ZSearch class="section-hero__search" />
+      <ZSearch
+        class="section-hero__search"
+        @submit="search"
+      />
     </ZSection>
     <ZSection
       title="Aktualności"
@@ -198,7 +201,13 @@ export default {
     }
   },
   methods: {
-    search () {
+    search (query) {
+      this.$router.push({
+        path: '/szukaj',
+        query: { search: query }
+      }
+      )
+      console.log(query)
       // https://developer.wordpress.org/rest-api/reference/search-results/
     }
   }
