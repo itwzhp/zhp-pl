@@ -143,37 +143,45 @@ export default {
   },
   async middleware ({ store, $axios }) {
     // vuex store is required to get data on server-side
-    const menusRes = await $axios.get('menus')
-    const menus = menusRes.data
-    menus.forEach((menu) => {
-      switch (menu.location) {
-        case 'header-menu':
-          store.commit('menus/update', {
-            location: 'headerMenu',
-            items: menu.items.map(item => ({
-              name: item.title,
-              to: item.url
-            }))
-          })
-          break
-        case 'footer-menu':
-          store.commit('menus/update', {
-            location: 'footerMenu',
-            items: menu.items.map(item => ({
-              name: item.title,
-              to: item.url
-            }))
-          })
-          break
-      }
-    })
-    const randomTextRes = await $axios.get('random')
-    const randomText = randomTextRes.data
-    store.commit('random/update', randomText.text)
+    if (!Object.keys(store.getters['menus/headerMenu']).length ||
+      Object.keys(!store.getters['menus/footerMenu']).length) {
+      const menusRes = await $axios.get('menus')
+      const menus = menusRes.data
+      menus.forEach((menu) => {
+        switch (menu.location) {
+          case 'header-menu':
+            store.commit('menus/update', {
+              location: 'headerMenu',
+              items: menu.items.map(item => ({
+                name: item.title,
+                to: item.url
+              }))
+            })
+            break
+          case 'footer-menu':
+            store.commit('menus/update', {
+              location: 'footerMenu',
+              items: menu.items.map(item => ({
+                name: item.title,
+                to: item.url
+              }))
+            })
+            break
+        }
+      })
+    }
+    if (!Object.keys(store.getters['random/text']).length) {
+      const randomTextRes = await $axios.get('random')
+      const randomText = randomTextRes.data
+      store.commit('random/update', randomText.text)
+    }
+
     const taxonomies = ['age_groups']
     taxonomies.forEach(async (taxonomy) => {
-      const items = await $axios.get(taxonomy, { params: { per_page: 99 } })
-      store.commit('taxonomies/update', { name: taxonomy, items: items.data })
+      if (!store.getters[`taxonomies/${taxonomy}`]) {
+        const items = await $axios.get(taxonomy, { params: { per_page: 99 } })
+        store.commit('taxonomies/update', { name: taxonomy, items: items.data })
+      }
     })
   },
   computed: {
