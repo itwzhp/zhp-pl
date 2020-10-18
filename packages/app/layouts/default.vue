@@ -178,7 +178,7 @@ export default {
 
     const taxonomies = ['age_groups']
     taxonomies.forEach(async (taxonomy) => {
-      if (!store.getters[`taxonomies/${taxonomy}`]) {
+      if (!store.getters['taxonomies/taxonomy'](taxonomy)) {
         const items = await $axios.get(taxonomy, { params: { per_page: 99 } })
         store.commit('taxonomies/update', { name: taxonomy, items: items.data })
       }
