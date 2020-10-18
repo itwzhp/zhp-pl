@@ -6,6 +6,7 @@
   >
     <ZInput
       v-model="search"
+      v-bind="input"
       type="text"
       placeholder="Czego dzisiaj chcsz się dowiedzieć o ZHP?"
       class="z-search__input"
@@ -39,6 +40,10 @@ export default {
     tag: {
       type: String,
       default: 'form',
+    },
+    input: {
+      type: Object,
+      default: () => ({}),
     },
   },
   data() {

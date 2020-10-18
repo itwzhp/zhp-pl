@@ -2,7 +2,7 @@
   <div id="home">
     <ZSection class="section-hero">
       <div class="section-hero__picture">
-        <ZClipPath></ZClipPath>
+        <ZClipPath />
       </div>
       <ZHeading
         :level="1"
@@ -12,6 +12,7 @@
       </ZHeading>
       <ZSearch
         class="section-hero__search"
+        :input="{placeholder: 'Czego dzisiaj chcsz się dowiedzieć o ZHP?'}"
         @submit="search"
       />
     </ZSection>
@@ -209,10 +210,7 @@ export default {
       this.$router.push({
         path: '/szukaj',
         query: { search: query }
-      }
-      )
-      console.log(query)
-      // https://developer.wordpress.org/rest-api/reference/search-results/
+      })
     }
   }
 }
@@ -235,6 +233,7 @@ export default {
     &__title {
       margin: 0 0 1.5rem 0;
       grid-column: span 12;
+      place-self: end stretch;
 
       @media (min-width: 480px) {
         grid-column: span 4;
@@ -243,6 +242,7 @@ export default {
 
     &__search {
       grid-column: span 12;
+      place-self: start stretch;
 
       @media (min-width: 480px) {
         grid-column: span 6;

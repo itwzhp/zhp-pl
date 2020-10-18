@@ -117,7 +117,7 @@ export default {
 
         &__slides {
           display: grid;
-          padding: 24px 0;
+          padding: var(--carousel-slides-padding, 24px 0);
           grid-auto-flow: column;
         }
 

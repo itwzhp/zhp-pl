@@ -21,6 +21,9 @@
             {{ title }}
           </ZLink>
         </slot>
+        <slot name="description">
+          <ZText class="z-card__description caption">{{description}}</ZText>
+        </slot>
       </div>
     </slot>
   </component>
@@ -30,6 +33,7 @@
 import ZImage from '../../atoms/ZImage/ZImage.vue';
 import ZLink from '../../atoms/ZLink/ZLink.vue';
 import ZHeading from '../../atoms/ZHeading/ZHeading.vue';
+import ZText from '../../atoms/ZText/ZText.vue';
 
 export default {
   name: 'Zcard',
@@ -37,6 +41,7 @@ export default {
     ZImage,
     ZLink,
     ZHeading,
+    ZText,
   },
   props: {
     tag: {
@@ -48,6 +53,10 @@ export default {
       default: '',
     },
     title: {
+      type: String,
+      default: '',
+    },
+    description: {
       type: String,
       default: '',
     },
@@ -94,7 +103,7 @@ export default {
 
   &__content {
     display: grid;
-    align-items: center;
+    align-items: end;
     padding: 16px 24px;
     grid-auto-flow: row;
   }
@@ -104,11 +113,17 @@ export default {
     text-transform: var(--text-transform);
   }
 
+  &__description {
+    color: #ffffff;
+  }
+
   &--uppercase {
     text-transform: uppercase;
   }
 
   &--pictured {
+    grid-template-rows: auto auto;
+
     #{$this}__title {
       color: #fff;
     }
@@ -129,6 +144,8 @@ export default {
   }
 
   &--overlayed {
+    grid-template-rows: auto auto;
+
     #{$this}__thumbnail {
       position: relative;
 

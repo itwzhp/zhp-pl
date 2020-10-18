@@ -95,7 +95,7 @@ export default {
       grid-row: var(--section-title-grid-row, 1);
 
       @media (min-width: 480px) {
-        --section-title-grid-column: span 4;
+        --section-title-grid-column: span 6;
       }
     }
 
@@ -104,7 +104,7 @@ export default {
       grid-row: var(--section-subtitle-grid-row, 2);
 
       @media (min-width: 480px) {
-        --section-subtitle-grid-column: span 5;
+        --section-subtitle-grid-column: span 6;
       }
     }
 
