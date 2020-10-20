@@ -29,9 +29,9 @@
         :html="event.content.rendered"
       />
       <ZFiles
-        v-if="filesMock"
+        v-if="hasFiles"
         title="Linki i dokumenty powiązane z artykułem:"
-        :files="filesMock"
+        :files="files"
         class="files"
       />
     </ZSection>
@@ -108,20 +108,21 @@ export default {
     // related events
     const relatedEventsRes = await $axios.get('events', { per_page: 8 })
     const relatedEvents = relatedEventsRes.data
-    // filesMock
-    const filesMock = [
-      { type: 'Link', name: 'Rejestracja patroli', url: '#' },
-      {
-        type: 'Dokument', name: 'Formularz zgłoszeniowy', url: '#', date: '12.07.2020', mimeType: 'Dokument Word'
-      },
-      {
-        type: 'Dokument', name: 'Formularz zgłoszeniowy', url: '#', date: '12.07.2020', mimeType: 'Dokument PDF'
-      }
-    ]
+    // files
+    const files = event.rest_acf.plikilinki
+      ? event.rest_acf.plikilinki.map(file => ({
+        ...file,
+        type: file.file ? 'Dokument' : 'Link',
+        date: file.file.modified
+      }))
+      : []
 
-    return { event, relatedEvents, filesMock }
+    return { event, relatedEvents, files }
   },
   computed: {
+    hasFiles () {
+      return this.files.length > 0
+    },
     ageGroups () {
       return this.$store.getters['taxonomies/taxonomy']('age_groups')
     }

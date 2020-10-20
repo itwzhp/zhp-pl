@@ -23,9 +23,9 @@
         class="content"
       />
       <ZFiles
-        v-if="filesMock"
+        v-if="hasFiles"
         title="Linki i dokumenty powiązane z artykułem:"
-        :files="filesMock"
+        :files="files"
         class="files"
       />
       <div class="sidebar">
@@ -104,18 +104,21 @@ export default {
     // related posts
     const relatedPostsRes = await $axios.get('posts', { per_page: 8 })
     const relatedPosts = relatedPostsRes.data
-    // filesMock
-    const filesMock = [
-      { type: 'Link', name: 'Rejestracja patroli', url: '#' },
-      {
-        type: 'Dokument', name: 'Formularz zgłoszeniowy', url: '#', date: '12.07.2020', mimeType: 'Dokument Word'
-      },
-      {
-        type: 'Dokument', name: 'Formularz zgłoszeniowy', url: '#', date: '12.07.2020', mimeType: 'Dokument PDF'
-      }
-    ]
+    // files
+    const files = post.rest_acf.plikilinki
+      ? post.rest_acf.plikilinki.map(file => ({
+        ...file,
+        type: file.file ? 'Dokument' : 'Link',
+        date: file.file.modified
+      }))
+      : []
 
-    return { post, relatedPosts, filesMock }
+    return { post, relatedPosts, files }
+  },
+  computed: {
+    hasFiles () {
+      return this.files.length > 0
+    }
   }
 }
 </script>

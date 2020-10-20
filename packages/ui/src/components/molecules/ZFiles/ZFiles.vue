@@ -23,10 +23,10 @@
               {{ file.name }}
             </ZLink>
             <div
-              v-if="file.mimeType || file.date"
+              v-if="file.mimeType && file.date"
               class="z-file__meta"
             >
-              {{ file.mimeType }}, {{ file.date }}
+              Dokument {{ file.mimeType }}, {{ file.date | format}}
             </div>
           </div>
         </li>
@@ -36,6 +36,7 @@
 </template>
 
 <script>
+import { format } from 'date-fns';
 import ZHeading from '../../atoms/ZHeading/ZHeading.vue';
 import ZList from '../../organisms/ZList/ZList.vue';
 import ZLink from '../../atoms/ZLink/ZLink.vue';
@@ -43,6 +44,14 @@ import ZLink from '../../atoms/ZLink/ZLink.vue';
 export default {
   name: 'ZFiles',
   components: { ZHeading, ZList, ZLink },
+  filters: {
+    format(date) {
+      if (!date) {
+        return '';
+      }
+      return format(new Date(date), 'dd.MM.yyyy');
+    },
+  },
   props: {
     tag: {
       type: String,
