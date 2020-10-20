@@ -4,6 +4,7 @@
       ref="img"
       :data-src="src"
       v-bind="$attrs"
+      alt=""
     >
   </div>
 </template>

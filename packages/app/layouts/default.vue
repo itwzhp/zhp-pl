@@ -16,7 +16,10 @@
             </template>
           </ZDropdown>
         </div>
-        <ZLink to="/">
+        <ZLink
+          to="/"
+          aria-label="powrót do strony głównej"
+        >
           <ZImage
             :src="require('~/assets/brand.svg')"
             class="z-logo"
