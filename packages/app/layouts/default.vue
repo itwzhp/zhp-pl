@@ -89,7 +89,7 @@
                 :key="key"
                 :to="item.to"
                 class="z-menu__item"
-                @click.native="toggle"
+                @click.native="close"
               >
                 {{ item.name }}
               </ZLink>
@@ -234,6 +234,9 @@ export default {
   methods: {
     toggle () {
       this.menuIsOpen = !this.menuIsOpen
+    },
+    close () {
+      this.menuIsOpen = false
     }
   }
 }
