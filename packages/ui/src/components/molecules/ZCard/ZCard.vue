@@ -114,7 +114,7 @@ export default {
   }
 
   &__description {
-    color: #ffffff;
+    color: #fff;
   }
 
   &--uppercase {

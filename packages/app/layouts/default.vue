@@ -62,23 +62,40 @@
         </div>
       </div>
       <div class="z-header__navigation">
-        <ZButton class="z-header__mobile z-button--text">
-          <ZIcon
-            name="menu"
-            style="--icon-color: #7ba22e; --icon-size: 1.5rem;"
-          />
-        </ZButton>
-        <nav class="z-menu z-header__menu">
-          <template v-for="(item, key) in headerMenu">
-            <ZLink
-              :key="key"
-              :to="item.to"
-              class="z-menu__item"
-            >
-              {{ item.name }}
-            </ZLink>
+        <ZButton
+          class="z-header__mobile z-button--text"
+          @click="toggle"
+        >
+          <template v-if="menuIsOpen">
+            <ZIcon
+              name="cross"
+            />
           </template>
-        </nav>
+          <template v-else>
+            <ZIcon
+              name="menu"
+            />
+          </template>
+        </ZButton>
+        <!-- TODO: rename this element -->
+        <div
+          ref="menu"
+          class="z-header__menu"
+          :class="{'is-active': menuIsOpen}"
+        >
+          <nav class="z-menu">
+            <template v-for="(item, key) in headerMenu">
+              <ZLink
+                :key="key"
+                :to="item.to"
+                class="z-menu__item"
+                @click.native="toggle"
+              >
+                {{ item.name }}
+              </ZLink>
+            </template>
+          </nav>
+        </div>
       </div>
     </header>
     <Nuxt />
@@ -120,6 +137,7 @@
 </template>
 
 <script>
+import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock'
 import { mapGetters } from 'vuex'
 import {
   ZImage,
@@ -187,6 +205,11 @@ export default {
       }
     })
   },
+  data () {
+    return {
+      menuIsOpen: false
+    }
+  },
   computed: {
     ...mapGetters(
       {
@@ -197,6 +220,20 @@ export default {
     year () {
       const today = new Date()
       return today.getFullYear()
+    }
+  },
+  watch: {
+    menuIsOpen (isOpen) {
+      if (isOpen) {
+        disableBodyScroll(this.$refs.menu)
+      } else {
+        clearAllBodyScrollLocks()
+      }
+    }
+  },
+  methods: {
+    toggle () {
+      this.menuIsOpen = !this.menuIsOpen
     }
   }
 }
@@ -213,14 +250,6 @@ export default {
   @media (min-width: 480px) {
     justify-content: unset;
     grid-auto-flow: row;
-  }
-
-  &__mobile {
-    margin: 0 1.25rem;
-
-    @media (min-width: 480px) {
-      display: none !important;
-    }
   }
 
   &__bar {
@@ -247,14 +276,42 @@ export default {
     }
   }
 
-  //&__navigation {}
+  &__navigation {
+    display: grid;
+    height: 3.125rem;
+    align-items: center;
+    grid-auto-flow: column;
+  }
 
-  &__menu {
-    display: none !important;
+  /* TODO: rename to more descriptive name */
+  &__mobile {
+    --icon-color: #7ba22e;
+    --icon-size: 1.5rem;
+
+    margin: 0 1.25rem;
 
     @media (min-width: 480px) {
-      display: grid !important;
-      height: 3rem;
+      display: none;
+    }
+  }
+
+  &__menu {
+    @media (max-width: 480px) {
+      position: absolute;
+      z-index: 1000; /* TODO: fix this z-index */
+      top: 5rem;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      display: none;
+      padding: 1.25rem;
+      background: #fff;
+    }
+
+    &.is-active {
+      @media (max-width: 480px) {
+        display: block;
+      }
     }
   }
 }

@@ -3,6 +3,7 @@
     :is="tagComputed"
     v-bind="toComputed"
     class="z-link"
+    v-on="$listeners"
   >
     <slot />
   </component>
