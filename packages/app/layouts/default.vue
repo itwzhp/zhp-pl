@@ -242,10 +242,16 @@ export default {
 <style lang="scss">
 .z-header {
   display: grid;
-  overflow: hidden;
   align-items: center;
   justify-content: space-between;
+  background: #fff;
   grid-auto-flow: column;
+
+  @media (max-width: 480px) {
+    position: sticky;
+    z-index: 1000; /* TODO: fix this z-index */
+    top: 0;
+  }
 
   @media (min-width: 480px) {
     justify-content: unset;
@@ -298,12 +304,10 @@ export default {
   &__menu {
     @media (max-width: 480px) {
       position: absolute;
-      z-index: 1000; /* TODO: fix this z-index */
       top: 5rem;
-      right: 0;
-      bottom: 0;
-      left: 0;
       display: none;
+      width: 100%;
+      height: calc(100vh - 5rem);
       padding: 1.25rem;
       background: #fff;
     }
