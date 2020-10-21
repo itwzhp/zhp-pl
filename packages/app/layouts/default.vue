@@ -291,7 +291,7 @@ export default {
     margin: 0 1.25rem;
 
     @media (min-width: 480px) {
-      display: none;
+      display: none !important;
     }
   }
 
