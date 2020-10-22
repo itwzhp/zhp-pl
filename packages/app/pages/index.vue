@@ -82,7 +82,7 @@
         title="Chcesz zapisać swoje dziecko do harcerstwa?"
         content="Harcerstwo to nie tylko niesamowita przygoda, ale także możliwość zdobycia sprawności na całe życie. Chcesz, aby Twoje dziecko wkroczyło z nami na szlak? Tutaj znajdziesz najważniejsze informacje."
         :calls-to-action="[
-          {name:'Jak zacząć', to: '/jak-zaczac'},
+          {name:'No to zaczynamy', to: '/no-to-zaczynamy'},
           {name:'Ile kosztuje harcerstwo?', to: '/ile-kosztuje-harcerstwo'},
           {name:'Gdzie się zapisać?', to: '/gdzie-sie-zapisac'}]"
         class="section-join-us__banner"
@@ -101,7 +101,7 @@
         class="section-mission__card section-mission__card--first"
       />
       <ZCard
-        title="Piony metodyczne"
+        title="Członkowie organizacji"
         thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/02.png"
         class="section-mission__card section-mission__card--bigger"
       />
