@@ -95,7 +95,7 @@ export default {
       grid-row: var(--section-title-grid-row, 1);
 
       @media (min-width: 480px) {
-        --section-title-grid-column: span 6;
+        grid-column: var(--section-title-grid-column, span 6);
       }
     }
 

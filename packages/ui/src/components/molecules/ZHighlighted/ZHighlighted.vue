@@ -7,6 +7,7 @@
       <ZHeading class="h5 uppercase">
         {{ title }}
       </ZHeading>
+      <ZText class="caption">{{ subtitle }}</ZText>
       <ZLink
         :to="`/${slug}`"
         class="z-highlighted__more z-highlighted__link"
@@ -62,6 +63,10 @@ export default {
       type: String,
       default: '',
     },
+    subtitle: {
+      type: String,
+      default: '',
+    },
     more: {
       type: String,
       default: 'Zobacz więcej',
@@ -87,12 +92,22 @@ export default {
       align-items: center;
       justify-content: space-between;
       grid-template-columns: repeat(2, auto);
+      grid-template-rows: repeat(2, auto);
+      grid-row-gap: 0.5rem;
     }
 
-    &__title {}
+    &__title {
+      grid-row: 1;
+    }
+
+    &__subtitle {
+      grid-row: 2;
+    }
 
     &__more {
       color: #7ba22e;
+      grid-row: 1;
+      grid-column: 2;
     }
 
     &__item {

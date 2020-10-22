@@ -8,7 +8,7 @@
         :level="1"
         class="section-hero__title t3"
       >
-        Przygoda. Przyjaźń. Wychowanie
+        Przygoda. Przyjaźń. Wychowanie.
       </ZHeading>
       <ZSearch
         class="section-hero__search"
@@ -17,8 +17,7 @@
       />
     </ZSection>
     <ZSection
-      title="Aktualności"
-      subtitle="Zobacz, co nowego w ZHP"
+      title="Polecamy"
     >
       <ZCarousel
         v-if="posts.length > 0"
@@ -59,7 +58,8 @@
         class="section-highlighted__card"
       />
       <ZHighlighted
-        title="Warto przeczytać"
+        title="Aktualności"
+        subtitle="Zobacz co nowego w ZHP"
         more="Zobacz więcje"
         :posts="highlightedPosts"
         class="section-highlighted__posts"
@@ -69,17 +69,18 @@
       <ZBanner
         thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/news-DMB.png"
         title="Poznaj ZHP"
-        content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam augue nisl, dignissim id metus
-        sagittis, ultrices consectetur turpis. Quisque maximus metus purus, vitae convallis mi tempus eu."
+        content="Związek Harcerstwa Polskiego to największa organizacja harcerska w Polsce, która zrzesza ponad 100 000 osób! Koniecznie dowiedz się o niej więcej!"
         class="section-about-us__banner"
+        :calls-to-action="[
+          {name:'Odkryj harcerstwo', to: '/odkryj-harcerstwo'}
+        ]"
       />
     </ZSection>
     <ZSection class="section-join-us">
       <ZBanner
         thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/Agnieszka_Madetko-Kurczab_ZHP_21-scaled.jpg"
         title="Chcesz zapisać swoje dziecko do harcerstwa?"
-        content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam augue nisl, dignissim id metus
-        sagittis, ultrices consectetur turpis. Quisque maximus metus purus, vitae convallis mi tempus eu."
+        content="Harcerstwo to nie tylko niesamowita przygoda, ale także możliwość zdobycia sprawności na całe życie. Chcesz, aby Twoje dziecko wkroczyło z nami na szlak? Tutaj znajdziesz najważniejsze informacje."
         :calls-to-action="[
           {name:'Jak zacząć', to: '/jak-zaczac'},
           {name:'Ile kosztuje harcerstwo?', to: '/ile-kosztuje-harcerstwo'},
@@ -110,16 +111,16 @@
         class="section-mission__card"
       />
       <ZBanner
-        title="Sprawedź Strefę Instruktora"
-        content="Szukasz pomysłu na zajęcia? Inspiracji do pracy z harcerzami?"
-        :calls-to-action="{name: 'Przejdź do strony', to: '/strefa-instruktora'}"
+        title="Sprawdź Centralny Bank Pomysłów"
+        content="Szukasz pomysłu na zbiórkę? Inspiracji do pracy z harcerzami?"
+        :calls-to-action="{name: 'Przejdź do strony', to: 'http://cbp.zhp.pl/'}"
         class="section-mission__banner"
       />
     </ZSection>
     <ZSection
-      title="Wydarzenia i przedsięwzięcia"
-      subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam augue nisl, dignissim id metus sagittis,
-      ultrices consectetur turpis."
+      class="section-events"
+      title="Przedsięwzięcia i wydarzenia"
+      subtitle=" Szukasz rajdu dla swojej drużyny? Albo konkursu dla swojej gromady? A może chcesz wziąć udział w kursie? Sprawdź, co odbywa się w ZHP w najbliższym czasie."
     >
       <ZCarousel
         v-if="events.length > 0"
@@ -349,6 +350,12 @@ export default {
       @media (min-width: 480px) {
         grid-column: span 5;
       }
+    }
+  }
+
+  .section-events {
+    @media (min-width: 480px) {
+      --section-title-grid-column: span 3;
     }
   }
 

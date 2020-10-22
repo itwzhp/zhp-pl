@@ -145,7 +145,7 @@ export default {
         '--background': this.audiences[0].rest_acf.background,
       } : {
         '--color': '#fff',
-        '--background': '#7ba22e',
+        '--background': '#748dc7',
       };
     },
   },
