@@ -91,9 +91,9 @@ export default {
       display: grid;
       align-items: center;
       justify-content: space-between;
+      grid-row-gap: 0.5rem;
       grid-template-columns: repeat(2, auto);
       grid-template-rows: repeat(2, auto);
-      grid-row-gap: 0.5rem;
     }
 
     &__title {
@@ -106,8 +106,8 @@ export default {
 
     &__more {
       color: #7ba22e;
-      grid-row: 1;
       grid-column: 2;
+      grid-row: 1;
     }
 
     &__item {
