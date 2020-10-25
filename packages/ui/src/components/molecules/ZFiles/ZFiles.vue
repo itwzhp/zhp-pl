@@ -26,7 +26,7 @@
               v-if="file.mimeType && file.date"
               class="z-file__meta"
             >
-              Dokument {{ file.mimeType }}, {{ file.date | format}}
+              Dokument {{ file.mimeType }}, {{ file.date | format }}
             </div>
           </div>
         </li>

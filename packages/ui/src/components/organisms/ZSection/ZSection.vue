@@ -70,23 +70,19 @@ export default {
 
 <style lang="scss">
   .z-section {
-    --section-max-width: 1140px;
-    --section-padding: 0 1.25rem;
-    --section-grid-template-columns: repeat(12, minmax(auto, 1fr));
-
     margin: var(--section-margin, 2.25rem 0);
     background: var(--section-background);
 
     @media (min-width: 480px) {
-      --section-margin: 5.5rem 0;
+      margin: var(--section-margin, 5.5rem 0);
     }
 
     &__header {
       display: grid;
-      max-width: var(--section-header-max-width, var(--section-max-width));
-      padding: var(--section-header-padding, var(--section-padding));
+      max-width: var(--section-header-max-width, 1140px);
+      padding: var(--section-header-padding, 0 1.25rem);
       margin: var(--section-header-margin, 0 auto 1.5rem auto);
-      grid-template-columns: var(--section-header-grid-template-columns, var(--section-grid-template-columns));
+      grid-template-columns: var(--section-header-grid-template-columns, repeat(12, minmax(auto, 1fr)));
     }
 
     &__title {
@@ -113,10 +109,10 @@ export default {
       max-width: var(--section-content-max-width, var(--section-max-width));
       height: var(--section-content-height);
       align-items: var(--section-content-align-items);
-      padding: var(--section-content-padding, var(--section-padding));
+      padding: var(--section-content-padding, 0 1.25rem);
       margin: var(--section-content-margin, auto);
       gap: 1.25rem;
-      grid-template-columns: var(--section-content-grid-template-columns, var(--section-grid-template-columns));
+      grid-template-columns: var(--section-content-grid-template-columns, repeat(12, minmax(auto, 1fr)));
     }
   }
 </style>

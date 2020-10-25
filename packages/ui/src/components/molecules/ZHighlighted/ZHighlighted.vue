@@ -7,7 +7,9 @@
       <ZHeading class="h5 uppercase">
         {{ title }}
       </ZHeading>
-      <ZText class="caption">{{ subtitle }}</ZText>
+      <ZText class="caption">
+        {{ subtitle }}
+      </ZText>
       <ZLink
         :to="`/${slug}`"
         class="z-highlighted__more z-highlighted__link"
@@ -42,10 +44,16 @@ import { format } from 'date-fns';
 import ZHeading from '../../atoms/ZHeading/ZHeading.vue';
 import ZLink from '../../atoms/ZLink/ZLink.vue';
 import ZList from '../../organisms/ZList/ZList.vue';
+import ZText from '../../atoms/ZText/ZText.vue';
 
 export default {
   name: 'ZHighlighted',
-  components: { ZHeading, ZLink, ZList },
+  components: {
+    ZHeading,
+    ZLink,
+    ZList,
+    ZText,
+  },
   filters: {
     format(date) {
       if (!date) {

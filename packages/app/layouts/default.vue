@@ -22,7 +22,7 @@
         >
           <ZImage
             :src="require('~/assets/brand.svg')"
-            class="z-logo"
+            class="z-header__logo"
             style="--image-width: 8.75rem;"
           />
         </ZLink>
@@ -61,182 +61,184 @@
           </ZDropdown>
         </div>
       </div>
-      <div class="z-header__navigation">
-        <ZButton
-          class="z-header__mobile z-button--text"
-          @click="toggle"
-        >
-          <template v-if="menuIsOpen">
-            <ZIcon
-              name="cross"
-            />
-          </template>
-          <template v-else>
-            <ZIcon
-              name="menu"
-            />
-          </template>
-        </ZButton>
-        <!-- TODO: rename this element -->
-        <div
-          ref="menu"
-          class="z-header__menu"
-          :class="{'is-active': menuIsOpen}"
-        >
-          <nav class="z-menu">
-            <template v-for="(item, key) in headerMenu">
-              <ZLink
-                :key="key"
-                :to="item.to"
-                class="z-menu__item"
-                @click.native="close"
-              >
-                {{ item.name }}
-              </ZLink>
-            </template>
-          </nav>
-        </div>
-      </div>
+      <ZMegaMenu :menu="headerMenu" />
     </header>
     <Nuxt />
     <footer class="z-footer">
       <ZSection class="z-footer__content">
         <ZDidYouKnow
           :random-text="randomText"
-          class="z-footer__random-text"
+          class="z-footer__random"
         />
         <div class="z-footer__scouting">
           <ZImage
             :src="require('~/assets/wagggs.png')"
-            class=""
+            class="z-footer__scouting-logo"
           />
           <ZImage
             :src="require('~/assets/wosm.png')"
-            class=""
+            class="z-footer__scouting-logo"
           />
         </div>
       </ZSection>
       <div class="z-footer__bar">
-        <ZText class="subtitle-2">
-          Copyright © 1997-{{ year }}<span class="z-footer__br" /> Związek Harcerstwa Polskiego
+        <ZText
+          class="z-footer__copyright subtitle-2"
+          tag="div"
+        >
+          Copyright © 1997-{{ year }}<span class="br" /> Związek Harcerstwa Polskiego
         </ZText>
-        <nav class="z-menu z-menu--secondary z-footer__menu">
-          <template v-for="(item, key) in footerMenu">
-            <ZLink
-              :key="key"
-              :to="item.to"
-              class="z-menu__item"
-            >
-              {{ item.name }}
-            </ZLink>
-          </template>
-        </nav>
+        <ZMenu
+          class="z-menu--horizontal z-footer__menu"
+          :menu="footerMenu"
+        />
       </div>
     </footer>
   </div>
 </template>
 
 <script>
-import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock'
 import { mapGetters } from 'vuex'
 import {
+  ZText,
+  ZSection,
+  ZDidYouKnow,
   ZImage,
   ZLink,
   ZDropdown,
-  ZButton,
   ZIcon,
-  ZText,
-  ZSection,
-  ZDidYouKnow
+  ZButton,
+  ZMenu,
+  ZMegaMenu
 } from '@nowa-zhp/ui'
 
 export default {
   name: 'Default',
   components: {
+    ZText,
+    ZSection,
+    ZDidYouKnow,
     ZImage,
     ZLink,
     ZDropdown,
-    ZButton,
     ZIcon,
-    ZText,
-    ZSection,
-    ZDidYouKnow
+    ZButton,
+    ZMenu,
+    ZMegaMenu
   },
   async middleware ({ store, $axios }) {
-    // vuex store is required to get data on server-side
-    if (!Object.keys(store.getters['menus/headerMenu']).length ||
-      Object.keys(!store.getters['menus/footerMenu']).length) {
+    if (!Object.keys(store.getters['menus/menu']).length) {
       const menusRes = await $axios.get('menus')
       const menus = menusRes.data
+      const locations = {
+        'header-menu': 'headerMenu',
+        'footer-menu': 'footerMenu'
+      }
       menus.forEach((menu) => {
-        switch (menu.location) {
-          case 'header-menu':
-            store.commit('menus/update', {
-              location: 'headerMenu',
-              items: menu.items.map(item => ({
-                name: item.title,
-                to: item.url
-              }))
-            })
-            break
-          case 'footer-menu':
-            store.commit('menus/update', {
-              location: 'footerMenu',
-              items: menu.items.map(item => ({
-                name: item.title,
-                to: item.url
-              }))
-            })
-            break
-        }
+        store.commit('menus/update', { location: locations[menu.location], items: menu.items })
       })
     }
     if (!Object.keys(store.getters['random/text']).length) {
-      const randomTextRes = await $axios.get('random')
-      const randomText = randomTextRes.data
-      store.commit('random/update', randomText.text)
+      const randomRes = await $axios.get('random')
+      const { text } = randomRes.data
+      store.commit('random/update', text)
     }
-
-    const taxonomies = ['age_groups']
-    taxonomies.forEach(async (taxonomy) => {
+    const tax = ['age_groups'] // categories
+    tax.forEach(async (taxonomy) => {
       if (!store.getters['taxonomies/taxonomy'](taxonomy)) {
-        const items = await $axios.get(taxonomy, { params: { per_page: 99 } })
-        store.commit('taxonomies/update', { name: taxonomy, items: items.data })
+        const itemsRes = await $axios.get(taxonomy, { params: { per_page: 99 } })
+        const items = itemsRes.data
+        store.commit('taxonomies/update', { name: taxonomy, items })
       }
     })
   },
   data () {
     return {
-      menuIsOpen: false
+      isOpen: false,
+      megaMenu: [
+        {
+          name: 'Strona Główna',
+          to: '/'
+        },
+        {
+          name: 'Aktualności',
+          to: '/aktualnosci'
+        },
+        {
+          name: 'Wydarzenia',
+          to: '/wydarzenia'
+        },
+        {
+          name: 'Dla rodzica',
+          to: '',
+          submenu: [
+            {
+              name: 'Członkowie organizacji',
+              menu: [
+                {
+                  name: 'Zuchy',
+                  to: '/zuchy'
+                },
+                {
+                  name: 'Harcerze',
+                  to: '/harcerze'
+                }
+              ]
+            },
+            {
+              name: 'Dla rodziców',
+              menu: [
+                {
+                  name: 'Poradnik rodzica',
+                  to: '/poradnik-rodzica'
+                },
+                {
+                  name: 'Bezpieczeństwo dzieci',
+                  to: '/bezpieczenstwo-dzieci'
+                },
+                {
+                  name: '1 procent',
+                  to: '/procen'
+                }
+              ]
+            }
+          ]
+        },
+        {
+          name: 'Intranet ZHP',
+          to: '/intranet'
+        },
+        {
+          name: 'Dla mediów',
+          to: '/dla-mediow'
+        },
+        {
+          name: 'Kontakt',
+          to: '/kontakt'
+        }
+      ]
     }
   },
   computed: {
-    ...mapGetters(
-      {
-        headerMenu: 'menus/headerMenu',
-        footerMenu: 'menus/footerMenu',
-        randomText: 'random/text'
-      }),
+    ...mapGetters({
+      randomText: 'random/text'
+    }),
+    headerMenu () {
+      return this.$store.getters['menus/menu']('headerMenu')
+    },
+    footerMenu () {
+      return this.$store.getters['menus/menu']('footerMenu')
+    },
     year () {
-      const today = new Date()
-      return today.getFullYear()
-    }
-  },
-  watch: {
-    menuIsOpen (isOpen) {
-      if (isOpen) {
-        disableBodyScroll(this.$refs.menu)
-      } else {
-        clearAllBodyScrollLocks()
-      }
+      return new Date().getFullYear()
     }
   },
   methods: {
     toggle () {
-      this.menuIsOpen = !this.menuIsOpen
+      this.isOpen = !this.isOpen
     },
     close () {
-      this.menuIsOpen = false
+      this.isOpen = false
     }
   }
 }
@@ -252,7 +254,7 @@ export default {
 
   @media (max-width: 480px) {
     position: sticky;
-    z-index: 1000; /* TODO: fix this z-index */
+    z-index: 1000;
     top: 0;
   }
 
@@ -266,8 +268,7 @@ export default {
     height: 5rem;
     align-items: center;
     justify-content: space-between;
-    padding: 0 1.25rem;
-    grid-template-columns: repeat(3, auto);
+    grid-auto-flow: column;
   }
 
   &__actions {
@@ -280,46 +281,20 @@ export default {
       --button-color: var(--color-primary);
 
       display: grid;
+      padding: 0 1.25rem;
       gap: 1rem;
       grid-auto-flow: column;
     }
   }
 
-  &__navigation {
-    display: grid;
-    height: 3.125rem;
-    align-items: center;
-    grid-auto-flow: column;
+  &__logo {
+    --image-width: 8.75rem;
+
+    padding: 0 1.25rem;
   }
 
-  /* TODO: rename to more descriptive name */
-  &__mobile {
-    --icon-color: #7ba22e;
-    --icon-size: 1.5rem;
-
-    margin: 0 1.25rem;
-
-    @media (min-width: 480px) {
-      display: none !important;
-    }
-  }
-
-  &__menu {
-    @media (max-width: 480px) {
-      position: absolute;
-      top: 5rem;
-      display: none;
-      width: 100%;
-      height: calc(100vh - 5rem);
-      padding: 1.25rem;
-      background: #fff;
-    }
-
-    &.is-active {
-      @media (max-width: 480px) {
-        display: block;
-      }
-    }
+  &__nav {
+    background: transparent;
   }
 }
 
@@ -328,23 +303,16 @@ export default {
   background: var(--color-primary-lighten);
 
   &__content {
-    --section-margin: 0 auto !important; /* FIXME: remove this !important */
+    --section-margin: 0 auto !important;
     --section-background: var(--color-primary-darken);
-
-    @media (min-width: 480px) {
-      --section-margin: 0 auto !important; /* FIXME: remove this !important */
-    }
   }
 
-  &__random-text {
-    margin: 1rem 0;
+  &__random {
+    /* TODO: setup height in ZDidYouKnow -> rename to ZRandomText */
     color: #fff;
     grid-column: span 12;
 
     @media (min-width: 480px) {
-      --section-margin: 0 auto;
-
-      margin: 1.87rem 0;
       grid-column: span 4;
     }
   }
@@ -361,15 +329,21 @@ export default {
       grid-auto-flow: column;
       grid-column: 9 / span 4;
     }
+
+    &-logo {
+      /* TODO: height */
+      background: transparent;
+    }
   }
 
   &__bar {
     display: grid;
     max-width: 1140px;
+    align-items: center;
     padding: 1rem 1.25rem;
     margin: 0 auto;
     color: #fff;
-    gap: 1rem;
+    gap: 2rem;
 
     @media (min-width: 480px) {
       height: 3rem;
@@ -379,47 +353,12 @@ export default {
       gap: 0;
       grid-auto-flow: column;
     }
-  }
 
-  &__br {
-    display: block;
+    .br {
+      display: block;
 
-    @media (min-width: 480px) {
-      display: inline;
-    }
-  }
-}
-
-.z-menu {
-  --link-font-size: var(--font-size-h6);
-
-  display: grid;
-  align-items: center;
-  gap: var(--menu-gap, 1.5rem);
-  grid-auto-flow: row;
-
-  @media (min-width: 480px) {
-    justify-content: center;
-    grid-auto-flow: column;
-  }
-
-  &--secondary {
-    --link-font-size: var(--font-size-subtitle-2);
-    --link-font-weight: 300;
-    --menu-gap: 1rem;
-
-    @media (min-width: 480px) {
-      --menu-gap: 0;
-    }
-
-    .z-menu {
-      &__item {
-        &::before {
-          @media (min-width: 480px) {
-            margin: 0 0.25rem;
-            content: "|";
-          }
-        }
+      @media (min-width: 480px) {
+        display: inline;
       }
     }
   }

@@ -37,8 +37,8 @@ export default {
       default: 'nav',
     },
     menu: {
-      type: Array,
-      default: () => ([]),
+      type: Object,
+      default: () => ({}),
     },
   },
 };
