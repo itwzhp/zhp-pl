@@ -102,7 +102,6 @@ import {
 } from '@nowa-zhp/ui'
 
 export default {
-  name: 'Faq',
   components: {
     ZSection,
     ZHeading,

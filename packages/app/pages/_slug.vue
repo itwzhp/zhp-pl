@@ -93,7 +93,6 @@ import {
 } from '@nowa-zhp/ui'
 
 export default {
-  name: 'Page',
   components: {
     ZSection,
     ZHeading,

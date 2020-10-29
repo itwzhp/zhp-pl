@@ -90,7 +90,6 @@ import {
 } from '@nowa-zhp/ui'
 
 export default {
-  name: 'Event',
   components: {
     ZSection,
     ZHeading,

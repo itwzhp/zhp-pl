@@ -15,7 +15,6 @@ import {
 } from '@nowa-zhp/ui'
 
 export default {
-  name: 'Search',
   components: {
     ZSection,
     ZText

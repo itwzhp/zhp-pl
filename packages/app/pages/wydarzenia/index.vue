@@ -47,7 +47,6 @@ import {
 } from '@nowa-zhp/ui'
 
 export default {
-  name: 'Events',
   watchQuery: true,
   components: {
     ZSection,

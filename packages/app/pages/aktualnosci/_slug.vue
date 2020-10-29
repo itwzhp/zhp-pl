@@ -86,7 +86,6 @@ import {
 } from '@nowa-zhp/ui'
 
 export default {
-  name: 'Post',
   components: {
     ZSection,
     ZHeading,

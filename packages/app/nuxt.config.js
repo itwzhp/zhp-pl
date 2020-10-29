@@ -24,11 +24,7 @@ export default {
     ],
     link: [
       { rel: 'stylesheet', href: 'https://use.typekit.net/lqw5sjc.css' },
-      { rel: 'icon', type: 'image/png', href: '/16.png' },
-      { rel: 'apple-touch-icon', href: '/144.png' },
-      { rel: 'apple-touch-icon', sizes: '76x76', href: '/76.png' },
-      { rel: 'apple-touch-icon', sizes: '114x114', href: '/114.png' },
-      { rel: 'apple-touch-icon', sizes: '144x144', href: '/144.png' }
+      { rel: 'icon', type: 'image/png', href: '/favicon.png' }
     ]
   },
   /*

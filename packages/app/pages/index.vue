@@ -175,7 +175,6 @@ import {
 } from '@nowa-zhp/ui'
 
 export default {
-  name: 'Home',
   components: {
     ZBanner,
     ZCard,

@@ -60,7 +60,6 @@ import {
 } from '@nowa-zhp/ui'
 
 export default {
-  name: 'Posts',
   watchQuery: true,
   components: {
     ZSection,

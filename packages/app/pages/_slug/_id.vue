@@ -10,7 +10,6 @@ import {
 } from '@nowa-zhp/ui'
 
 export default {
-  name: 'Nested',
   components: {
     ZWordPress
   },
