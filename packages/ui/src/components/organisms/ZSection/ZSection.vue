@@ -106,7 +106,7 @@ export default {
 
     &__content {
       display: grid;
-      max-width: var(--section-content-max-width, var(--section-max-width));
+      max-width: var(--section-content-max-width, 1140px);
       height: var(--section-content-height);
       align-items: var(--section-content-align-items);
       padding: var(--section-content-padding, 0 1.25rem);
