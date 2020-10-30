@@ -10,6 +10,7 @@
           :key="question.id"
           :thumbnail="question.thumbnail"
           :title="question.title"
+          :description="question.description"
           :to="question.to"
           class="z-card--pictured z-card--overlayed section-questions__question"
         />
@@ -59,24 +60,28 @@ export default {
           id: '233',
           thumbnail: 'http://prod.przemyslawspaczek.pl/wp-content/uploads/2020/10/ZUCHY-ZHP_NatGeoKids_Konrad_Kmieć-4075-scaled.jpg',
           title: 'Zuchy',
+          description: 'Dzieci w wieku 6-10 lat',
           to: '/zuchy'
         },
         {
           id: '235',
           thumbnail: 'http://prod.przemyslawspaczek.pl/wp-content/uploads/2020/10/HARCERZE-ZHP_HARCERSKIE_LATO_2019_KAROLINA_PIOTRIOWSKA_-232-scaled.jpg',
           title: 'Harcerze',
+          description: 'Dzieci w wieku 10-13 lat',
           to: '/harcerze'
         },
         {
           id: '239',
           thumbnail: 'http://prod.przemyslawspaczek.pl/wp-content/uploads/2020/10/HS-ZHP_harcerskielato_lipiec_2019_Konrad_Kmieć-3370-scaled.jpg',
           title: 'Harcerze starsi',
+          description: 'Młodzież w wieku 13-16 lat',
           to: '/harcerze-starsi'
         },
         {
           id: '241',
           thumbnail: 'http://prod.przemyslawspaczek.pl/wp-content/uploads/2020/10/WĘDRO-Karolina_Pośnik_ZHP_20180807__DSC5370-scaled.jpg',
           title: 'Wędrownicy',
+          description: 'Młodzież w wieku 16-21 lat',
           to: '/wedrownicy'
         },
         {
@@ -89,6 +94,7 @@ export default {
           id: '245',
           thumbnail: 'http://prod.przemyslawspaczek.pl/wp-content/uploads/2020/10/NS-scaled.jpg',
           title: 'Nieprzetarty Szlak',
+          description: 'Dzieci i młodzież z niepełnosprawnościami',
           to: '/nieprzetarty-szlak'
         },
         {
