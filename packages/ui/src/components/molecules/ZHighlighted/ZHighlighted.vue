@@ -3,20 +3,9 @@
     :is="tag"
     class="z-highlighted"
   >
-    <div class="z-highlighted__header">
-      <ZHeading class="h5 uppercase">
-        {{ title }}
-      </ZHeading>
-      <ZText class="caption">
-        {{ subtitle }}
-      </ZText>
-      <ZLink
-        :to="`/${slug}`"
-        class="z-highlighted__more z-highlighted__link"
-      >
-        {{ more }}
-      </ZLink>
-    </div>
+    <ZHeading class="h5 uppercase">
+      {{ title }}
+    </ZHeading>
     <ZList>
       <template v-for="(article, key) in posts">
         <li
@@ -36,6 +25,12 @@
         </li>
       </template>
     </ZList>
+    <ZLink
+        :to="`/${slug}`"
+        class="z-highlighted__more z-highlighted__link"
+    >
+      {{ more }}
+    </ZLink>
   </component>
 </template>
 
@@ -71,10 +66,6 @@ export default {
       type: String,
       default: '',
     },
-    subtitle: {
-      type: String,
-      default: '',
-    },
     more: {
       type: String,
       default: 'Zobacz więcej',
@@ -94,28 +85,11 @@ export default {
 <style lang="scss">
   .z-highlighted {
     --link-text-decoration: underline;
-
-    &__header {
-      display: grid;
-      align-items: center;
-      justify-content: space-between;
-      grid-row-gap: 0.5rem;
-      grid-template-columns: repeat(2, auto);
-      grid-template-rows: repeat(2, auto);
-    }
-
-    &__title {
-      grid-row: 1;
-    }
-
-    &__subtitle {
-      grid-row: 2;
-    }
+    display: grid;
 
     &__more {
       color: #7ba22e;
-      grid-column: 2;
-      grid-row: 1;
+      place-self: end;
     }
 
     &__item {

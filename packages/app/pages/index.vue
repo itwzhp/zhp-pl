@@ -59,8 +59,6 @@
       />
       <ZHighlighted
         title="Aktualności"
-        subtitle="Zobacz co nowego w ZHP"
-        more="Zobacz więcje"
         :posts="highlightedPosts"
         class="section-highlighted__posts"
       />
