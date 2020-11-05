@@ -1,6 +1,7 @@
 <template>
   <component
     :is="tag"
+    v-click-outside="close"
     class="z-dropdown"
   >
     <slot
@@ -20,7 +21,6 @@
     >
       <div
         v-if="isOpen"
-        v-click-outside="close"
         class="z-dropdown__content"
       >
         <slot v-bind="{isOpen, toggle}" />

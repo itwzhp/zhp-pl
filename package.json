@@ -3,7 +3,14 @@
   "private": true,
   "version": "0.0.0",
   "devDependencies": {
-    "lerna": "^3.22.1"
+    "@commitlint/cli": "^9.1.2",
+    "@commitlint/config-conventional": "^9.1.2",
+    "file-save": "^0.2.0",
+    "glob": "^7.1.6",
+    "husky": "^4.2.5",
+    "lerna": "^3.22.1",
+    "prompts": "^2.3.2",
+    "uppercamelcase": "^3.0.0"
   },
   "scripts": {
     "create-component": "node ./scripts/create-component.js && cd packages/ui && yarn create-index",
@@ -25,15 +32,5 @@
     "hooks": {
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
-  },
-  "devDependencies": {
-    "@commitlint/cli": "^9.1.2",
-    "@commitlint/config-conventional": "^9.1.2",
-    "file-save": "^0.2.0",
-    "glob": "^7.1.6",
-    "husky": "^4.2.5",
-    "lerna": "^3.22.1",
-    "prompts": "^2.3.2",
-    "uppercamelcase": "^3.0.0"
   }
 }
