@@ -26,7 +26,7 @@
             style="--image-width: 8.75rem;"
           />
         </ZLink>
-        <div class="z-header__actions">
+        <div class="z-header__actions z-header__actions--right">
           <ZDropdown>
             <template #toggle="{toggle}">
               <ZButton
@@ -267,8 +267,11 @@ export default {
     display: grid;
     height: 5rem;
     align-items: center;
-    justify-content: space-between;
-    grid-auto-flow: column;
+
+    @media (min-width: 480px) {
+      justify-content: space-between;
+      grid-template-columns: repeat(3, minmax(auto, 1fr));
+    }
   }
 
   &__actions {
@@ -281,9 +284,14 @@ export default {
       --button-color: var(--color-primary);
 
       display: grid;
+      justify-content: start;
       padding: 0 1.25rem;
       gap: 1rem;
       grid-auto-flow: column;
+    }
+
+    &--right {
+      justify-content: end;
     }
   }
 
