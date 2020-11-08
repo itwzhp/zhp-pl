@@ -65,7 +65,8 @@
     </ZSection>
     <ZSection class="section-about-us">
       <ZBanner
-        thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/news-DMB.png"
+        :thumbnail="{yt: 'HiJLo2_qB44'}"
+        cover-type="video"
         title="Poznaj ZHP"
         content="Związek Harcerstwa Polskiego to największa organizacja harcerska w Polsce, która zrzesza ponad 100 000 osób! Koniecznie dowiedz się o niej więcej!"
         class="section-about-us__banner"
@@ -76,7 +77,7 @@
     </ZSection>
     <ZSection class="section-join-us">
       <ZBanner
-        thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/Agnieszka_Madetko-Kurczab_ZHP_21-scaled.jpg"
+        :thumbnail="{src: 'https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/Agnieszka_Madetko-Kurczab_ZHP_21-scaled.jpg'}"
         title="Chcesz zapisać swoje dziecko do harcerstwa?"
         content="Harcerstwo to nie tylko niesamowita przygoda, ale także możliwość zdobycia sprawności na całe życie. Chcesz, aby Twoje dziecko wkroczyło z nami na szlak? Tutaj znajdziesz najważniejsze informacje."
         :calls-to-action="[
@@ -277,6 +278,8 @@ export default {
       @media (min-width: 480px) {
         --banner-title-grid-column: span 5;
         --banner-description-grid-column: span 5;
+        --banner-thumbnail-z-index: 10;
+        --banner-min-height: auto;
       }
     }
   }
