@@ -220,11 +220,17 @@ export default {
   overflow: hidden;
 
   .section-hero {
+    @media (min-width: 480px) {
+      --section-content-grid-template-columns: repeat(24, minmax(auto, 1fr));
+      --section-content-max-width: 1235px;
+      --section-content-margin: 0 auto 0 0;
+    }
+
     &__picture {
       grid-column: span 12;
 
       @media (min-width: 480px) {
-        grid-column: span 6;
+        grid-column: span 13;
         grid-row: span 2;
       }
     }
@@ -235,7 +241,7 @@ export default {
       place-self: end stretch;
 
       @media (min-width: 480px) {
-        grid-column: span 4;
+        grid-column: span 8;
       }
     }
 
@@ -244,7 +250,7 @@ export default {
       place-self: start stretch;
 
       @media (min-width: 480px) {
-        grid-column: span 6;
+        grid-column: span 11;
       }
     }
   }

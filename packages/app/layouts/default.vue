@@ -259,7 +259,9 @@ export default {
   }
 
   @media (min-width: 480px) {
+    max-width: 1370px;
     justify-content: unset;
+    margin: 0 auto;
     grid-auto-flow: row;
   }
 
