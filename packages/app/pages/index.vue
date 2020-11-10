@@ -73,7 +73,14 @@
         :calls-to-action="[
           {name:'Odkryj harcerstwo', to: '/odkryj-harcerstwo'}
         ]"
-      />
+      >
+        <template #thumbnail="{thumbnail}">
+          <ZVideo
+            class="z-banner__thumbnail section-about-us__video"
+            v-bind="thumbnail"
+          />
+        </template>
+      </ZBanner>
     </ZSection>
     <ZSection class="section-join-us">
       <ZBanner
@@ -170,7 +177,8 @@ import {
   ZPost,
   ZSearch,
   ZSection,
-  ZClipPath
+  ZClipPath,
+  ZVideo
 } from '@nowa-zhp/ui'
 
 export default {
@@ -184,7 +192,8 @@ export default {
     ZPost,
     ZSearch,
     ZSection,
-    ZClipPath
+    ZClipPath,
+    ZVideo
   },
   async asyncData ({ $axios }) {
     // last 8 post for posts ZCarousel
@@ -278,6 +287,11 @@ export default {
   .section-about-us {
     --section-content-max-width: 1235px;
 
+    &__video {
+      height: calc(100% + 46px);
+      margin: -24px 0;
+    }
+
     &__banner {
       grid-column: span 12;
 
@@ -285,7 +299,6 @@ export default {
         --banner-title-grid-column: span 5;
         --banner-description-grid-column: span 5;
         --banner-thumbnail-z-index: 10;
-        --banner-min-height: auto;
       }
     }
   }
