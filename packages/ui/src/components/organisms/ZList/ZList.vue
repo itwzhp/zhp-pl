@@ -7,6 +7,11 @@
   </component>
 </template>
 <script>
+import Vue from 'vue';
+import ZListItem from './_internal/ZListItem.vue';
+
+Vue.component('ZListItem', ZListItem);
+
 export default {
   name: 'ZList',
   props: {

@@ -3,7 +3,7 @@
     <header class="z-header">
       <div class="z-header__bar">
         <div class="z-header__actions">
-          <ZDropdown>
+          <ZDropdown v-if="false">
             <template #toggle="{toggle}">
               <ZButton
                 class="z-button--text"
@@ -27,36 +27,46 @@
           />
         </ZLink>
         <div class="z-header__actions z-header__actions--right">
-          <ZDropdown>
+          <ZDropdown style="width: 150px;">
             <template #toggle="{toggle}">
               <ZButton
                 class="z-button--text"
                 @click="toggle"
               >
-                Wyszukaj
+                Chorągwie ZHP
               </ZButton>
             </template>
-          </ZDropdown>
-          <ZDropdown>
-            <template #toggle="{toggle}">
-              <ZButton
-                class="z-button--text"
-                @click="toggle"
-              >
-                Język
-              </ZButton>
+            <template>
+              <ZList>
+                <template v-for="(choragiew, key) in choragwie">
+                  <ZListItem :key="key">
+                    <ZLink :to="choragiew.href">
+                      {{ choragiew.name }}
+                    </ZLink>
+                  </ZListItem>
+                </template>
+              </ZList>
             </template>
           </ZDropdown>
-          <ZDropdown>
+          <ZDropdown style="width: 150px;">
             <template #toggle="{toggle}">
               <ZButton
                 class="z-button--text"
                 @click="toggle"
               >
-                <ZIcon
-                  name="wheelchair"
-                /> Dostosuj
+                Grupa ZHP
               </ZButton>
+            </template>
+            <template>
+              <ZList>
+                <template v-for="(jednostka, key) in grupaZHP">
+                  <ZListItem :key="key">
+                    <ZLink :to="jednostka.href">
+                      {{ jednostka.name }}
+                    </ZLink>
+                  </ZListItem>
+                </template>
+              </ZList>
             </template>
           </ZDropdown>
         </div>
@@ -109,7 +119,8 @@ import {
   ZIcon,
   ZButton,
   ZMenu,
-  ZMegaMenu
+  ZMegaMenu,
+  ZList
 } from '@nowa-zhp/ui'
 
 export default {
@@ -124,7 +135,8 @@ export default {
     ZIcon,
     ZButton,
     ZMenu,
-    ZMegaMenu
+    ZMegaMenu,
+    ZList
   },
   async middleware ({ store, $axios }) {
     if (!Object.keys(store.getters['menus/menu']).length) {
@@ -155,67 +167,33 @@ export default {
   data () {
     return {
       isOpen: false,
-      megaMenu: [
-        {
-          name: 'Strona Główna',
-          to: '/'
-        },
-        {
-          name: 'Aktualności',
-          to: '/aktualnosci'
-        },
-        {
-          name: 'Wydarzenia',
-          to: '/wydarzenia'
-        },
-        {
-          name: 'Dla rodzica',
-          to: '',
-          submenu: [
-            {
-              name: 'Członkowie organizacji',
-              menu: [
-                {
-                  name: 'Zuchy',
-                  to: '/zuchy'
-                },
-                {
-                  name: 'Harcerze',
-                  to: '/harcerze'
-                }
-              ]
-            },
-            {
-              name: 'Dla rodziców',
-              menu: [
-                {
-                  name: 'Poradnik rodzica',
-                  to: '/poradnik-rodzica'
-                },
-                {
-                  name: 'Bezpieczeństwo dzieci',
-                  to: '/bezpieczenstwo-dzieci'
-                },
-                {
-                  name: '1 procent',
-                  to: '/procen'
-                }
-              ]
-            }
-          ]
-        },
-        {
-          name: 'Intranet ZHP',
-          to: '/intranet'
-        },
-        {
-          name: 'Dla mediów',
-          to: '/dla-mediow'
-        },
-        {
-          name: 'Kontakt',
-          to: '/kontakt'
-        }
+      choragwie: [
+        { name: 'Białostocka', href: 'http://bialostocka.zhp.pl/' },
+        { name: 'Dolnośląska', href: 'http://dolnoslaska.zhp.pl/' },
+        { name: 'Gdańska', href: 'https://gdanska.zhp.pl/' },
+        { name: 'Kielecka', href: 'https://kielecka.zhp.pl/' },
+        { name: 'Krakowska', href: 'https://krakowska.zhp.pl/' },
+        { name: 'Kujawsko-Pomorska', href: 'https://kp.zhp.pl/' },
+        { name: 'Lubelska', href: 'https://lubelska.zhp.pl/' },
+        { name: 'Łódzka', href: 'https://lodzka.zhp.pl/' },
+        { name: 'Mazowiecka', href: 'https://mazowiecka.zhp.pl/' },
+        { name: 'Opolska', href: 'https://opolska.zhp.pl/' },
+        { name: 'Podkarpacka', href: 'http://podkarpacka.zhp.pl/' },
+        { name: 'Stołeczna', href: 'https://stoleczna.zhp.pl/' },
+        { name: 'Śląska', href: 'https://slaska.zhp.pl/' },
+        { name: 'Warmińsko-Mazurska', href: 'http://wm.zhp.pl/' },
+        { name: 'Wielkopolska', href: 'http://wielkopolska.zhp.pl/' },
+        { name: 'Zachodniopomorska', href: 'http://zachpom.zhp.pl/' },
+        { name: 'Ziemi Lubuskiej', href: 'http://lubuska.zhp.pl/' }
+      ],
+      grupaZHP: [
+        { name: 'Muzeum Harcerstwa', href: 'http://muzeumharcerstwa.pl/' },
+        { name: 'Schronistko Górskie Głodówksa', href: 'http://glodowka.com.pl/pl/home/' },
+        { name: 'OSW Perkoz/Mazury', href: 'https://perkoz.zhp.pl/' },
+        { name: 'Centrum Wychowania Morskiego', href: 'https://cwm.edu.pl/' },
+        { name: 'CSH 4 Żywioły', href: 'https://4zywioly.pl/' },
+        { name: 'SZAiL (Konopnickiej6)', href: 'https://szal.pl/' },
+        { name: 'Fundacja Światowe Jamboree', href: 'http://fsj.zhp.pl/' }
       ]
     }
   },
