@@ -89,39 +89,8 @@ export default {
     // TODO: move tags to vuex
     const tagsRes = await $axios('tags', { params: { per_page: 99 } })
     const tags = tagsRes.data.reduce(reduce, {})
-    // TODO: move age_groups to vuex
-    const ageGroupsRes = await $axios('age_groups', {})
-    const ageGroups = ageGroupsRes.data.reduce(reduce, {})
-    // TODO: move teams to vuex
-    const teamsRes = await $axios('teams', {})
-    const teams = teamsRes.data.reduce(reduce, {})
-    const categories = {
-      teams: {
-        id: 'teams',
-        label: 'Zespół',
-        options: {
-          0: {
-            id: 0,
-            label: 'Wybierz zespół',
-            value: ''
-          },
-          ...teams
-        }
-      },
-      age_groups: {
-        id: 'age_groups',
-        label: 'Metodyki',
-        options: {
-          0: {
-            id: 0,
-            label: 'Wybierz metodykę',
-            value: ''
-          },
-          ...ageGroups
-        }
-      }
-    }
-    const filtersKeys = ['tags', 'age_groups', 'teams', 'before', 'after']
+    const categories = {}
+    const filtersKeys = ['tags', 'before', 'after']
     const selectedFilters = Object.keys(query).reduce((accumulator, param) => {
       if (filtersKeys.includes(param)) {
         return {
