@@ -102,17 +102,19 @@
     </ZSection>
     <ZSection class="section-mission">
       <ZCard
+        to="/stopnie-i-sprawnosci"
         title="Stopnie i sprawności"
         thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/01.png"
         class="section-mission__card section-mission__card--first"
       />
       <ZCard
+        to="/czlonkowie-organizacji"
         title="Członkowie organizacji"
         thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/02.png"
         class="section-mission__card section-mission__card--bigger"
       />
       <ZCard
-        title="Status ZHP i Władze ZHP"
+        title="Statut ZHP i Władze ZHP"
         thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/03.png"
         class="section-mission__card"
       />
