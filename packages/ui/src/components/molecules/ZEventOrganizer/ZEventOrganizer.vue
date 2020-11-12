@@ -30,7 +30,6 @@
         {{ web }}
       </ZLink>
     </ZText>
-    <ZButton>Skontaktuj się</ZButton>
   </component>
 </template>
 
