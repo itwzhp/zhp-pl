@@ -96,7 +96,7 @@
           class="z-footer__copyright subtitle-2"
           tag="div"
         >
-          Copyright © 1997-{{ year }}<span class="br" /> Związek Harcerstwa Polskiego
+          <ZLink to="/copyright">Copyright</ZLink> © 1997-{{ year }}<span class="br" /> Związek Harcerstwa Polskiego
         </ZText>
         <ZMenu
           class="z-menu--horizontal z-footer__menu"
