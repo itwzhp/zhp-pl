@@ -235,7 +235,7 @@ export default {
       gap: .5rem;
       @media (min-width: 480px) {
         gap: 0;
-        grid-template-columns: repeat(2, minmax(auto, 1fr));
+        grid-template-columns: repeat(2, minmax(auto, 1fr)) 16%;
       }
     }
 
