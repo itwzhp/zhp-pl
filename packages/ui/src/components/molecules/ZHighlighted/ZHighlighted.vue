@@ -3,7 +3,7 @@
     :is="tag"
     class="z-highlighted"
   >
-    <ZHeading class="h5 uppercase">
+    <ZHeading class="t4 uppercase">
       {{ title }}
     </ZHeading>
     <ZList>
