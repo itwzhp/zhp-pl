@@ -167,6 +167,45 @@
         </template>
       </ZCarousel>
     </ZSection>
+    <ZSection>
+      <div style="grid-column: span 4" />
+      <div style="grid-column: span 3">
+        <ZFacebook />
+      </div>
+      <div style="grid-column: span 5">
+        <ZHeading class="t4 uppercase">
+          Partnerzy organizacji
+        </ZHeading>
+        <ZCarousel
+          :settings="{
+            autoplay: 3000,
+            perView: 3,
+            peek: {
+              before: 0,
+              after: 55
+            },
+            breakpoints: {
+              480: {
+                perView: 1,
+                peek: {
+                  before: 0,
+                  after: 20
+                }
+              }
+            }
+          }"
+        >
+          <template v-for="partner in partners">
+            <li
+              :key="partner.id"
+              class="glide__slide"
+            >
+              <ZImage :src="partner.rest_media" />
+            </li>
+          </template>
+        </ZCarousel>
+      </div>
+    </ZSection>
   </div>
 </template>
 
@@ -182,7 +221,9 @@ import {
   ZSearch,
   ZSection,
   ZClipPath,
-  ZVideo
+  ZVideo,
+  ZImage,
+  ZFacebook
 } from '@nowa-zhp/ui'
 
 export default {
@@ -197,7 +238,9 @@ export default {
     ZSearch,
     ZSection,
     ZClipPath,
-    ZVideo
+    ZVideo,
+    ZImage,
+    ZFacebook
   },
   async asyncData ({ $axios }) {
     // last 8 post for posts ZCarousel
@@ -209,8 +252,11 @@ export default {
     // last 8 events for events ZCarousel
     const eventsRes = await $axios.get('events', { params: { per_page: 8 } })
     const events = eventsRes.data
+    // partners
+    const partnersRes = await $axios.get('logos', { params: { per_page: 99, logos_categories: 25 } })
+    const partners = partnersRes.data
 
-    return { posts, highlightedPosts, events }
+    return { posts, highlightedPosts, events, partners }
   },
   computed: {
     ageGroups () {

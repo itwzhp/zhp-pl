@@ -1,5 +1,13 @@
 <template>
   <div>
+    <div id="fb-root" />
+    <script
+      async
+      defer
+      crossorigin="anonymous"
+      src="https://connect.facebook.net/pl_PL/sdk.js#xfbml=1&version=v9.0&appId=2797653613806518&autoLogAppEvents=1"
+      nonce="1i8tQDha"
+    />
     <header class="z-header">
       <div class="z-header__bar">
         <div class="z-header__actions">
