@@ -23,6 +23,7 @@
         v-if="posts.length > 0"
         :peeked="true"
         :settings="{
+          autoplay: 3000,
           breakpoints: {
             480: {
               perView: 1,
@@ -134,6 +135,7 @@
         v-if="events.length > 0"
         :peeked="true"
         :settings="{
+          autoplay: 3000,
           breakpoints: {
             480: {
               perView: 1,

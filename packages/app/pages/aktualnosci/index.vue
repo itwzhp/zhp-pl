@@ -27,7 +27,7 @@
           :author="post.rest_author"
           :date="post.date"
           :category="post.sticky
-            ? 'Wyróżnione'
+            ? 'Ważne'
             : page === 1 && index === 0
               ? 'Dzieje się'
               : post.category"

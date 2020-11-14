@@ -8,7 +8,7 @@
       v-model="search"
       v-bind="input"
       type="text"
-      placeholder="Czego dzisiaj chcsz się dowiedzieć o ZHP?"
+      placeholder="Czego dzisiaj chcesz dowiedzieć się o ZHP?"
       class="z-search__input"
     />
     <ZButton
