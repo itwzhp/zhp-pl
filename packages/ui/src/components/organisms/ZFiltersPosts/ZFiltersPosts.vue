@@ -13,7 +13,7 @@
             class="z-dropdown__toggle z-filters-posts__date-toggle"
             @click="toggle"
           >
-            Wybierz miesiąc
+            Wybierz datę
           </ZButton>
         </template>
         <template #default="{ toggle }">
@@ -50,7 +50,7 @@
       </ZDropdown>
       <ZDropdown
         class="z-dropdown--has-chevron z-filters-posts__categories"
-        @update:open="updateCategories(selected, categories)"
+        @update:open="updateCategories(selected.categories)"
       >
         <template #toggle="{ toggle }">
           <ZButton
@@ -62,53 +62,18 @@
         </template>
         <template #default="{ toggle }">
           <ZForm
-            @submit="submit(selectedCategories, toggle)"
-            @click:cancel="toggle"
-          >
-            <template v-for="category in categories">
-              <ZFormField
-                :key="category.id"
-                :label="category.label"
-              >
-                <template #input="{id}">
-                  <ZSelect
-                    :id="id"
-                    v-model="selectedCategories[category.id]"
-                    :options="category.options"
-                    class="z-form-field__input"
-                  />
-                </template>
-              </ZFormField>
-            </template>
-          </ZForm>
-        </template>
-      </ZDropdown>
-      <ZDropdown
-        class="z-dropdown--has-chevron z-filters-posts__tags"
-        @update:open="updateTags(selected.tags)"
-      >
-        <template #toggle="{ toggle }">
-          <ZButton
-            class="z-dropdown__toggle z-filters-posts__tags-toggle"
-            @click="toggle"
-          >
-            Wybierz tagi
-          </ZButton>
-        </template>
-        <template #default="{ toggle }">
-          <ZForm
-            @submit.prevent="submit({tags: selectedTags.join(',')}, toggle)"
+            @submit.prevent="submit({categories: selectedCategories.join(',')}, toggle)"
             @click:cancel="toggle"
           >
             <template>
-              <ul class="z-filters-posts__tags-list">
-                <template v-for="option in tags">
+              <ul class="z-filters-posts__categories-list">
+                <template v-for="option in categories">
                   <li
                     :key="option.id"
-                    class="z-filters-posts__tag"
+                    class="z-filters-posts__category"
                   >
                     <ZBubble
-                      v-model="selectedTags"
+                      v-model="selectedCategories"
                       :value="`${option.id}`"
                       type="filter"
                       class="z-filters-post__bubble"
@@ -191,10 +156,6 @@ export default {
       type: String,
       default: 'div',
     },
-    tags: {
-      type: Object,
-      default: () => ({}),
-    },
     categories: {
       type: Object,
       default: () => ({}),
@@ -206,8 +167,7 @@ export default {
   },
   data() {
     return {
-      selectedTags: [],
-      selectedCategories: {},
+      selectedCategories: [],
       selectedDate: [],
     };
   },
@@ -215,12 +175,7 @@ export default {
     // TODO: keep all taxonomies as object with taxonomy name
     taxonomies() {
       return {
-        ...this.tags,
-        ...Object.keys(this.categories).reduce(
-          (accumulator, category) => ({
-            ...accumulator, ...this.categories[category].options,
-          }), {},
-        ),
+        ...this.categories,
       };
     },
     mappedDate() {
@@ -243,15 +198,7 @@ export default {
     updateDate(selected) {
       this.selectedDate = [selected.after, selected.before].filter((date) => (date));
     },
-    updateCategories(selected, categories) {
-      this.selectedCategories = Object.keys(categories).reduce((accumulator, category) => {
-        if (selected[category]) {
-          return { ...accumulator, [category]: selected[category] };
-        }
-        return accumulator;
-      }, {});
-    },
-    updateTags(selected) {
+    updateCategories(selected) {
       this.selectedTags = selected || [];
     },
     unselectDate() {
@@ -260,8 +207,8 @@ export default {
     unselectTaxonomies(option) {
       let query;
       switch (option.taxonomy) {
-        case 'tags':
-          query = { [option.taxonomy]: this.selected.tags.filter((tag) => (tag !== option.value)).join(',') };
+        case 'categories':
+          query = { [option.taxonomy]: this.selected.categories.filter((category) => (category !== option.value)).join(',') };
           break;
         default:
           query = {
@@ -283,20 +230,25 @@ export default {
     --button-text-transform: none;
 
     &__selectors {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: flex-start;
+      display: grid;
+      grid-template-columns: minmax(auto, 1fr);
+      gap: .5rem;
+      @media (min-width: 480px) {
+        gap: 0;
+        grid-template-columns: repeat(2, minmax(auto, 1fr));
+      }
     }
 
     &__date {
       @media (min-width: 480px) {
-        --dropdown-content-width: calc(300% - 0.125rem);
+        --dropdown-content-width: 200%;
+        --button-min-width: 100%;
       }
     }
 
     &__date-toggle {
+      --button-height: 40px;
       @media (min-width: 480px) {
-        --button-height: 40px;
         --button-border-radius: 0.625rem 0 0 0.625rem;
       }
     }
@@ -304,7 +256,10 @@ export default {
     &__date-picker {
       display: grid;
       align-items: end;
-      grid-template-columns: auto 180px;
+      grid-template-columns: minmax(auto, 1fr);
+      @media (min-width: 480px) {
+        grid-template-columns: auto 180px;
+      }
 
       .flatpickr-calendar {
         grid-column: 1;
@@ -319,8 +274,11 @@ export default {
       border-radius: 10px;
       box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.05);
       font-size: var(--font-size-body-2);
-      grid-column: 2;
+      grid-column: 1;
       grid-template-rows: auto 3.25rem;
+      @media (min-width: 480px) {
+        grid-column: 2;
+      }
     }
 
     &__date-label {
@@ -337,36 +295,18 @@ export default {
 
     &__categories {
       @media (min-width: 480px) {
-        --dropdown-content-width: calc(200% - 0.75rem);
-        --dropdown-content-padding: 32px 32px 16px 32px;
+        --button-min-width: 100%;
 
         margin: 0 0 0 -0.625rem;
       }
     }
 
     &__categories-toggle {
-      --button-background: #78a22f;
-
-      @media (min-width: 480px) {
-        --button-height: 40px;
-        --button-border-radius: 0.625rem 0 0 0.625rem;
-      }
-    }
-
-    &__tags {
-      @media (min-width: 480px) {
-        --button-height: 40px;
-        --button-min-width: 12rem;
-
-        margin: 0 0 0 -0.625rem;
-      }
-    }
-
-    &__tags-toggle {
       --button-background: #4a7b26;
+      --button-height: 40px;
     }
 
-    &__tags-list {
+    &__categories-list {
       display: flex;
       flex-wrap: wrap;
       padding: 0;
@@ -374,7 +314,7 @@ export default {
       list-style-type: none;
     }
 
-    &__tag {
+    &__category {
       margin: 3px;
     }
 

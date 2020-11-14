@@ -129,7 +129,7 @@
     <ZSection
       class="section-events"
       title="Przedsięwzięcia i wydarzenia"
-      subtitle=" Szukasz rajdu dla swojej drużyny? Albo konkursu dla swojej gromady? A może chcesz wziąć udział w kursie? Sprawdź, co odbywa się w ZHP w najbliższym czasie."
+      subtitle=" Szukasz rajdu dla swojej drużyny? Albo konkursu dla swojej gromady? A&nbsp;może chcesz wziąć udział w&nbsp;kursie? Sprawdź, co odbywa się w&nbsp;ZHP w&nbsp;najbliższym czasie."
     >
       <ZCarousel
         v-if="events.length > 0"

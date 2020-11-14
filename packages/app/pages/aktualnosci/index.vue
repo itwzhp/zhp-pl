@@ -10,7 +10,6 @@
       </zHeading>
       <ZFiltersPosts
         class="filters"
-        :tags="tags"
         :categories="categories"
         :selected="{...selectedFilters}"
         @submit="updateQuery"
@@ -78,32 +77,25 @@ export default {
       id: option.id,
       label: option.name,
       value: `${option.id}`,
-      taxonomy: option.taxonomy === 'post_tag'
-        ? 'tags' // FIXME: hack for differences from rest request and taxonomy name
-        : `${option.taxonomy}s` // FIXME: hack for differences from taxonomy name and rest_base
+      taxonomy: option.taxonomy === 'category' ? 'categories' : option.taxonomy
     })
     // posts
     const postsRes = await $axios.get('posts', { params: { per_page: 16, page: 1, ...query } })
     const posts = postsRes.data
     const totalPages = postsRes.headers['x-wp-totalpages']
-    // TODO: move tags to vuex
-    const tagsRes = await $axios('tags', { params: { per_page: 99 } })
-    const tags = tagsRes.data.reduce(reduce, {})
-    const categories = {}
-    const filtersKeys = ['tags', 'before', 'after']
-    const selectedFilters = Object.keys(query).reduce((accumulator, param) => {
-      if (filtersKeys.includes(param)) {
-        return {
-          ...accumulator,
-          [param]: param === 'tags'
-            ? query[param].split(',')
-            : query[param]
-        }
-      } else {
-        return accumulator
+
+    const categoriesRes = await $axios('categories', { params: { per_page: 99 } })
+    const categories = categoriesRes.data.reduce(reduce, {})
+
+    const selectedFilters = Object.keys(query).reduce((object, param) => {
+      return {
+        ...object,
+        [param]: param === 'categories'
+          ? query[param].split(',')
+          : query[param]
       }
     }, {})
-    return { posts, page: query.page || '1', totalPages, tags, categories, selectedFilters }
+    return { posts, page: query.page || '1', totalPages, categories, selectedFilters }
   },
   methods: {
     updateQuery (query) {
