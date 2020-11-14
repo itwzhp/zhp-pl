@@ -82,7 +82,7 @@ export default {
 
     &__toggle {
       --button-color: #fff;
-      --button-border: 0;
+      --button-border-width: 0;
 
       position: relative;
       z-index: 1;

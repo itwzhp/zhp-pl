@@ -72,5 +72,9 @@ export default {
 
     margin: 0 8px 0 0;
   }
+
+  &__submit {
+    --button-border-width: 0;
+  }
 }
 </style>

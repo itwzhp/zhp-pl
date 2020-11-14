@@ -31,7 +31,8 @@ export default {
     align-items: center;
     justify-content: center;
     padding: var(--button-padding, 0.5rem 2rem);
-    border: var(--button-border, 1px solid #7ba22e);
+    border: var(--button-border, solid #7ba22e);
+    border-width: var(--button-border-width, 1px);
     background: var(--button-background, #a6ce39);
     border-radius: var(--button-border-radius, 0.625rem);
     box-shadow: var(--button-box-shadow);
