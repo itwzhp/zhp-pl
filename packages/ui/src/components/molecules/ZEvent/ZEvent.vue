@@ -25,28 +25,18 @@
           <ZLink
             :to="to"
             class="z-event__title"
-          >
-            {{ title }}
-          </ZLink>
+            v-html="title"
+          />
         </slot>
         <slot name="excerpt">
           <ZText
             v-if="excerpt"
             class="z-event__excerpt"
-          >
-            {{ excerpt }}
-          </ZText>
+            v-html="excerpt"
+          />
         </slot>
         <slot name="meta">
           <div class="z-event__meta">
-            <slot name="location">
-              <ZLink
-                :to="location.to"
-                class="z-event__location caption"
-              >
-                {{ location.name }}
-              </ZLink>
-            </slot>
             <slot name="audience">
               <template v-for="audience in audiences">
                 <ZLink
@@ -69,6 +59,16 @@
       >
         <ZBubble class="z-bubble--is-badge">
           {{ type.name }}
+        </ZBubble>
+      </ZLink>
+    </slot>
+    <slot name="location">
+      <ZLink
+        :to="location.to"
+        class="z-event__location caption"
+      >
+        <ZBubble class="z-bubble--is-badge">
+          {{ location.name }}
         </ZBubble>
       </ZLink>
     </slot>
@@ -164,6 +164,8 @@ export default {
     grid-template-rows: 128px 1fr;
 
     &__thumbnail {
+      grid-column: 1;
+      grid-row: 1;
       position: relative;
       overflow: hidden;
 
@@ -206,8 +208,6 @@ export default {
       grid-template-columns: repeat(2, auto);
     }
 
-    &__location {}
-
     &__audience {}
 
     &__date {
@@ -223,15 +223,17 @@ export default {
       transform: translate(8px, -65%);
     }
 
+    &__location,
     &__type {
-      --bubble-height: 24px;
-      --bubble-background: var(--background);
-      --link-text-decoration: none;
-
-      position: absolute;
-      top: 0;
-      right: 0;
-      transform: translate(-8px, 8px);
+      grid-column: 1;
+      grid-row: 1;
+      margin: 8px;
+    }
+    &__location {
+      place-self: end;
+    }
+    &__type {
+      place-self: start end;
     }
 
     &--primary {
@@ -267,6 +269,11 @@ export default {
         @media (min-width: 480px) {
           font-size: 2.125rem;
         }
+      }
+
+      #{$this}__location,
+      #{$this}__type {
+        grid-column: 12;
       }
     }
   }
