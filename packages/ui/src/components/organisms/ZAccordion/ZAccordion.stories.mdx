@@ -1,0 +1,29 @@
+import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
+import { withKnobs, text, object } from '@storybook/addon-knobs';
+import { withA11y } from '@storybook/addon-a11y';
+import ZAccordion from './ZAccordion.vue';
+
+<Meta title="Organisms/Accordion" component={ZAccordion} />
+
+# Accordion
+
+<Preview>
+  <Story name="Common">
+    {{
+      components: { ZAccordion },
+      props: {
+        common: {
+          default: text('common', '')
+        }
+      },
+      template: `<ZAccordion :multiple="true">
+        <ZAccordionItem title="2019">content A</ZAccordionItem>
+        <ZAccordionItem title="2020">content B</ZAccordionItem>
+      </ZAccordion>`,
+    }}
+  </Story>
+</Preview>
+
+# Props
+
+<Props of={ZAccordion} />

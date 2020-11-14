@@ -29,7 +29,7 @@ export default {
     min-width: var(--button-min-width);
     height: var(--button-height, 2rem);
     align-items: center;
-    justify-content: center;
+    justify-content: var(--button-justify-content, center);
     padding: var(--button-padding, 0.5rem 2rem);
     border: var(--button-border, solid #7ba22e);
     border-width: var(--button-border-width, 1px);
