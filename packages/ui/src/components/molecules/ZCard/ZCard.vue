@@ -79,6 +79,7 @@ export default {
   border-radius: 10px;
   box-shadow: 0 2px 4px 0 rgba(157, 157, 157, 0.5);
   grid-template-rows: 1fr 128px;
+  background: #fff;
 
   &__thumbnail {
     position: relative;

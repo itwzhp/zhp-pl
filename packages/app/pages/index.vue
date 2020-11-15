@@ -1,21 +1,23 @@
 <template>
   <div id="home">
-    <ZSection class="section-hero">
-      <div class="section-hero__picture">
-        <ZClipPath />
-      </div>
-      <ZHeading
-        :level="1"
-        class="section-hero__title t3"
-      >
-        Przygoda. Przyjaźń. Wychowanie.
-      </ZHeading>
-      <ZSearch
-        class="section-hero__search"
-        :input="{placeholder: 'Czego dzisiaj chcsz się dowiedzieć o ZHP?'}"
-        @submit="search"
-      />
-    </ZSection>
+    <div class="hero-wrapper">
+      <ZSection class="section-hero">
+        <div class="section-hero__picture">
+          <ZClipPath />
+        </div>
+        <ZHeading
+          :level="1"
+          class="section-hero__title t3"
+        >
+          Przygoda. Przyjaźń. Wychowanie.
+        </ZHeading>
+        <ZSearch
+          class="section-hero__search"
+          :input="{placeholder: 'Czego dzisiaj chcsz się dowiedzieć o ZHP?'}"
+          @submit="search"
+        />
+      </ZSection>
+    </div>
     <ZSection
       title="Polecamy"
     >
@@ -277,6 +279,11 @@ export default {
 <style lang="scss">
 #home {
   overflow: hidden;
+
+  .hero-wrapper {
+    max-width: 1360px;
+    margin: 0 auto;
+  }
 
   .section-hero {
     @media (min-width: 480px) {
