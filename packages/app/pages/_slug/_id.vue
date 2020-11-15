@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ZWordPress v-html="page.content.rendered" />
+    <ZWordPress :html="page.content.rendered" />
   </div>
 </template>
 
