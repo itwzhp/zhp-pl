@@ -1,6 +1,5 @@
 <template>
   <div>
-    <div id="fb-root" />
     <header class="z-header">
       <div class="z-header__bar">
         <div class="z-header__actions">

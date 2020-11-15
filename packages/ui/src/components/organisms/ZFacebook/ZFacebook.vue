@@ -1,5 +1,6 @@
 <template>
   <div class="z-facebook">
+    <div id="fb-root" />
     <div
       class="fb-page"
       data-href="https://www.facebook.com/ZHPpl"
