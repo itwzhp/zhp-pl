@@ -15,7 +15,10 @@
         {{ title }}
       </ZButton>
     </slot>
-    <div v-show="isOpen" class="z-accordion-item__content">
+    <div
+      v-show="isOpen"
+      class="z-accordion-item__content"
+    >
       <slot />
     </div>
   </component>
@@ -55,7 +58,11 @@ export default {
     open() {
       const { opened, open } = this.accordion;
       if (typeof opened === 'string') {
-        open(this.title);
+        open(
+          opened === this.title
+            ? ''
+            : this.title
+        );
       } else if (opened.includes(this.title)) {
         open(opened.filter((element) => (element !== this.title)));
       } else {
