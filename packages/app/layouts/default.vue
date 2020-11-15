@@ -27,7 +27,28 @@
           />
         </ZLink>
         <div class="z-header__actions z-header__actions--right">
-          <ZDropdown style="width: 150px;">
+          <ZDropdown>
+            <template #toggle="{toggle}">
+              <ZButton
+                class="z-button--text"
+                @click="toggle"
+              >
+                PL
+              </ZButton>
+            </template>
+            <template>
+              <ZList>
+                <template v-for="(language, key) in languages">
+                  <ZListItem :key="key">
+                    <ZLink :to="language.href">
+                      {{ language.name }}
+                    </ZLink>
+                  </ZListItem>
+                </template>
+              </ZList>
+            </template>
+          </ZDropdown>
+          <ZDropdown>
             <template #toggle="{toggle}">
               <ZButton
                 class="z-button--text"
@@ -48,7 +69,7 @@
               </ZList>
             </template>
           </ZDropdown>
-          <ZDropdown style="width: 150px;">
+          <ZDropdown>
             <template #toggle="{toggle}">
               <ZButton
                 class="z-button--text"
@@ -169,6 +190,12 @@ export default {
   data () {
     return {
       isOpen: false,
+      languages: [
+        { name: 'EN', href: '/en' },
+        { name: 'FR', href: '/fr' },
+        { name: 'ES', href: '/es' },
+        { name: 'RU', href: '/ru' }
+      ],
       choragwie: [
         { name: 'Białostocka', href: 'http://bialostocka.zhp.pl/' },
         { name: 'Dolnośląska', href: 'http://dolnoslaska.zhp.pl/' },

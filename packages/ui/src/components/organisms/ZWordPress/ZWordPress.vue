@@ -19,7 +19,7 @@ export default {
   computed: {
     component() {
       return {
-        template: this.html,
+        template: `<div>${this.html}</div>`,
       };
     },
   },
