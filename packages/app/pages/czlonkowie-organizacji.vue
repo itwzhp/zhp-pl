@@ -113,36 +113,6 @@ export default {
 #faq {
   overflow: hidden;
 
-  .section-hero {
-    &__picture {
-      grid-column: span 12;
-
-      @media (min-width: 480px) {
-        grid-column: span 5;
-        grid-row: span 2;
-      }
-    }
-
-    &__title {
-      margin: 0 0 1.5rem 0;
-      grid-column: span 12;
-      place-self: end stretch;
-
-      @media (min-width: 480px) {
-        grid-column: span 7;
-      }
-    }
-
-    &__search {
-      grid-column: span 12;
-      place-self: start stretch;
-
-      @media (min-width: 480px) {
-        grid-column: span 6;
-      }
-    }
-  }
-
   .section-questions {
     &__question {
       grid-column: span 4;
@@ -167,12 +137,6 @@ export default {
       @media (min-width: 480px) {
         grid-column: span 3;
       }
-    }
-  }
-
-  .section-posts {
-    &__carousel {
-      grid-column: span 12;
     }
   }
 }
