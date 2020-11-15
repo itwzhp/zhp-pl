@@ -36,7 +36,7 @@ export default {
           id: '233',
           thumbnail: 'https://prod.przemyslawspaczek.pl/wp-content/uploads/2020/11/harcerstwo-ksztalci-scaled.jpg',
           title: 'Harcerstwo kształci',
-          to: '/harcerstw-kształci'
+          to: '/harcerstwo-kształci'
         },
         {
           id: '549',
