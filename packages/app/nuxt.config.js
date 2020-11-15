@@ -20,6 +20,9 @@ export default {
     link: [
       { rel: 'stylesheet', href: 'https://use.typekit.net/lqw5sjc.css' },
       { rel: 'icon', type: 'image/png', href: '/favicon.png' }
+    ],
+    script: [
+      { async: true, defer: true, crossorigin: 'anonymous', src: 'https://connect.facebook.net/pl_PL/sdk.js#xfbml=1&version=v9.0&appId=2797653613806518&autoLogAppEvents=1', nonce: '1i8tQDha' }
     ]
   },
   /*
