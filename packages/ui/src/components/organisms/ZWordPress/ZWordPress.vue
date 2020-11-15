@@ -1,12 +1,9 @@
-<template>
-  <component
-    :is="tag"
-    class="z-word-press"
-    v-html="html"
-  />
-</template>
-
 <script>
+import Vue from 'vue';
+import ZAccordion from '../ZAccordion/ZAccordion.vue';
+
+Vue.component('ZAccordion', ZAccordion);
+
 export default {
   name: 'ZWordPress',
   props: {
@@ -18,6 +15,19 @@ export default {
       type: String,
       default: '',
     },
+  },
+  computed: {
+    component() {
+      return {
+        template: this.html,
+      };
+    },
+  },
+  render(createElement) {
+    return createElement(
+      'div',
+      [createElement(this.component)],
+    );
   },
 };
 </script>

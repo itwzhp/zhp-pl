@@ -70,6 +70,12 @@ export default {
   ** See https://nuxtjs.org/api/configuration-build/
   */
   build: {
+    extend (config, context) {
+      config.resolve.alias = {
+        ...config.resolve.alias,
+        'vue$': 'vue/dist/vue.esm.js'
+      }
+    },
     transpile: [/^@nowa-zhp/]
   },
   pwa: {
