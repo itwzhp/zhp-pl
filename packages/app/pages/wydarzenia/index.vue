@@ -100,11 +100,11 @@ export default {
       },
       age_groups: {
         id: 'age_groups',
-        label: 'Metodyki',
+        label: 'Dla kogo',
         options: {
           0: {
             id: 0,
-            label: 'Wybierz metodykę',
+            label: 'Wybierz dla kogo',
             value: ''
           },
           ...ageGroups
@@ -112,11 +112,11 @@ export default {
       },
       districts: {
         id: 'districts',
-        label: 'Województwa',
+        label: 'Gdzie',
         options: {
           0: {
             id: 0,
-            label: 'Wybierz województwo',
+            label: 'Wybierz gdzie',
             value: ''
           },
           ...districts

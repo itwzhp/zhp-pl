@@ -71,7 +71,7 @@
             </ZFormField>
           </template>
           <!-- TODO: include it to API request; ACF integration -->
-          <ZFormField label="Data wydarzenia">
+          <ZFormField label="Kiedy">
             <template #input>
               <ZDatePicker
                 v-model="selectedDate"
@@ -85,25 +85,6 @@
               />
             </template>
           </ZFormField>
-        </div>
-        <!-- tags -->
-        <div class="z-filters-events__section z-filters-events__section--no-border">
-          <div class="z-filters-events__section-header">
-            <ZHeading
-              :level="4"
-              class="uppercase z-filters-events__section-title"
-            >
-              Tagi
-            </ZHeading>
-            <ZLink
-              to="#"
-              class="z-filters-events__section-more"
-            >
-              Zobacz wszystkie
-            </ZLink>
-          </div>
-          <!-- TODO: should looks like WordPress tags selector -->
-          <ZFormField />
         </div>
       </template>
     </ZForm>
