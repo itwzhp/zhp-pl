@@ -1,40 +1,26 @@
 export const state = () => ({})
 export const mutations = {
   update (state, menu) {
+    const itemsAsObject = menu.items.reduce((object, item) => ({ ...object, [item.ID]: item }), {})
     const items = menu.items
-      .sort((a, b) => (a.menu_order < b.menu_order ? -1 : 1))
-    const flat = items.reduce((accumulator, item) => ({ ...accumulator, [item.ID]: item }), {})
-    const reducer = (accumulator, item) => {
-      if (item.menu_item_parent !== '0') {
-        if (flat[item.menu_item_parent].menu_item_parent === '0') {
-          accumulator[item.menu_item_parent]
-            .submenu[item.ID] = {
-              name: item.title,
-              menu: {}
-            }
-        } else {
-          accumulator[flat[item.menu_item_parent].menu_item_parent]
-            .submenu[item.menu_item_parent]
-            .menu[item.ID] = {
-              id: item.ID,
-              name: item.title,
-              to: item.url
-            }
-        }
-        return accumulator
+    const links = items.reduce((array, item) => {
+      const parent = item.menu_item_parent
+      if (parent === '0') {
+        itemsAsObject[item.ID].index = array.length
+        return [...array, { to: item.url, name: item.title }]
+      } else if (itemsAsObject[parent].index) {
+        const copyOfItem = { to: item.url, name: item.title }
+        itemsAsObject[item.ID].root_index = itemsAsObject[parent].index
+        array[itemsAsObject[parent].index].submenu = copyOfItem
+      } else if (itemsAsObject[parent].root_index) {
+        const copyOfItem = { to: item.url, name: item.title }
+        array[itemsAsObject[parent].root_index].submenu.mega_menu = array[itemsAsObject[parent].root_index].submenu.mega_menu
+          ? [...array[itemsAsObject[parent].root_index].submenu.mega_menu, copyOfItem]
+          : [copyOfItem]
       }
-      return {
-        ...accumulator,
-        [item.ID]: {
-          id: item.ID,
-          name: item.title,
-          to: item.url,
-          submenu: {}
-        }
-      }
-    }
-
-    state[menu.location] = items.reduce(reducer, {})
+      return array
+    }, [])
+    state[menu.location] = links
   }
 }
 export const getters = {
