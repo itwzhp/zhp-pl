@@ -34,25 +34,25 @@ export default {
       questions: [
         {
           id: '233',
-          thumbnail: 'https://prod.przemyslawspaczek.pl/wp-content/uploads/2020/11/harcerstwo-ksztalci-scaled.jpg',
+          thumbnail: `${this.$config.mediaBaseURL}/wp-content/uploads/2020/11/harcerstwo-ksztalci-scaled.jpg`,
           title: 'Harcerstwo kształci',
           to: '/harcerstwo-kształci'
         },
         {
           id: '549',
-          thumbnail: 'https://prod.przemyslawspaczek.pl/wp-content/uploads/2020/11/nic-o-nas-bez-nas-scaled.jpg',
+          thumbnail: `${this.$config.mediaBaseURL}/wp-content/uploads/2020/11/nic-o-nas-bez-nas-scaled.jpg`,
           title: 'Nic o nas bez nas',
           to: '/nic-o-nas-bez-nas'
         },
         {
           id: '545',
-          thumbnail: 'https://prod.przemyslawspaczek.pl/wp-content/uploads/2020/11/rohis-w-ZHP-scaled.jpg',
+          thumbnail: `${this.$config.mediaBaseURL}/wp-content/uploads/2020/11/rohis-w-ZHP-scaled.jpg`,
           title: 'ROHiS w ZHP',
           to: '/rohis-w-zhp'
         },
         {
           id: '547',
-          thumbnail: 'https://prod.przemyslawspaczek.pl/wp-content/uploads/2020/11/harp-scaled.jpg',
+          thumbnail: `${this.$config.mediaBaseURL}/wp-content/uploads/2020/11/harp-scaled.jpg`,
           title: 'Harcerska Akademia Rozwoju Pedagogicznego (HARP)',
           to: '/harp'
         }

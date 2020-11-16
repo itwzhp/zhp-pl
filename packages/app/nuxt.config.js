@@ -63,7 +63,7 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-    baseURL: 'https://prod.przemyslawspaczek.pl/wp-json/wp/v2'
+    baseURL: process.env.REST_API
   },
   /*
   ** Build configuration
@@ -88,5 +88,8 @@ export default {
       lang: 'pl',
       useWebmanifestExtension: false
     }
-  }
+  },
+  publicRuntimeConfig: {
+    mediaBaseURL: process.env.MEDIA_BASE_URL
+  },
 }

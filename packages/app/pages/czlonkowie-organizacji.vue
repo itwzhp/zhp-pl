@@ -58,48 +58,48 @@ export default {
       questions: [
         {
           id: '233',
-          thumbnail: 'http://prod.przemyslawspaczek.pl/wp-content/uploads/2020/10/ZUCHY-ZHP_NatGeoKids_Konrad_Kmieć-4075-scaled.jpg',
+          thumbnail: `${this.$config.mediaBaseURL}/wp-content/uploads/2020/10/ZUCHY-ZHP_NatGeoKids_Konrad_Kmieć-4075-scaled.jpg`,
           title: 'Zuchy',
           description: 'Dzieci w wieku 6-10 lat',
           to: '/zuchy'
         },
         {
           id: '235',
-          thumbnail: 'http://prod.przemyslawspaczek.pl/wp-content/uploads/2020/10/HARCERZE-ZHP_HARCERSKIE_LATO_2019_KAROLINA_PIOTRIOWSKA_-232-scaled.jpg',
+          thumbnail: `${this.$config.mediaBaseURL}/wp-content/uploads/2020/10/HARCERZE-ZHP_HARCERSKIE_LATO_2019_KAROLINA_PIOTRIOWSKA_-232-scaled.jpg`,
           title: 'Harcerze',
           description: 'Dzieci w wieku 10-13 lat',
           to: '/harcerze'
         },
         {
           id: '239',
-          thumbnail: 'http://prod.przemyslawspaczek.pl/wp-content/uploads/2020/10/HS-ZHP_harcerskielato_lipiec_2019_Konrad_Kmieć-3370-scaled.jpg',
+          thumbnail: `${this.$config.mediaBaseURL}/wp-content/uploads/2020/10/HS-ZHP_harcerskielato_lipiec_2019_Konrad_Kmieć-3370-scaled.jpg`,
           title: 'Harcerze starsi',
           description: 'Młodzież w wieku 13-16 lat',
           to: '/harcerze-starsi'
         },
         {
           id: '241',
-          thumbnail: 'http://prod.przemyslawspaczek.pl/wp-content/uploads/2020/10/WĘDRO-Karolina_Pośnik_ZHP_20180807__DSC5370-scaled.jpg',
+          thumbnail: `${this.$config.mediaBaseURL}/wp-content/uploads/2020/10/WĘDRO-Karolina_Pośnik_ZHP_20180807__DSC5370-scaled.jpg`,
           title: 'Wędrownicy',
           description: 'Młodzież w wieku 16-21 lat',
           to: '/wedrownicy'
         },
         {
           id: '243',
-          thumbnail: 'http://prod.przemyslawspaczek.pl/wp-content/uploads/2020/10/AKADEMICY-Zlot_Kadry_2019_Piotr_Rodzoch_DSC5813-scaled.jpg',
+          thumbnail: `${this.$config.mediaBaseURL}/wp-content/uploads/2020/10/AKADEMICY-Zlot_Kadry_2019_Piotr_Rodzoch_DSC5813-scaled.jpg`,
           title: 'Akademicy',
           to: '/akademicy'
         },
         {
           id: '245',
-          thumbnail: 'http://prod.przemyslawspaczek.pl/wp-content/uploads/2020/10/NS-scaled.jpg',
+          thumbnail: `${this.$config.mediaBaseURL}/wp-content/uploads/2020/10/NS-scaled.jpg`,
           title: 'Nieprzetarty Szlak',
           description: 'Dzieci i młodzież z niepełnosprawnościami',
           to: '/nieprzetarty-szlak'
         },
         {
           id: '247',
-          thumbnail: 'http://prod.przemyslawspaczek.pl/wp-content/uploads/2020/10/Agnieszka_Madetko-Kurczab_34-1.jpg',
+          thumbnail: `${this.$config.mediaBaseURL}/wp-content/uploads/2020/10/Agnieszka_Madetko-Kurczab_34-1.jpg`,
           title: 'Dorośli w harcerstwie',
           to: '/dorosli-w-harcerstwie'
         }
