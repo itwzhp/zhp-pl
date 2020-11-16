@@ -170,11 +170,11 @@
       </ZCarousel>
     </ZSection>
     <ZSection>
-      <div style="grid-column: span 4" />
-      <div style="grid-column: span 3">
+      <div style="grid-column: span 4;" />
+      <div style="grid-column: span 3;">
         <ZFacebook />
       </div>
-      <div style="grid-column: span 5">
+      <div style="grid-column: span 5;">
         <ZHeading class="t4 uppercase">
           Partnerzy organizacji
         </ZHeading>
@@ -343,11 +343,6 @@ export default {
 
   .section-about-us {
     --section-content-max-width: 1235px;
-
-    &__video {
-      height: calc(100% + 46px);
-      margin: -24px 0;
-    }
 
     &__banner {
       grid-column: span 12;

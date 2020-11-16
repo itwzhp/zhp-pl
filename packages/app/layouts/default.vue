@@ -258,6 +258,7 @@ export default {
   background-repeat: repeat-y;
   background-size: 100% auto;
 }
+
 .z-header {
   display: grid;
   align-items: center;
@@ -272,10 +273,10 @@ export default {
   }
 
   @media (min-width: 480px) {
+    max-width: 1360px;
     justify-content: unset;
     margin: 0 auto;
     grid-auto-flow: row;
-    max-width: 1360px;
   }
 
   &__bar {

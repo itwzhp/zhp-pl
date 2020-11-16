@@ -73,7 +73,7 @@ export default {
     extend (config, context) {
       config.resolve.alias = {
         ...config.resolve.alias,
-        'vue$': 'vue/dist/vue.esm.js'
+        vue$: 'vue/dist/vue.esm.js'
       }
     },
     transpile: [/^@nowa-zhp/]
