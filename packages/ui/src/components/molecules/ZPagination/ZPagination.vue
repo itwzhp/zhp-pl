@@ -54,7 +54,6 @@ export default {
   },
   methods: {
     change(direction) {
-      console.log(direction);
       const newPage = parseInt(this.page, 10) + direction;
       this.$emit('change', `${newPage}`);
     },
