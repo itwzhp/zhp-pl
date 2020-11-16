@@ -17,7 +17,8 @@
     "create-index": "cd packages/ui && yarn create-index",
     "storybook:serve": "cd packages/ui && yarn storybook:serve",
     "nuxt:dev": "cd packages/app && yarn dev",
-    "nuxt:build": "cd packages/app && yarn build"
+    "nuxt:build": "cd packages/app && yarn build",
+    "nuxt:start": "cd packages/app && yarn start"
   },
   "repository": {
     "type": "git",
