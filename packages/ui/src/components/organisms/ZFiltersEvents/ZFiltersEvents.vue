@@ -51,41 +51,41 @@
         </template>
       </ZList>
     </div>
-    <ZForm @submit.prevent="submit">
+    <ZForm
+      @submit.prevent="submit"
+      @click:cancel="clear"
+    >
       <template>
-        <div class="z-filters-events__section">
-          <!-- categories -->
-          <template v-for="category in categories">
-            <ZFormField
-              :key="category.id"
-              :label="category.label"
-            >
-              <template #input="{id}">
-                <ZSelect
-                  :id="id"
-                  v-model="selectedCategories[category.id]"
-                  :options="category.options"
-                  class="z-form-field__input"
-                />
-              </template>
-            </ZFormField>
-          </template>
-          <!-- TODO: include it to API request; ACF integration -->
-          <ZFormField label="Kiedy">
-            <template #input>
-              <ZDatePicker
-                v-model="selectedDate"
-                tag="input"
-                placeholder="Wybierz przedział"
-                :settings="{
-                  inline: false,
-                  dateFormat: 'd/m/Y',
-                }"
-                class="z-input"
+        <template v-for="category in categories">
+          <ZFormField
+            :key="category.id"
+            :label="category.label"
+          >
+            <template #input="{id}">
+              <ZSelect
+                :id="id"
+                v-model="selectedCategories[category.id]"
+                :options="category.options"
+                class="z-form-field__input"
               />
             </template>
           </ZFormField>
-        </div>
+        </template>
+        <!-- TODO: include it to API request; ACF integration -->
+        <ZFormField label="Kiedy">
+          <template #input>
+            <ZDatePicker
+              v-model="selectedDate"
+              tag="input"
+              placeholder="Wybierz przedział"
+              :settings="{
+                inline: false,
+                dateFormat: 'd/m/Y',
+              }"
+              class="z-input"
+            />
+          </template>
+        </ZFormField>
       </template>
     </ZForm>
   </component>
@@ -127,10 +127,6 @@ export default {
       type: String,
       default: 'div',
     },
-    tags: {
-      type: Object,
-      default: () => ({}),
-    },
     categories: {
       type: Object,
       default: () => ({}),
@@ -142,7 +138,6 @@ export default {
   },
   data() {
     return {
-      selectedTags: [],
       selectedCategories: {},
       selectedDate: [],
     };
@@ -179,7 +174,6 @@ export default {
       handler() {
         this.updateDate(this.selected);
         this.updateCategories(this.selected, this.categories);
-        this.updateTags(this.selected.tags);
       },
       immediate: true,
     },
@@ -196,18 +190,12 @@ export default {
         return accumulator;
       }, {});
     },
-    updateTags(selected) {
-      this.selectedTags = selected || [];
-    },
     unselectDate() {
       this.$emit('submit', { after: '', before: '' });
     },
     unselectTaxonomies(option) {
       let query;
       switch (option.taxonomy) {
-        case 'tags':
-          query = { [option.taxonomy]: this.selected.tags.filter((tag) => (tag !== option.value)).join(',') };
-          break;
         default:
           query = {
             [option.taxonomy]: '',
@@ -217,7 +205,12 @@ export default {
     },
     submit() {
       const date = { after: this.selectedDate[0] || '', before: this.selectedDate[1] || '' };
-      this.$emit('submit', { ...this.selectedTags, ...this.selectedCategories, ...date });
+      this.$emit('submit', { ...this.selectedCategories, ...date });
+    },
+    clear() {
+      const date = { after: '', before: '' };
+      const categories = Object.keys(this.selectedCategories).reduce((object, key) => ({ ...object, [key]: '' }), {});
+      this.$emit('submit', { ...categories, ...date });
     },
   },
 };
@@ -228,6 +221,7 @@ export default {
     padding: 24px;
     border-radius: 10px;
     box-shadow: rgba(157, 157, 157, 0.5) 0 2px 4px 0;
+    background: #fff;
 
     &__title {
       margin: 0 0 1.5rem 0;
