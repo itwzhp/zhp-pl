@@ -9,7 +9,7 @@
       muted
     >
       <source
-        src="https://prod.przemyslawspaczek.pl/wp-content/uploads/2020/11/Harcerskielatp2019.mp4"
+        :src="src"
         type="video/mp4"
       >
       Sorry, your browser doesn't support embedded videos.
@@ -34,6 +34,12 @@ import ZIcon from '../ZIcon/ZIcon.vue';
 export default {
   name: 'ZVideo',
   components: { ZButton, ZIcon },
+  props: {
+    src: {
+      type: String,
+      default: ''
+    }
+  },
   data() {
     return {
       isPlay: false,

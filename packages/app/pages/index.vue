@@ -68,7 +68,7 @@
     </ZSection>
     <ZSection class="section-about-us">
       <ZBanner
-        :thumbnail="{yt: 'HiJLo2_qB44'}"
+        :thumbnail="{src: 'https://prod.przemyslawspaczek.pl/wp-content/uploads/2020/11/Harcerskielatp2019.mp4'}"
         cover-type="video"
         title="Poznaj ZHP"
         content="Związek Harcerstwa Polskiego to największa organizacja harcerska w Polsce, która zrzesza ponad 100 000 osób! Koniecznie dowiedz się o niej więcej!"
