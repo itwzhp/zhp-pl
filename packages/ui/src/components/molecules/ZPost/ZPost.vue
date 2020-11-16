@@ -167,6 +167,15 @@ export default {
     &__title {
       order: var(--post-title-order);
       margin: 8px 0;
+
+      &::after {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        content: "";
+      }
     }
 
     &__meta {
@@ -179,6 +188,7 @@ export default {
     }
 
     &__author {
+      z-index: 1;
       &::after {
         content: ",";
       }

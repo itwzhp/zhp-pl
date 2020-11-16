@@ -190,6 +190,15 @@ export default {
 
     &__title {
       margin: 0 0 8px 0;
+
+      &::after {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        content: "";
+      }
     }
 
     &__excerpt {
@@ -209,7 +218,10 @@ export default {
       grid-template-columns: repeat(2, auto);
     }
 
-    &__audience {}
+    &__audience {
+
+      z-index: 1;
+    }
 
     &__date {
       position: absolute;
@@ -226,9 +238,12 @@ export default {
 
     &__location,
     &__type {
+      --link-color: var(--color, #fff);
+
       grid-column: 1;
       grid-row: 1;
       margin: 8px;
+      z-index: 1;
     }
     &__location {
       place-self: end;
