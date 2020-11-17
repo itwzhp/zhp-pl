@@ -178,10 +178,10 @@ export default {
       const { text } = randomRes.data
       store.commit('random/update', text)
     }
-    const tax = ['age_groups'] // categories
+    const tax = ['age_groups', 'event_types', 'districts', 'categories'] // categories
     tax.forEach(async (taxonomy) => {
       if (!store.getters['taxonomies/taxonomy'](taxonomy)) {
-        const itemsRes = await $axios.get(taxonomy, { params: { per_page: 99 } })
+        const itemsRes = await $axios.get(taxonomy, { params: { per_page: 99, orderby: 'name' } })
         const items = itemsRes.data
         store.commit('taxonomies/update', { name: taxonomy, items })
       }

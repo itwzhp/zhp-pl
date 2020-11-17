@@ -8,7 +8,6 @@
       <div class="sidebar">
         <ZFiltersEvents
           :categories="categories"
-          :tags="tags"
           :selected="selectedFilters"
           @submit="updateQuery"
         />
@@ -73,17 +72,14 @@ export default {
     const eventsRes = await $axios.get('events', { params: { per_page: 13, page: 1, ...query } })
     const events = eventsRes.data
     const totalPages = eventsRes.headers['x-wp-totalpages']
-    // TODO: move tags to vuex
-    const tagsRes = await $axios('tags', {})
-    const tags = tagsRes.data.reduce(reduce, {})
     // TODO: move event_types to vuex
-    const eventTypesRes = await $axios('event_types', {})
+    const eventTypesRes = await $axios('event_types', { params: { per_page: 99 } })
     const eventTypes = eventTypesRes.data.reduce(reduce, {})
     // TODO: base on age_groups from vuex
     const ageGroupsRes = await $axios('age_groups', { params: { per_page: 99 } })
     const ageGroups = ageGroupsRes.data.reduce(reduce, {})
     // TODO: move district to vuex
-    const districtsRes = await $axios('districts', {})
+    const districtsRes = await $axios('districts', { params: { per_page: 99 } })
     const districts = districtsRes.data.reduce(reduce, {})
     const categories = {
       event_types: {
@@ -123,14 +119,12 @@ export default {
         }
       }
     }
-    const filtersKeys = ['tags', 'event_types', 'age_groups', 'districts', 'before', 'after']
+    const filtersKeys = ['event_types', 'age_groups', 'districts', 'before', 'after']
     const selectedFilters = Object.keys(query).reduce((accumulator, param) => {
       if (filtersKeys.includes(param)) {
         return {
           ...accumulator,
-          [param]: param === 'tags'
-            ? query[param].split(',')
-            : query[param]
+          [param]: query[param]
         }
       } else {
         return accumulator
@@ -139,7 +133,6 @@ export default {
     return {
       events,
       categories,
-      tags,
       selectedFilters,
       page: query.page || '1',
       totalPages
