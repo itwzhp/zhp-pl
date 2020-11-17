@@ -23,27 +23,32 @@ export default {
     },
   },
   computed: {
+    hack() {
+      return typeof this.to === 'string'
+        ? this.to.replace(/https?:\/\/prod\.przemyslawspaczek\.pl|https?:\/\/zhp\.pl/gm, '')
+        : this.to;
+    },
     tagComputed() {
       const { tag } = this;
       const { routerTag } = this;
       return tag || routerTag;
     },
     toComputed() {
-      const { to } = this;
+      const { hack } = this;
       const { tagComputed } = this;
       switch (tagComputed) {
         case 'a':
-          return { href: to, target: '__blank' };
+          return { href: hack, target: '__blank' };
         case 'router-link':
         case 'nuxt-link':
-          return { to };
+          return { to: hack };
         default:
           return {};
       }
     },
     isExternal() {
-      const { to } = this;
-      return typeof to === 'string' && to.search(/(^\/)/g) === -1;
+      const { hack } = this;
+      return typeof hack === 'string' && hack.search(/(^\/)/g) === -1;
     },
     routerTag() {
       const { isExternal } = this;
