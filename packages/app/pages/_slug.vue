@@ -1,5 +1,51 @@
 <template>
   <div id="page">
+    <template v-for="(carousel, key) in topCarousels">
+      <ZSection
+        :key="key"
+        :title="carousel.title"
+        class="carousel"
+      >
+        <ZCarousel
+          :peeked="true"
+          :settings="{
+            type: 'carousel',
+            breakpoints: {
+              480: {
+                perView: 1,
+                peek: {
+                  before: 0,
+                  after: 20
+                }
+              }
+            }
+          }"
+          class="carousel__slider"
+        >
+          <template v-for="post in carousel.posts">
+            <li
+              :key="post.id"
+              class="glide__slide"
+            >
+              <template v-if="post.type === 'post'">
+                <ZPost
+                  :key="post.id"
+                  :thumbnail="post.rest_media"
+                  :title="post.title.rendered"
+                  :to="`/aktualnosci/${post.slug}`"
+                  :author="post.rest_author"
+                  :sticky="post.sticky"
+                  :date="post.date"
+                />
+              </template>
+              <template v-if="post.type === 'logo'">
+                <ZImage :src="post.rest_media" />
+              </template>
+            </li>
+          </template>
+        </ZCarousel>
+      </ZSection>
+    </template>
     <ZSection tag="div">
       <ZHeading
         :level="1"
@@ -40,44 +86,52 @@
         </div>
       </div>
     </ZSection>
-    <ZSection class="related">
-      <ZHeading class="related__title t4 uppercase">
-        Aktualności silni duchem:
-      </ZHeading>
-      <ZCarousel
-        v-if="relatedPosts.length > 0"
-        :peeked="true"
-        :settings="{
-          breakpoints: {
-            480: {
-              perView: 1,
-              peek: {
-                before: 0,
-                after: 20
+    <template v-for="(carousel, key) in bottomCarousels">
+      <ZSection
+        :key="key"
+        :title="carousel.title"
+        class="carousel"
+      >
+        <ZCarousel
+          :peeked="true"
+          :settings="{
+            type: 'carousel',
+            breakpoints: {
+              480: {
+                perView: 1,
+                peek: {
+                  before: 0,
+                  after: 20
+                }
               }
             }
-          }
-        }"
-        class="related__carousel"
-      >
-        <template v-for="relatedPost in relatedPosts">
-          <li
-            :key="relatedPost.id"
-            class="glide__slide"
-          >
-            <ZPost
-              :key="relatedPost.id"
-              :thumbnail="relatedPost.rest_media"
-              :title="relatedPost.title.rendered"
-              :to="`/aktualnosci/${relatedPost.slug}`"
-              :author="relatedPost.rest_author"
-              :sticky="relatedPost.sticky"
-              :date="relatedPost.date"
-            />
-          </li>
-        </template>
-      </ZCarousel>
-    </ZSection>
+          }"
+          class="carousel__slider"
+        >
+          <template v-for="post in carousel.posts">
+            <li
+              :key="post.id"
+              class="glide__slide"
+            >
+              <template v-if="post.type === 'post'">
+                <ZPost
+                  :key="post.id"
+                  :thumbnail="post.rest_media"
+                  :title="post.title.rendered"
+                  :to="`/aktualnosci/${post.slug}`"
+                  :author="post.rest_author"
+                  :sticky="post.sticky"
+                  :date="post.date"
+                />
+              </template>
+              <template v-if="post.type === 'logo'">
+                <ZImage :src="post.rest_media" />
+              </template>
+            </li>
+          </template>
+        </ZCarousel>
+      </ZSection>
+    </template>
   </div>
 </template>
 
@@ -89,7 +143,8 @@ import {
   ZPost,
   ZWordPress,
   ZList,
-  ZLink
+  ZLink,
+  ZImage
 } from '@nowa-zhp/ui'
 
 export default {
@@ -100,23 +155,37 @@ export default {
     ZPost,
     ZWordPress,
     ZList,
-    ZLink
+    ZLink,
+    ZImage
   },
   async asyncData ({ $axios, params, redirect, route }) {
+    const asyncCarousel = async (carousel) => {
+      const { post_type, taxonomy, id, per_page } = carousel
+      const postsRes = await $axios(post_type, { params: { per_page, [taxonomy]: id } })
+      return {
+        posts: postsRes.data,
+        title: carousel.title,
+        location: carousel.location
+      }
+    }
     const pageRest = await $axios.get('pages', { params })
-    const page = pageRest.data.shift()
+    const page = pageRest.data.filter(page => page.parent === 0).shift()
+
     const childrenRes = await $axios.get('pages', { params: { parent: page.id } })
     const children = childrenRes.data.sort((a, b) => (a.menu_order < b.menu_order ? -1 : 1))
     if (children.length && !params.id) {
       redirect(`${route.path}/${children[0].slug}`)
     }
-    const relatedPostsRes = await $axios.get('posts', { per_page: 8 })
-    const relatedPosts = relatedPostsRes.data
 
+    const carousels = page.rest_acf && page.rest_acf.carousels
+      ? await Promise.all(page.rest_acf.carousels
+        .reduce((array, carousel) => ([...array, carousel.carousel]), [])
+        .map(carousel => (asyncCarousel(carousel))))
+      : []
     return {
       page,
       params,
-      relatedPosts,
+      carousels,
       children: children.reduce((accumulator, child) => ({
         ...accumulator,
         [child.slug]: child
@@ -126,6 +195,12 @@ export default {
   computed: {
     hasChildren () {
       return Object.keys(this.children).length
+    },
+    topCarousels () {
+      return this.carousels.filter(carosuel => carosuel.location === 'before')
+    },
+    bottomCarousels () {
+      return this.carousels.filter(carosuel => carosuel.location === 'after')
     }
   }
 }
@@ -160,13 +235,9 @@ export default {
     }
   }
 
-  .related {
-    &__title {
-      grid-column: span 12;
-      place-self: center;
-    }
-
-    &__carousel {
+  .carousel {
+    --section-margin: 1.75rem 0;
+    &__slider {
       grid-column: span 12;
     }
   }
