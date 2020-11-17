@@ -10,7 +10,7 @@
     >
       <ZIcon :name="icon" />
     </ZButton>
-    <nav class="z-mega-menu__holder">
+    <nav class="z-mega-menu__holder" ref="menu">
       <ZList class="z-mega-menu__menu">
         <template v-for="item in menu">
           <ZListItem
@@ -94,7 +94,7 @@ export default {
   watch: {
     isOpen(isOpen) {
       if (isOpen) {
-        disableBodyScroll(this.$el);
+        disableBodyScroll(this.$refs.menu);
       } else {
         clearAllBodyScrollLocks();
       }
