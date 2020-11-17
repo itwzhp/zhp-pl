@@ -10,7 +10,10 @@
     >
       <ZIcon :name="icon" />
     </ZButton>
-    <nav class="z-mega-menu__holder" ref="menu">
+    <nav
+      ref="menu"
+      class="z-mega-menu__holder"
+    >
       <ZList class="z-mega-menu__menu">
         <template v-for="item in menu">
           <ZListItem
@@ -185,12 +188,12 @@ export default {
     @media (min-width: 480px) {
       position: absolute;
       z-index: 10;
-      left: 0;
       right: 0;
+      left: 0;
     }
 
     .z-mega-menu__item:hover &,
-    .z-mega-menu__item:focus-within &{
+    .z-mega-menu__item:focus-within & {
       @media (min-width: 480px) {
         display: grid;
       }

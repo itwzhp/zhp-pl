@@ -237,6 +237,7 @@ export default {
 
   .carousel {
     --section-margin: 1.75rem 0;
+
     &__slider {
       grid-column: span 12;
     }
