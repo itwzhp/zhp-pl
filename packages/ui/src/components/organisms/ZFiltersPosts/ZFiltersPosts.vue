@@ -231,8 +231,9 @@ export default {
 
     &__selectors {
       display: grid;
+      gap: 0.5rem;
       grid-template-columns: minmax(auto, 1fr);
-      gap: .5rem;
+
       @media (min-width: 480px) {
         gap: 0;
         grid-template-columns: repeat(2, minmax(auto, 1fr)) 16%;
@@ -248,6 +249,7 @@ export default {
 
     &__date-toggle {
       --button-height: 40px;
+
       @media (min-width: 480px) {
         --button-border-radius: 0.625rem 0 0 0.625rem;
       }
@@ -257,6 +259,7 @@ export default {
       display: grid;
       align-items: end;
       grid-template-columns: minmax(auto, 1fr);
+
       @media (min-width: 480px) {
         grid-template-columns: auto 180px;
       }
@@ -276,6 +279,7 @@ export default {
       font-size: var(--font-size-body-2);
       grid-column: 1;
       grid-template-rows: auto 3.25rem;
+
       @media (min-width: 480px) {
         grid-column: 2;
       }

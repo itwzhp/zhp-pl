@@ -128,10 +128,10 @@ export default {
     position: relative;
     display: grid;
     overflow: hidden;
+    background: #fff;
     border-radius: 10px;
     box-shadow: 0 2px 4px 0 rgba(157, 157, 157, 0.5);
     grid-template-rows: var(--post-grid-template-rows, 128px 1fr);
-    background: #fff;
 
     &__thumbnail {
       position: relative;
@@ -189,6 +189,7 @@ export default {
 
     &__author {
       z-index: 1;
+
       &::after {
         content: ",";
       }

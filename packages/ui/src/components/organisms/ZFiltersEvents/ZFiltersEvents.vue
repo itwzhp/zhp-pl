@@ -219,9 +219,9 @@ export default {
 <style lang="scss">
   .z-filters-events {
     padding: 24px;
+    background: #fff;
     border-radius: 10px;
     box-shadow: rgba(157, 157, 157, 0.5) 0 2px 4px 0;
-    background: #fff;
 
     &__title {
       margin: 0 0 1.5rem 0;

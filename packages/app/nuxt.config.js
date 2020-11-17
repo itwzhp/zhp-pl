@@ -91,5 +91,5 @@ export default {
   },
   publicRuntimeConfig: {
     mediaBaseURL: process.env.MEDIA_BASE_URL
-  },
+  }
 }

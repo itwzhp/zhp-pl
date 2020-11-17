@@ -30,8 +30,16 @@ export default {
     },
     toComputed() {
       const { to } = this;
-      const { routerTag } = this;
-      return routerTag === 'a' ? { href: to, target: '__blank' } : { to };
+      const { tagComputed } = this;
+      switch (tagComputed) {
+        case 'a':
+          return { href: to, target: '__blank' };
+        case 'router-link':
+        case 'nuxt-link':
+          return { to };
+        default:
+          return {};
+      }
     },
     isExternal() {
       const { to } = this;
@@ -54,6 +62,7 @@ export default {
 <style lang="scss">
   .z-link {
     color: var(--link-color, inherit);
+    cursor: pointer;
     font-size: var(--link-font-size, var(--font-size-button));
     font-weight: var(--link-font-weight);
     line-height: 1.2;

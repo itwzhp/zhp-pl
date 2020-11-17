@@ -92,7 +92,7 @@
           </ZDropdown>
         </div>
       </div>
-      <ZMegaMenu :menu="{}" />
+      <ZMegaMenu :menu="headerMenu" />
     </header>
     <Nuxt />
     <footer class="z-footer">

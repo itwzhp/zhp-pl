@@ -109,7 +109,7 @@ export default {
       align-items: var(--section-content-align-items);
       padding: var(--section-content-padding, 0 1.25rem);
       margin: var(--section-content-margin, auto);
-      gap: 1.25rem;
+      gap: var(--section-content-gap, 1.25rem);
       grid-template-columns: var(--section-content-grid-template-columns, repeat(12, minmax(auto, 1fr)));
     }
   }

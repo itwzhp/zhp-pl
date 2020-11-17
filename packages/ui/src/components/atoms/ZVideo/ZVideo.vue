@@ -37,8 +37,8 @@ export default {
   props: {
     src: {
       type: String,
-      default: ''
-    }
+      default: '',
+    },
   },
   data() {
     return {
@@ -69,8 +69,8 @@ export default {
   position: relative;
 
   &__source {
-    height: calc(100% + 2.875rem);
     width: 100%;
+    height: calc(100% + 2.875rem);
     margin: -1.5rem 0;
     object-fit: cover;
   }
@@ -89,12 +89,12 @@ export default {
       position: absolute;
       width: 100%;
       height: 100%;
-      content: "";
       background: #7ba22e;
+      content: "";
       opacity: 0.4;
     }
 
-    .is-play &{
+    .is-play & {
       opacity: 0;
     }
   }
@@ -107,12 +107,12 @@ export default {
     top: 50%;
     left: 50%;
     display: inline-flex;
+    width: 5.5rem;
+    height: 5.5rem;
     align-items: center;
     justify-content: center;
     background: #fff;
     border-radius: 50%;
-    width: 5.5rem;
-    height: 5.5rem;
     transform: translateY(-50%);
   }
 }

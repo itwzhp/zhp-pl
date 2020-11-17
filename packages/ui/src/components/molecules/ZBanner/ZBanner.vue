@@ -7,13 +7,16 @@
       v-if="thumbnail"
       class="z-banner__cover"
     >
-      <svg style="height: 0; width: 0; position: absolute">
+      <svg style=" position: absolute; width: 0; height: 0;">
         <clipPath
           id="banner"
           clipPathUnits="objectBoundingBox"
         ><path d="M0.098,0 C0.098,0,0.098,0,0.098,0 L0.985,0 L0.985,0 C0.987,0,0.989,0.001,0.991,0.002 C0.992,0.003,0.994,0.005,0.996,0.007 C0.997,0.009,0.998,0.012,0.999,0.015 C1,0.018,1,0.021,1,0.024 V0.976 C1,0.979,1,0.982,0.999,0.985 C0.998,0.988,0.997,0.991,0.996,0.993 C0.994,0.995,0.992,0.997,0.991,0.998 C0.989,0.999,0.987,1,0.985,1 H0.097 C0.097,1,0.097,1,0.097,0.999 C0.096,0.999,0.096,0.998,0.095,0.997 C0.094,0.995,0.093,0.992,0.091,0.988 C0.088,0.98,0.084,0.968,0.079,0.952 C0.069,0.922,0.057,0.878,0.046,0.827 C0.022,0.724,0,0.59,0,0.465 C0,0.34,0.025,0.224,0.049,0.139 C0.061,0.096,0.074,0.061,0.083,0.037 C0.087,0.025,0.091,0.016,0.094,0.009 C0.095,0.006,0.096,0.004,0.097,0.002 C0.097,0.001,0.098,0.001,0.098,0" /></clipPath>
       </svg>
-      <slot name="thumbnail" v-bind="{thumbnail}">
+      <slot
+        name="thumbnail"
+        v-bind="{thumbnail}"
+      >
         <ZImage
           v-if="coverType === 'image'"
           class="z-banner__thumbnail z-banner__thumbnail--image"
@@ -156,6 +159,7 @@ export default {
     &__thumbnail {
       position: relative;
       z-index: var(--banner-thumbnail-z-index);
+
       @media (min-width: 480px) {
         clip-path: url(#banner);
       }
@@ -172,6 +176,7 @@ export default {
           opacity: 0.4;
         }
       }
+
       &,
       img {
         width: 100%;

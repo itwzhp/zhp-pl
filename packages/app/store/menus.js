@@ -7,15 +7,19 @@ export const mutations = {
       const parent = item.menu_item_parent
       if (parent === '0') {
         itemsAsObject[item.ID].index = array.length
-        return [...array, { to: item.url, name: item.title }]
+        return [...array, { to: item.url, name: item.title, id: item.ID }]
       } else if (itemsAsObject[parent].index) {
-        const copyOfItem = { to: item.url, name: item.title }
+        const copyOfItem = { name: item.title, id: item.ID }
+        array[itemsAsObject[parent].index].submenu = array[itemsAsObject[parent].index].submenu
+          ? [...array[itemsAsObject[parent].index].submenu, copyOfItem]
+          : [copyOfItem]
         itemsAsObject[item.ID].root_index = itemsAsObject[parent].index
-        array[itemsAsObject[parent].index].submenu = copyOfItem
+        itemsAsObject[item.ID].submenu_index = array[itemsAsObject[parent].index].submenu.length - 1
       } else if (itemsAsObject[parent].root_index) {
-        const copyOfItem = { to: item.url, name: item.title }
-        array[itemsAsObject[parent].root_index].submenu.mega_menu = array[itemsAsObject[parent].root_index].submenu.mega_menu
-          ? [...array[itemsAsObject[parent].root_index].submenu.mega_menu, copyOfItem]
+        const { root_index, submenu_index } = itemsAsObject[parent]
+        const copyOfItem = { to: item.url, name: item.title, id: item.ID }
+        array[root_index].submenu[submenu_index].mega_menu = array[root_index].submenu[submenu_index].mega_menu
+          ? [...array[root_index].submenu[submenu_index].mega_menu, copyOfItem]
           : [copyOfItem]
       }
       return array

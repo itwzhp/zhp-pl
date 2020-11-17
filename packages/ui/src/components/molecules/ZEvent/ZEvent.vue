@@ -159,16 +159,16 @@ export default {
     position: relative;
     display: grid;
     overflow: hidden;
+    background: #fff;
     border-radius: 10px;
     box-shadow: 0 2px 4px 0 rgba(157, 157, 157, 0.5);
     grid-template-rows: 128px 1fr;
-    background: #fff;
 
     &__thumbnail {
-      grid-column: 1;
-      grid-row: 1;
       position: relative;
       overflow: hidden;
+      grid-column: 1;
+      grid-row: 1;
 
       & .z-image,
       & img {
@@ -219,7 +219,6 @@ export default {
     }
 
     &__audience {
-
       z-index: 1;
     }
 
@@ -240,14 +239,16 @@ export default {
     &__type {
       --link-color: var(--color, #fff);
 
+      z-index: 1;
+      margin: 8px;
       grid-column: 1;
       grid-row: 1;
-      margin: 8px;
-      z-index: 1;
     }
+
     &__location {
       place-self: end;
     }
+
     &__type {
       place-self: start end;
     }

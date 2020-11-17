@@ -26,8 +26,8 @@
       </template>
     </ZList>
     <ZLink
-        :to="`/${slug}`"
-        class="z-highlighted__more z-highlighted__link"
+      :to="`/${slug}`"
+      class="z-highlighted__more z-highlighted__link"
     >
       {{ more }}
     </ZLink>
@@ -85,6 +85,7 @@ export default {
 <style lang="scss">
   .z-highlighted {
     --link-text-decoration: underline;
+
     display: grid;
 
     &__more {

@@ -12,6 +12,6 @@ export default {
 
 <style lang="scss">
 .z-list-item {
-  margin: 4px 0;
+  margin: 8px 0;
 }
 </style>

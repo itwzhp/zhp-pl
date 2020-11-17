@@ -61,7 +61,7 @@ export default {
         open(
           opened === this.title
             ? ''
-            : this.title
+            : this.title,
         );
       } else if (opened.includes(this.title)) {
         open(opened.filter((element) => (element !== this.title)));
@@ -75,16 +75,18 @@ export default {
 
 <style lang="scss">
 .z-accordion-item {
-  &__toggler{
+  &__toggler {
     --button-min-width: 100%;
     --button-justify-content: flex-start;
   }
+
   &__icon {
     --icon-size: 0.75rem;
     --icon-color: #7ba22e;
 
     margin: var(--accordion-item-icon-margin, 0 0.5rem 0 0);
   }
+
   &__content {
     padding: 0.5rem 0;
   }
