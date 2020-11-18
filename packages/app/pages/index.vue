@@ -175,8 +175,14 @@
         <ZFacebook />
       </div>
       <div style="grid-column: span 5;">
-        <ZHeading class="t4 uppercase">
-          Partnerzy organizacji
+        <ZHeading>
+          <ZLink
+            to="/partnerzy"
+            class="t4 uppercase"
+            style="--link-text-decoration: none"
+          >
+            Partnerzy organizacji
+          </ZLink>
         </ZHeading>
         <ZCarousel
           :settings="{
@@ -206,7 +212,9 @@
             </li>
           </template>
         </ZCarousel>
-        <ZText class="caption">Stworzenie strony zhp.pl zostało sfinansowane ze&nbsp;środków Rządowego Programu Wsparcia Rozwoju Organizacji Harcerskich i&nbsp;Skautowych na&nbsp;lata 2018&#8209;2030.</ZText>
+        <ZText class="caption">
+          Stworzenie strony zhp.pl zostało sfinansowane ze&nbsp;środków Rządowego Programu Wsparcia Rozwoju Organizacji Harcerskich i&nbsp;Skautowych na&nbsp;lata 2018&#8209;2030.
+        </ZText>
       </div>
     </ZSection>
   </div>
@@ -227,7 +235,8 @@ import {
   ZVideo,
   ZImage,
   ZFacebook,
-  ZText
+  ZText,
+  ZLink
 } from '@nowa-zhp/ui'
 
 export default {
@@ -245,7 +254,8 @@ export default {
     ZVideo,
     ZImage,
     ZFacebook,
-    ZText
+    ZText,
+    ZLink
   },
   async asyncData ({ $axios }) {
     // last 8 post for posts ZCarousel
