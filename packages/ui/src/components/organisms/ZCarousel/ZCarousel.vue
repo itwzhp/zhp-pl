@@ -1,6 +1,6 @@
 <template>
   <div
-    class="glide"
+    class="glide z-carousel"
     :class="{'z-carousel--peeked': peeked}"
   >
     <div
@@ -109,6 +109,12 @@ export default {
   @import "~@glidejs/glide/src/assets/sass/glide.core";
 
   .z-carousel {
+    .glide {
+      &__slides {
+        align-items: center;
+      }
+    }
+
     &--peeked {
       .glide {
         &__track {
@@ -119,6 +125,7 @@ export default {
           display: grid;
           padding: var(--carousel-slides-padding, 24px 0);
           grid-auto-flow: column;
+          align-items: center;
         }
 
         &__slide {
