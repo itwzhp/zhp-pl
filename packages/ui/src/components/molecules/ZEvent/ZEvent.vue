@@ -179,13 +179,12 @@ export default {
     }
 
     &__content {
-      position: relative;
       display: grid;
       justify-content: space-between;
       padding: 32px 8px 16px 8px;
       background: var(--background, #7ba22e);
       color: var(--color, #fff);
-      grid-template-rows: 1fr auto;
+      grid-template-rows: 0 1fr auto;
     }
 
     &__title {
@@ -223,16 +222,12 @@ export default {
     }
 
     &__date {
-      position: absolute;
-      top: 0;
-      left: 0;
       display: grid;
       align-items: center;
       justify-content: start;
-      margin: 0 0 8px 0;
       column-gap: 4px;
       grid-template-columns: repeat(3, auto);
-      transform: translate(8px, -65%);
+      transform: translateY(-56px);
     }
 
     &__location,
@@ -258,7 +253,7 @@ export default {
       grid-template-rows: 1fr;
 
       #{$this}__thumbnail {
-        grid-column: span 12;
+        grid-column: 1 / span 12;
 
         @media (min-width: 480px) {
           grid-column: 6 / span 7;
@@ -267,19 +262,23 @@ export default {
       }
 
       #{$this}__content {
-        grid-column: span 12;
+        grid-column: 1 / span 12;
+        grid-template-rows: 0 1fr auto;
 
         @media (min-width: 480px) {
           align-items: end;
           padding: 32px 40px;
           grid-column: 1 / span 5;
           grid-row: 1;
+          grid-template-rows: auto;
         }
       }
 
       #{$this}__date {
-        position: static;
-        transform: unset;
+        transform: translateY(-56px);
+        @media (min-width: 480px) {
+          transform: translateY(0);
+        }
       }
 
       #{$this}__title {
@@ -290,7 +289,7 @@ export default {
 
       #{$this}__location,
       #{$this}__type {
-        grid-column: 12;
+          grid-column: 12;
       }
     }
   }
