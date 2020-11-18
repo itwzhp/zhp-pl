@@ -148,7 +148,7 @@
       style=""
     >
       <ZImage
-        src="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/news-DMB.png"
+        :src="heroImage"
         class="z-clip-path__picture"
       />
     </div>
@@ -167,6 +167,10 @@ export default {
     tag: {
       type: String,
       default: 'div',
+    },
+    heroImage: {
+      type: String,
+      default: '',
     },
   },
 };

@@ -3,7 +3,7 @@
     <div class="hero-wrapper">
       <ZSection class="section-hero">
         <div class="section-hero__picture">
-          <ZClipPath />
+          <ZClipPath :hero-image="homepage._embedded['wp:featuredmedia'][0].media_details.sizes.medium_large.source_url"/>
         </div>
         <ZHeading
           :level="1"
@@ -258,6 +258,8 @@ export default {
     ZLink
   },
   async asyncData ({ $axios }) {
+    const homepageRes = await $axios.get('pages', { params: { slug: 'strona-glowna', _embed: true } })
+    const homepage = homepageRes.data.shift()
     // last 8 post for posts ZCarousel
     const postsRes = await $axios.get('posts', { params: { per_page: 8 } })
     const posts = postsRes.data
@@ -271,7 +273,7 @@ export default {
     const partnersRes = await $axios.get('logos', { params: { per_page: 99, logos_categories: 25 } })
     const partners = partnersRes.data
 
-    return { posts, highlightedPosts, events, partners }
+    return { homepage, posts, highlightedPosts, events, partners }
   },
   computed: {
     ageGroups () {
