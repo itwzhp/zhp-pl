@@ -11,13 +11,20 @@
         :author="{name: post.rest_author.name, avatarUrl: post.rest_author['avatar_url']}"
         :reading-time="post.rest_reading_time"
         :date="post.date"
-        :categories="post.categories"
+        :categories="post._embedded['wp:term'][0]"
         class="meta"
       />
-      <ZImage
-        :src="post.rest_media"
-        class="cover"
-      />
+      <figure class="thumbnail">
+        <ZImage
+          :src="post._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url"
+          class="cover"
+        />
+        <ZText
+          tag="figcaption"
+          class="caption"
+          v-html="`fot. ${post._embedded['wp:featuredmedia'][0].title.rendered}`"
+        />
+      </figure>
       <ZWordPress
         :html="post.content && post.content.rendered"
         class="content"
@@ -98,7 +105,7 @@ export default {
   },
   async asyncData ({ $axios, params, query }) {
     // posts
-    const postRes = await $axios.get('posts', { params })
+    const postRes = await $axios.get('posts', { params: { _embed: true, ...params } })
     const post = postRes.data[0]
     // related posts
     const relatedPostsRes = await $axios.get('posts', { per_page: 8 })
@@ -141,14 +148,16 @@ export default {
       grid-column: span 8;
     }
   }
-
+  .thumbnail {
+    grid-column: span 8;
+    grid-row: 3;
+    margin: 0;
+  }
   .cover {
     display: flex;
     overflow: hidden;
     height: 396px;
     border-radius: 10px;
-    grid-column: span 12;
-    grid-row: 3;
 
     & .z-image,
     & img {

@@ -18,8 +18,8 @@ export default {
       default: '',
     },
     to: {
-      type: [Object, String],
-      default: () => ({}),
+      type: [String, Object],
+      default: '',
     },
   },
   computed: {

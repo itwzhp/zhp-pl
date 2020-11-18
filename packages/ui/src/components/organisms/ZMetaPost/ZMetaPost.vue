@@ -12,10 +12,9 @@
       <template v-for="(category, key) in categories">
         <ZLink
           :key="key"
-          to="#"
-        >
-          {{ category }}
-        </ZLink>
+          tag="span"
+          v-html="category.name"
+        />
       </template>
     </div>
     <div class="z-meta__date button">
@@ -88,6 +87,9 @@ export default {
   &__author {}
 
   &__categories {
+    display: grid;
+    column-gap: 4px;
+    grid-auto-flow: column;
     text-align: right;
   }
 
