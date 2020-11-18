@@ -39,10 +39,10 @@
 &nbsp;
       </div>
     </ZSection>
-    <ZSection class="related">
-      <ZHeading class="related__title t4 uppercase">
-        Mogą Cię także zainteresować:
-      </ZHeading>
+    <ZSection
+      class="related"
+      title="Mogą Cię także zainteresować:"
+    >
       <ZCarousel
         v-if="relatedPosts.length > 0"
         :peeked="true"
