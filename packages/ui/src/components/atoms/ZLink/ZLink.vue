@@ -29,13 +29,13 @@ export default {
         : this.to;
     },
     tagComputed() {
-      const { tag } = this;
-      const { routerTag } = this;
-      return tag || routerTag;
+      const { to, tag, routerTag } = this;
+      return to
+        ? routerTag
+        : tag;
     },
     toComputed() {
-      const { hack } = this;
-      const { tagComputed } = this;
+      const { hack, tagComputed } = this;
       switch (tagComputed) {
         case 'a':
           return { href: hack, target: '__blank' };

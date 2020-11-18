@@ -1,8 +1,12 @@
 <script>
 import Vue from 'vue';
+
+// hack for components available in WordPress
+import ZButton from '../../atoms/ZButton/ZButton.vue';
 import ZAccordion from '../ZAccordion/ZAccordion.vue';
 
 Vue.component('ZAccordion', ZAccordion);
+Vue.component('ZButton', ZButton);
 
 export default {
   name: 'ZWordPress',

@@ -1,7 +1,7 @@
 <template>
   <component
-    :is="tag"
-    v-outline
+    :is="tagComputed"
+    v-bind="toComputed"
     class="z-button"
     v-on="$listeners"
   >
@@ -18,6 +18,49 @@ export default {
     tag: {
       type: String,
       default: 'button',
+    },
+    to: {
+      type: [String, Object],
+      default: '',
+    },
+  },
+  computed: {
+    hack() {
+      return typeof this.to === 'string'
+        ? this.to.replace(/https?:\/\/prod\.przemyslawspaczek\.pl|https?:\/\/zhp\.pl/gm, '')
+        : this.to;
+    },
+    tagComputed() {
+      const { to, tag, routerTag } = this;
+      return to
+        ? routerTag
+        : tag;
+    },
+    toComputed() {
+      const { hack, tagComputed } = this;
+      switch (tagComputed) {
+        case 'a':
+          return { href: hack, target: '__blank' };
+        case 'router-link':
+        case 'nuxt-link':
+          return { to: hack };
+        default:
+          return {};
+      }
+    },
+    isExternal() {
+      const { hack } = this;
+      return typeof hack === 'string' && hack.search(/(^\/)/g) === -1;
+    },
+    routerTag() {
+      const { isExternal } = this;
+      if (this.$nuxt && !isExternal) {
+        return 'nuxt-link';
+      }
+      if (this.$router && !isExternal) {
+        return 'router-link';
+      }
+      return 'a';
     },
   },
 };
@@ -42,6 +85,7 @@ export default {
     font-weight: 500;
     line-height: 1.2;
     text-transform: var(--button-text-transform, uppercase);
+    text-decoration: var(--button-text-decoration, none);
 
     &--text {
       --button-color: #7ba22e;
@@ -51,6 +95,14 @@ export default {
 
       padding: 0;
       border: 0;
+    }
+
+    &--full {
+      --button-width: 100%;
+    }
+
+    &--no-border {
+      --button-border-width: 0;
     }
   }
 </style>

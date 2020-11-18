@@ -17,3 +17,14 @@ import ZButton from './ZButton.vue';
     }}
   </Story>
 </Preview>
+
+<Props of={ZButton} />
+
+<Preview>
+  <Story name="Link">
+    {{
+        components: { ZButton },
+        template: `<ZButton to="http://1procent.pl/">Button</ZButton>`,
+    }}
+  </Story>
+</Preview>
