@@ -276,6 +276,7 @@ export default {
 
       #{$this}__date {
         transform: translateY(-56px);
+
         @media (min-width: 480px) {
           transform: translateY(0);
         }
@@ -289,7 +290,7 @@ export default {
 
       #{$this}__location,
       #{$this}__type {
-          grid-column: 12;
+        grid-column: 12;
       }
     }
   }

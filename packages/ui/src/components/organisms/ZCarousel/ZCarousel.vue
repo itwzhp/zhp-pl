@@ -123,9 +123,9 @@ export default {
 
         &__slides {
           display: grid;
+          align-items: center;
           padding: var(--carousel-slides-padding, 24px 0);
           grid-auto-flow: column;
-          align-items: center;
         }
 
         &__slide {

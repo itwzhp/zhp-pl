@@ -84,8 +84,8 @@ export default {
     font-size: var(--button-font-size, 0.876rem);
     font-weight: 500;
     line-height: 1.2;
-    text-transform: var(--button-text-transform, uppercase);
     text-decoration: var(--button-text-decoration, none);
+    text-transform: var(--button-text-transform, uppercase);
 
     &--text {
       --button-color: #7ba22e;
