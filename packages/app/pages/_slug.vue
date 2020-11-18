@@ -1,5 +1,9 @@
 <template>
-  <div id="page">
+  <div
+    id="page"
+    class="page page--full"
+    :class="{'page--full': isFull}"
+  >
     <template v-for="(carousel, key) in topCarousels">
       <ZSection
         :key="key"
@@ -193,6 +197,9 @@ export default {
     }
   },
   computed: {
+    isFull () {
+      return /page-full/gi.test(this.page.template)
+    },
     hasChildren () {
       return Object.keys(this.children).length
     },
@@ -223,6 +230,9 @@ export default {
 
     @media (min-width: 480px) {
       grid-column: span 8;
+      .page--full & {
+        grid-column: span 12;
+      }
     }
   }
 
