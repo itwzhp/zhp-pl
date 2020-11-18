@@ -206,6 +206,7 @@
             </li>
           </template>
         </ZCarousel>
+        <ZText class="caption">Stworzenie strony zhp.pl zostało sfinansowane ze&nbsp;środków Rządowego Programu Wsparcia Rozwoju Organizacji Harcerskich i&nbsp;Skautowych na&nbsp;lata 2018&#8209;2030.</ZText>
       </div>
     </ZSection>
   </div>
@@ -225,7 +226,8 @@ import {
   ZClipPath,
   ZVideo,
   ZImage,
-  ZFacebook
+  ZFacebook,
+  ZText
 } from '@nowa-zhp/ui'
 
 export default {
@@ -242,7 +244,8 @@ export default {
     ZClipPath,
     ZVideo,
     ZImage,
-    ZFacebook
+    ZFacebook,
+    ZText
   },
   async asyncData ({ $axios }) {
     // last 8 post for posts ZCarousel
