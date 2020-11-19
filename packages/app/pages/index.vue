@@ -3,7 +3,7 @@
     <div class="hero-wrapper">
       <ZSection class="section-hero">
         <div class="section-hero__picture">
-          <ZClipPath :hero-image="homepage._embedded['wp:featuredmedia'][0].media_details.sizes.medium_large.source_url"/>
+          <ZClipPath :hero-image="homepage._embedded['wp:featuredmedia'][0].media_details.sizes.medium_large.source_url" />
         </div>
         <ZHeading
           :level="1"
@@ -56,8 +56,10 @@
     </ZSection>
     <ZSection class="section-highlighted">
       <ZCard
-        title="Polska reprezentacja na Jamboree 2019 w USA!"
-        thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/08/ZHP_WYLOT_JAMBOREE_2019_KAROLINA_PIOTROWSKA-12.jpg"
+        v-if="cards['>>']"
+        :title="cards['>>'].title.rendered"
+        :thumbnail="cards['>>']._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url"
+        :to="`/aktualnosci/${cards['>>'].slug}`"
         class="section-highlighted__card"
       />
       <ZHighlighted
@@ -97,9 +99,11 @@
         class="section-join-us__banner"
       />
       <ZPost
-        thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/08/fot.-ZHP-_-Karolina-Piotrowska-18.jpg"
-        title="Przewodniczący ZHP i Naczelniczka ZHP: Wychowujemy w zgodzie z wartościami"
-        date="2020-08-30"
+        v-if="cards['>>>']"
+        :title="cards['>>>'].title.rendered"
+        :thumbnail="cards['>>>']._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url"
+        :to="`/aktualnosci/${cards['>>>'].slug}`"
+        :date="cards['>>>'].date"
         class="section-join-us__post"
       />
     </ZSection>
@@ -238,6 +242,7 @@ import {
   ZText,
   ZLink
 } from '@nowa-zhp/ui'
+import { mapGetters } from 'vuex'
 
 export default {
   components: {
@@ -261,7 +266,7 @@ export default {
     const homepageRes = await $axios.get('pages', { params: { slug: 'strona-glowna', _embed: true } })
     const homepage = homepageRes.data.shift()
     // last 8 post for posts ZCarousel
-    const postsRes = await $axios.get('posts', { params: { per_page: 8 } })
+    const postsRes = await $axios.get('posts', { params: { per_page: 8, tags: 57 } })
     const posts = postsRes.data
     // last 5 posts for ZHighlighted component
     const highlightedPostsRes = await $axios.get('posts', { params: { per_page: 5 } })
@@ -276,6 +281,9 @@ export default {
     return { homepage, posts, highlightedPosts, events, partners }
   },
   computed: {
+    ...mapGetters({
+      cards: 'cards/posts'
+    }),
     ageGroups () {
       return this.$store.getters['taxonomies/taxonomy']('age_groups')
     }

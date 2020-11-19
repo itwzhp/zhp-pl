@@ -37,6 +37,7 @@ export default {
   tr {
     border: solid #ddd;
     border-width: 1px 0 0 0;
+
     &:first-of-type {
       border-width: 0;
     }
