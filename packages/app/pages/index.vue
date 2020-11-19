@@ -183,7 +183,7 @@
           <ZLink
             to="/partnerzy"
             class="t4 uppercase"
-            style="--link-text-decoration: none"
+            style="--link-text-decoration: none;"
           >
             Partnerzy organizacji
           </ZLink>

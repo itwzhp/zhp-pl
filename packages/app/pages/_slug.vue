@@ -230,6 +230,7 @@ export default {
 
     @media (min-width: 480px) {
       grid-column: span 8;
+
       .page--full & {
         grid-column: span 12;
       }

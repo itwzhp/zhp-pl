@@ -1,20 +1,29 @@
 <template>
   <div id="posts">
-    <ZSection>
-      <ZHeading
-        style="grid-column: 5 / span 7;"
-        class="t3"
-      >
-        Aktualności
-        <small style="display: block; margin: 8px 0;">Sprawdź, co nowego w ZHP</small>
-      </zHeading>
-      <ZFiltersPosts
-        class="filters"
-        :categories="categories"
-        :selected="{...selectedFilters}"
-        @submit="updateQuery"
-      />
-    </ZSection>
+    <div class="hero-wrapper">
+      <ZSection class="section-hero">
+        <div class="section-hero__picture">
+          <ZClipPath :hero-image="news._embedded['wp:featuredmedia'][0].media_details.sizes.medium_large.source_url" />
+        </div>
+        <ZHeading
+          class="t4 section-hero__title uppercase"
+        >
+          Aktualności
+          <div
+            class="t6 normal"
+            style="margin: 8px 0 0 0"
+          >
+            Sprawdź, co nowego w ZHP
+          </div>
+        </ZHeading>
+        <ZFiltersPosts
+          class="filters section-hero__filters"
+          :categories="categories"
+          :selected="{...selectedFilters}"
+          @submit="updateQuery"
+        />
+      </ZSection>
+    </div>
     <ZSection>
       <!-- FIXME: fallback for posts.length === 0, I can show last 5 posts  -->
       <template v-for="(post, index) in posts">
@@ -55,7 +64,8 @@ import {
   ZPost,
   ZHeading,
   ZFiltersPosts,
-  ZPagination
+  ZPagination,
+  ZClipPath
 } from '@nowa-zhp/ui'
 
 export default {
@@ -65,9 +75,12 @@ export default {
     ZFiltersPosts,
     ZPost,
     ZHeading,
-    ZPagination
+    ZPagination,
+    ZClipPath
   },
   async asyncData ({ $axios, params, query }) {
+    const newsRes = await $axios.get('pages', { params: { slug: 'aktualnosci', _embed: true } })
+    const news = newsRes.data.shift()
     // helpers
     const reduce = (accumulator, option) => ({
       ...accumulator,
@@ -87,15 +100,17 @@ export default {
     const categoriesRes = await $axios('categories', { params: { per_page: 99 } })
     const categories = categoriesRes.data.reduce(reduce, {})
 
-    const selectedFilters = Object.keys(query).reduce((object, param) => {
-      return {
-        ...object,
-        [param]: param === 'categories'
-          ? query[param].split(',')
-          : query[param]
-      }
-    }, {})
-    return { posts, page: query.page || '1', totalPages, categories, selectedFilters }
+    const selectedFilters = Object.keys(query)
+      .filter(key => (key !== 'page'))
+      .reduce((object, param) => {
+        return {
+          ...object,
+          [param]: param === 'categories'
+            ? query[param].split(',')
+            : query[param]
+        }
+      }, {})
+    return { news, posts, page: query.page || '1', totalPages, categories, selectedFilters }
   },
   methods: {
     updateQuery (query) {
@@ -124,12 +139,43 @@ export default {
 
 <style lang="scss">
 #posts {
-  .filters {
-    margin: 32px 0;
-    grid-column: span 12;
-
+  .hero-wrapper {
+    max-width: 1360px;
+    margin: 0 auto;
+  }
+  .section-hero {
     @media (min-width: 480px) {
-      grid-column: 5 / span 7;
+      --section-content-grid-template-columns: repeat(24, minmax(auto, 1fr));
+      --section-content-max-width: 1235px;
+      --section-content-margin: 0 auto 0 0;
+    }
+
+    &__picture {
+      grid-column: span 12;
+
+      @media (min-width: 480px) {
+        grid-column: span 9 ;
+        grid-row: span 2;
+      }
+    }
+
+    &__title {
+      margin: 0 0 1.5rem 0;
+      grid-column: span 12;
+      place-self: end stretch;
+
+      @media (min-width: 480px) {
+        grid-column: span 13;
+      }
+    }
+
+    &__filters {
+      grid-column: span 12;
+      place-self: start stretch;
+
+      @media (min-width: 480px) {
+        grid-column: span 13;
+      }
     }
   }
 
