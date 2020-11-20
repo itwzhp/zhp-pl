@@ -216,7 +216,7 @@
             </li>
           </template>
         </ZCarousel>
-        <ZImage src="http://prod.przemyslawspaczek.pl/wp-content/uploads/2020/11/ROHIS.png"/>
+        <ZImage :src="`${$config.mediaBaseURL}/wp-content/uploads/2020/11/ROHIS.png`"/>
       </div>
     </ZSection>
   </div>
