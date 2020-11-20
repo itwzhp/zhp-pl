@@ -80,15 +80,19 @@ export default {
   display: grid;
   overflow: hidden;
   min-height: 426px;
+  background: #fff;
   border-radius: 10px;
   box-shadow: 0 2px 10px 0 rgba(157, 157, 157, 0.39);
   grid-auto-flow: row;
-  background: #fff;
 
   &__thumbnail {
     display: flex;
     overflow: hidden;
-    height: 396px;
+    height: 198px;
+
+    @media (min-width: 480px) {
+      height: 396px;
+    }
 
     & .z-image,
     & img {

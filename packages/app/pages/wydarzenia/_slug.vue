@@ -10,7 +10,6 @@
       >
         {{ event.title.rendered }}
       </ZHeading>
-      <!-- ZMetaPost<- for event -->
       <ZMetaEvent
         :thumbnail="event.rest_media"
         :date="event.rest_acf.date"

@@ -4,11 +4,9 @@ import Vue from 'vue';
 // hack for components available in WordPress
 import ZButton from '../../atoms/ZButton/ZButton.vue';
 import ZAccordion from '../ZAccordion/ZAccordion.vue';
-import ZTable from '../ZTable/ZTable.vue';
 
 Vue.component('ZButton', ZButton);
 Vue.component('ZAccordion', ZAccordion);
-Vue.component('ZTable', ZTable);
 
 export default {
   name: 'ZWordPress',
@@ -49,5 +47,42 @@ export default {
   figure {
     margin: 0;
   }
+
+  table {
+    border-collapse: collapse;
+
+    th,
+    strong {
+      color: var(--table-th-color, var(--color-primary));
+      font-weight: 700;
+    }
+
+    th,
+    td {
+      padding: 0.5rem 1rem;
+    }
+
+    tr {
+      border: solid #ddd;
+      border-width: 1px 0 0 0;
+
+      &:first-of-type {
+        border-width: 0;
+      }
+    }
+  }
+
+  blockquote {
+    padding: 1rem;
+    border: solid #cacaca;
+    border-width: 4px 0;
+    margin: 0;
+    font-style: italic;
+    font-weight: 300;
+  }
+
+  img { max-width: 100%; height: auto; }
+
+  a { color: var(--color-primary); }
 }
 </style>
