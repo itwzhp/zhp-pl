@@ -45,6 +45,10 @@ export default {
 <style lang="scss">
 .z-did-you-know {
   position: relative;
+  padding: 2rem 0;
+  @media (min-width: 480px) {
+    padding: 2rem 0;
+  }
 
   & > * {
     position: relative;
@@ -53,14 +57,17 @@ export default {
 
   &__question-marks {
     --icon-size: 100px;
-
+    --icon-color: #4a7b26;
     position: absolute;
-    z-index: 0;
-    top: 0;
-    left: 0;
-    fill: #4a7b26;
     opacity: 0.4;
-    transform: translate(-66%, -34%);
+    top: -2rem;
+    @media (min-width: 480px) {
+      z-index: 0;
+      top: 2rem;
+      left: 0;
+
+      transform: translate(-66%, -34%);
+    }
   }
 }
 </style>

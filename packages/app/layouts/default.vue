@@ -186,6 +186,12 @@ export default {
         store.commit('taxonomies/update', { name: taxonomy, items })
       }
     })
+    if (!Object.keys(store.state.posts.posts).length) {
+      console.log('...')
+      const postsRes = await $axios.get('posts', { params: { per_page: 9 } })
+      const posts = postsRes.data
+      store.commit('posts/update', posts)
+    }
     if (!Object.keys(store.state.cards.posts).length) {
       const tags = [{ id: 58, name: '>>' }, { id: 59, name: '>>>' }]
       tags.forEach(async (tag) => {

@@ -84,7 +84,6 @@ export default {
     }
 
     &__title {
-      margin: var(--section-title-margin, 0 0 0.75rem 0);
       grid-column: var(--section-title-grid-column, span 12);
       grid-row: var(--section-title-grid-row, 1);
 
@@ -94,6 +93,7 @@ export default {
     }
 
     &__subtitle {
+      margin: var(--section-title-margin, 0.75rem 0 0 0);
       grid-column: var(--section-subtitle-grid-column, span 12);
       grid-row: var(--section-subtitle-grid-row, 2);
 

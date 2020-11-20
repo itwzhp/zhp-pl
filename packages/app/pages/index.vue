@@ -216,7 +216,7 @@
             </li>
           </template>
         </ZCarousel>
-        <ZImage :src="`${$config.mediaBaseURL}/wp-content/uploads/2020/11/ROHIS.png`"/>
+        <ZImage :src="`${$config.mediaBaseURL}/wp-content/uploads/2020/11/ROHIS.png`" />
       </div>
     </ZSection>
   </div>
@@ -266,9 +266,9 @@ export default {
     // last 8 post for posts ZCarousel
     const postsRes = await $axios.get('posts', { params: { per_page: 8, tags: 57 } })
     const posts = postsRes.data
-    // last 5 posts for ZHighlighted component
-    const highlightedPostsRes = await $axios.get('posts', { params: { per_page: 5 } })
-    const highlightedPosts = highlightedPostsRes.data.map(post => ({ ...post, title: post.title.rendered }))
+    // // last 5 posts for ZHighlighted component
+    // const highlightedPostsRes = await $axios.get('posts', { params: { per_page: 5 } })
+    // const highlightedPosts = highlightedPostsRes.data.map(post => ({ ...post, title: post.title.rendered }))
     // last 8 events for events ZCarousel
     const eventsRes = await $axios.get('events', { params: { per_page: 8 } })
     const events = eventsRes.data
@@ -276,7 +276,7 @@ export default {
     const partnersRes = await $axios.get('logos', { params: { per_page: 99, logos_categories: 25 } })
     const partners = partnersRes.data
 
-    return { homepage, posts, highlightedPosts, events, partners }
+    return { homepage, posts, events, partners }
   },
   computed: {
     ...mapGetters({
@@ -284,6 +284,9 @@ export default {
     }),
     ageGroups () {
       return this.$store.getters['taxonomies/taxonomy']('age_groups')
+    },
+    highlightedPosts () {
+      return this.$store.getters['posts/posts'].map(post => ({ ...post, title: post.title.rendered }))
     }
   },
   methods: {

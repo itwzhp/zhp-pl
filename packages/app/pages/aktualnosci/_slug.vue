@@ -1,6 +1,6 @@
 <template>
   <div id="post">
-    <ZSection tag="div">
+    <ZSection tag="div" class="section">
       <ZHeading
         :level="1"
         class="title t3"
@@ -36,11 +36,32 @@
         class="files"
       />
       <div class="sidebar">
-&nbsp;
+        <div class="z-news">
+          <ZHeading class="t6 z-news__heading">
+            Warto przeczytać
+          </ZHeading>
+          <ZList>
+            <template v-for="news in newses">
+              <ZListItem
+                :key="news.id"
+                class="z-news__item"
+              >
+                <ZLink
+                  :to="`/posts/${news.slug}`"
+                  class="z-news__title"
+                  v-html="news.title.rendered"
+                />
+                <div class="light body-2">
+                  {{ news.date | format }} {{ news.rest_author.name }}
+                </div>
+              </ZListItem>
+            </template>
+          </ZList>
+        </div>
       </div>
     </ZSection>
     <ZSection
-      class="related"
+      class="related section"
       title="Mogą Cię także zainteresować:"
     >
       <ZCarousel
@@ -81,6 +102,7 @@
 </template>
 
 <script>
+import { format } from 'date-fns'
 import {
   ZSection,
   ZHeading,
@@ -89,10 +111,20 @@ import {
   ZCarousel,
   ZPost,
   ZWordPress,
-  ZFiles
+  ZFiles,
+  ZList,
+  ZLink
 } from '@nowa-zhp/ui'
 
 export default {
+  filters: {
+    format (date) {
+      if (!date) {
+        return ''
+      }
+      return format(new Date(date), 'dd.MM.yyyy')
+    }
+  },
   components: {
     ZSection,
     ZHeading,
@@ -101,14 +133,16 @@ export default {
     ZCarousel,
     ZPost,
     ZWordPress,
-    ZFiles
+    ZFiles,
+    ZList,
+    ZLink
   },
   async asyncData ({ $axios, params, query }) {
     // posts
     const postRes = await $axios.get('posts', { params: { _embed: true, ...params } })
     const post = postRes.data[0]
     // related posts
-    const relatedPostsRes = await $axios.get('posts', { per_page: 8 })
+    const relatedPostsRes = await $axios.get('posts', { params: { per_page: 8, categories: post.categories.shift() } })
     const relatedPosts = relatedPostsRes.data
     // files
     const files = post.rest_acf.plikilinki
@@ -124,6 +158,9 @@ export default {
   computed: {
     hasFiles () {
       return this.files.length > 0
+    },
+    newses () {
+      return this.$store.getters['posts/posts'].slice(4)
     }
   }
 }
@@ -132,7 +169,9 @@ export default {
 <style lang="scss">
 #post {
   overflow: hidden;
-
+  .section {
+    --section-margin: 25px 0;
+  }
   .title {
     margin: 32px 0;
     grid-column: span 12;
@@ -149,15 +188,21 @@ export default {
     }
   }
   .thumbnail {
-    grid-column: span 8;
+    grid-column: span 12;
     grid-row: 3;
     margin: 0;
+    @media (min-width: 480px) {
+      grid-column: span 8;
+    }
   }
   .cover {
     display: flex;
     overflow: hidden;
-    height: 396px;
+    height: 198px;
     border-radius: 10px;
+    @media (min-width: 480px) {
+      height: 396px;
+    }
 
     & .z-image,
     & img {
@@ -172,7 +217,6 @@ export default {
   }
 
   .content {
-    margin: 0 0 48px 0;
     grid-column: span 12;
     grid-row: 4;
 
@@ -191,6 +235,7 @@ export default {
   }
 
   .files {
+    margin: 48px 0 0 0;
     grid-column: span 12;
 
     @media (min-width: 480px) {
@@ -214,6 +259,29 @@ export default {
     display: flex;
     overflow: hidden;
     border-radius: 10px;
+  }
+}
+.z-news {
+  padding: 20px;
+  background: #f7f7f7;
+  box-shadow: 0 10px 30px 0 rgba(209, 213, 223, 0.5);
+  border-radius: 10px;
+
+  &__heading {
+    color: var(--color-primary);
+    margin: 0 0 32px 0;
+  }
+
+  &__item {
+    margin: 0 0 24px 0;
+    &:last-of-type {
+      margin: 0;
+    }
+  }
+
+  &__title {
+    margin: 0 0 0.5rem 0;
+    display: inline-block;
   }
 }
 </style>
