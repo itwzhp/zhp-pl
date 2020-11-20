@@ -72,9 +72,11 @@ export default {
     font-weight: var(--link-font-weight);
     line-height: 1.2;
     text-decoration: var(--link-text-decoration, inherit);
+    transition: var(--link-transition);
 
     &:hover {
-      text-decoration: var(--link-text-decoration, underline);
+      color: var(--link-hover-color, inherit);
+      text-decoration: var(--link-hover-text-decoration, underline);
     }
   }
 </style>

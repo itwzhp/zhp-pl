@@ -27,20 +27,23 @@
           />
         </ZLink>
         <div class="z-header__actions z-header__actions--right">
-          <ZDropdown>
+          <ZDropdown class="z-language">
             <template #toggle="{toggle}">
               <ZButton
-                class="z-button--text"
+                class="z-button--text uppercase"
                 @click="toggle"
               >
-                PL
+                {{ selectedLanguage }}
               </ZButton>
             </template>
             <template>
               <ZList>
                 <template v-for="(language, key) in languages">
                   <ZListItem :key="key">
-                    <ZLink :to="language.href">
+                    <ZLink
+                      :to="language.href"
+                      class="z-language__link"
+                    >
                       {{ language.name }}
                     </ZLink>
                   </ZListItem>
@@ -48,7 +51,7 @@
               </ZList>
             </template>
           </ZDropdown>
-          <ZDropdown>
+          <ZDropdown class="z-districts">
             <template #toggle="{toggle}">
               <ZButton
                 class="z-button--text"
@@ -61,7 +64,10 @@
               <ZList>
                 <template v-for="(choragiew, key) in choragwie">
                   <ZListItem :key="key">
-                    <ZLink :to="choragiew.href">
+                    <ZLink
+                      :to="choragiew.href"
+                      class="z-districts__link"
+                    >
                       {{ choragiew.name }}
                     </ZLink>
                   </ZListItem>
@@ -69,7 +75,7 @@
               </ZList>
             </template>
           </ZDropdown>
-          <ZDropdown>
+          <ZDropdown class="z-groups z-dropdown--right">
             <template #toggle="{toggle}">
               <ZButton
                 class="z-button--text"
@@ -82,7 +88,10 @@
               <ZList>
                 <template v-for="(jednostka, key) in grupaZHP">
                   <ZListItem :key="key">
-                    <ZLink :to="jednostka.href">
+                    <ZLink
+                      :to="jednostka.href"
+                      class="z-groups__link"
+                    >
                       {{ jednostka.name }}
                     </ZLink>
                   </ZListItem>
@@ -204,12 +213,6 @@ export default {
   data () {
     return {
       isOpen: false,
-      languages: [
-        { name: 'EN', href: '/en' },
-        { name: 'FR', href: '/fr' },
-        { name: 'ES', href: '/es' },
-        { name: 'RU', href: '/ru' }
-      ],
       choragwie: [
         { name: 'Białostocka', href: 'http://bialostocka.zhp.pl/' },
         { name: 'Dolnośląska', href: 'http://dolnoslaska.zhp.pl/' },
@@ -252,6 +255,19 @@ export default {
     },
     year () {
       return new Date().getFullYear()
+    },
+    languages () {
+      return [
+        { name: 'en', href: '/en' },
+        { name: 'fr', href: '/fr' },
+        { name: 'es', href: '/es' },
+        { name: 'ru', href: '/ru' },
+        { name: 'pl', href: '/' }
+      ].filter(language => (language.name !== this.selectedLanguage))
+    },
+    selectedLanguage () {
+      const languages = ['en', 'fr', 'es', 'ru']
+      return languages.includes(this.$route.params.slug) ? this.$route.params.slug : 'pl'
     }
   },
   methods: {
@@ -398,6 +414,46 @@ export default {
       @media (min-width: 480px) {
         display: inline;
       }
+    }
+  }
+}
+.z-language {
+  --list-item: 0;
+  --link-hover-text-decoration: none;
+  --dropdown-content-width: 35px;
+  --dropdown-content-padding: 16px 0;
+  --dropdown-content-transform: translateY(0);
+
+  &__link {
+    display: inline-flex;
+    width: 100%;
+    padding: 4px 8px;
+    transition: color 150ms ease-in-out,
+    background-color 150ms ease-in-out;
+    text-transform: uppercase;
+    &:hover {
+      background: var(--color-primary);
+      color: #fff
+    }
+  }
+}
+.z-districts,
+.z-groups {
+  --list-item: 0;
+  --link-hover-text-decoration: none;
+  --dropdown-content-width: 160px;
+  --dropdown-content-padding: 16px 0;
+  --dropdown-content-transform: translateY(0);
+
+  &__link {
+    display: inline-flex;
+    width: 100%;
+    padding: 4px 8px;
+    transition: color 150ms ease-in-out,
+      background-color 150ms ease-in-out;
+    &:hover {
+      background: var(--color-primary);
+      color: #fff
     }
   }
 }
