@@ -1,7 +1,7 @@
 <template>
   <div
     id="page"
-    class="page page--full"
+    class="page"
     :class="{'page--full': isFull}"
   >
     <template v-for="(carousel, key) in topCarousels">
@@ -217,6 +217,16 @@ export default {
 #page {
   overflow: hidden;
 
+  &.page {
+    &--full {
+      .content {
+        @media (min-width: 480px) {
+          grid-column: span 12;
+        }
+      }
+    }
+  }
+
   .title {
     margin: 32px 0;
     grid-column: span 12;
@@ -230,10 +240,6 @@ export default {
 
     @media (min-width: 480px) {
       grid-column: span 8;
-
-      .page--full & {
-        grid-column: span 12;
-      }
     }
   }
 
