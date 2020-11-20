@@ -41,7 +41,7 @@
               <template v-for="audience in audiences">
                 <ZLink
                   :key="audience.id"
-                  to="#"
+                  tag="span"
                   class="z-event__audience caption"
                 >
                   {{ audience.name }}
@@ -54,7 +54,7 @@
     </slot>
     <slot name="type">
       <ZLink
-        :to="to"
+        tag="span"
         class="z-event__type"
       >
         <ZBubble class="z-bubble--is-badge">
@@ -64,7 +64,7 @@
     </slot>
     <slot name="location">
       <ZLink
-        :to="location.to"
+        tag="span"
         class="z-event__location caption"
       >
         <ZBubble class="z-bubble--is-badge">
