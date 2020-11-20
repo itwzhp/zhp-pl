@@ -55,7 +55,8 @@ export default {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    '@nuxtjs/pwa'
+    '@nuxtjs/pwa',
+    '@nuxtjs/sentry'
   ],
   /*
   ** Axios module configuration
@@ -90,5 +91,9 @@ export default {
   },
   publicRuntimeConfig: {
     mediaBaseURL: process.env.MEDIA_BASE_URL
+  },
+  sentry: {
+    dsn: 'https://dbc6503ec4004c37a3f7706daa89aa73@o479654.ingest.sentry.io/5524988',
+    config: {}
   }
 }
