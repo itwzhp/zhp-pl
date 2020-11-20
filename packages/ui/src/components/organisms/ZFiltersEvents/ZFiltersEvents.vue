@@ -72,7 +72,7 @@
           </ZFormField>
         </template>
         <!-- TODO: include it to API request; ACF integration -->
-        <ZFormField label="Kiedy">
+        <ZFormField label="Kiedy" v-if="false">
           <template #input>
             <ZDatePicker
               v-model="selectedDate"
