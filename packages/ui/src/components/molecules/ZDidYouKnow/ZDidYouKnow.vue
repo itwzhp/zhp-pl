@@ -46,6 +46,7 @@ export default {
 .z-did-you-know {
   position: relative;
   padding: 2rem 0;
+
   @media (min-width: 480px) {
     padding: 2rem 0;
   }
@@ -58,14 +59,15 @@ export default {
   &__question-marks {
     --icon-size: 100px;
     --icon-color: #4a7b26;
+
     position: absolute;
-    opacity: 0.4;
     top: -2rem;
+    opacity: 0.4;
+
     @media (min-width: 480px) {
       z-index: 0;
       top: 2rem;
       left: 0;
-
       transform: translate(-66%, -34%);
     }
   }

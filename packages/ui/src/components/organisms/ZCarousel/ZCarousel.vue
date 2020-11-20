@@ -117,6 +117,7 @@ export default {
 
     &--peeked {
       margin: 0 -24px;
+
       .glide {
         &__track {
           overflow: visible;

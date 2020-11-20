@@ -1,6 +1,9 @@
 <template>
   <div id="post">
-    <ZSection tag="div" class="section">
+    <ZSection
+      tag="div"
+      class="section"
+    >
       <ZHeading
         :level="1"
         class="title t3"
