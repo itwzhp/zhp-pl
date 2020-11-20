@@ -50,7 +50,7 @@
                 class="z-news__item"
               >
                 <ZLink
-                  :to="`/posts/${news.slug}`"
+                  :to="`/aktualnosci/${news.slug}`"
                   class="z-news__title"
                   v-html="news.title.rendered"
                 />
