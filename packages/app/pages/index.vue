@@ -216,9 +216,7 @@
             </li>
           </template>
         </ZCarousel>
-        <ZText class="caption">
-          Stworzenie strony zhp.pl zostało sfinansowane ze&nbsp;środków Rządowego Programu Wsparcia Rozwoju Organizacji Harcerskich i&nbsp;Skautowych na&nbsp;lata 2018&#8209;2030.
-        </ZText>
+        <ZImage src="http://prod.przemyslawspaczek.pl/wp-content/uploads/2020/11/ROHIS.png"/>
       </div>
     </ZSection>
   </div>
