@@ -92,8 +92,8 @@ export default {
       position: absolute;
       z-index: 0;
       top: var(--dropdown-content-top);
-      left: var(--dropdown-content-left);
       right: var(--dropdown-content-right);
+      left: var(--dropdown-content-left);
       width: var(--dropdown-content-width, 100%);
       padding: var(--dropdown-content-padding, 32px 8px 16px 8px);
       margin: var(--dropdown-content-margin);
