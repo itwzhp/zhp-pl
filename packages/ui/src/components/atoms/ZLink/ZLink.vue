@@ -75,7 +75,6 @@ export default {
     transition: var(--link-transition);
 
     &:hover {
-      color: var(--link-hover-color, inherit);
       text-decoration: var(--link-hover-text-decoration, underline);
     }
   }

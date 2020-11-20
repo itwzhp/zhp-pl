@@ -165,7 +165,7 @@
               :to="`/wydarzenia/${event.slug}`"
               :author="event.rest_author"
               :date="event.rest_acf.date"
-              :location="{name: 'Warszawa'}"
+              :location="{name: event._embedded['wp:term'][0][0] && event._embedded['wp:term'][0][0].name, to:'#'}"
               :type="event.rest_event_type"
               :audiences="event.age_groups.map((ageGroup)=>(ageGroups[ageGroup]))"
             />
@@ -237,7 +237,6 @@ import {
   ZVideo,
   ZImage,
   ZFacebook,
-  ZText,
   ZLink
 } from '@nowa-zhp/ui'
 import { mapGetters } from 'vuex'
@@ -257,20 +256,19 @@ export default {
     ZVideo,
     ZImage,
     ZFacebook,
-    ZText,
     ZLink
   },
   async asyncData ({ $axios }) {
     const homepageRes = await $axios.get('pages', { params: { slug: 'strona-glowna', _embed: true } })
     const homepage = homepageRes.data.shift()
     // last 8 post for posts ZCarousel
-    const postsRes = await $axios.get('posts', { params: { per_page: 8, tags: 57 } })
+    const postsRes = await $axios.get('posts', { params: { per_page: 8, tags: 57, _embed: true } })
     const posts = postsRes.data
     // // last 5 posts for ZHighlighted component
     // const highlightedPostsRes = await $axios.get('posts', { params: { per_page: 5 } })
     // const highlightedPosts = highlightedPostsRes.data.map(post => ({ ...post, title: post.title.rendered }))
     // last 8 events for events ZCarousel
-    const eventsRes = await $axios.get('events', { params: { per_page: 8 } })
+    const eventsRes = await $axios.get('events', { params: { per_page: 8, _embed: true } })
     const events = eventsRes.data
     // partners
     const partnersRes = await $axios.get('logos', { params: { per_page: 99, logos_categories: 25 } })

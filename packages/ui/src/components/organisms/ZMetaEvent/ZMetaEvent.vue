@@ -13,16 +13,16 @@
         <div class="z-date__separator" />
         <ZDate :date="date.end" />
       </div>
-      <ZLink to="#">
+      <ZLink tag="span">
         {{ location.name }}
       </ZLink>
-      <ZLink to="#">
+      <ZLink tag="span">
         {{ type.name }}
       </ZLink>
       <template v-for="audience in audiences">
         <ZLink
           :key="audience.id"
-          to="#"
+          tag="span"
         >
           {{ audience.name }}
         </ZLink>
@@ -83,6 +83,7 @@ export default {
   border-radius: 10px;
   box-shadow: 0 2px 10px 0 rgba(157, 157, 157, 0.39);
   grid-auto-flow: row;
+  background: #fff;
 
   &__thumbnail {
     display: flex;

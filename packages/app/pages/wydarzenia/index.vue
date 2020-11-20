@@ -18,7 +18,7 @@
           :thumbnail="event.rest_media"
           :title="event.title.rendered"
           :date="event.rest_acf.date"
-          :location="{name: event._embedded['wp:term'][0][0].name, to:'#'}"
+          :location="{name: event._embedded['wp:term'][0][0] && event._embedded['wp:term'][0][0].name, to:'#'}"
           :type="event.rest_event_type"
           :audiences="event.age_groups.map((ageGroup)=>(ageGroups[ageGroup]))"
           :excerpt="page === '1' && index === 0 ? event.excerpt.rendered : ''"

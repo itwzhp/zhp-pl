@@ -2,6 +2,7 @@
   <div id="event">
     <ZSection
       tag="div"
+      class="section"
     >
       <ZHeading
         :level="1"
@@ -13,7 +14,7 @@
       <ZMetaEvent
         :thumbnail="event.rest_media"
         :date="event.rest_acf.date"
-        :location="{name: 'Warszawa', to:'#'}"
+        :location="{name: event._embedded['wp:term'][0][0] && event._embedded['wp:term'][0][0].name, to:'#'}"
         :type="event.rest_event_type"
         :audiences="event.age_groups.map((ageGroup)=>(ageGroups[ageGroup]))"
         class="meta"
@@ -35,10 +36,10 @@
         class="files"
       />
     </ZSection>
-    <ZSection class="related">
-      <ZHeading class="related__title">
-        Mogą Cię także zainteresować:
-      </ZHeading>
+    <ZSection
+      class="related section"
+      title="Mogą Cię także zainteresować:"
+    >
       <ZCarousel
         v-if="relatedEvents.length > 0"
         :peeked="true"
@@ -65,9 +66,9 @@
               :thumbnail="relatedEvent.rest_media"
               :title="relatedEvent.title.rendered"
               :date="relatedEvent.rest_acf.date"
-              :location="{name: 'Warszawa', to:'#'}"
+              :location="{name: relatedEvent._embedded['wp:term'][0][0] && relatedEvent._embedded['wp:term'][0][0].name, to:'#'}"
               :type="relatedEvent.rest_event_type"
-              :audiences="event.age_groups.map((ageGroup)=>(ageGroups[ageGroup]))"
+              :audiences="relatedEvent.age_groups.map((ageGroup)=>(ageGroups[ageGroup]))"
               :to="`/wydarzenia/${relatedEvent.slug}`"
             />
           </li>
@@ -102,10 +103,10 @@ export default {
   },
   async asyncData ({ $axios, params, query }) {
     // events
-    const eventRes = await $axios.get('events', { params })
+    const eventRes = await $axios.get('events', { params: { ...params, _embed: true } })
     const event = eventRes.data[0]
     // related events
-    const relatedEventsRes = await $axios.get('events', { per_page: 8 })
+    const relatedEventsRes = await $axios.get('events', { params: { per_page: 8, _embed: true } })
     const relatedEvents = relatedEventsRes.data
     // files
     const files = event.rest_acf.plikilinki
@@ -132,6 +133,10 @@ export default {
 <style lang="scss">
 #event {
   overflow: hidden;
+
+  .section {
+    --section-margin: 25px 0;
+  }
 
   .title {
     margin: 32px 0;
