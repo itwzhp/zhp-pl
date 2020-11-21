@@ -214,7 +214,6 @@
             >
               <ZImage
                 :src="partner.rest_media"
-                :lazy="false"
               />
             </li>
           </template>

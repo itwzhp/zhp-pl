@@ -50,7 +50,6 @@
               <template v-if="post.type === 'logo'">
                 <ZImage
                   :src="post.rest_media"
-                  :lazy="false"
                 />
               </template>
             </li>
@@ -160,7 +159,6 @@
               <template v-if="post.type === 'logo'">
                 <ZImage
                   :src="post.rest_media"
-                  :lazy="false"
                 />
               </template>
             </li>
