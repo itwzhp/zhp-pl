@@ -36,7 +36,10 @@
           />
         </slot>
         <slot name="meta">
-          <div class="z-event__meta">
+          <div
+            v-if="audiences.length"
+            class="z-event__meta"
+          >
             <slot name="audience">
               <template v-for="audience in audiences">
                 <ZLink
@@ -54,6 +57,7 @@
     </slot>
     <slot name="type">
       <ZLink
+        v-if="type.name"
         tag="span"
         class="z-event__type"
       >
@@ -64,6 +68,7 @@
     </slot>
     <slot name="location">
       <ZLink
+        v-if="location.name"
         tag="span"
         class="z-event__location caption"
       >

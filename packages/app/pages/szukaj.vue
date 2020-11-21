@@ -21,15 +21,21 @@
         <template v-if="post.subtype === 'post'">
           <ZPost
             :key="post.id"
+            :to="`/aktualnosci/${post._embedded.self[0].slug}`"
             :title="post.title"
+            :date="post._embedded.self[0].date"
             :thumbnail="post._embedded.self[0].rest_media || require('~/assets/placeholder.png')"
+            :author="post._embedded.self[0].rest_author"
             style="grid-column: span 3;"
           />
         </template>
         <template v-else-if="post.subtype === 'event'">
           <ZEvent
             :key="post.id"
+            :to="`/wydarzenia/${post._embedded.self[0].slug}`"
             :title="post.title"
+            :date="post._embedded.self[0].rest_acf.date"
+            :type="post._embedded.self[0].rest_acf.rest_event_type"
             :thumbnail="post._embedded.self[0].rest_media || require('~/assets/placeholder.png')"
             style="grid-column: span 3;"
           />
@@ -37,6 +43,7 @@
         <template v-else>
           <ZCard
             :key="post.id"
+            :to="post._embedded.self[0].slug"
             :title="post.title"
             :thumbnail="post._embedded.self[0].rest_media || require('~/assets/placeholder.png')"
             style="grid-column: span 3;"
@@ -78,7 +85,7 @@ export default {
     ZPagination
   },
   async asyncData ({ $axios, params, query }) {
-    const searchRes = await $axios.get('pages', { params: { slug: 'szukaj', _embed: true } })
+    const searchRes = await $axios.get('pages', { params: { slug: 'szukaj', _embed: true, per_page: 16 } })
     const search = searchRes.data.shift()
 
     const postsRes = await $axios.get('search', { params: { ...query, _embed: true } })
