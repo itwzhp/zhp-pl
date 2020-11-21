@@ -17,6 +17,7 @@
     <ZButton
       class="z-video__controls"
       @click="controls"
+      :aria-label="aria"
     >
       <div
         class="z-video__icon"
@@ -50,6 +51,11 @@ export default {
       return this.isPlay
         ? 'pause'
         : 'play';
+    },
+    aria() {
+      return this.isPlay
+        ? 'zatrzymaj wideo'
+        : 'uruchom wideo';
     },
   },
   methods: {

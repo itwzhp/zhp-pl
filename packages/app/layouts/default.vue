@@ -27,7 +27,7 @@
           />
         </ZLink>
         <div class="z-header__actions z-header__actions--right">
-          <ZDropdown class="z-language">
+          <ZDropdown class="z-language z-dropdown--has-chevron">
             <template #toggle="{toggle}">
               <ZButton
                 class="z-button--text uppercase"
@@ -51,7 +51,7 @@
               </ZList>
             </template>
           </ZDropdown>
-          <ZDropdown class="z-districts">
+          <ZDropdown class="z-districts z-dropdown--has-chevron">
             <template #toggle="{toggle}">
               <ZButton
                 class="z-button--text"
@@ -75,7 +75,7 @@
               </ZList>
             </template>
           </ZDropdown>
-          <ZDropdown class="z-groups z-dropdown--right">
+          <ZDropdown class="z-groups z-dropdown--right z-dropdown--has-chevron">
             <template #toggle="{toggle}">
               <ZButton
                 class="z-button--text"
@@ -441,6 +441,7 @@ export default {
 
 .z-districts,
 .z-groups {
+  --button-color: var(--color-primary-darken);
   --list-item: 0;
   --link-hover-text-decoration: none;
   --dropdown-content-width: 160px;

@@ -7,12 +7,14 @@
       v-if="previousUnavailable"
       class="z-pagination__previous"
       @click="change(-1)"
+      aria-label="przejdź do poprzedniej strony"
     >
       <ZIcon name="arrow-left" />
     </ZButton>
     <ZButton
       v-if="nextUnavailable"
       class="z-pagination__next"
+      aria-label="przejdź do następnej strony"
       @click="change(1)"
     >
       <ZIcon name="arrow-right" />

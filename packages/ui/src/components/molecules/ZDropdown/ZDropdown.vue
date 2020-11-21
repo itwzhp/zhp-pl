@@ -104,7 +104,7 @@ export default {
     }
 
     &--has-chevron {
-      #{$this}__toggle {
+      & > *:first-child {
         &::after {
           width: 0;
           height: 0;

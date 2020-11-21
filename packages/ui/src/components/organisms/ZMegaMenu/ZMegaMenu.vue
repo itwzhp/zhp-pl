@@ -7,6 +7,7 @@
     <ZButton
       class="z-button--text z-mega-menu__toggler"
       @click="toggle"
+      aria-label="menu"
     >
       <ZIcon :name="icon" />
     </ZButton>

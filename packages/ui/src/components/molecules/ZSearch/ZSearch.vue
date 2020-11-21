@@ -10,6 +10,7 @@
       type="text"
       placeholder="Czego dzisiaj chcesz dowiedzieć się o ZHP?"
       class="z-search__input"
+      aria-label="wpisz czego szukasz na stornie ZHP"
     />
     <ZButton
       style="--button-min-width: 168px;"

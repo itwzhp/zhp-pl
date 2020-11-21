@@ -88,7 +88,7 @@ export default {
     text-transform: var(--button-text-transform, uppercase);
 
     &--text {
-      --button-color: #7ba22e;
+      --button-color: var(--color-primary-darken);
       --button-background: transparent;
       --button-min-width: unset;
       --button-text-transform: none;
