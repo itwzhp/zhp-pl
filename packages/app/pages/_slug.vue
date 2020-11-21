@@ -3,6 +3,7 @@
     id="page"
     class="page"
     :class="{'page--full': isFull}"
+    :style="custom"
   >
     <template v-for="(carousel, key) in topCarousels">
       <ZSection
@@ -67,6 +68,17 @@
       >
         {{ page.title.rendered }}
       </ZHeading>
+      <figure class="thumbnail">
+        <ZImage
+          :src="page._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url"
+          class="cover"
+        />
+        <ZText
+          tag="figcaption"
+          class="caption"
+          v-html="`fot. ${page._embedded['wp:featuredmedia'][0].title.rendered}`"
+        />
+      </figure>
       <nuxt-child
         v-if="hasChildren"
         :children="children"
@@ -165,7 +177,8 @@ import {
   ZWordPress,
   ZList,
   ZLink,
-  ZImage
+  ZImage,
+  ZText
 } from '@nowa-zhp/ui'
 
 export default {
@@ -177,7 +190,8 @@ export default {
     ZWordPress,
     ZList,
     ZLink,
-    ZImage
+    ZImage,
+    ZText
   },
   async asyncData ({ $axios, params, redirect, route }) {
     const asyncCarousel = async (carousel) => {
@@ -193,10 +207,10 @@ export default {
         gap: parseInt(carousel.gap, 10)
       }
     }
-    const pageRest = await $axios.get('pages', { params })
+    const pageRest = await $axios.get('pages', { params: { _embed: true, ...params } })
     const page = pageRest.data.filter(page => page.parent === 0).shift()
 
-    const childrenRes = await $axios.get('pages', { params: { parent: page.id } })
+    const childrenRes = await $axios.get('pages', { params: { parent: page.id, _embed: true } })
     const children = childrenRes.data.sort((a, b) => (a.menu_order < b.menu_order ? -1 : 1))
     if (children.length && !params.id) {
       redirect(`${route.path}/${children[0].slug}`)
@@ -229,6 +243,14 @@ export default {
     },
     bottomCarousels () {
       return this.carousels.filter(carosuel => carosuel.location === 'after')
+    },
+    custom () {
+      return this.page.rest_acf.featuredmedia
+        ? {
+          '--cover-mobile-height': this.page.rest_acf.featuredmedia.mobile && `${this.page.rest_acf.featuredmedia.mobile}px`,
+          '--cover-height': this.page.rest_acf.featuredmedia.desktop && `${this.page.rest_acf.featuredmedia.desktop}px`
+        }
+        : {}
     }
   }
 }
@@ -242,7 +264,8 @@ export default {
   }
   &.page {
     &--full {
-      .content {
+      .content,
+      .thumbnail{
         @media (min-width: 480px) {
           grid-column: span 12;
         }
@@ -280,6 +303,36 @@ export default {
 
     &__slider {
       grid-column: span 12;
+    }
+  }
+
+  .thumbnail {
+    grid-column: span 12;
+    grid-row: 3;
+    margin: 0;
+    @media (min-width: 480px) {
+      grid-column: span 8;
+    }
+  }
+
+  .cover {
+    display: flex;
+    overflow: hidden;
+    height: var(--cover-mobile-height, var(--cover-height, 198px));
+    border-radius: 10px;
+    @media (min-width: 480px) {
+      height: var(--cover-height, 396px);
+    }
+
+    & .z-image,
+    & img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    @media (min-width: 480px) {
+      grid-column: span 8;
     }
   }
 }
