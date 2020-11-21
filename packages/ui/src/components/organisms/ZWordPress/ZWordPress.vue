@@ -73,16 +73,26 @@ export default {
   }
 
   blockquote {
+    display: inline-flex;
     padding: 1rem;
     border: solid #cacaca;
     border-width: 4px 0;
     margin: 0;
     font-style: italic;
     font-weight: 300;
+    &::before {
+      width: 45px;
+      height: 45px;
+      background: url('~assets/quote.svg');
+      background-size: 100% 100%;
+      content: "";
+    }
   }
 
   img { max-width: 100%; height: auto; }
 
-  a { color: var(--color-primary); }
+  a:not(.z-button) {
+    color: var(--color-primary);
+  }
 }
 </style>
