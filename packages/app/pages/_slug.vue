@@ -64,9 +64,8 @@
       <ZHeading
         :level="1"
         class="title t3"
-      >
-        {{ page.title.rendered }}
-      </ZHeading>
+        v-html="hasChildren ? activeChild.title.rendered : page.title.rendered"
+      />
       <figure
         v-if="page._embedded['wp:featuredmedia']"
         class="thumbnail"
@@ -104,7 +103,10 @@
           </ZHeading>
           <ZList>
             <template v-for="child in children">
-              <ZListItem class="z-box__item" :key="child.id">
+              <ZListItem
+                :key="child.id"
+                class="z-box__item"
+              >
                 <ZLink :to="`/${page.slug}/${child.slug}`">
                   {{ child.title.rendered }}
                 </ZLink>
@@ -194,6 +196,7 @@ export default {
     ZImage,
     ZText
   },
+  watchQuery: true,
   async asyncData ({ $axios, params, redirect, route }) {
     const asyncCarousel = async (carousel) => {
       const { post_type, taxonomy, id, per_page } = carousel
@@ -233,6 +236,9 @@ export default {
     }
   },
   computed: {
+    activeChild () {
+      return this.hasChildren && this.children[this.$route.params.id]
+    },
     isFull () {
       return /page-full/gi.test(this.page.template)
     },
