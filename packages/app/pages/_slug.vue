@@ -98,17 +98,17 @@
         >
           <ZHeading
             :level="2"
-            class="t4"
+            class="t6 z-box__heading"
           >
             Przejdź do
           </ZHeading>
           <ZList>
             <template v-for="child in children">
-              <li :key="child.id">
+              <ZListItem class="z-box__item" :key="child.id">
                 <ZLink :to="`/${page.slug}/${child.slug}`">
                   {{ child.title.rendered }}
                 </ZLink>
-              </li>
+              </ZListItem>
             </template>
           </ZList>
         </div>
@@ -211,7 +211,7 @@ export default {
     const pageRest = await $axios.get('pages', { params: { _embed: true, ...params } })
     const page = pageRest.data.filter(page => page.parent === 0).shift()
 
-    const childrenRes = await $axios.get('pages', { params: { parent: page.id, _embed: true } })
+    const childrenRes = await $axios.get('pages', { params: { parent: page.id, _embed: true, per_page: 99 } })
     const children = childrenRes.data.sort((a, b) => (a.menu_order < b.menu_order ? -1 : 1))
     if (children.length && !params.id) {
       redirect(`${route.path}/${children[0].slug}`)
@@ -347,5 +347,18 @@ export default {
   background: #f7f7f7;
   border-radius: 10px;
   box-shadow: 0 10px 30px 0 rgba(209, 213, 223, 0.5);
+  &__heading {
+    margin: 0 0 24px 0;
+  }
+  &__item {
+    margin: 0 0 .75rem 0;
+    &:last-child {
+      margin: 0;
+    }
+  }
+
+  .nuxt-link-active {
+    color: var(--color-primary)
+  }
 }
 </style>
