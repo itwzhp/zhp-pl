@@ -130,6 +130,9 @@ export default {
 
 <style lang="scss">
 .z-mega-menu {
+  .nuxt-link-active {
+    color: var(--color-primary);
+  }
   display: grid;
   align-items: center;
   justify-content: center;
