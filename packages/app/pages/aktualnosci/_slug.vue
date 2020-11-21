@@ -163,7 +163,7 @@ export default {
       return this.files.length > 0
     },
     newses () {
-      return this.$store.getters['posts/posts'].slice(4)
+      return this.$store.getters['posts/posts'].filter(post => (post.id !== this.post.id)).slice(0, 4)
     }
   }
 }

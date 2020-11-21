@@ -284,7 +284,7 @@ export default {
       return this.$store.getters['taxonomies/taxonomy']('age_groups')
     },
     highlightedPosts () {
-      return this.$store.getters['posts/posts'].map(post => ({ ...post, title: post.title.rendered }))
+      return this.$store.getters['posts/posts'].map(post => ({ ...post, title: post.title.rendered })).slice(0, 5)
     }
   },
   methods: {
