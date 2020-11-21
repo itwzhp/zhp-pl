@@ -68,7 +68,10 @@
       >
         {{ page.title.rendered }}
       </ZHeading>
-      <figure class="thumbnail">
+      <figure
+        v-if="page._embedded['wp:featuredmedia']"
+        class="thumbnail"
+      >
         <ZImage
           :src="page._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url"
           class="cover"
@@ -274,15 +277,19 @@ export default {
   }
 
   .title {
-    margin: 32px 0;
+    margin: 32px 0 8px 0;
     grid-column: span 12;
     grid-row: 1;
+
+    @media (min-width: 480px) {
+      margin: 32px 0;
+    }
   }
 
   .content {
     margin: 0 0 48px 0;
     grid-column: span 12;
-    grid-row: 4;
+    grid-row: 3;
 
     @media (min-width: 480px) {
       grid-column: span 8;
@@ -291,10 +298,10 @@ export default {
 
   .sidebar {
     grid-column: span 12;
-
+    grid-row: 4;
     @media (min-width: 480px) {
       grid-column: span 4;
-      grid-row: 3 / span 3;
+      grid-row: 2 / span 3;
     }
   }
 
@@ -308,7 +315,7 @@ export default {
 
   .thumbnail {
     grid-column: span 12;
-    grid-row: 3;
+    grid-row: 2;
     margin: 0;
     @media (min-width: 480px) {
       grid-column: span 8;
