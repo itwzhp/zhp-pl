@@ -9,7 +9,7 @@
           :level="1"
           class="section-hero__title t3"
         >
-          Przygoda. Przyjaźń. Wychowanie.
+          ZHP - sprawności na&nbsp;całe życie
         </ZHeading>
         <ZSearch
           class="section-hero__search"
@@ -333,7 +333,7 @@ export default {
       place-self: end stretch;
 
       @media (min-width: 480px) {
-        grid-column: span 8;
+        grid-column: span 9;
       }
     }
 
