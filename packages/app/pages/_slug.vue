@@ -11,12 +11,16 @@
         class="carousel"
       >
         <ZCarousel
-          :peeked="true"
+          :peeked="carousel.peeked"
           :settings="{
+            perView: carousel.perView,
+            autoplay: carousel.autoplay,
+            gap: carousel.gap,
             type: 'carousel',
             breakpoints: {
               480: {
                 perView: 1,
+                gap: 20,
                 peek: {
                   before: 0,
                   after: 20
@@ -43,14 +47,20 @@
                 />
               </template>
               <template v-if="post.type === 'logo'">
-                <ZImage :src="post.rest_media" />
+                <ZImage
+                  :src="post.rest_media"
+                  :lazy="false"
+                />
               </template>
             </li>
           </template>
         </ZCarousel>
       </ZSection>
     </template>
-    <ZSection tag="div">
+    <ZSection
+      tag="div"
+      class="section"
+    >
       <ZHeading
         :level="1"
         class="title t3"
@@ -68,7 +78,7 @@
         class="content"
       />
       <div class="sidebar">
-        &nbsp;<div
+        <div
           v-if="hasChildren"
           class="z-box"
         >
@@ -97,12 +107,16 @@
         class="carousel"
       >
         <ZCarousel
-          :peeked="true"
+          :peeked="carousel.peeked"
           :settings="{
+            perView: carousel.perView,
+            autoplay: carousel.autoplay,
+            gap: carousel.gap,
             type: 'carousel',
             breakpoints: {
               480: {
                 perView: 1,
+                gap: 20,
                 peek: {
                   before: 0,
                   after: 20
@@ -129,7 +143,10 @@
                 />
               </template>
               <template v-if="post.type === 'logo'">
-                <ZImage :src="post.rest_media" />
+                <ZImage
+                  :src="post.rest_media"
+                  :lazy="false"
+                />
               </template>
             </li>
           </template>
@@ -169,7 +186,11 @@ export default {
       return {
         posts: postsRes.data,
         title: carousel.title,
-        location: carousel.location
+        location: carousel.location,
+        peeked: carousel.peeked,
+        autoplay: parseInt(carousel.autoplay, 10),
+        perView: parseInt(carousel.perView, 10),
+        gap: parseInt(carousel.gap, 10)
       }
     }
     const pageRest = await $axios.get('pages', { params })
@@ -216,7 +237,9 @@ export default {
 <style lang="scss">
 #page {
   overflow: hidden;
-
+  .section {
+    --section-margin: 25px 0;
+  }
   &.page {
     &--full {
       .content {

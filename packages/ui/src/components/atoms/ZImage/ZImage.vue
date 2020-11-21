@@ -2,8 +2,7 @@
   <div class="z-image">
     <img
       ref="img"
-      :data-src="src"
-      v-bind="$attrs"
+      v-bind="{...$attrs, ...source}"
       alt=""
     >
   </div>
@@ -19,8 +18,20 @@ export default {
       type: String,
       default: '',
     },
+    lazy: {
+      type: Boolean,
+      default: true,
+    },
+  },
+  computed: {
+    source() {
+      return this.lazy
+        ? { 'data-src': this.src }
+        : { src: this.src };
+    },
   },
   mounted() {
+    if (!this.lazy) return;
     const { img } = this.$refs;
     const observer = lozad(img);
     observer.observe();

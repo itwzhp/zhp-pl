@@ -212,11 +212,16 @@
               :key="partner.id"
               class="glide__slide"
             >
-              <ZImage :src="partner.rest_media" />
+              <ZImage
+                :src="partner.rest_media"
+                :lazy="false"
+              />
             </li>
           </template>
         </ZCarousel>
-        <ZImage :src="`${$config.mediaBaseURL}/wp-content/uploads/2020/11/ROHIS.png`" />
+        <ZImage
+          :src="`${$config.mediaBaseURL}/wp-content/uploads/2020/11/ROHIS.png`"
+        />
       </div>
     </ZSection>
   </div>
