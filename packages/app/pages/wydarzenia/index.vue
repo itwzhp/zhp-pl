@@ -119,7 +119,7 @@ export default {
         }
       }
     }
-    const filtersKeys = ['event_types', 'age_groups', 'districts', 'before', 'after']
+    const filtersKeys = ['event_types', 'age_groups', 'loaclizations', 'before', 'after']
     const selectedFilters = Object.keys(query).reduce((accumulator, param) => {
       if (filtersKeys.includes(param)) {
         return {

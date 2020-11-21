@@ -156,7 +156,6 @@ import {
 } from '@nowa-zhp/ui'
 
 export default {
-  name: 'Default',
   components: {
     ZText,
     ZSection,
@@ -187,7 +186,7 @@ export default {
       const { text } = randomRes.data
       store.commit('random/update', text)
     }
-    const tax = ['age_groups', 'event_types', 'districts', 'categories'] // categories
+    const tax = ['age_groups', 'event_types', 'localizations', 'categories'] // categories
     tax.forEach(async (taxonomy) => {
       if (!store.getters['taxonomies/taxonomy'](taxonomy)) {
         const itemsRes = await $axios.get(taxonomy, { params: { per_page: 99, orderby: 'name' } })
@@ -196,7 +195,6 @@ export default {
       }
     })
     if (!Object.keys(store.state.posts.posts).length) {
-      console.log('...')
       const postsRes = await $axios.get('posts', { params: { per_page: 9 } })
       const posts = postsRes.data
       store.commit('posts/update', posts)
