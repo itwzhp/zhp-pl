@@ -417,6 +417,7 @@ export default {
     }
   }
 }
+
 .z-language {
   --list-item: 0;
   --link-hover-text-decoration: none;
@@ -428,15 +429,18 @@ export default {
     display: inline-flex;
     width: 100%;
     padding: 4px 8px;
-    transition: color 150ms ease-in-out,
-    background-color 150ms ease-in-out;
     text-transform: uppercase;
+    transition:
+      color 150ms ease-in-out,
+      background-color 150ms ease-in-out;
+
     &:hover {
       background: var(--color-primary);
-      color: #fff
+      color: #fff;
     }
   }
 }
+
 .z-districts,
 .z-groups {
   --list-item: 0;
@@ -449,11 +453,13 @@ export default {
     display: inline-flex;
     width: 100%;
     padding: 4px 8px;
-    transition: color 150ms ease-in-out,
+    transition:
+      color 150ms ease-in-out,
       background-color 150ms ease-in-out;
+
     &:hover {
       background: var(--color-primary);
-      color: #fff
+      color: #fff;
     }
   }
 }

@@ -74,18 +74,20 @@ export default {
 
   blockquote {
     display: inline-flex;
-    padding: 1rem;
+    padding: 1rem 1rem 1rem 1.5rem;
     border: solid #cacaca;
     border-width: 4px 0;
-    margin: 0;
+    margin: 1rem 0;
     font-style: italic;
     font-weight: 300;
+    font-size: 1.25rem;
     &::before {
-      width: 45px;
-      height: 45px;
+      flex: 0 0 40px;
+      height: 40px;
       background: url('~assets/quote.svg');
       background-size: 100% 100%;
       content: "";
+      margin: 1rem 1.5rem 1rem 0;
     }
   }
 
