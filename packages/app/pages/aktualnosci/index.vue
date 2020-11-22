@@ -29,7 +29,7 @@
       <template v-for="(post, index) in posts">
         <ZPost
           :key="post.id"
-          :thumbnail="post.rest_media"
+          :thumbnail="post.rest_media || require('~/assets/placeholder.png')"
           :title="post.title && post.title.rendered"
           :to="post.rest_redirect ? post.rest_redirect : `/aktualnosci/${post.slug}`"
           :author="post.rest_author"
