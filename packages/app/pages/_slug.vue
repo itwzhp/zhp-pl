@@ -260,6 +260,31 @@ export default {
         }
         : {}
     }
+  },
+  head () {
+    const title = this.page.title.rendered + ' | Związek Harcerstwa Polskiego'
+    const description = ''
+    const image = 'https://zhp.pl/wp-content/uploads/2020/10/zhp_fb-850x468-1.png'
+    return {
+      title,
+      meta: [
+        {
+          hid: 'og:title',
+          property: 'og:title',
+          content: title
+        },
+        {
+          hid: 'og:description',
+          property: 'og:description',
+          content: description
+        },
+        {
+          hid: 'og:image',
+          property: 'og:image',
+          content: image
+        }
+      ]
+    }
   }
 }
 </script>
