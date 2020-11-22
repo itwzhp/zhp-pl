@@ -200,7 +200,7 @@ export default {
       store.commit('posts/update', posts)
     }
     if (!Object.keys(store.state.cards.posts).length) {
-      const tags = [{ id: 58, name: '>>' }, { id: 59, name: '>>>' }]
+      const tags = [{ id: 425, name: '>>' }, { id: 427, name: '>>>' }]
       tags.forEach(async (tag) => {
         const postRes = await $axios.get('posts', { params: { per_page: 1, tags: tag.id, _embed: true } })
         const post = postRes.data.shift()

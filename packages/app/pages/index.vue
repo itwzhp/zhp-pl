@@ -266,7 +266,7 @@ export default {
     const homepageRes = await $axios.get('pages', { params: { slug: 'strona-glowna', _embed: true } })
     const homepage = homepageRes.data.shift()
     // last 8 post for posts ZCarousel
-    const postsRes = await $axios.get('posts', { params: { per_page: 8, tags: 57, _embed: true } })
+    const postsRes = await $axios.get('posts', { params: { per_page: 8, tags: 426, _embed: true } })
     const posts = postsRes.data
     // // last 5 posts for ZHighlighted component
     // const highlightedPostsRes = await $axios.get('posts', { params: { per_page: 5 } })
