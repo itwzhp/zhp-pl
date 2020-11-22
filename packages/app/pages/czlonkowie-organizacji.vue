@@ -107,12 +107,18 @@ export default {
     }
   },
   head () {
-    const title = 'Członkowie organizacji | Związek Harcerstwa Polskiego'
+    const title = 'Członkowie organizacji |  Związek Harcerstwa Polskiego'
     const description = ''
     const image = 'https://zhp.pl/wp-content/uploads/2015/01/zhp_fb.png'
     return {
       title,
       meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: description
+        },
+        // Open Graph
         {
           hid: 'og:title',
           property: 'og:title',
@@ -127,6 +133,17 @@ export default {
           hid: 'og:image',
           property: 'og:image',
           content: image
+        },
+        // Twitter Card
+        {
+          hid: 'twitter:title',
+          property: 'twitter:title',
+          content: title
+        },
+        {
+          hid: 'twitter:description',
+          property: 'twitter:description',
+          content: description
         }
       ]
     }
