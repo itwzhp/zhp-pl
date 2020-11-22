@@ -6,8 +6,8 @@
     <ZButton
       v-if="previousUnavailable"
       class="z-pagination__previous"
-      @click="change(-1)"
       aria-label="przejdź do poprzedniej strony"
+      @click="change(-1)"
     >
       <ZIcon name="arrow-left" />
     </ZButton>

@@ -6,8 +6,8 @@
   >
     <ZButton
       class="z-button--text z-mega-menu__toggler"
-      @click="toggle"
       aria-label="menu"
+      @click="toggle"
     >
       <ZIcon :name="icon" />
     </ZButton>
@@ -133,6 +133,7 @@ export default {
   .nuxt-link-active {
     color: var(--color-primary);
   }
+
   display: grid;
   align-items: center;
   justify-content: center;

@@ -16,8 +16,8 @@
     </video>
     <ZButton
       class="z-video__controls"
-      @click="controls"
       :aria-label="aria"
+      @click="controls"
     >
       <div
         class="z-video__icon"

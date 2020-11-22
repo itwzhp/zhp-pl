@@ -78,16 +78,17 @@ export default {
     border: solid #cacaca;
     border-width: 4px 0;
     margin: 1rem 0;
+    font-size: 1.25rem;
     font-style: italic;
     font-weight: 300;
-    font-size: 1.25rem;
+
     &::before {
-      flex: 0 0 40px;
       height: 40px;
+      flex: 0 0 40px;
+      margin: 1rem 1.5rem 1rem 0;
       background: url('~assets/quote.svg');
       background-size: 100% 100%;
       content: "";
-      margin: 1rem 1.5rem 1rem 0;
     }
   }
 

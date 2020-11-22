@@ -75,10 +75,10 @@
           class="cover"
         />
         <ZText
-            v-if="page._embedded['wp:featuredmedia'][0].caption.rendered"
-            tag="figcaption"
-            class="caption"
-            v-html="`fot. ${page._embedded['wp:featuredmedia'][0].caption.rendered}`"
+          v-if="page._embedded['wp:featuredmedia'][0].caption.rendered"
+          tag="figcaption"
+          class="caption"
+          v-html="`fot. ${page._embedded['wp:featuredmedia'][0].caption.rendered}`"
         />
       </figure>
       <nuxt-child
@@ -267,13 +267,15 @@ export default {
 <style lang="scss">
 #page {
   overflow: hidden;
+
   .section {
     --section-margin: 25px 0;
   }
+
   &.page {
     &--full {
       .content,
-      .thumbnail{
+      .thumbnail {
         @media (min-width: 480px) {
           grid-column: span 12;
         }
@@ -304,6 +306,7 @@ export default {
   .sidebar {
     grid-column: span 12;
     grid-row: 4;
+
     @media (min-width: 480px) {
       grid-column: span 4;
       grid-row: 2 / span 3;
@@ -319,9 +322,10 @@ export default {
   }
 
   .thumbnail {
+    margin: 0;
     grid-column: span 12;
     grid-row: 2;
-    margin: 0;
+
     @media (min-width: 480px) {
       grid-column: span 8;
     }
@@ -332,6 +336,7 @@ export default {
     overflow: hidden;
     height: var(--cover-mobile-height, var(--cover-height, 198px));
     border-radius: 10px;
+
     @media (min-width: 480px) {
       height: var(--cover-height, 396px);
     }
@@ -354,18 +359,21 @@ export default {
   background: #f7f7f7;
   border-radius: 10px;
   box-shadow: 0 10px 30px 0 rgba(209, 213, 223, 0.5);
+
   &__heading {
     margin: 0 0 24px 0;
   }
+
   &__item {
-    margin: 0 0 .75rem 0;
+    margin: 0 0 0.75rem 0;
+
     &:last-child {
       margin: 0;
     }
   }
 
   .nuxt-link-active {
-    color: var(--color-primary)
+    color: var(--color-primary);
   }
 }
 </style>

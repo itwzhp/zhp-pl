@@ -134,15 +134,18 @@ export default {
 <style lang="scss">
 #search {
   overflow: hidden;
+
   .pagination {
     max-width: 1140px;
     padding: 0 1.25rem;
     margin: 32px auto;
   }
+
   .hero-wrapper {
     max-width: 1360px;
     margin: 0 auto;
   }
+
   .section-hero {
     @media (min-width: 480px) {
       --section-content-grid-template-columns: repeat(24, minmax(auto, 1fr));
@@ -154,7 +157,7 @@ export default {
       grid-column: span 12;
 
       @media (min-width: 480px) {
-        grid-column: span 9 ;
+        grid-column: span 9;
         grid-row: span 2;
       }
     }
