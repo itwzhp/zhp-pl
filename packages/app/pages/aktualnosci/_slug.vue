@@ -23,9 +23,10 @@
           class="cover"
         />
         <ZText
+          v-if="post._embedded['wp:featuredmedia'][0].caption.rendered"
           tag="figcaption"
           class="caption"
-          v-html="`fot. ${post._embedded['wp:featuredmedia'][0].title.rendered}`"
+          v-html="`fot. ${post._embedded['wp:featuredmedia'][0].caption.rendered}`"
         />
       </figure>
       <ZWordPress
