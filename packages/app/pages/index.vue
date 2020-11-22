@@ -302,7 +302,7 @@ export default {
   head () {
     const title = 'Związek Harcerstwa Polskiego'
     const description = 'Zmieniamy świat na lepsze'
-    const image = 'https://zhp.pl/wp-content/uploads/2020/10/zhp_fb-850x468-1.png'
+    const image = 'https://zhp.pl/wp-content/uploads/2015/01/zhp_fb.png'
     return {
       title,
       meta: [

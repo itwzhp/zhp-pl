@@ -264,7 +264,7 @@ export default {
   head () {
     const title = this.page.title.rendered + ' | Związek Harcerstwa Polskiego'
     const description = ''
-    const image = 'https://zhp.pl/wp-content/uploads/2020/10/zhp_fb-850x468-1.png'
+    const image = 'https://zhp.pl/wp-content/uploads/2015/01/zhp_fb.png'
     return {
       title,
       meta: [
