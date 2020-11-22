@@ -18,7 +18,7 @@
         class="meta"
       />
       <figure
-        v-if="page._embedded['wp:featuredmedia'][0].media_details"
+        v-if="post._embedded['wp:featuredmedia']"
         class="thumbnail"
       >
         <ZImage
@@ -168,6 +168,31 @@ export default {
     },
     newses () {
       return this.$store.getters['posts/posts'].filter(post => (post.id !== this.post.id)).slice(0, 4)
+    }
+  },
+  head () {
+    const title = this.post.title.rendered + ' | Związek Harcerstwa Polskiego'
+    const description = ''
+    const image = 'https://zhp.pl/wp-content/uploads/2015/01/zhp_fb.png'
+    return {
+      title,
+      meta: [
+        {
+          hid: 'og:title',
+          property: 'og:title',
+          content: title
+        },
+        {
+          hid: 'og:description',
+          property: 'og:description',
+          content: description
+        },
+        {
+          hid: 'og:image',
+          property: 'og:image',
+          content: image
+        }
+      ]
     }
   }
 }

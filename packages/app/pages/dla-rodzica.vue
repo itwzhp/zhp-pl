@@ -166,6 +166,31 @@ export default {
         query: { search: query }
       })
     }
+  },
+  head () {
+    const title = 'Dla rodzica | Związek Harcerstwa Polskiego'
+    const description = ''
+    const image = 'https://zhp.pl/wp-content/uploads/2015/01/zhp_fb.png'
+    return {
+      title,
+      meta: [
+        {
+          hid: 'og:title',
+          property: 'og:title',
+          content: title
+        },
+        {
+          hid: 'og:description',
+          property: 'og:description',
+          content: description
+        },
+        {
+          hid: 'og:image',
+          property: 'og:image',
+          content: image
+        }
+      ]
+    }
   }
 }
 </script>

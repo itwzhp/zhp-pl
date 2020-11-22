@@ -67,7 +67,7 @@
         v-html="hasChildren ? activeChild.title.rendered : page.title.rendered"
       />
       <figure
-        v-if="page._embedded['wp:featuredmedia'][0].media_details"
+        v-if="page._embedded['wp:featuredmedia']"
         class="thumbnail"
       >
         <ZImage
