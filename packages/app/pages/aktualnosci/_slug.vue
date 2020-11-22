@@ -17,7 +17,10 @@
         :categories="post._embedded['wp:term'][0]"
         class="meta"
       />
-      <figure class="thumbnail">
+      <figure
+        v-if="page._embedded['wp:featuredmedia'][0].media_details"
+        class="thumbnail"
+      >
         <ZImage
           :src="post._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url"
           class="cover"

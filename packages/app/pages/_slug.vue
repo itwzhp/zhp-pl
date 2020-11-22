@@ -67,7 +67,7 @@
         v-html="hasChildren ? activeChild.title.rendered : page.title.rendered"
       />
       <figure
-        v-if="page._embedded['wp:featuredmedia']"
+        v-if="page._embedded['wp:featuredmedia'][0].media_details"
         class="thumbnail"
       >
         <ZImage
@@ -75,9 +75,10 @@
           class="cover"
         />
         <ZText
-          tag="figcaption"
-          class="caption"
-          v-html="`fot. ${page._embedded['wp:featuredmedia'][0].title.rendered}`"
+            v-if="page._embedded['wp:featuredmedia'][0].caption.rendered"
+            tag="figcaption"
+            class="caption"
+            v-html="`fot. ${page._embedded['wp:featuredmedia'][0].caption.rendered}`"
         />
       </figure>
       <nuxt-child
