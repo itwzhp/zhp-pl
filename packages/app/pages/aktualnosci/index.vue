@@ -31,7 +31,7 @@
           :key="post.id"
           :thumbnail="post.rest_media"
           :title="post.title && post.title.rendered"
-          :to="`/aktualnosci/${post.slug}`"
+          :to="post.rest_redirect ? post.rest_redirect : `/aktualnosci/${post.slug}`"
           :author="post.rest_author"
           :date="post.date"
           :category="post.sticky

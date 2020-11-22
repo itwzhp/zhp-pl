@@ -54,7 +54,7 @@
                 class="z-news__item"
               >
                 <ZLink
-                  :to="`/aktualnosci/${news.slug}`"
+                  :to="news.rest_redirect ? news.rest_redirect : `/aktualnosci/${news.slug}`"
                   class="z-news__title"
                   v-html="news.title.rendered"
                 />
@@ -96,7 +96,7 @@
               :key="relatedPost.id"
               :thumbnail="relatedPost.rest_media"
               :title="relatedPost.title.rendered"
-              :to="`/aktualnosci/${relatedPost.slug}`"
+              :to="relatedPost.rest_redirect ? relatedPost.rest_redirect : `/aktualnosci/${relatedPost.slug}`"
               :author="relatedPost.rest_author"
               :sticky="relatedPost.sticky"
               :date="relatedPost.date"
