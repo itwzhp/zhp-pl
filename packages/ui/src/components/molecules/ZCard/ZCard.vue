@@ -74,6 +74,7 @@ export default {
 .z-card {
   $this: &;
 
+  position: relative;
   display: grid;
   overflow: hidden;
   background: #fff;
@@ -114,6 +115,14 @@ export default {
   &__title {
     color: #78a22f;
     text-transform: var(--text-transform);
+    &::after {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      content: "";
+    }
   }
 
   &__description {
