@@ -88,7 +88,7 @@ export default {
     const searchRes = await $axios.get('pages', { params: { slug: 'szukaj', _embed: true, per_page: 16 } })
     const search = searchRes.data.shift()
 
-    const postsRes = await $axios.get('search', { params: { ...query, _embed: true } })
+    const postsRes = await $axios.get('search', { params: { ...query, _embed: true, subtype: ['post', 'page', 'event'] } })
     const posts = postsRes.data
 
     const totalPages = postsRes.headers['x-wp-totalpages']
