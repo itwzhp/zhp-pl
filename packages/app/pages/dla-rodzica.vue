@@ -78,7 +78,7 @@
             <ZPost
               :thumbnail="post.rest_media"
               :title="post.title.rendered"
-              :to="`/aktualnosci/${post.slug}`"
+              :to="`/${post.date.split('-')[0]}/${post.slug}`"
               :author="post.rest_author"
               :date="post.date"
             />

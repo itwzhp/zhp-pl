@@ -46,7 +46,7 @@
             <ZPost
               :thumbnail="post.rest_media"
               :title="post.title.rendered"
-              :to="post.rest_redirect ? post.rest_redirect :`/aktualnosci/${post.slug}`"
+              :to="post.rest_redirect ? post.rest_redirect :`/${post.date.split('-')[0]}/${post.slug}`"
               :author="post.rest_author"
               :date="post.date"
             />
@@ -59,7 +59,7 @@
         v-if="cards['>>']"
         :title="cards['>>'].title.rendered"
         :thumbnail="cards['>>']._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url"
-        :to="cards['>>'].rest_redirect ? cards['>>'].rest_redirect :`/aktualnosci/${cards['>>'].slug}`"
+        :to="cards['>>'].rest_redirect ? cards['>>'].rest_redirect :`/${cards['>>'].date.split('-')[0]}/${cards['>>'].slug}`"
         class="section-highlighted__card"
       />
       <ZHighlighted
@@ -102,7 +102,7 @@
         v-if="cards['>>>']"
         :title="cards['>>>'].title.rendered"
         :thumbnail="cards['>>>']._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url"
-        :to="cards['>>>'].rest_redirect ? cards['>>>'].rest_redirect :`/aktualnosci/${cards['>>>'].slug}`"
+        :to="cards['>>>'].rest_redirect ? cards['>>>'].rest_redirect :`/${cards['>>>'].date.split('-')[0]}/${cards['>>>'].slug}`"
         :date="cards['>>>'].date"
         class="section-join-us__post"
       />

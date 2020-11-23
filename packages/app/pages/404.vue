@@ -3,7 +3,7 @@
     <div class="hero-wrapper">
       <ZSection class="section-hero">
         <div class="section-hero__picture">
-          <ZClipPath :hero-image="search._embedded['wp:featuredmedia'][0].media_details.sizes.medium_large.source_url" />
+          <ZClipPath :hero-image="page._embedded['wp:featuredmedia'][0].media_details.sizes.medium_large.source_url" />
         </div>
         <ZHeading
           class="t4 section-hero__title uppercase"
@@ -16,47 +16,6 @@
         />
       </ZSection>
     </div>
-    <ZSection>
-      <template v-for="post in posts">
-        <template v-if="post.subtype === 'post'">
-          <ZPost
-            :key="post.id"
-            :to="`/${post.date.split('-')[0]}/${post._embedded.self[0].slug}`"
-            :title="post.title"
-            :date="post._embedded.self[0].date"
-            :thumbnail="post._embedded.self[0].rest_media || require('~/assets/placeholder.png')"
-            :author="post._embedded.self[0].rest_author"
-            style="grid-column: span 3;"
-          />
-        </template>
-        <template v-else-if="post.subtype === 'event'">
-          <ZEvent
-            :key="post.id"
-            :to="`/wydarzenia/${post._embedded.self[0].slug}`"
-            :title="post.title"
-            :date="post._embedded.self[0].rest_acf.date"
-            :type="post._embedded.self[0].rest_acf.rest_event_type"
-            :thumbnail="post._embedded.self[0].rest_media || require('~/assets/placeholder.png')"
-            style="grid-column: span 3;"
-          />
-        </template>
-        <template v-else>
-          <ZCard
-            :key="post.id"
-            :to="post._embedded.self[0].slug"
-            :title="post.title"
-            :thumbnail="post._embedded.self[0].rest_media || require('~/assets/placeholder.png')"
-            style="grid-column: span 3;"
-          />
-        </template>
-      </template>
-    </ZSection>
-    <ZPagination
-      :page="page"
-      :total-pages="totalPages"
-      class="pagination"
-      @change="updateQuery({page: $event})"
-    />
   </div>
 </template>
 
@@ -65,11 +24,7 @@ import {
   ZSection,
   ZClipPath,
   ZSearch,
-  ZPost,
-  ZEvent,
-  ZCard,
-  ZHeading,
-  ZPagination
+  ZHeading
 } from '@nowa-zhp/ui'
 
 export default {
@@ -78,26 +33,16 @@ export default {
     ZSection,
     ZClipPath,
     ZSearch,
-    ZPost,
-    ZEvent,
-    ZCard,
-    ZHeading,
-    ZPagination
+    ZHeading
   },
   async asyncData ({ $axios, params, query }) {
-    const searchRes = await $axios.get('pages', { params: { slug: 'szukaj', _embed: true, per_page: 16 } })
-    const search = searchRes.data.shift()
-
-    const postsRes = await $axios.get('search', { params: { ...query, _embed: true } })
-    const posts = postsRes.data
-
-    const totalPages = postsRes.headers['x-wp-totalpages']
-
-    return { posts, page: query.page || '1', totalPages, search, query }
+    const pageRes = await $axios.get('pages', { params: { slug: 'undefined', _embed: true, per_page: 16 } })
+    const page = pageRes.data.shift()
+    return { page }
   },
   computed: {
     title () {
-      return `Wyniki wyszukiwania dla "${this.query.search}"`
+      return `Ups, nie ma takiej strony!`
     }
   },
   methods: {
@@ -129,7 +74,7 @@ export default {
     }
   },
   head () {
-    const title = this.query.search + ' | Związek Harcerstwa Polskiego'
+    const title = 'Strona nie została znaleziona | Związek Harcerstwa Polskiego'
     const description = ''
     const image = 'https://zhp.pl/wp-content/uploads/2015/01/zhp_fb.png'
     return {

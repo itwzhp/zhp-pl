@@ -13,7 +13,7 @@
           class="z-highlighted__item"
         >
           <ZLink
-            :to="article.rest_redirect ? article.rest_redirect : `/${slug}/${article.slug}`"
+            :to="article.rest_redirect ? article.rest_redirect : `/${article.date.split('-')[0]}/${article.slug}`"
             class="z-highlighted__link"
           >
             {{ article.title }}

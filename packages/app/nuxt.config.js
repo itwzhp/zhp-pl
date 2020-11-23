@@ -110,6 +110,19 @@ export default {
           }
         ]
       })
+      const year = new Date().getFullYear()
+      for (let y = 2010; y <= year; y++) {
+        routes.push({
+          name: `${y}`,
+          path: `/${y}/:slug`,
+          component: resolve(__dirname, 'pages/aktualnosci/_slug.vue')
+        })
+        routes.push({
+          name: `${y}`,
+          path: `/${y}`,
+          component: resolve(__dirname, 'pages/aktualnosci/index.vue')
+        })
+      }
       sortRoutes(routes)
     }
   }

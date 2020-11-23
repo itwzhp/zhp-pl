@@ -31,7 +31,7 @@
           :key="post.id"
           :thumbnail="post.rest_media || require('~/assets/placeholder.png')"
           :title="post.title && post.title.rendered"
-          :to="post.rest_redirect ? post.rest_redirect : `/aktualnosci/${post.slug}`"
+          :to="post.rest_redirect ? post.rest_redirect : `/${post.date.split('-')[0]}/${post.slug}`"
           :author="post.rest_author"
           :date="post.date"
           :category="post.sticky

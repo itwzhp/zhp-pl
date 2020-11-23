@@ -41,7 +41,7 @@
                   :key="post.id"
                   :thumbnail="post.rest_media"
                   :title="post.title.rendered"
-                  :to="post.rest_redirect ? post.rest_redirect :`/aktualnosci/${post.slug}`"
+                  :to="post.rest_redirect ? post.rest_redirect :`//${post.slug}`"
                   :author="post.rest_author"
                   :sticky="post.sticky"
                   :date="post.date"
@@ -153,7 +153,7 @@
                   :key="post.id"
                   :thumbnail="post.rest_media"
                   :title="post.title.rendered"
-                  :to="post.rest_redirect ? post.rest_redirect :`/aktualnosci/${post.slug}`"
+                  :to="post.rest_redirect ? post.rest_redirect :`//${post.slug}`"
                   :author="post.rest_author"
                   :sticky="post.sticky"
                   :date="post.date"
@@ -213,6 +213,9 @@ export default {
       }
     }
     const pageRest = await $axios.get('pages', { params: { _embed: true, ...params } })
+    if (!pageRest.data.length) {
+      redirect({ name: '404' })
+    }
     const page = pageRest.data.filter(page => page.parent === 0).shift()
 
     const childrenRes = await $axios.get('pages', { params: { parent: page.id, _embed: true, per_page: 99 } })
