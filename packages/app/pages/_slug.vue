@@ -221,7 +221,7 @@ export default {
     const childrenRes = await $axios.get('pages', { params: { parent: page.id, _embed: true, per_page: 99 } })
     const children = childrenRes.data.sort((a, b) => (a.menu_order < b.menu_order ? -1 : 1))
     if (children.length && !params.id) {
-      redirect(`${route.path}/${children[0].slug}`)
+      redirect(`${route.path.replace(/\/$/gm, '')}/${children[0].slug}`)
     }
 
     const carousels = page.rest_acf && page.rest_acf.carousels
