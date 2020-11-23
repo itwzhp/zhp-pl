@@ -10,7 +10,7 @@
           :thumbnail="question.thumbnail"
           :title="question.title"
           :description="question.description"
-          :to="question.to"
+          :to="`/dotacje/${question.to}`"
           class="z-card--pictured z-card--overlayed section-subsidies__subsidie"
         />
       </template>
@@ -36,25 +36,25 @@ export default {
           id: '233',
           thumbnail: `${this.$config.mediaBaseURL}/wp-content/uploads/2020/11/harcerstwo-ksztalci-scaled.jpg`,
           title: 'Harcerstwo kształci',
-          to: '/harcerstwo-kształci'
+          to: 'harcerstwo-ksztalci'
         },
         {
           id: '549',
           thumbnail: `${this.$config.mediaBaseURL}/wp-content/uploads/2020/11/nic-o-nas-bez-nas-scaled.jpg`,
           title: 'Nic o nas bez nas',
-          to: '/nic-o-nas-bez-nas'
+          to: 'nic-o-nas-bez-nas'
         },
         {
           id: '545',
           thumbnail: `${this.$config.mediaBaseURL}/wp-content/uploads/2020/11/rohis-w-ZHP-scaled.jpg`,
           title: 'ROHiS w ZHP',
-          to: '/rohis-w-zhp'
+          to: 'rohis-w-zhp'
         },
         {
           id: '547',
           thumbnail: `${this.$config.mediaBaseURL}/wp-content/uploads/2020/11/harp-scaled.jpg`,
           title: 'Harcerska Akademia Rozwoju Pedagogicznego (HARP)',
-          to: '/harp'
+          to: 'harp'
         }
       ]
     }

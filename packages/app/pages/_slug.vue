@@ -108,7 +108,7 @@
                 :key="child.id"
                 class="z-box__item"
               >
-                <ZLink :to="`/${page.slug}/${child.slug}`">
+                <ZLink :to="`${$route.name === 'dotacje-id' ? '/dotacje' : ''}/${page.slug}/${child.slug}`">
                   {{ child.title.rendered }}
                 </ZLink>
               </ZListItem>
@@ -262,7 +262,7 @@ export default {
     }
   },
   head () {
-    const title = this.hasChildren ? this.activeChild.title.rendered : this.page.title.rendered + ' | Związek Harcerstwa Polskiego'
+    const title = (this.hasChildren ? this.activeChild.title.rendered : this.page.title.rendered) + ' | Związek Harcerstwa Polskiego'
     const description = ''
     const image = this.page._embedded['wp:featuredmedia']
       ? this.page._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url

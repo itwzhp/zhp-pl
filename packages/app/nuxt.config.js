@@ -1,4 +1,4 @@
-
+import { sortRoutes } from '@nuxt/utils'
 export default {
   /*
   ** Nuxt target
@@ -95,5 +95,22 @@ export default {
   sentry: {
     dsn: 'https://dbc6503ec4004c37a3f7706daa89aa73@o479654.ingest.sentry.io/5524988',
     config: {}
+  },
+  router: {
+    extendRoutes (routes, resolve) {
+      routes.push({
+        name: 'dotacje-slug',
+        path: '/dotacje/:slug',
+        component: resolve(__dirname, 'pages/_slug.vue'),
+        children: [
+          {
+            path: ':id',
+            component: resolve(__dirname, 'pages/_slug/_id.vue'),
+            name: 'dotacje-id'
+          }
+        ]
+      })
+      sortRoutes(routes)
+    }
   }
 }
