@@ -21,7 +21,7 @@
         <template v-if="post.subtype === 'post'">
           <ZPost
             :key="post.id"
-            :to="`/${post.date.split('-')[0]}/${post._embedded.self[0].slug}`"
+            :to="`/${post._embedded.self[0].date.split('-')[0]}/${post._embedded.self[0].slug}`"
             :title="post.title"
             :date="post._embedded.self[0].date"
             :thumbnail="post._embedded.self[0].rest_media || require('~/assets/placeholder.png')"
