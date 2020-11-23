@@ -113,7 +113,7 @@ export default {
       const year = new Date().getFullYear()
       for (let y = 2010; y <= year; y++) {
         routes.push({
-          name: `${y}`,
+          name: `slug-${y}`,
           path: `/${y}/:slug`,
           component: resolve(__dirname, 'pages/aktualnosci/_slug.vue')
         })
