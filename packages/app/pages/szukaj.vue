@@ -43,7 +43,7 @@
         <template v-else>
           <ZCard
             :key="post.id"
-            :to="post._embedded.self[0].slug"
+            :to="post.url"
             :title="post.title"
             :thumbnail="post._embedded.self[0].rest_media || require('~/assets/placeholder.png')"
             style="grid-column: span 3;"
