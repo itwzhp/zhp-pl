@@ -2,7 +2,7 @@
   <component
     :is="tag"
     class="z-search"
-    @submit.prevent="$emit('submit', search)"
+    @submit.prevent="submit"
   >
     <ZInput
       v-model="search"
@@ -12,6 +12,15 @@
       class="z-search__input"
       aria-label="wpisz czego szukasz na stornie ZHP"
     />
+    <div class="z-search__error">
+      <ZText
+        v-if="hasError"
+        class="caption"
+        tag="span"
+      >
+        Wpisz proszę conajmniej 3 znaki
+      </ZText>
+    </div>
     <ZButton
       style="--button-min-width: 168px;"
       class="z-search__submit"
@@ -29,6 +38,7 @@
 import ZIcon from '../../atoms/ZIcon/ZIcon.vue';
 import ZInput from '../../atoms/ZInput/ZInput.vue';
 import ZButton from '../../atoms/ZButton/ZButton.vue';
+import ZText from '../../atoms/ZText/ZText.vue';
 
 export default {
   name: 'ZSearch',
@@ -36,6 +46,7 @@ export default {
     ZIcon,
     ZInput,
     ZButton,
+    ZText,
   },
   props: {
     tag: {
@@ -50,7 +61,18 @@ export default {
   data() {
     return {
       search: '',
+      hasError: false,
     };
+  },
+  methods: {
+    submit() {
+      this.hasError = false;
+      if (this.search.length >= 3) {
+        this.$emit('submit', this.search);
+      } else {
+        this.hasError = true;
+      }
+    },
   },
 };
 </script>
@@ -58,7 +80,6 @@ export default {
 <style lang="scss">
 .z-search {
   display: grid;
-  grid-row-gap: 16px;
   justify-items: end;
 
   &__input {
@@ -76,6 +97,14 @@ export default {
 
   &__submit {
     --button-border-width: 0;
+  }
+  &__error {
+    color: var(--color-primary-darken);
+
+    display: flex;
+    align-items: center;
+    place-self: center start;
+    height: 20px;
   }
 }
 </style>
