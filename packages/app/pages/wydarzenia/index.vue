@@ -79,8 +79,8 @@ export default {
     const ageGroupsRes = await $axios('age_groups', { params: { per_page: 99 } })
     const ageGroups = ageGroupsRes.data.reduce(reduce, {})
     // TODO: move district to vuex
-    const districtsRes = await $axios('localizations', { params: { per_page: 99, parent: 0 } })
-    const districts = districtsRes.data.reduce(reduce, {})
+    const localizationsRes = await $axios('localizations', { params: { per_page: 99, parent: 0 } })
+    const localizations = localizationsRes.data.reduce(reduce, {})
     const categories = {
       event_types: {
         id: 'event_types',
@@ -106,8 +106,8 @@ export default {
           ...ageGroups
         }
       },
-      districts: {
-        id: 'districts',
+      localizations: {
+        id: 'localizations',
         label: 'Gdzie',
         options: {
           0: {
@@ -115,11 +115,11 @@ export default {
             label: 'Wybierz gdzie',
             value: ''
           },
-          ...districts
+          ...localizations
         }
       }
     }
-    const filtersKeys = ['event_types', 'age_groups', 'loaclizations', 'before', 'after']
+    const filtersKeys = ['event_types', 'age_groups', 'localizations', 'before', 'after']
     const selectedFilters = Object.keys(query).reduce((accumulator, param) => {
       if (filtersKeys.includes(param)) {
         return {
