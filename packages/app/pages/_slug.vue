@@ -216,7 +216,11 @@ export default {
     if (!pageRest.data.length) {
       redirect({ name: '404' })
     }
-    const page = pageRest.data.filter(page => page.parent === 0).shift()
+    // hack for dotacje
+    const filter = page => (page.parent === 0 ||
+        (page.link.split('/').includes('dotacje') &&
+            page.link.replace(/https?:\/\/.+.pl\//gm, '').replace(/\/$/gm, '').split('/').length === 2))
+    const page = pageRest.data.filter(filter).shift()
 
     const childrenRes = await $axios.get('pages', { params: { parent: page.id, _embed: true, per_page: 99 } })
     const children = childrenRes.data.sort((a, b) => (a.menu_order < b.menu_order ? -1 : 1))
