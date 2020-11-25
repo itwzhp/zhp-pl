@@ -28,7 +28,7 @@ export default {
   mounted() {
     const flatpickrConfig = {
       ...{
-        minDate: '2020',
+        minDate: '2010',
         maxDate: new Date(),
         locale: Polish,
         inline: true,
