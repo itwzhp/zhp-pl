@@ -209,7 +209,7 @@ export default {
       margin: 0 0 8px 0;
       font-size: var(--font-size-subtitle-2);
 
-      @media (min-width: 480px) {
+      @media (min-width: 640px) {
         font-size: var(--font-size-body-1);
       }
     }
@@ -260,7 +260,7 @@ export default {
       #{$this}__thumbnail {
         grid-column: 1 / span 12;
 
-        @media (min-width: 480px) {
+        @media (min-width: 640px) {
           grid-column: 6 / span 7;
           grid-row: 1;
         }
@@ -270,7 +270,7 @@ export default {
         grid-column: 1 / span 12;
         grid-template-rows: 0 1fr auto;
 
-        @media (min-width: 480px) {
+        @media (min-width: 640px) {
           align-items: end;
           padding: 32px 40px;
           grid-column: 1 / span 5;
@@ -282,13 +282,13 @@ export default {
       #{$this}__date {
         transform: translateY(-56px);
 
-        @media (min-width: 480px) {
+        @media (min-width: 640px) {
           transform: translateY(0);
         }
       }
 
       #{$this}__title {
-        @media (min-width: 480px) {
+        @media (min-width: 640px) {
           font-size: 2.125rem;
         }
       }

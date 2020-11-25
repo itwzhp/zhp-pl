@@ -71,7 +71,7 @@ export default {
     margin: var(--section-margin, 2.25rem 0);
     background: var(--section-background);
 
-    @media (min-width: 480px) {
+    @media (min-width: 640px) {
       margin: var(--section-margin, 5.5rem 0);
     }
 
@@ -87,7 +87,7 @@ export default {
       grid-column: var(--section-title-grid-column, span 12);
       grid-row: var(--section-title-grid-row, 1);
 
-      @media (min-width: 480px) {
+      @media (min-width: 640px) {
         grid-column: var(--section-title-grid-column, span 6);
       }
     }
@@ -97,7 +97,7 @@ export default {
       grid-column: var(--section-subtitle-grid-column, span 12);
       grid-row: var(--section-subtitle-grid-row, 2);
 
-      @media (min-width: 480px) {
+      @media (min-width: 640px) {
         --section-subtitle-grid-column: span 6;
       }
     }

@@ -165,7 +165,7 @@ export default {
     &__banner {
       grid-column: span 12;
 
-      @media (min-width: 480px) {
+      @media (min-width: 640px) {
         grid-column: span 9;
       }
     }
@@ -176,7 +176,7 @@ export default {
 
       grid-column: span 12;
 
-      @media (min-width: 480px) {
+      @media (min-width: 640px) {
         grid-column: span 3;
       }
     }

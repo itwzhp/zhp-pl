@@ -259,7 +259,7 @@ export default {
         grid-row: 1;
         place-self: end;
 
-        @media (min-width: 480px) {
+        @media (min-width: 640px) {
           padding: 40px;
           grid-column: 1 / span 6;
         }

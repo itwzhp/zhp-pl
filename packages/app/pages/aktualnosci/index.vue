@@ -186,7 +186,7 @@ export default {
     margin: 0 auto;
   }
   .section-hero {
-    @media (min-width: 480px) {
+    @media (min-width: 640px) {
       --section-content-grid-template-columns: repeat(24, minmax(auto, 1fr));
       --section-content-max-width: 1235px;
       --section-content-margin: 0 auto 0 0;
@@ -195,7 +195,7 @@ export default {
     &__picture {
       grid-column: span 12;
 
-      @media (min-width: 480px) {
+      @media (min-width: 640px) {
         grid-column: span 9 ;
         grid-row: span 2;
       }
@@ -206,7 +206,7 @@ export default {
       grid-column: span 12;
       place-self: end stretch;
 
-      @media (min-width: 480px) {
+      @media (min-width: 640px) {
         grid-column: span 13;
       }
     }
@@ -215,7 +215,7 @@ export default {
       grid-column: span 12;
       place-self: start stretch;
 
-      @media (min-width: 480px) {
+      @media (min-width: 640px) {
         grid-column: span 13;
       }
     }
@@ -224,18 +224,22 @@ export default {
   .post {
     grid-column: span 12;
 
-    @media (min-width: 480px) {
+    @media (min-width: 640px) {
+      grid-column: span 4;
+    }
+
+    @media (min-width: 768px) {
       grid-column: span 3;
     }
 
     &--highlighted {
-      @media (min-width: 480px) {
+      @media (min-width: 640px) {
         grid-column: 10 / span 3;
       }
     }
 
     &--primary {
-      @media (min-width: 480px) {
+      @media (min-width: 640px) {
         grid-column: span 12;
       }
     }

@@ -173,12 +173,14 @@
         </template>
       </ZCarousel>
     </ZSection>
-    <ZSection>
-      <div style="grid-column: span 4;" />
-      <div style="grid-column: span 3;">
+    <ZSection class="section-social">
+      <div class="section-social__instagram">
+        <!-- instagram -->
+      </div>
+      <div class="section-social__facebook">
         <ZFacebook />
       </div>
-      <div style="grid-column: span 5;">
+      <div class="section-social__partners">
         <ZHeading>
           <ZLink
             to="/partnerzy"
@@ -354,7 +356,7 @@ export default {
   }
 
   .section-hero {
-    @media (min-width: 480px) {
+    @media (min-width: 640px) {
       --section-content-grid-template-columns: repeat(24, minmax(auto, 1fr));
       --section-content-max-width: 1235px;
       --section-content-margin: 0 auto 0 0;
@@ -363,7 +365,7 @@ export default {
     &__picture {
       grid-column: span 12;
 
-      @media (min-width: 480px) {
+      @media (min-width: 640px) {
         grid-column: span 13;
         grid-row: span 2;
       }
@@ -374,7 +376,7 @@ export default {
       grid-column: span 12;
       place-self: end stretch;
 
-      @media (min-width: 480px) {
+      @media (min-width: 640px) {
         grid-column: span 9;
       }
     }
@@ -383,7 +385,7 @@ export default {
       grid-column: span 12;
       place-self: start stretch;
 
-      @media (min-width: 480px) {
+      @media (min-width: 640px) {
         grid-column: span 11;
       }
     }
@@ -395,7 +397,7 @@ export default {
     &__card {
       grid-column: span 12;
 
-      @media (min-width: 480px) {
+      @media (min-width: 640px) {
         grid-column: span 4;
       }
     }
@@ -403,7 +405,7 @@ export default {
     &__posts {
       grid-column: span 12;
 
-      @media (min-width: 480px) {
+      @media (min-width: 640px) {
         grid-column: span 7;
       }
     }
@@ -415,7 +417,7 @@ export default {
     &__banner {
       grid-column: span 12;
 
-      @media (min-width: 480px) {
+      @media (min-width: 640px) {
         --banner-title-grid-column: span 5;
         --banner-description-grid-column: span 5;
         --banner-thumbnail-z-index: 10;
@@ -427,7 +429,7 @@ export default {
     &__banner {
       grid-column: span 12;
 
-      @media (min-width: 480px) {
+      @media (min-width: 640px) {
         grid-column: span 9;
       }
     }
@@ -438,7 +440,7 @@ export default {
 
       grid-column: span 12;
 
-      @media (min-width: 480px) {
+      @media (min-width: 640px) {
         grid-column: span 3;
       }
     }
@@ -447,28 +449,28 @@ export default {
   .section-mission {
     --section-content-align-items: end;
 
-    @media (min-width: 480px) {
+    @media (min-width: 640px) {
       --section-content-grid-template-columns: repeat(24, minmax(auto, 1fr));
     }
 
     &__card {
       grid-column: span 12;
 
-      @media (min-width: 480px) {
+      @media (min-width: 640px) {
         grid-column: span 5;
       }
 
       &--bigger {
         overflow: hidden;
 
-        @media (min-width: 480px) {
+        @media (min-width: 640px) {
           height: calc(100% + 2rem);
           transform: translateY(16px);
         }
       }
 
       &--first {
-        @media (min-width: 480px) {
+        @media (min-width: 640px) {
           grid-column: 3 / span 5;
         }
       }
@@ -486,15 +488,41 @@ export default {
 
       grid-column: span 12;
 
-      @media (min-width: 480px) {
+      @media (min-width: 640px) {
         grid-column: span 5;
       }
     }
   }
 
   .section-events {
-    @media (min-width: 480px) {
+    @media (min-width: 640px) {
       --section-title-grid-column: span 3;
+    }
+  }
+
+  .section-social {
+    &__instagram {
+      grid-column: span 12;
+
+      @media (min-width: 640px) {
+        grid-column: span 4;
+      }
+    }
+
+    &__facebook {
+      grid-column: span 12;
+
+      @media (min-width: 640px) {
+        grid-column: span 3;
+      }
+    }
+
+    &__partners {
+      grid-column: span 12;
+
+      @media (min-width: 640px) {
+        grid-column: span 5;
+      }
     }
   }
 

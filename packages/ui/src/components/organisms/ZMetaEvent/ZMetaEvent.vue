@@ -90,7 +90,7 @@ export default {
     overflow: hidden;
     height: 198px;
 
-    @media (min-width: 480px) {
+    @media (min-width: 640px) {
       height: 396px;
     }
 
@@ -110,7 +110,7 @@ export default {
     gap: 0.5rem;
     grid-auto-flow: column;
 
-    @media (min-width: 480px) {
+    @media (min-width: 640px) {
       gap: 2.5rem;
     }
   }

@@ -327,7 +327,7 @@ export default {
     &--full {
       .content,
       .thumbnail {
-        @media (min-width: 480px) {
+        @media (min-width: 640px) {
           grid-column: span 12;
         }
       }
@@ -339,7 +339,7 @@ export default {
     grid-column: span 12;
     grid-row: 1;
 
-    @media (min-width: 480px) {
+    @media (min-width: 640px) {
       margin: 32px 0;
     }
   }
@@ -349,7 +349,7 @@ export default {
     grid-column: span 12;
     grid-row: 3;
 
-    @media (min-width: 480px) {
+    @media (min-width: 640px) {
       grid-column: span 8;
     }
   }
@@ -358,7 +358,7 @@ export default {
     grid-column: span 12;
     grid-row: 4;
 
-    @media (min-width: 480px) {
+    @media (min-width: 640px) {
       grid-column: span 4;
       grid-row: 2 / span 3;
     }
@@ -377,7 +377,7 @@ export default {
     grid-column: span 12;
     grid-row: 2;
 
-    @media (min-width: 480px) {
+    @media (min-width: 640px) {
       grid-column: span 8;
     }
   }
@@ -388,7 +388,7 @@ export default {
     height: var(--cover-mobile-height, var(--cover-height, 198px));
     border-radius: 10px;
 
-    @media (min-width: 480px) {
+    @media (min-width: 640px) {
       height: var(--cover-height, 396px);
     }
 
@@ -399,7 +399,7 @@ export default {
       object-fit: cover;
     }
 
-    @media (min-width: 480px) {
+    @media (min-width: 640px) {
       grid-column: span 8;
     }
   }

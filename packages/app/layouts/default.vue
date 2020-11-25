@@ -295,13 +295,13 @@ export default {
   background: #fff;
   grid-auto-flow: column;
 
-  @media (max-width: 480px) {
+  @media (max-width: 640px) {
     position: sticky;
     z-index: 1000;
     top: 0;
   }
 
-  @media (min-width: 480px) {
+  @media (min-width: 640px) {
     max-width: 1360px;
     justify-content: unset;
     margin: 0 auto;
@@ -313,7 +313,7 @@ export default {
     height: 5rem;
     align-items: center;
 
-    @media (min-width: 480px) {
+    @media (min-width: 640px) {
       justify-content: space-between;
       grid-template-columns: repeat(3, minmax(auto, 1fr));
     }
@@ -322,7 +322,7 @@ export default {
   &__actions {
     display: none;
 
-    @media (min-width: 480px) {
+    @media (min-width: 640px) {
       --icon-size: var(--font-size-button);
       --icon-margin: 0 1rem 0 0;
       --icon-color: var(--color-primary);
@@ -343,9 +343,9 @@ export default {
   &__logo {
     --image-width: 8.75rem;
 
-    padding: 0 1.25rem;
     display: grid;
     justify-content: center;
+    padding: 0 1.25rem;
   }
 
   &__nav {
@@ -367,7 +367,7 @@ export default {
     color: #fff;
     grid-column: span 12;
 
-    @media (min-width: 480px) {
+    @media (min-width: 640px) {
       grid-column: span 4;
     }
   }
@@ -378,7 +378,7 @@ export default {
     margin: 1rem 0;
     grid-column: span 12;
 
-    @media (min-width: 480px) {
+    @media (min-width: 640px) {
       order: 0;
       margin: 0;
       grid-auto-flow: column;
@@ -400,7 +400,7 @@ export default {
     color: #fff;
     gap: 2rem;
 
-    @media (min-width: 480px) {
+    @media (min-width: 640px) {
       height: 3rem;
       align-items: center;
       justify-content: center;
@@ -412,7 +412,7 @@ export default {
     .br {
       display: block;
 
-      @media (min-width: 480px) {
+      @media (min-width: 640px) {
         display: inline;
       }
     }
@@ -468,10 +468,11 @@ export default {
 
 .layout {
   display: flex;
-  flex-direction: column;
   min-height: 100vh;
+  flex-direction: column;
+
   &__page {
-    flex: 1
+    flex: 1;
   }
 }
 </style>

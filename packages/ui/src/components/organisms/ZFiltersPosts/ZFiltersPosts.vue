@@ -234,14 +234,14 @@ export default {
       gap: 0.5rem;
       grid-template-columns: minmax(auto, 1fr);
 
-      @media (min-width: 480px) {
+      @media (min-width: 640px) {
         gap: 0;
         grid-template-columns: repeat(2, minmax(auto, 1fr)) 16%;
       }
     }
 
     &__date {
-      @media (min-width: 480px) {
+      @media (min-width: 640px) {
         --dropdown-content-width: 200%;
         --button-min-width: 100%;
       }
@@ -250,7 +250,7 @@ export default {
     &__date-toggle {
       --button-height: 40px;
 
-      @media (min-width: 480px) {
+      @media (min-width: 640px) {
         --button-border-radius: 0.625rem 0 0 0.625rem;
       }
     }
@@ -260,7 +260,7 @@ export default {
       align-items: end;
       grid-template-columns: minmax(auto, 1fr);
 
-      @media (min-width: 480px) {
+      @media (min-width: 640px) {
         grid-template-columns: auto 180px;
       }
 
@@ -280,7 +280,7 @@ export default {
       grid-column: 1;
       grid-template-rows: auto 3.25rem;
 
-      @media (min-width: 480px) {
+      @media (min-width: 640px) {
         grid-column: 2;
       }
     }
@@ -298,7 +298,7 @@ export default {
     }
 
     &__categories {
-      @media (min-width: 480px) {
+      @media (min-width: 640px) {
         --button-min-width: 100%;
 
         margin: 0 0 0 -0.625rem;

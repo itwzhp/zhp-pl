@@ -234,7 +234,7 @@ export default {
     grid-column: span 12;
     grid-row: 2;
 
-    @media (min-width: 480px) {
+    @media (min-width: 640px) {
       grid-column: span 8;
     }
   }
@@ -242,7 +242,7 @@ export default {
     grid-column: span 12;
     grid-row: 3;
     margin: 0;
-    @media (min-width: 480px) {
+    @media (min-width: 640px) {
       grid-column: span 8;
     }
   }
@@ -251,7 +251,7 @@ export default {
     overflow: hidden;
     height: 198px;
     border-radius: 10px;
-    @media (min-width: 480px) {
+    @media (min-width: 640px) {
       height: 396px;
     }
 
@@ -262,7 +262,7 @@ export default {
       object-fit: cover;
     }
 
-    @media (min-width: 480px) {
+    @media (min-width: 640px) {
       grid-column: span 8;
     }
   }
@@ -271,7 +271,7 @@ export default {
     grid-column: span 12;
     grid-row: 4;
 
-    @media (min-width: 480px) {
+    @media (min-width: 640px) {
       grid-column: span 8;
     }
   }
@@ -279,7 +279,7 @@ export default {
   .sidebar {
     grid-column: span 12;
 
-    @media (min-width: 480px) {
+    @media (min-width: 640px) {
       grid-column: span 4;
       grid-row: 3 / span 3;
     }
@@ -289,7 +289,7 @@ export default {
     margin: 48px 0 0 0;
     grid-column: span 12;
 
-    @media (min-width: 480px) {
+    @media (min-width: 640px) {
       grid-column: span 8;
       grid-row: 5;
     }

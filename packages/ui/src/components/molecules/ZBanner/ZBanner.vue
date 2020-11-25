@@ -141,7 +141,7 @@ export default {
     grid-template-columns: repeat(12, 1fr);
     grid-template-rows: repeat(2, auto);
 
-    @media (min-width: 480px) {
+    @media (min-width: 640px) {
       grid-template-rows: 1fr;
     }
 
@@ -151,7 +151,7 @@ export default {
       grid-column: span 12;
       grid-row: 1;
 
-      @media (min-width: 480px) {
+      @media (min-width: 640px) {
         grid-column: 7 / span 6;
       }
     }
@@ -160,7 +160,7 @@ export default {
       position: relative;
       z-index: var(--banner-thumbnail-z-index);
 
-      @media (min-width: 480px) {
+      @media (min-width: 640px) {
         clip-path: url(#banner);
       }
 
@@ -196,7 +196,7 @@ export default {
       grid-row: 2;
       grid-template-columns: repeat(12, 1fr);
 
-      @media (min-width: 480px) {
+      @media (min-width: 640px) {
         grid-row: 1;
       }
     }
@@ -209,7 +209,7 @@ export default {
       grid-row: var(--banner-title-grid-row, 1);
       text-transform: var(--banner-title-text-transform, uppercase);
 
-      @media (min-width: 480px) {
+      @media (min-width: 640px) {
         grid-column: var(--banner-title-grid-column, span 8);
       }
     }
@@ -221,7 +221,7 @@ export default {
       grid-column: var(--banner-description-grid-column, span 12);
       grid-row: var(--banner-description-grid-row, 2);
 
-      @media (min-width: 480px) {
+      @media (min-width: 640px) {
         grid-column: var(--banner-description-grid-column, span 8);
       }
     }
@@ -232,7 +232,7 @@ export default {
       grid-column: var(--banner-call-to-actions-grid-column, span 12);
       grid-row: var(--banner-call-to-actions-grid-row, 3);
 
-      @media (min-width: 480px) {
+      @media (min-width: 640px) {
         grid-auto-flow: column;
         grid-column: var(--banner-call-to-actions-grid-column, span 11);
       }

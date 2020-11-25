@@ -50,7 +50,7 @@ export default {
     display: grid;
     gap: 1rem 0;
 
-    @media (min-width: 480px) {
+    @media (min-width: 640px) {
       gap: 0;
     }
   }
@@ -61,7 +61,7 @@ export default {
     grid-auto-flow: column;
 
     &::before {
-      @media (min-width: 480px) {
+      @media (min-width: 640px) {
         margin: 0 4px;
         content: "|";
         font-size: 14px;
@@ -74,7 +74,7 @@ export default {
   &--horizontal {
     .z-menu {
       &__items {
-        @media (min-width: 480px) {
+        @media (min-width: 640px) {
           grid-auto-flow: column;
         }
       }

@@ -53,7 +53,7 @@ export default {
     --section-margin: 0;
     --section-content-gap: 0;
 
-    @media (min-width: 480px) {
+    @media (min-width: 640px) {
       --section-content-gap: 1.25rem;
       --section-content-padding: 0 1.25rem;
       --section-margin: 1rem 0;
@@ -64,7 +64,7 @@ export default {
     &__column {
       grid-column: span 12;
 
-      @media (min-width: 480px) {
+      @media (min-width: 640px) {
         grid-column: span 3;
       }
     }

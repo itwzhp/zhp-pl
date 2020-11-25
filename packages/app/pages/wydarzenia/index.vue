@@ -217,21 +217,29 @@ export default {
   .sidebar {
     grid-column: span 12;
 
-    @media (min-width: 480px) {
-      grid-column: span 3;
+    @media (min-width: 640px) {
+      grid-column: span 4;
       grid-row: span 4;
+    }
+
+    @media (min-width: 768px) {
+      grid-column: span 3;
     }
   }
 
   .event {
     grid-column: span 12;
 
-    @media (min-width: 480px) {
+    @media (min-width: 640px) {
+      grid-column: span 4;
+    }
+
+    @media (min-width: 768px) {
       grid-column: span 3;
     }
 
     &--primary {
-      @media (min-width: 480px) {
+      @media (min-width: 640px) {
         grid-column: span 12;
         grid-row: -1;
       }
@@ -245,7 +253,7 @@ export default {
   }
 
   .section {
-    @media (min-width: 480px) {
+    @media (min-width: 640px) {
       --section-margin: 3rem 0;
     }
   }

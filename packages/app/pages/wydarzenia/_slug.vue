@@ -189,7 +189,7 @@ export default {
     margin: 0 0 24px 0;
     grid-column: span 12;
 
-    @media (min-width: 480px) {
+    @media (min-width: 640px) {
       grid-column: span 8;
       grid-row: 3;
     }
@@ -199,7 +199,7 @@ export default {
     margin: 0 0 48px 0;
     grid-column: span 12;
 
-    @media (min-width: 480px) {
+    @media (min-width: 640px) {
       grid-column: span 8;
       grid-row: 4;
     }
@@ -208,7 +208,7 @@ export default {
   .sidebar {
     grid-column: span 12;
 
-    @media (min-width: 480px) {
+    @media (min-width: 640px) {
       grid-column: span 4;
       grid-row: 3 / span 3;
     }

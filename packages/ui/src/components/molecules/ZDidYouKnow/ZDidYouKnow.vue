@@ -47,7 +47,7 @@ export default {
   position: relative;
   padding: 2rem 0;
 
-  @media (min-width: 480px) {
+  @media (min-width: 640px) {
     padding: 2rem 0;
   }
 
@@ -64,7 +64,7 @@ export default {
     top: -2rem;
     opacity: 0.4;
 
-    @media (min-width: 480px) {
+    @media (min-width: 640px) {
       z-index: 0;
       top: 2rem;
       left: 0;
