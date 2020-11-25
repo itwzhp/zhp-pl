@@ -19,14 +19,16 @@
       <ZLink tag="span">
         {{ type.name }}
       </ZLink>
-      <template v-for="audience in audiences">
-        <ZLink
-          :key="audience.id"
-          tag="span"
-        >
-          {{ audience.name }}
-        </ZLink>
-      </template>
+      <div>
+        <template v-for="(audience, index) in audiences">
+          <ZLink
+            :key="audience.id"
+            tag="span"
+          >
+            {{ audience.name }}{{ index < audiences.length - 1 ? `, ` : `` }}
+          </ZLink>
+        </template>
+      </div>
     </div>
   </component>
 </template>
