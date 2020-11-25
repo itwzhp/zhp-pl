@@ -192,7 +192,7 @@ export default {
 
     @media (min-width: 480px) {
       position: absolute;
-      z-index: 10;
+      z-index: 1000;
       right: 0;
       left: 0;
     }
