@@ -4,9 +4,11 @@ import Vue from 'vue';
 // hack for components available in WordPress
 import ZButton from '../../atoms/ZButton/ZButton.vue';
 import ZAccordion from '../ZAccordion/ZAccordion.vue';
+import ZLink from '../../atoms/ZLink/ZLink.vue';
 
 Vue.component('ZButton', ZButton);
 Vue.component('ZAccordion', ZAccordion);
+Vue.component('ZLink', ZLink);
 
 export default {
   name: 'ZWordPress',
@@ -21,9 +23,15 @@ export default {
     },
   },
   computed: {
+    replacedHTML() {
+      const anchor = /<a.+?href="(.+?)">(.+?)<\/a>/gm;
+      return this.html.replaceAll(anchor,(match, href, name) => {
+        return `<z-link to="${href}">${name}</z-link>`;
+      });
+    },
     component() {
       return {
-        template: `<div class="z-word-press">${this.html}</div>`,
+        template: `<div class="z-word-press">${this.replacedHTML}</div>`,
       };
     },
   },
