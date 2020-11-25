@@ -7,7 +7,7 @@ export const mutations = {
       const parent = item.menu_item_parent
       if (parent === '0') {
         itemsAsObject[item.ID].index = array.length
-        return [...array, { to: item.url, name: item.title, id: item.ID }]
+        return [...array, { to: item.url, name: item.title, id: item.ID}]
       } else if (itemsAsObject[parent].index) {
         const copyOfItem = { name: item.title, id: item.ID }
         array[itemsAsObject[parent].index].submenu = array[itemsAsObject[parent].index].submenu

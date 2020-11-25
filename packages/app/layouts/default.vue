@@ -16,16 +16,17 @@
             </template>
           </ZDropdown>
         </div>
-        <ZLink
-          to="/"
-          aria-label="powrót do strony głównej"
-        >
-          <ZImage
-            :src="require('~/assets/brand.svg')"
-            class="z-header__logo"
-            style="--image-width: 8.75rem;"
-          />
-        </ZLink>
+        <div class="z-header__logo">
+          <ZLink
+            to="/"
+            aria-label="powrót do strony głównej"
+          >
+            <ZImage
+              :src="require('~/assets/brand.svg')"
+              style="--image-width: 8.75rem;"
+            />
+          </ZLink>
+        </div>
         <div class="z-header__actions z-header__actions--right">
           <ZDropdown class="z-language z-dropdown--has-chevron">
             <template #toggle="{toggle}">
@@ -343,6 +344,8 @@ export default {
     --image-width: 8.75rem;
 
     padding: 0 1.25rem;
+    display: grid;
+    justify-content: center;
   }
 
   &__nav {

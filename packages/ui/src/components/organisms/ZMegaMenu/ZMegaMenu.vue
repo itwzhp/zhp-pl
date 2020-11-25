@@ -21,20 +21,23 @@
             <ZListItem
               :key="item.id"
               class="z-mega-menu__item"
+              tabindex="0"
+              @mouseover="submenuHandlerOpen(item.id)"
+              @focus="submenuHandlerOpen(item.id)"
+              @mouseleave="submenuHandlerClose"
             >
               <ZLink
                 class="z-mega-menu__link body-1"
                 tag="span"
-                tabindex="0"
-                @click="submenuHandler(item.submenu.name)"
+                @click="submenuHandlerMobile(item.id)"
               >
                 {{ item.name }}
               </ZLink>
               <ZMegaMenuDropdown
-                v-if="item.submenu"
+                v-if="item.id === submenu"
                 :menu="item.submenu"
                 class="z-mega-menu__submenu"
-                :class="{'is-open': submenu === item.submenu.name}"
+                :class="{'is-open': submenu === item.id}"
                 @close="close"
               />
             </ZListItem>
@@ -49,6 +52,7 @@
                 :to="item.to"
                 :tag="item.submenu && 'span'"
                 @click.native="close"
+                @focus.native="submenuHandlerClose"
               >
                 {{ item.name }}
               </ZLink>
@@ -95,6 +99,7 @@ export default {
       isOpen: false,
       isMobile: false,
       submenu: '',
+      el: null,
     };
   },
   computed: {
@@ -123,15 +128,24 @@ export default {
   methods: {
     toggle() {
       this.isOpen = !this.isOpen;
+      this.submenu = -1;
     },
     close() {
-      if (!this.isMobile) return;
       this.isOpen = false;
-      this.submenu = '';
+      this.submenu = -1;
     },
-    submenuHandler(submenu) {
+    submenuHandlerOpen(submenu) {
+      if (this.isMobile) return;
+      this.submenu = submenu;
+    },
+    submenuHandlerClose() {
+      if (this.isMobile) return;
+      this.submenu = -1;
+    },
+    submenuHandlerMobile(submenu) {
+      if (!this.isMobile) return;
       this.submenu = this.submenu === submenu
-        ? ''
+        ? -1
         : submenu;
     },
   },
@@ -195,9 +209,7 @@ export default {
     display: none;
 
     &.is-open {
-      @media (max-width: 480px) {
-        display: grid;
-      }
+      display: grid;
     }
 
     @media (min-width: 480px) {
@@ -207,12 +219,12 @@ export default {
       left: 0;
     }
 
-    .z-mega-menu__item:hover &,
-    .z-mega-menu__item:focus-within & {
-      @media (min-width: 480px) {
-        display: grid;
-      }
-    }
+    //.z-mega-menu__item:hover &,
+    //.z-mega-menu__item:focus-within & {
+    //  @media (min-width: 480px) {
+    //    display: grid;
+    //  }
+    //}
   }
 }
 </style>

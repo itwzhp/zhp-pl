@@ -1,5 +1,5 @@
 <template>
-  <li class="z-list-item">
+  <li class="z-list-item" v-on="$listeners">
     <slot />
   </li>
 </template>
