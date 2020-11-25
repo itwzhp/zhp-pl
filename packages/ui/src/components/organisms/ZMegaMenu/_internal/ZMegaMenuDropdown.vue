@@ -12,7 +12,7 @@
           <ZList>
             <template v-for="link in submenu.mega_menu">
               <ZListItem :key="link.id">
-                <ZLink :to="link.to">
+                <ZLink :to="link.to" @click.native="$emit('close')">
                   {{ link.name }}
                 </ZLink>
               </ZListItem>

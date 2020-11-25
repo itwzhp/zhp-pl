@@ -17,11 +17,11 @@
     >
       <ZList class="z-mega-menu__menu">
         <template v-for="item in menu">
-          <ZListItem
-            :key="item.id"
-            class="z-mega-menu__item"
-          >
-            <template v-if="item.submenu">
+          <template v-if="item.submenu">
+            <ZListItem
+              :key="item.id"
+              class="z-mega-menu__item"
+            >
               <ZLink
                 class="z-mega-menu__link body-1"
                 tag="span"
@@ -30,23 +30,30 @@
               >
                 {{ item.name }}
               </ZLink>
-            </template>
-            <template v-else>
+              <ZMegaMenuDropdown
+                v-if="item.submenu"
+                :menu="item.submenu"
+                class="z-mega-menu__submenu"
+                :class="{'is-open': submenu === item.submenu.name}"
+                @close="close"
+              />
+            </ZListItem>
+          </template>
+          <template v-else>
+            <ZListItem
+              :key="item.id"
+              class="z-mega-menu__item"
+            >
               <ZLink
                 class="z-mega-menu__link body-1"
                 :to="item.to"
                 :tag="item.submenu && 'span'"
+                @click.native="close"
               >
                 {{ item.name }}
               </ZLink>
-            </template>
-            <ZMegaMenuDropdown
-              v-if="item.submenu"
-              :menu="item.submenu"
-              class="z-mega-menu__submenu"
-              :class="{'is-open': submenu === item.submenu.name}"
-            />
-          </ZListItem>
+            </ZListItem>
+          </template>
         </template>
       </ZList>
     </nav>
@@ -110,6 +117,7 @@ export default {
     },
   },
   mounted() {
+    this.isMobile = matchMedia('(max-width: 480px)').matches;
     matchMedia('(max-width: 480px)').addListener((e) => { this.isMobile = e.matches; });
   },
   methods: {
@@ -117,7 +125,9 @@ export default {
       this.isOpen = !this.isOpen;
     },
     close() {
+      if (!this.isMobile) return;
       this.isOpen = false;
+      this.submenu = '';
     },
     submenuHandler(submenu) {
       this.submenu = this.submenu === submenu
