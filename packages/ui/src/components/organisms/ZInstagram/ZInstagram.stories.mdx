@@ -1,0 +1,26 @@
+import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
+import { withKnobs, text, object } from '@storybook/addon-knobs';
+import { withA11y } from '@storybook/addon-a11y';
+import ZInstagram from './ZInstagram.vue';
+
+<Meta title="Organisms/ZInstagram" component={ZInstagram} />
+
+# ZInstagram
+
+<Preview>
+  <Story name="Common">
+    {{
+        components: { ZInstagram },
+        props: {
+          common: {
+            default: text('common', '')
+          }
+        },
+        template: `<ZInstagram />`,
+    }}
+  </Story>
+</Preview>
+
+# Props
+
+<Props of={ZInstagram} />
