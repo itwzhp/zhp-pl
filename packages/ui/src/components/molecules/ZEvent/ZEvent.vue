@@ -275,7 +275,8 @@ export default {
           padding: 32px 40px;
           grid-column: 1 / span 5;
           grid-row: 1;
-          grid-template-rows: auto;
+          grid-template-rows: 1fr auto;
+          row-gap: 16px;
         }
       }
 
@@ -290,6 +291,7 @@ export default {
       #{$this}__title {
         @media (min-width: 640px) {
           font-size: 2.125rem;
+          margin: 0;
         }
       }
 
