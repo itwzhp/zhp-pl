@@ -98,13 +98,13 @@ export default {
   &__submit {
     --button-border-width: 0;
   }
-  &__error {
-    color: var(--color-primary-darken);
 
+  &__error {
     display: flex;
-    align-items: center;
-    place-self: center start;
     height: 20px;
+    align-items: center;
+    color: var(--color-primary-darken);
+    place-self: center start;
   }
 }
 </style>

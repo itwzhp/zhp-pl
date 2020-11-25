@@ -78,8 +78,10 @@ export default {
     &:hover {
       text-decoration: var(--link-hover-text-decoration, underline);
     }
+
     &--as-text {
       --link-hover-text-decoration: none;
+
       cursor: default;
     }
   }

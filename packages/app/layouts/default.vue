@@ -104,7 +104,7 @@
       </div>
       <ZMegaMenu :menu="headerMenu" />
     </header>
-    <Nuxt class="layout__page"/>
+    <Nuxt class="layout__page" />
     <footer class="z-footer">
       <ZSection class="z-footer__content">
         <ZDidYouKnow

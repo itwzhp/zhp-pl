@@ -115,6 +115,7 @@ export default {
   &__title {
     color: #78a22f;
     text-transform: var(--text-transform);
+
     &::after {
       position: absolute;
       top: 0;

@@ -175,7 +175,10 @@
     </ZSection>
     <ZSection class="section-social">
       <div class="section-social__instagram">
-        <!-- instagram -->
+        <ZInstagram
+          :image="`${$config.mediaBaseURL}/wp-content/uploads/2020/11/instagram.jpg`"
+          :feed="feed"
+        />
       </div>
       <div class="section-social__facebook">
         <ZFacebook />
@@ -243,7 +246,8 @@ import {
   ZVideo,
   ZImage,
   ZFacebook,
-  ZLink
+  ZLink,
+  ZInstagram
 } from '@nowa-zhp/ui'
 import { mapGetters } from 'vuex'
 
@@ -262,9 +266,10 @@ export default {
     ZVideo,
     ZImage,
     ZFacebook,
-    ZLink
+    ZLink,
+    ZInstagram
   },
-  async asyncData ({ $axios }) {
+  async asyncData ({ $axios, store }) {
     const homepageRes = await $axios.get('pages', { params: { slug: 'strona-glowna', _embed: true } })
     const homepage = homepageRes.data.shift()
     // last 8 post for posts ZCarousel
@@ -280,6 +285,16 @@ export default {
     const partnersRes = await $axios.get('logos', { params: { per_page: 99, logos_categories: 25 } })
     const partners = partnersRes.data
 
+    if (!Object.keys(store.state.instagram.posts).length) {
+      const instagramRes = await $axios.get('instagram')
+      const instagram = instagramRes.data
+      const regex = /href="(.+?)".+?data-full-res="(.+?)"/gm
+      const matches = [...instagram.matchAll(regex)].map(match => (
+        { href: match[1], src: JSON.stringify(match[2]) }
+      ))
+      store.commit('instagram/update', matches)
+    }
+
     return { homepage, posts, events, partners }
   },
   computed: {
@@ -288,6 +303,9 @@ export default {
     }),
     ageGroups () {
       return this.$store.getters['taxonomies/taxonomy']('age_groups')
+    },
+    feed () {
+      return this.$store.getters['instagram/posts']
     },
     highlightedPosts () {
       return this.$store.getters['posts/posts'].map(post => ({ ...post, title: post.title.rendered })).slice(0, 5)

@@ -290,8 +290,8 @@ export default {
 
       #{$this}__title {
         @media (min-width: 640px) {
-          font-size: 2.125rem;
           margin: 0;
+          font-size: 2.125rem;
         }
       }
 
