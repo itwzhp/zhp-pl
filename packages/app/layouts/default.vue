@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="layout">
     <header class="z-header">
       <div class="z-header__bar">
         <div class="z-header__actions">
@@ -104,7 +104,7 @@
       </div>
       <ZMegaMenu :menu="headerMenu" />
     </header>
-    <Nuxt />
+    <Nuxt class="layout__page"/>
     <footer class="z-footer">
       <ZSection class="z-footer__content">
         <ZDidYouKnow
@@ -463,6 +463,15 @@ export default {
       background: var(--color-primary);
       color: #fff;
     }
+  }
+}
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  &__page {
+    flex: 1
   }
 }
 </style>
