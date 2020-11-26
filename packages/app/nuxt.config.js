@@ -20,7 +20,7 @@ export default {
     link: [
       { rel: 'stylesheet', href: 'https://use.typekit.net/lqw5sjc.css' },
       { rel: 'icon', type: 'image/png', href: '/favicon.png' }
-    ],
+    ]
   },
   /*
   ** Global CSS
@@ -67,14 +67,16 @@ export default {
   ** See https://nuxtjs.org/api/configuration-build/
   */
   build: {
-    extend (config, context) {
+    extend (config, { isClient }) {
+      if (isClient) {
+        config.optimization.splitChunks.maxSize = 200000
+      }
       config.resolve.alias = {
         ...config.resolve.alias,
         vue$: 'vue/dist/vue.esm.js'
       }
     },
     transpile: [/^@nowa-zhp/],
-    analyze: true,
     extractCSS: true
   },
   pwa: {
@@ -92,7 +94,7 @@ export default {
     mediaBaseURL: process.env.MEDIA_BASE_URL
   },
   sentry: {
-    dsn: 'https://dbc6503ec4004c37a3f7706daa89aa73@o479654.ingest.sentry.io/5524988',
+    // dsn: 'https://dbc6503ec4004c37a3f7706daa89aa73@o479654.ingest.sentry.io/5524988',
     config: {}
   },
   router: {
@@ -124,7 +126,7 @@ export default {
         routes.push({
           name: `${y}`,
           path: `/${y}`,
-          component: resolve(__dirname, 'pages/aktualnosci/index.vue')
+          component: resolve(__dirname, 'pages/aktualnosci/_slug.vue')
         })
       }
       sortRoutes(routes)
