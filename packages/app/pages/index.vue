@@ -195,7 +195,7 @@
         </ZHeading>
         <ZSection
           tag="div"
-          style="--section-margin: 0"
+          style="--section-margin: 0;"
         >
           <ZCarousel
             class="carousel"

@@ -66,6 +66,7 @@ export default {
       display: flex;
       align-items: center;
     }
+
     &-day {
       &:nth-child(7n+0) {
         border-radius: 0 50px 50px 0;
