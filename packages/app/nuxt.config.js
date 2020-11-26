@@ -44,7 +44,8 @@ export default {
   buildModules: [
     // '@nuxtjs/eslint-module',
     // '@nuxtjs/stylelint-module',
-    '@nuxtjs/pwa'
+    '@nuxtjs/pwa',
+    '@nuxtjs/google-analytics'
   ],
   /*
   ** Nuxt.js modules
@@ -131,5 +132,8 @@ export default {
       }
       sortRoutes(routes)
     }
+  },
+  googleAnalytics: {
+    id: process.env.GA
   }
 }

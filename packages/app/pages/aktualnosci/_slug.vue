@@ -120,7 +120,8 @@ import {
   ZWordPress,
   ZFiles,
   ZList,
-  ZLink
+  ZLink,
+  ZText
 } from '@nowa-zhp/ui'
 
 export default {
@@ -142,7 +143,8 @@ export default {
     ZWordPress,
     ZFiles,
     ZList,
-    ZLink
+    ZLink,
+    ZText
   },
   async asyncData ({ $axios, params, query }) {
     // posts

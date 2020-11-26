@@ -85,16 +85,15 @@ export default {
   background: #fff;
   border-radius: 10px;
   box-shadow: 0 2px 10px 0 rgba(157, 157, 157, 0.39);
-  grid-auto-flow: row;
+  grid-template-rows: 198px auto;
+
+  @media (min-width: 640px) {
+    grid-template-rows: 396px auto;
+  }
 
   &__thumbnail {
     display: flex;
     overflow: hidden;
-    height: 198px;
-
-    @media (min-width: 640px) {
-      height: 396px;
-    }
 
     & .z-image,
     & img {
@@ -110,10 +109,11 @@ export default {
     justify-content: start;
     padding: 1.5rem;
     gap: 0.5rem;
-    grid-auto-flow: column;
+    grid-auto-flow: row;
 
     @media (min-width: 640px) {
       gap: 2.5rem;
+      grid-auto-flow: column;
     }
   }
 
