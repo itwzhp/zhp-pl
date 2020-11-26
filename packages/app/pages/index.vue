@@ -193,36 +193,42 @@
             Partnerzy organizacji
           </ZLink>
         </ZHeading>
-        <ZCarousel
-          :settings="{
-            autoplay: 3000,
-            perView: 3,
-            peek: {
-              before: 0,
-              after: 55
-            },
-            breakpoints: {
-              640: {
-                perView: 1,
-                peek: {
-                  before: 0,
-                  after: 20
+        <ZSection
+          tag="div"
+          style="--section-margin: 0"
+        >
+          <ZCarousel
+            class="carousel"
+            :settings="{
+              autoplay: 3000,
+              perView: 3,
+              peek: {
+                before: 0,
+                after: 55
+              },
+              breakpoints: {
+                640: {
+                  perView: 1,
+                  peek: {
+                    before: 0,
+                    after: 20
+                  }
                 }
               }
-            }
-          }"
-        >
-          <template v-for="partner in partners">
-            <li
-              :key="partner.id"
-              class="glide__slide"
-            >
-              <ZImage
-                :src="partner.rest_media"
-              />
-            </li>
-          </template>
-        </ZCarousel>
+            }"
+          >
+            <template v-for="partner in partners">
+              <li
+                :key="partner.id"
+                class="glide__slide"
+              >
+                <ZImage
+                  :src="partner._embedded['wp:featuredmedia'][0].media_details.sizes.medium ? partner._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url : partner._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url"
+                />
+              </li>
+            </template>
+          </ZCarousel>
+        </ZSection>
         <ZImage
           :src="`${$config.mediaBaseURL}/wp-content/uploads/2020/11/ROHIS.png`"
         />
@@ -282,7 +288,7 @@ export default {
     const eventsRes = await $axios.get('events', { params: { per_page: 8, _embed: true } })
     const events = eventsRes.data
     // partners
-    const partnersRes = await $axios.get('logos', { params: { per_page: 99, logos_categories: 25 } })
+    const partnersRes = await $axios.get('logos', { params: { per_page: 99, logos_categories: 25, _embed: true } })
     const partners = partnersRes.data
 
     if (!Object.keys(store.state.instagram.posts).length) {
