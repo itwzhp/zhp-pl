@@ -28,7 +28,7 @@ export default {
   mounted() {
     const flatpickrConfig = {
       ...{
-        minDate: '2010',
+        minDate: '2010-05-28',
         maxDate: new Date(),
         locale: Polish,
         inline: true,
@@ -62,6 +62,10 @@ export default {
   }
 
   .flatpickr {
+    &-current-month {
+      display: flex;
+      align-items: center;
+    }
     &-day {
       &:nth-child(7n+0) {
         border-radius: 0 50px 50px 0;
