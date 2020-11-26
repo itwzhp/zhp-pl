@@ -76,7 +76,7 @@
         :peeked="true"
         :settings="{
           breakpoints: {
-            480: {
+            640: {
               perView: 1,
               peek: {
                 before: 0,

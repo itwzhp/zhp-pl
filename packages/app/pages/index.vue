@@ -27,7 +27,7 @@
         :settings="{
           autoplay: 3000,
           breakpoints: {
-            480: {
+            640: {
               perView: 1,
               peek: {
                 before: 0,
@@ -143,7 +143,7 @@
         :settings="{
           autoplay: 3000,
           breakpoints: {
-            480: {
+            640: {
               perView: 1,
               peek: {
                 before: 0,
@@ -202,7 +202,7 @@
               after: 55
             },
             breakpoints: {
-              480: {
+              640: {
                 perView: 1,
                 peek: {
                   before: 0,

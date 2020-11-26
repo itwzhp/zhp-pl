@@ -19,7 +19,7 @@
             gap: carousel.gap,
             type: 'carousel',
             breakpoints: {
-              480: {
+              640: {
                 perView: 1,
                 gap: 20,
                 peek: {
@@ -131,7 +131,7 @@
             gap: carousel.gap,
             type: 'carousel',
             breakpoints: {
-              480: {
+              640: {
                 perView: 1,
                 gap: 20,
                 peek: {
