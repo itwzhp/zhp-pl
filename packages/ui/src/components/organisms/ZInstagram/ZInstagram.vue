@@ -82,7 +82,7 @@ export default {
       if (typeof document === 'undefined') return;
       const decoder = document.createElement('div');
       decoder.innerHTML = url;
-      return decoder.textContent.replaceAll('"', '');
+      return decoder.textContent.replace(/"/gm, '');
     },
   },
 };

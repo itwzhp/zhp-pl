@@ -25,7 +25,7 @@ export default {
   computed: {
     replacedHTML() {
       const anchor = /<a.+?href="(.+?)">(.+?)<\/a>/gm;
-      return this.html.replaceAll(anchor, (match, href, name) => `<z-link to="${href}">${name}</z-link>`);
+      return this.html.replace(anchor, (match, href, name) => `<z-link to="${href}">${name}</z-link>`);
     },
     component() {
       return {
