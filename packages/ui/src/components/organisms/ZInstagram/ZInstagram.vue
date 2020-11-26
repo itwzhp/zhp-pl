@@ -120,8 +120,8 @@ export default {
   }
 
   &__description {
-    grid-column: span 2;
     margin: 0 0 20px 0;
+    grid-column: span 2;
   }
 
   &__details {

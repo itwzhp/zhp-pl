@@ -70,15 +70,19 @@ export default {
   },
 };
 </script>
+
 <style lang="scss">
 .z-video {
   position: relative;
 
   &__source {
     width: 100%;
-    height: calc(100% + 2.875rem);
-    margin: -1.5rem 0;
     object-fit: cover;
+
+    @media (min-width: 640px) {
+      height: calc(100% + 2.875rem);
+      margin: -1.5rem 0;
+    }
   }
 
   &__controls {
@@ -119,7 +123,11 @@ export default {
     justify-content: center;
     background: #fff;
     border-radius: 50%;
-    transform: translateY(-50%);
+    transform: translate(-50%, -50%);
+
+    @media (min-width: 640px) {
+      transform: translateY(-50%);
+    }
   }
 }
 </style>
