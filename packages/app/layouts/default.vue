@@ -137,6 +137,11 @@
         />
       </div>
     </footer>
+    <ZCookies
+      v-if="cookies"
+      class="cookies"
+      @close="closeCookies"
+    />
   </div>
 </template>
 
@@ -153,7 +158,8 @@ import {
   ZButton,
   ZMenu,
   ZMegaMenu,
-  ZList
+  ZList,
+  ZCookies
 } from '@nowa-zhp/ui'
 
 export default {
@@ -168,7 +174,8 @@ export default {
     ZButton,
     ZMenu,
     ZMegaMenu,
-    ZList
+    ZList,
+    ZCookies
   },
   async middleware ({ store, $axios }) {
     if (!Object.keys(store.getters['menus/menu']).length) {
@@ -239,7 +246,8 @@ export default {
         { name: 'CSH 4 Żywioły', href: 'https://4zywioly.pl/' },
         { name: 'SZAiL (Konopnickiej6)', href: 'https://szal.pl/' },
         { name: 'Fundacja Światowe Jamboree', href: 'http://fsj.zhp.pl/' }
-      ]
+      ],
+      cookies: false
     }
   },
   computed: {
@@ -269,12 +277,21 @@ export default {
       return languages.includes(this.$route.params.slug) ? this.$route.params.slug : 'pl'
     }
   },
+  mounted () {
+    if (localStorage.getItem('cookies')) { return }
+    this.cookies = true
+    setTimeout(this.closeCookies, 3000)
+  },
   methods: {
     toggle () {
       this.isOpen = !this.isOpen
     },
     close () {
       this.isOpen = false
+    },
+    closeCookies () {
+      this.cookies = false
+      localStorage.setItem('cookies', JSON.stringify(true))
     }
   }
 }
@@ -474,5 +491,12 @@ export default {
   &__page {
     flex: 1;
   }
+}
+
+.cookies {
+  position: fixed;
+  z-index: 100;
+  bottom: 0;
+  left: 0;
 }
 </style>
