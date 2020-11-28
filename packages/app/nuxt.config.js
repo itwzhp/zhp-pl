@@ -135,5 +135,6 @@ export default {
   },
   googleAnalytics: {
     id: process.env.GA
-  }
+  },
+  telemetry: false
 }
