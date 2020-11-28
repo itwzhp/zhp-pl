@@ -75,9 +75,7 @@
         title="Poznaj ZHP"
         content="Związek Harcerstwa Polskiego to największa organizacja harcerska w Polsce, która zrzesza ponad 100 000 osób! Koniecznie dowiedz się o niej więcej!"
         class="section-about-us__banner"
-        :calls-to-action="[
-          {name:'Odkryj harcerstwo', to: '/odkryj-harcerstwo'}
-        ]"
+        :calls-to-action="[]"
       >
         <template #thumbnail="{thumbnail}">
           <ZVideo
