@@ -280,7 +280,7 @@ export default {
   mounted () {
     if (localStorage.getItem('cookies')) { return }
     this.cookies = true
-    setTimeout(this.closeCookies, 3000)
+    setTimeout(this.closeCookies, 60000)
   },
   methods: {
     toggle () {
