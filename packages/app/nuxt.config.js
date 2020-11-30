@@ -44,7 +44,7 @@ export default {
   buildModules: [
     // '@nuxtjs/eslint-module',
     // '@nuxtjs/stylelint-module',
-    // '@nuxtjs/pwa',
+    '@nuxtjs/pwa',
     '@nuxtjs/google-analytics'
   ],
   /*
@@ -53,7 +53,7 @@ export default {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    // '@nuxtjs/pwa',
+    '@nuxtjs/pwa',
     '@nuxtjs/sentry'
   ],
   /*
