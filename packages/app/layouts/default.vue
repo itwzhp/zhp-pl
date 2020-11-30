@@ -178,7 +178,7 @@ export default {
     ZCookies
   },
   async middleware ({ store, $axios }) {
-    if (!Object.keys(store.getters['menus/menu']).length) {
+    if (!Object.keys(store.state.menus).length) {
       const menusRes = await $axios.get('menus')
       const menus = menusRes.data
       const locations = {
