@@ -1,7 +1,6 @@
 import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
 import { withKnobs, text, object } from '@storybook/addon-knobs';
 import { withA11y } from '@storybook/addon-a11y';
-import axios from 'axios';
 import ZPost from './ZPost.vue';
 
 <Meta title="Molecules/Post" component={ZPost} decorators={[withKnobs, withA11y]}/>
@@ -37,40 +36,6 @@ import ZPost from './ZPost.vue';
           :date="date"
           style="width: 250px"
         />`,
-    }}
-  </Story>
-</Preview>
-
-<Preview>
-  <Story name="Grid">
-    {{
-        components: { ZPost },
-        data() {
-          return {
-            posts: [],
-          }
-        },
-        template: `<div style="display: grid; grid-template-columns: repeat(4, 1fr); column-gap: 20px; row-gap: 20px; max-width: 1071px; margin: 0 auto">
-          <ZPost
-            v-for="(post, index) in posts"
-            :key="post.id"
-            :thumbnail="post.rest_media"
-            :title="post.title.rendered"
-            :to="post.link"
-            author="Przemysław Spaczek"
-            :sticky="post.sticky"
-            :date="post.date"
-            :class="{'z-post--highlighted': post.sticky, 'z-post--primary': index === 0}"
-          />
-        </div>`,
-      async created(){
-        const { API_URL } = process.env;
-        const params = {
-          per_page: 16,
-        };
-        const { data } = await axios.get(`${API_URL}/posts`, { params });
-        this.posts = data;
-      }
     }}
   </Story>
 </Preview>

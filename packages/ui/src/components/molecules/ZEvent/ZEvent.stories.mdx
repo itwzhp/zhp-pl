@@ -1,7 +1,6 @@
 import { Meta, Props, Story, Preview } from '@storybook/addon-docs/blocks';
 import { withKnobs, text, object } from '@storybook/addon-knobs';
 import { withA11y } from '@storybook/addon-a11y';
-import axios from 'axios';
 import ZEvent from './ZEvent.vue';
 
 <Meta title="Molecules/Event" component={ZEvent} decorators={[withKnobs, withA11y]}/>
@@ -42,43 +41,6 @@ import ZEvent from './ZEvent.vue';
           :ageGroup="{name: 'Harcerze', color: '#ffffff', background: '#f58220'}"
           style="width: 250px"
         />`,
-    }}
-  </Story>
-</Preview>
-
-<Preview>
-  <Story name="Grid">
-    {{
-      components: { ZEvent },
-      data() {
-        return {
-          events: [],
-          eventTypes: [],
-          ageGroups: [],
-        }
-      },
-      template: `<div style="display: grid; grid-template-columns: repeat(4, 1fr); column-gap: 20px; row-gap: 20px; max-width: 1071px; margin: 0 auto">
-          <div style="grid-row: span 4; grid-column: 1;"></div>
-          <ZEvent
-            v-for="(event, index) in events"
-            :key="event.id"
-            :thumbnail="event.rest_media"
-            :title="event.title.rendered"
-            :date="{start: '01/09/2020', end: '03/09/2020'}"
-            :location="{name: 'Warszawa'}"
-            :audience="{name: 'Wszyscy harcerze'}"
-            :type="{name: 'Zlot'}"
-            :age-group="{name: 'Harcerze Starsi', color: '#ffffff', background: '#084da1'}"
-          />
-        </div>`,
-      async created(){
-        const { API_URL } = process.env;
-        const params = {
-          per_page: 12,
-        };
-        const eventsRes = await axios.get(`${API_URL}/events`, { params });
-        this.events = eventsRes.data;
-      }
     }}
   </Story>
 </Preview>
