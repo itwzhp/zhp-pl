@@ -3,3 +3,4 @@ node_modules
 packages/*/node_modules
 packages/*/storybook-static
 packages/*/.nuxt
+packages/app/static/sw.js
