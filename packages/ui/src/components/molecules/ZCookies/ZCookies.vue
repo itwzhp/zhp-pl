@@ -8,7 +8,7 @@
         tag="span"
         class="z-cookies__description button light"
       >
-        Ta strona używa ciasteczek (cookies), dzięki którym nasz serwis może działać lepieje.
+        Ta strona używa ciasteczek (cookies), dzięki którym nasz serwis może działać lepiej.
       </ZText>
       <ZButton @click="$emit('close')">
         Rozumiem
