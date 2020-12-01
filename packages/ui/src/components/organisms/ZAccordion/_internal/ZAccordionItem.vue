@@ -75,15 +75,21 @@ export default {
 
 <style lang="scss">
 .z-accordion-item {
+  margin: var(--accordion-margin, 4px 0);
+
   &__toggler {
     --button-min-width: 100%;
     --button-justify-content: flex-start;
+    --button-height: auto;
+
+    text-align: left;
   }
 
   &__icon {
     --icon-size: 0.75rem;
     --icon-color: #7ba22e;
 
+    flex: none;
     margin: var(--accordion-item-icon-margin, 0 0.5rem 0 0);
   }
 
