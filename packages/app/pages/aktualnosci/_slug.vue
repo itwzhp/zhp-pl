@@ -146,10 +146,20 @@ export default {
     ZLink,
     ZText
   },
-  async asyncData ({ $axios, params, query }) {
+  async asyncData ({ $axios, params, query, redirect }) {
     // posts
     const postRes = await $axios.get('posts', { params: { _embed: true, ...params } })
-    const post = postRes.data[0]
+
+    if (!postRes.data.length) {
+      redirect({ name: '404' })
+    }
+
+    const post = postRes.data.shift()
+    const postRedirect = post.rest_redirect
+    if (postRedirect) {
+      redirect(postRedirect)
+    }
+
     // related posts
     const relatedPostsRes = await $axios.get('posts', { params: { per_page: 8, categories: post.categories.shift() } })
     const relatedPosts = relatedPostsRes.data
