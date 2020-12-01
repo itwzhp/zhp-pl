@@ -81,6 +81,7 @@ export default {
     box-shadow: var(--button-box-shadow);
     color: var(--button-color, #fff);
     cursor: var(--button-cursor, pointer);
+    font-family: inherit;
     font-size: var(--button-font-size, 0.876rem);
     font-weight: 500;
     line-height: 1.2;
