@@ -222,6 +222,11 @@ export default {
             page.link.replace(/https?:\/\/.+.pl\//gm, '').replace(/\/$/gm, '').split('/').length === 2))
     const page = pageRest.data.filter(filter).shift()
 
+    const pageRedirect = page.rest_redirect
+    if (pageRedirect) {
+      redirect(pageRedirect)
+    }
+
     const childrenRes = await $axios.get('pages', { params: { parent: page.id, _embed: true, per_page: 99 } })
     const children = childrenRes.data.sort((a, b) => (a.menu_order < b.menu_order ? -1 : 1))
     if (children.length && !params.id) {
