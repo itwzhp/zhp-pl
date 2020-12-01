@@ -234,7 +234,7 @@ export default {
         { name: 'Stołeczna', href: 'https://stoleczna.zhp.pl/' },
         { name: 'Śląska', href: 'https://slaska.zhp.pl/' },
         { name: 'Warmińsko-Mazurska', href: 'http://wm.zhp.pl/' },
-        { name: 'Wielkopolska', href: 'http://wielkopolska.zhp.pl/' },
+        { name: 'Wielkopolska', href: 'http://www.zhp.wlkp.pl/' },
         { name: 'Zachodniopomorska', href: 'http://zachpom.zhp.pl/' },
         { name: 'Ziemi Lubuskiej', href: 'http://lubuska.zhp.pl/' }
       ],
