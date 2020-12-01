@@ -87,7 +87,7 @@
     </ZSection>
     <ZSection class="section-join-us">
       <ZBanner
-        :thumbnail="{src: 'https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/Agnieszka_Madetko-Kurczab_ZHP_21-scaled.jpg'}"
+        :thumbnail="{src: `${$config.mediaBaseURL}/wp-content/uploads/2020/12/Agnieszka_Madetko-Kurczab_ZHP.jpg`}"
         title="Chcesz zapisać swoje dziecko do harcerstwa?"
         content="Harcerstwo to nie tylko niesamowita przygoda, ale także możliwość zdobycia sprawności na całe życie. Chcesz, aby Twoje dziecko wkroczyło z nami na szlak? Tutaj znajdziesz najważniejsze informacje."
         :calls-to-action="[
@@ -109,18 +109,18 @@
       <ZCard
         to="/stopnie-i-sprawnosci"
         title="Stopnie i sprawności"
-        thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/01.png"
+        :thumbnail="`${$config.mediaBaseURL}/wp-content/uploads/2020/12/01.png`"
         class="section-mission__card section-mission__card--first"
       />
       <ZCard
         to="/czlonkowie-organizacji"
         title="Członkowie organizacji"
-        thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/02.png"
+        :thumbnail="`${$config.mediaBaseURL}/wp-content/uploads/2020/12/02.png`"
         class="section-mission__card section-mission__card--bigger"
       />
       <ZCard
         title="Statut ZHP i Władze ZHP"
-        thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/03.png"
+        :thumbnail="`${$config.mediaBaseURL}/wp-content/uploads/2020/12/03.png`"
         class="section-mission__card"
       />
       <ZBanner

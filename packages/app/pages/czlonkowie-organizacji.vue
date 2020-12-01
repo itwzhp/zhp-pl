@@ -18,20 +18,21 @@
     </ZSection>
     <ZSection class="section-join-us">
       <ZBanner
-        thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/09/Agnieszka_Madetko-Kurczab_ZHP_21-scaled.jpg"
+        :thumbnail="{src: `${$config.mediaBaseURL}/wp-content/uploads/2020/12/Agnieszka_Madetko-Kurczab_ZHP.jpg`}"
         title="Chcesz zapisać swoje dziecko do harcerstwa?"
-        content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam augue nisl, dignissim id metus
-        sagittis, ultrices consectetur turpis. Quisque maximus metus purus, vitae convallis mi tempus eu."
+        content="Harcerstwo to nie tylko niesamowita przygoda, ale także możliwość zdobycia sprawności na całe życie. Chcesz, aby Twoje dziecko wkroczyło z nami na szlak? Tutaj znajdziesz najważniejsze informacje."
         :calls-to-action="[
-          {name:'Jak zacząć', to: '/jak-zaczac'},
+          {name:'No to zaczynamy', to: '/no-to-zaczynamy'},
           {name:'Ile kosztuje harcerstwo?', to: '/ile-kosztuje-harcerstwo'},
           {name:'Gdzie się zapisać?', to: '/gdzie-sie-zapisac'}]"
         class="section-join-us__banner"
       />
       <ZPost
-        thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/08/fot.-ZHP-_-Karolina-Piotrowska-18.jpg"
-        title="Przewodniczący ZHP i Naczelniczka ZHP: Wychowujemy w zgodzie z wartościami"
-        date="2020-08-30"
+        v-if="cards['>>>']"
+        :title="cards['>>>'].title.rendered"
+        :thumbnail="cards['>>>']._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url"
+        :to="cards['>>>'].rest_redirect ? cards['>>>'].rest_redirect :`/${cards['>>>'].date.split('-')[0]}/${cards['>>>'].slug}`"
+        :date="cards['>>>'].date"
         class="section-join-us__post"
       />
     </ZSection>
@@ -45,6 +46,7 @@ import {
   ZBanner,
   ZPost
 } from '@nowa-zhp/ui'
+import { mapGetters } from 'vuex'
 
 export default {
   components: {
@@ -105,6 +107,11 @@ export default {
         }
       ]
     }
+  },
+  computed: {
+    ...mapGetters({
+      cards: 'cards/posts'
+    })
   },
   head () {
     const title = 'Członkowie organizacji |  Związek Harcerstwa Polskiego'
