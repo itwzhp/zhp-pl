@@ -36,7 +36,7 @@ export default {
     ZHeading
   },
   async asyncData ({ $axios, params, query }) {
-    const pageRes = await $axios.get('pages', { params: { slug: 'undefined', _embed: true, per_page: 16 } })
+    const pageRes = await $axios.get('pages', { params: { slug: 'undefined', _embed: true, parent: 0 } })
     const page = pageRes.data.shift()
     return { page }
   },

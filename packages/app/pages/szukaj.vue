@@ -85,7 +85,7 @@ export default {
     ZPagination
   },
   async asyncData ({ $axios, params, query }) {
-    const searchRes = await $axios.get('pages', { params: { slug: 'szukaj', _embed: true, per_page: 16 } })
+    const searchRes = await $axios.get('pages', { params: { slug: 'szukaj', _embed: true, parent: 0 } })
     const search = searchRes.data.shift()
 
     const postsRes = await $axios.get('search', { params: { ...query, _embed: true, subtype: ['post', 'page', 'event'] } })

@@ -31,7 +31,6 @@
           :key="post.id"
           :thumbnail="post.rest_media || require('~/assets/placeholder.png')"
           :title="post.title && post.title.rendered"
-          :to="post.rest_redirect ? post.rest_redirect : `/${post.date.split('-')[0]}/${post.slug}`"
           :author="post.rest_author"
           :date="post.date"
           :category="post.sticky
@@ -79,7 +78,7 @@ export default {
     ZClipPath
   },
   async asyncData ({ $axios, params, query }) {
-    const newsRes = await $axios.get('pages', { params: { slug: 'aktualnosci', _embed: true } })
+    const newsRes = await $axios.get('pages', { params: { slug: 'aktualnosci', _embed: true, parent: 0 } })
     const news = newsRes.data.shift()
     // helpers
     const reduce = (accumulator, option) => ({
