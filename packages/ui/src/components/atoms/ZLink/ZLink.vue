@@ -26,7 +26,7 @@ export default {
   computed: {
     hack() {
       return typeof this.to === 'string' && !/wp-content/gm.test(this.to)
-        ? this.to.replace(/https?:\/\/prod\.przemyslawspaczek\.pl|https?:\/\/zhp\.pl/gm, '')
+        ? this.to.replace(/https?:\/\/prod\.przemyslawspaczek\.pl|https?:\/\/zhp\.pl|https?:\/\/work\.zhp\.pl/gm, '')
         : this.to;
     },
     tagComputed() {
