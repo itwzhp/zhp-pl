@@ -11,7 +11,7 @@
       tag="div"
       class="z-did-you-know__title caption uppercase black"
     >
-      Czy wiesz że...
+      Czy wiesz, że...
     </ZText>
     <ZText class="caption">
       {{ randomText }}
