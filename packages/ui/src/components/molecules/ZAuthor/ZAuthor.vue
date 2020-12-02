@@ -11,7 +11,7 @@
     </slot>
     <slot name="name">
       <ZLink
-        to="#"
+        tag="span"
         class="z-author__name"
       >
         {{ name }}
