@@ -199,6 +199,9 @@ export default {
   },
   watchQuery: true,
   async asyncData ({ $axios, params, redirect, route }) {
+    if (!params) {
+      return
+    }
     const asyncCarousel = async (carousel) => {
       const { post_type, taxonomy, id, per_page } = carousel
       const postsRes = await $axios(post_type, { params: { per_page, [taxonomy]: id } })
