@@ -299,8 +299,8 @@ export default {
 
 <style lang="scss">
 #__nuxt {
-  background-image: url('~assets/background.png');
   background-color: #fff;
+  background-image: url('~assets/background.png');
   background-position-x: center;
   background-repeat: repeat-y;
   background-size: 100% auto;

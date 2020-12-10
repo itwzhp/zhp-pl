@@ -28,8 +28,8 @@
       <!-- FIXME: fallback for posts.length === 0, I can show last 5 posts  -->
       <template v-for="(post, index) in posts">
         <ZPost
-          :to="post.rest_redirect ? post.rest_redirect : `/${post.date.split('-')[0]}/${post.slug}`"
           :key="post.id"
+          :to="post.rest_redirect ? post.rest_redirect : `/${post.date.split('-')[0]}/${post.slug}`"
           :thumbnail="post.rest_media || require('~/assets/placeholder.png')"
           :title="post.title && post.title.rendered"
           :author="post.rest_author"
