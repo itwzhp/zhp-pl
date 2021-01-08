@@ -216,15 +216,20 @@ export default {
       }
     }
     const pageRest = await $axios.get('pages', { params: { _embed: true, ...params } })
-    if (!pageRest.data.length) {
+
+    if (!pageRest.data.length > 0) {
       redirect({ name: '404' })
+      return
     }
     // hack for dotacje
     const filter = page => (page.parent === 0 ||
         (page.link.split('/').includes('dotacje') &&
             page.link.replace(/https?:\/\/.+.pl\//gm, '').replace(/\/$/gm, '').split('/').length === 2))
     const page = pageRest.data.filter(filter).shift()
-
+    if (!page) {
+      redirect({ name: '404' })
+      return
+    }
     const pageRedirect = page.rest_redirect
     if (pageRedirect) {
       redirect(pageRedirect)
