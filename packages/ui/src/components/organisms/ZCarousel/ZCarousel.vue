@@ -116,8 +116,6 @@ export default {
     }
 
     &--peeked {
-      margin: 0 -24px;
-
       .glide {
         &__track {
           overflow: visible;
@@ -139,11 +137,15 @@ export default {
             opacity: 1;
 
             & > * {
-              transition: transform  300ms ease-in-out;
+              @media (min-width: 640px) and (prefers-reduced-motion: no-preference) {
+                transition: transform 300ms ease-in-out;
+              }
 
               &:hover {
-                transform: scale(1.08);
-                transform-origin: center;
+                @media (min-width: 640px) and (prefers-reduced-motion: no-preference) {
+                  transform: scale(1.08);
+                  transform-origin: center;
+                }
               }
             }
           }

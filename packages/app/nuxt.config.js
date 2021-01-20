@@ -96,7 +96,9 @@ export default {
   },
   sentry: {
     dsn: 'https://dbc6503ec4004c37a3f7706daa89aa73@o479654.ingest.sentry.io/5524988',
-    config: {}
+    config: {
+      environment: process.env.NODE_ENV
+    }
   },
   router: {
     scrollBehavior () {

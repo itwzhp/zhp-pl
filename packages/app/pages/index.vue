@@ -20,6 +20,7 @@
     </div>
     <ZSection
       title="Polecamy"
+      class="section-posts"
     >
       <ZCarousel
         v-if="posts.length > 0"
@@ -144,7 +145,7 @@
             640: {
               perView: 1,
               peek: {
-                before: 0,
+                before: 20,
                 after: 20
               }
             }
@@ -549,6 +550,10 @@ export default {
 
   .carousel {
     grid-column: span 12;
+  }
+
+  .section-posts {
+    --section-content-max-width: 1100px;
   }
 }
 </style>
