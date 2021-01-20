@@ -39,7 +39,7 @@ export default {
       if (!date) {
         return '';
       }
-      return format(new Date(date), 'HH:mm dd/MM/yyyy');
+      return format(new Date(date), 'dd/MM/yyyy');
     },
   },
   components: {
