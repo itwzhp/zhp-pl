@@ -22,7 +22,10 @@
           </ZLink>
         </slot>
         <slot name="description">
-          <ZText class="z-card__description caption">
+          <ZText
+            v-if="description"
+            class="z-card__description caption"
+          >
             {{ description }}
           </ZText>
         </slot>
