@@ -26,7 +26,7 @@
             :date="post._embedded.self[0].date"
             :thumbnail="post._embedded.self[0].rest_media || require('~/assets/placeholder.png')"
             :author="post._embedded.self[0].rest_author"
-            style="grid-column: span 3;"
+            class="post"
           />
         </template>
         <template v-else-if="post.subtype === 'event'">
@@ -37,7 +37,7 @@
             :date="post._embedded.self[0].rest_acf.date"
             :type="post._embedded.self[0].rest_acf.rest_event_type"
             :thumbnail="post._embedded.self[0].rest_media || require('~/assets/placeholder.png')"
-            style="grid-column: span 3;"
+            class="post"
           />
         </template>
         <template v-else>
@@ -46,7 +46,7 @@
             :to="post.url"
             :title="post.title"
             :thumbnail="post._embedded.self[0].rest_media || require('~/assets/placeholder.png')"
-            style="grid-column: span 3;"
+            class="post"
           />
         </template>
       </template>
@@ -221,6 +221,18 @@ export default {
       @media (min-width: 640px) {
         grid-column: span 13;
       }
+    }
+  }
+
+  .post {
+    grid-column: span 12;
+
+    @media (min-width: 640px) {
+      grid-column: span 4;
+    }
+
+    @media (min-width: 768px) {
+      grid-column: span 3;
     }
   }
 }
