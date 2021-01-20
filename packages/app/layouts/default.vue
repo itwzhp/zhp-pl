@@ -1,5 +1,8 @@
 <template>
-  <div class="layout">
+  <div
+    class="layout"
+    :class="{'layout--mourning': hasMourning}"
+  >
     <header class="z-header">
       <div class="z-header__bar">
         <div class="z-header__actions">
@@ -178,6 +181,11 @@ export default {
     ZCookies
   },
   async middleware ({ store, $axios }) {
+    if (!Object.keys(store.state.theme.options).length) {
+      const optionsRes = await $axios.get('options')
+      const options = optionsRes.data
+      store.dispatch('theme/update', options)
+    }
     if (!Object.keys(store.state.menus).length) {
       const menusRes = await $axios.get('menus')
       const menus = menusRes.data
@@ -256,7 +264,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      randomText: 'random/text'
+      randomText: 'random/text',
+      hasMourning: 'theme/hasMourning'
     }),
     headerMenu () {
       return this.$store.getters['menus/menu']('headerMenu')
@@ -498,6 +507,10 @@ export default {
 
   &__page {
     flex: 1;
+  }
+
+  &--mourning {
+    filter: grayscale(1);
   }
 }
 
