@@ -98,7 +98,10 @@ export default {
     }
   }
 
-  img { max-width: 100%; height: auto; }
+  img {
+    max-width: 100%;
+    height: auto;
+  }
 
   a:not(.z-button) {
     color: var(--color-primary);
@@ -106,6 +109,62 @@ export default {
 
   .z-link {
     font-size: 1rem;
+  }
+
+  h1 {
+    font-size: 2rem;
+
+    @media (min-width: 640px) {
+      font-size: 3rem;
+    }
+  }
+
+  h2 {
+    font-size: 1.57rem;
+
+    @media (min-width: 640px) {
+      font-size: 2.125rem;
+    }
+  }
+
+  h3 {
+    font-size: 1.25rem;
+
+    @media (min-width: 640px) {
+      font-size: 1.75rem;
+    }
+  }
+
+  h3 {
+    font-size: 1.25rem;
+
+    @media (min-width: 640px) {
+      font-size: 1.5rem;
+    }
+  }
+
+  h4 {
+    font-size: 1.125rem;
+
+    @media (min-width: 640px) {
+      font-size: 1.25rem;
+    }
+  }
+
+  h5 {
+    font-size: 1rem;
+
+    @media (min-width: 640px) {
+      font-size: 1rem;
+    }
+  }
+
+  h6 {
+    font-size: 0.75rem;
+
+    @media (min-width: 640px) {
+      font-size: 0.875rem;
+    }
   }
 }
 </style>
