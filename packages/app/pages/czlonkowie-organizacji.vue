@@ -164,7 +164,15 @@ export default {
 
   .section-questions {
     &__question {
-      grid-column: span 4;
+      grid-column: span 12;
+
+      @media (min-width: 640px) {
+        grid-column: span 4;
+      }
+
+      @media (min-width: 768px) {
+        grid-column: span 3;
+      }
     }
   }
 

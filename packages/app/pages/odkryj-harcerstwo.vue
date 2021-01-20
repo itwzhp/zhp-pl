@@ -44,9 +44,11 @@
         class="section-join-us__banner"
       />
       <ZPost
-        thumbnail="https://demo.przemyslawspaczek.pl/wp-content/uploads/2020/08/fot.-ZHP-_-Karolina-Piotrowska-18.jpg"
-        title="Przewodniczący ZHP i Naczelniczka ZHP: Wychowujemy w zgodzie z wartościami"
-        date="2020-08-30"
+        v-if="cards['>>>']"
+        :title="cards['>>>'].title.rendered"
+        :thumbnail="cards['>>>']._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url"
+        :to="cards['>>>'].rest_redirect ? cards['>>>'].rest_redirect :`/${cards['>>>'].date.split('-')[0]}/${cards['>>>'].slug}`"
+        :date="cards['>>>'].date"
         class="section-join-us__post"
       />
     </ZSection>
@@ -100,6 +102,7 @@ import {
   ZCarousel,
   ZSearch
 } from '@nowa-zhp/ui'
+import { mapGetters } from 'vuex'
 
 export default {
   components: {
@@ -166,6 +169,11 @@ export default {
         query: { search: query }
       })
     }
+  },
+  computed: {
+    ...mapGetters({
+      cards: 'cards/posts'
+    })
   },
   head () {
     const title = 'Dla rodzica | Związek Harcerstwa Polskiego'
@@ -248,7 +256,11 @@ export default {
 
   .section-questions {
     &__question {
-      grid-column: span 4;
+      grid-column: span 12;
+
+      @media (min-width: 640px) {
+        grid-column: span 4;
+      }
     }
   }
 

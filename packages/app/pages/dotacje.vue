@@ -110,7 +110,11 @@ export default {
 
   .section-subsidies {
     &__subsidie {
-      grid-column: span 4;
+      grid-column: span 12;
+
+      @media (min-width: 640px) {
+        grid-column: span 4;
+      }
     }
   }
 }

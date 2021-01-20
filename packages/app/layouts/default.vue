@@ -195,13 +195,15 @@ export default {
       store.commit('random/update', text)
     }
     const tax = ['age_groups', 'event_types', 'localizations', 'categories'] // categories
-    tax.forEach(async (taxonomy) => {
-      if (!store.getters['taxonomies/taxonomy'](taxonomy)) {
-        const itemsRes = await $axios.get(taxonomy, { params: { per_page: 99, orderby: 'name' } })
-        const items = itemsRes.data
-        store.commit('taxonomies/update', { name: taxonomy, items })
-      }
-    })
+    await Promise.all(
+      tax.map(async (taxonomy) => {
+        if (!store.getters['taxonomies/taxonomy'](taxonomy)) {
+          const itemsRes = await $axios.get(taxonomy, { params: { per_page: 99, orderby: 'name' } })
+          const items = itemsRes.data
+          store.commit('taxonomies/update', { name: taxonomy, items })
+        }
+      })
+    )
     if (!Object.keys(store.state.posts.posts).length) {
       const postsRes = await $axios.get('posts', { params: { per_page: 9 } })
       const posts = postsRes.data
@@ -209,11 +211,13 @@ export default {
     }
     if (!Object.keys(store.state.cards.posts).length) {
       const tags = [{ id: 433, name: '>>' }, { id: 427, name: '>>>' }]
-      tags.forEach(async (tag) => {
-        const postRes = await $axios.get('posts', { params: { per_page: 1, tags: tag.id, _embed: true } })
-        const post = postRes.data.shift()
-        store.commit('cards/update', { name: tag.name, post })
-      })
+      await Promise.all(
+        tags.map(async (tag) => {
+          const postRes = await $axios.get('posts', { params: { per_page: 1, tags: tag.id, _embed: true } })
+          const post = postRes.data.shift()
+          store.dispatch('cards/update', { name: tag.name, post })
+        })
+      )
     }
   },
   data () {
