@@ -409,8 +409,8 @@ export default {
   &__scouting {
     display: grid;
     order: -1;
-    margin: 1rem 0;
-    grid-column: span 12;
+    margin: 32px 0;
+    grid-column: 3 / span 8;
 
     @media (min-width: 640px) {
       order: 0;
@@ -420,8 +420,15 @@ export default {
     }
 
     &-logo {
-      /* TODO: height */
+      margin: 0 0 24px 0;
       background: transparent;
+
+      &:last-of-type {
+        margin: 0;
+      }
+      @media (min-width: 640px) {
+        margin: 0;
+      }
     }
   }
 
