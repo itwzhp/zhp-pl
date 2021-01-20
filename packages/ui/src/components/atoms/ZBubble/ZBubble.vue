@@ -1,7 +1,7 @@
 <template>
   <component
     :is="tag"
-    class="z-bubble"
+    class="z-bubble caption"
     :class="{'z-bubble--is-checked': isChecked, 'z-bubble--is-badge': !isFilter}"
   >
     <input
@@ -14,7 +14,7 @@
       @input="changeHandler"
     >
     <div
-      v-if="isFilter"
+      v-if="hasCross"
       class="z-bubble__uncheck"
     >
       <ZIcon name="cross" />
@@ -22,7 +22,7 @@
     <ZText
       :for="isFilter ? id: undefined"
       :tag="isFilter ? 'label' : 'span'"
-      class="z-bubble__label caption"
+      class="z-bubble__label"
     >
       <slot />
     </ZText>
@@ -71,6 +71,9 @@ export default {
       return this._uid;
     },
     isFilter() {
+      return this.type === 'filter' || this.type === 'filter-no-cross';
+    },
+    hasCross() {
       return this.type === 'filter';
     },
     isChecked() {
@@ -95,6 +98,8 @@ export default {
 
 <style lang="scss">
   .z-bubble {
+    $this: &;
+
     position: relative;
 
     &:focus-within {
@@ -121,17 +126,21 @@ export default {
     }
 
     &__label {
-      display: grid;
+      display: block;
+      overflow: hidden;
       min-width: var(--bubble-label-min-width, 72px);
       height: var(--bubble-label-height, 24px);
-      align-items: center;
-      justify-content: center;
       padding: var(--bubble-label-padding, 0 8px);
       border: var(--bubble-label-border, 1px solid #a6ce39);
       background: var(--bubble-label-background, var(--background, #fff));
       border-radius: var(--bubble-label-border-radius, 10px);
       color: var(--bubble-label-color, var(--color));
+      cursor: pointer;
+      line-height: var(--bubble-label-height, 24px) !important;
       outline: var(--bubble-label-outline);
+      text-align: center;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     &--is-checked {
@@ -149,6 +158,17 @@ export default {
 
     &--is-badge {
       --bubble-label-border: 0;
+      #{$this}__label {
+        cursor: default;
+      }
+    }
+
+    &--no-cross {
+      &#{$this}--is-checked {
+        #{$this}__label {
+          --bubble-label-padding: 0 8px;
+        }
+      }
     }
   }
 

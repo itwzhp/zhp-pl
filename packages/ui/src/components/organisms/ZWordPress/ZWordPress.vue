@@ -103,6 +103,7 @@ export default {
   a:not(.z-button) {
     color: var(--color-primary);
   }
+
   .z-link {
     font-size: 1rem;
   }

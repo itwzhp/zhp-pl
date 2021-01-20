@@ -11,7 +11,7 @@
           Aktualności
           <div
             class="t6 normal"
-            style="margin: 8px 0 0 0"
+            style="margin: 8px 0 0 0;"
           >
             Sprawdź, co nowego w ZHP
           </div>
@@ -185,6 +185,7 @@ export default {
     max-width: 1360px;
     margin: 0 auto;
   }
+
   .section-hero {
     @media (min-width: 640px) {
       --section-content-grid-template-columns: repeat(24, minmax(auto, 1fr));
@@ -196,7 +197,7 @@ export default {
       grid-column: span 12;
 
       @media (min-width: 640px) {
-        grid-column: span 9 ;
+        grid-column: span 9;
         grid-row: span 2;
       }
     }

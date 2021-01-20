@@ -232,9 +232,11 @@ export default {
 <style lang="scss">
 #post {
   overflow: hidden;
+
   .section {
     --section-margin: 25px 0;
   }
+
   .title {
     margin: 32px 0;
     grid-column: span 12;
@@ -250,19 +252,23 @@ export default {
       grid-column: span 8;
     }
   }
+
   .thumbnail {
+    margin: 0;
     grid-column: span 12;
     grid-row: 3;
-    margin: 0;
+
     @media (min-width: 640px) {
       grid-column: span 8;
     }
   }
+
   .cover {
     display: flex;
     overflow: hidden;
     height: 198px;
     border-radius: 10px;
+
     @media (min-width: 640px) {
       height: 396px;
     }
@@ -324,27 +330,29 @@ export default {
     border-radius: 10px;
   }
 }
+
 .z-news {
   padding: 20px;
   background: #f7f7f7;
-  box-shadow: 0 10px 30px 0 rgba(209, 213, 223, 0.5);
   border-radius: 10px;
+  box-shadow: 0 10px 30px 0 rgba(209, 213, 223, 0.5);
 
   &__heading {
-    color: var(--color-primary);
     margin: 0 0 32px 0;
+    color: var(--color-primary);
   }
 
   &__item {
     margin: 0 0 24px 0;
+
     &:last-of-type {
       margin: 0;
     }
   }
 
   &__title {
-    margin: 0 0 0.5rem 0;
     display: inline-block;
+    margin: 0 0 0.5rem 0;
   }
 }
 </style>

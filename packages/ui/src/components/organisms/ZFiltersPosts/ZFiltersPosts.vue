@@ -75,8 +75,8 @@
                     <ZBubble
                       v-model="selectedCategories"
                       :value="`${option.id}`"
-                      type="filter"
-                      class="z-filters-post__bubble"
+                      type="filter-no-cross"
+                      class="z-filters-posts__bubble z-bubble--no-cross"
                     >
                       {{ option.label }}
                     </ZBubble>
@@ -199,7 +199,7 @@ export default {
       this.selectedDate = [selected.after, selected.before].filter((date) => (date));
     },
     updateCategories(selected) {
-      this.selectedTags = selected || [];
+      this.selectedCategories = selected || [];
     },
     unselectDate() {
       this.$emit('submit', { after: '', before: '' });
@@ -312,19 +312,27 @@ export default {
 
     &__categories-list {
       display: flex;
+      overflow: auto;
+      height: 250px;
       flex-wrap: wrap;
-      padding: 0;
+      padding: 0 6px 0 0;
       margin: -3px -3px 10px -3px;
       list-style-type: none;
+      overflow-x: hidden;
     }
 
     &__category {
+      max-width: 100%;
       margin: 3px;
     }
 
     &__bubble {
       --button-min-width: 14px;
       --button-padding: 0;
+
+      label {
+        cursor: pointer !important;
+      }
     }
 
     &__selected {
