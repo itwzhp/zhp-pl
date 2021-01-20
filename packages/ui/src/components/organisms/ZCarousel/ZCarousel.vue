@@ -100,7 +100,10 @@ export default {
       if (this.peeked) {
         extensions = { ...extensions, VisibleClass };
       }
-      new Glide(this.$el, this.options).mount(extensions);
+      const glide = new Glide(this.$el, this.options).mount(extensions);
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        glide.update({ autoplay: false });
+      }
     });
   },
 };
