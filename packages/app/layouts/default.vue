@@ -317,9 +317,9 @@ export default {
   background-position-x: center;
   background-repeat: repeat-y;
   background-size: 100% auto;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
+  //-webkit-font-smoothing: antialiased;
+  //-moz-osx-font-smoothing: grayscale;
+  //text-rendering: optimizeLegibility;
 }
 
 .z-header {
