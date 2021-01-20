@@ -79,22 +79,46 @@ export default {
   }
 
   blockquote {
-    display: inline-flex;
-    padding: 1rem 1rem 1rem 1.5rem;
+    position: relative;
     border: solid #cacaca;
+    padding: 1rem 1rem 1rem 3rem;
     border-width: 4px 0;
     margin: 1rem 0;
-    font-size: 1.25rem;
+    font-size: 1.125rem;
     font-style: italic;
     font-weight: 300;
 
+    @media (min-width: 640px) {
+      padding: 1rem 1rem 1rem 5rem;
+      font-size: 1.25rem;
+    }
+
     &::before {
-      height: 40px;
-      flex: 0 0 40px;
-      margin: 1rem 1.5rem 1rem 0;
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      width: 1.5rem;
+      height: 1.5rem;
       background: url('~assets/quote.svg');
       background-size: 100% 100%;
       content: "";
+
+      @media (min-width: 640px) {
+        width: 2.5rem;
+        height: 2.5rem;
+      }
+    }
+
+    p {
+      margin: 0 0 1rem 0;
+    }
+
+    cite {
+      font-size: 1.125rem;
+
+      @media (min-width: 640px) {
+        font-size: 1.25rem;
+      }
     }
   }
 
