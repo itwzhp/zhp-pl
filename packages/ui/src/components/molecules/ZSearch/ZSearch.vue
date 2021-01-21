@@ -7,7 +7,7 @@
     <ZInput
       v-model="search"
       v-bind="input"
-      type="text"
+      type="search"
       class="z-search__input"
       aria-label="wpisz czego szukasz na stornie ZHP"
     />
@@ -104,7 +104,14 @@ export default {
   justify-items: end;
 
   &__input {
-    width: 100%;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    &::-webkit-search-decoration,
+    &::-webkit-search-cancel-button,
+    &::-webkit-search-results-button,
+    &::-webkit-search-results-decoration { display: none; }
   }
 
   &__icon {
@@ -126,13 +133,25 @@ export default {
   &--condensed {
     --input-background: #fff;
     --input-color: #1e152f;
-    --input-padding: 0 8px;
+    --input-padding: 0 32px 0 8px;
     --input-height: 32px;
     --button-min-width: 32px;
     --button-padding: 0;
+    --icon-color: var(--color-primary-darken);
+    --button-background: transparent;
 
-    grid-template-columns: 1fr 32px;
-    gap: 4px;
+    grid-template-columns: 1fr;
+
+    #{$this}__input {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    #{$this}__submit {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
     #{$this}__icon {
       margin: 0;
     }
