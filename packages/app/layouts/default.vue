@@ -426,6 +426,7 @@ export default {
       &:last-of-type {
         margin: 0;
       }
+
       @media (min-width: 640px) {
         margin: 0;
       }

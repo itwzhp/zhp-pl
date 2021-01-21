@@ -12,7 +12,8 @@
       <template v-for="(category, key) in categories">
         <ZLink
           :key="key"
-          tag="span"
+          :to="{name: 'aktualnosci', query: {categories: `${category.id}`}}"
+          class="z-meta__category"
           v-html="category.name"
         />
       </template>
@@ -87,16 +88,32 @@ export default {
   &__author {}
 
   &__categories {
-    display: grid;
-    column-gap: 4px;
-    grid-auto-flow: column;
-    text-align: right;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    margin: -4px 0 0 0;
+  }
+
+  &__category {
+    margin: 4px 4px 0 0;
+
+    &::after {
+      content: ", ";
+    }
+
+    &:last-of-type {
+      margin: 4px 0 0 0;
+      &::after {
+        content: none;
+      }
+    }
   }
 
   &__date {}
 
   &__reading {
     color: #a6ce39;
+    text-align: right;
   }
 }
 </style>

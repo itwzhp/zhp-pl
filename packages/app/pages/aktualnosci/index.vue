@@ -106,7 +106,7 @@ export default {
         return {
           ...object,
           [param]: param === 'categories'
-            ? query[param].split(',')
+            ? query[param]?.split(',')
             : query[param]
         }
       }, {})

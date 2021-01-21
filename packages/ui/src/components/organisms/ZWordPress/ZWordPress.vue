@@ -80,8 +80,8 @@ export default {
 
   blockquote {
     position: relative;
-    border: solid #cacaca;
     padding: 1rem 1rem 1rem 3rem;
+    border: solid #cacaca;
     border-width: 4px 0;
     margin: 1rem 0;
     font-size: 1.125rem;
