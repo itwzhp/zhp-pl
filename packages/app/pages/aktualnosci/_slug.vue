@@ -94,7 +94,7 @@
           >
             <ZPost
               :key="relatedPost.id"
-              :thumbnail="relatedPost.rest_media"
+              :thumbnail="relatedPost.rest_media || require('~/assets/placeholder.png')"
               :title="relatedPost.title.rendered"
               :to="relatedPost.rest_redirect ? relatedPost.rest_redirect : `/${relatedPost.date.split('-')[0]}/${relatedPost.slug}`"
               :author="relatedPost.rest_author"
