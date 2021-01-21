@@ -6,18 +6,13 @@
     <header class="z-header">
       <div class="z-header__bar">
         <div class="z-header__actions">
-          <ZDropdown v-if="false">
-            <template #toggle="{toggle}">
-              <ZButton
-                class="z-button--text"
-                @click="toggle"
-              >
-                <ZIcon
-                  name="shuffle"
-                /> Zmień serwis
-              </ZButton>
-            </template>
-          </ZDropdown>
+          <ZSearch
+            class="z-search--condensed z-header__search"
+            :has-label="false"
+            :min-char="0"
+            :input="{placeholder: 'Jakich aktualności szukasz?'}"
+            @submit="search"
+          />
         </div>
         <div class="z-header__logo">
           <ZLink
@@ -157,12 +152,12 @@ import {
   ZImage,
   ZLink,
   ZDropdown,
-  ZIcon,
   ZButton,
   ZMenu,
   ZMegaMenu,
   ZList,
-  ZCookies
+  ZCookies,
+  ZSearch
 } from '@nowa-zhp/ui'
 
 export default {
@@ -173,12 +168,12 @@ export default {
     ZImage,
     ZLink,
     ZDropdown,
-    ZIcon,
     ZButton,
     ZMenu,
     ZMegaMenu,
     ZList,
-    ZCookies
+    ZCookies,
+    ZSearch
   },
   async middleware ({ store, $axios }) {
     if (!Object.keys(store.state.theme.options).length) {
@@ -305,6 +300,13 @@ export default {
     closeCookies () {
       this.cookies = false
       localStorage.setItem('cookies', JSON.stringify(true))
+    },
+    search (query) {
+      if (!query.trim().length) { return }
+      this.$router.push({
+        path: '/szukaj',
+        query: { search: query, subtype: 'post' }
+      })
     }
   }
 }
@@ -336,6 +338,7 @@ export default {
   }
 
   @media (min-width: 640px) {
+    width: 100%;
     max-width: 1360px;
     justify-content: unset;
     margin: 0 auto;
@@ -363,7 +366,6 @@ export default {
       --button-color: var(--color-primary);
 
       display: grid;
-      justify-content: start;
       padding: 0 1.25rem;
       gap: 1rem;
       grid-auto-flow: column;
@@ -384,6 +386,10 @@ export default {
 
   &__nav {
     background: transparent;
+  }
+
+  &__search {
+    max-width: 250px;
   }
 }
 

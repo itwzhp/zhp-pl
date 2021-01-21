@@ -13,7 +13,7 @@
         </ZHeading>
         <ZSearch
           class="section-hero__search"
-          :input="{placeholder: 'Czego dzisiaj chcsz się dowiedzieć o ZHP?'}"
+          :input="{placeholder: 'Czego dzisiaj chcesz dowiedzieć się o ZHP?'}"
           @submit="search"
         />
       </ZSection>
