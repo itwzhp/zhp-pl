@@ -55,10 +55,10 @@ export default {
   },
   async asyncData ({ $axios, params, query }) {
     // helpers
-    const reduce = (accumulator, option) => ({
-      ...accumulator,
-      [option.id]: map(option)
-    })
+    // const reduce = (accumulator, option) => ({
+    //   ...accumulator,
+    //   [option.id]: map(option)
+    // })
     // FIXME: remove this mapping, base on native taxonomies fields or exclude it in Vuex
     const map = option => ({
       id: option.id,
@@ -74,49 +74,49 @@ export default {
     const totalPages = eventsRes.headers['x-wp-totalpages']
     // TODO: move event_types to vuex
     const eventTypesRes = await $axios('event_types', { params: { per_page: 99 } })
-    const eventTypes = eventTypesRes.data.reduce(reduce, {})
+    const eventTypes = eventTypesRes.data.map(map)
     // TODO: base on age_groups from vuex
     const ageGroupsRes = await $axios('age_groups', { params: { per_page: 99 } })
-    const ageGroups = ageGroupsRes.data.reduce(reduce, {})
+    const ageGroups = ageGroupsRes.data.map(map)
     // TODO: move district to vuex
     const localizationsRes = await $axios('localizations', { params: { per_page: 99, parent: 0 } })
-    const localizations = localizationsRes.data.reduce(reduce, {})
+    const localizations = localizationsRes.data.map(map)
     const categories = {
       event_types: {
         id: 'event_types',
         label: 'Rodzaj wydarzenia',
-        options: {
-          0: {
+        options: [
+          {
             id: 0,
             label: 'Wybierz rodzaj wydarzenia',
             value: ''
           },
           ...eventTypes
-        }
+        ]
       },
       age_groups: {
         id: 'age_groups',
         label: 'Dla kogo',
-        options: {
-          0: {
+        options: [
+          {
             id: 0,
             label: 'Wybierz dla kogo',
             value: ''
           },
           ...ageGroups
-        }
+        ]
       },
       localizations: {
         id: 'localizations',
         label: 'Gdzie',
-        options: {
-          0: {
+        options: [
+          {
             id: 0,
             label: 'Wybierz gdzie',
             value: ''
           },
           ...localizations
-        }
+        ]
       }
     }
     const filtersKeys = ['event_types', 'age_groups', 'localizations', 'before', 'after']

@@ -64,9 +64,10 @@
             <template #input="{id}">
               <ZSelect
                 :id="id"
-                v-model="selectedCategories[category.id]"
+                :value="selectedCategories[category.id]"
                 :options="category.options"
                 class="z-form-field__input"
+                @input="selectHandler(category.id, $event)"
               />
             </template>
           </ZFormField>
@@ -147,13 +148,7 @@ export default {
   },
   computed: {
     taxonomies() {
-      return {
-        ...Object.keys(this.categories).reduce(
-          (accumulator, category) => ({
-            ...accumulator, ...this.categories[category].options,
-          }), {},
-        ),
-      };
+      return Object.keys(this.categories).reduce((object, taxonomy) => ({ ...object, ...this.categories[taxonomy]?.options.reduce((o, category) => ({ ...o, [category.id]: category }), {}) }), {});
     },
     mappedDate() {
       const after = this.selected && this.$options.filters.format(this.selected.after);
@@ -182,6 +177,9 @@ export default {
     },
   },
   methods: {
+    selectHandler(category, id) {
+      this.selectedCategories[category] = id;
+    },
     updateDate(selected) {
       this.selectedDate = [selected.after, selected.before].filter((date) => (date));
     },
