@@ -24,7 +24,7 @@
           :excerpt="page === '1' && index === 0 ? event.excerpt.rendered : ''"
           :to="`/wydarzenia/${event.slug}`"
           class="event"
-          :class="{'z-event--primary': page === '1' && index === 0, 'event--primary': index === 0}"
+          :class="{'z-event--primary': page === '1' && index === 0, 'event--primary': page === '1' && index === 0}"
         />
       </template>
     </ZSection>

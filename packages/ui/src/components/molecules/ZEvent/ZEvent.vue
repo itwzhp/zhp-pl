@@ -3,6 +3,7 @@
     :is="tag"
     class="z-event"
     :style="style"
+    :class="{'z-event--expired': isExpired}"
   >
     <slot name="thumbnail">
       <div class="z-event__thumbnail">
@@ -15,7 +16,13 @@
     <slot name="content">
       <div class="z-event__content">
         <slot name="date">
-          <div class="z-event__date">
+          <div v-if="isExpired">
+            <!-- expired -->
+          </div>
+          <div
+            v-else
+            class="z-event__date"
+          >
             <ZDate :date="date.begin" />
             <div class="z-date__separator" />
             <ZDate :date="date.end" />
@@ -144,6 +151,11 @@ export default {
     },
   },
   computed: {
+    isExpired() {
+      const now = Date.now();
+      const end = new Date(this.date.end).getTime();
+      return (end - now) < 0;
+    },
     style() {
       return this.audiences.length === 1 ? {
         '--color': this.audiences[0].rest_acf.color,
@@ -299,6 +311,11 @@ export default {
       #{$this}__type {
         grid-column: 12;
       }
+    }
+
+    &--expired {
+      filter: grayscale(1);
+      opacity: 0.5;
     }
   }
 </style>

@@ -128,12 +128,15 @@ export default {
 
     &__more {
       --link-color: #7ba22e;
-      text-decoration: underline;
+
+      margin: 1rem 0 0 0;
       grid-column: span 12;
-      &:hover{
+      text-decoration: underline;
+
+      &:hover {
         text-decoration: none;
       }
-      margin: 1rem 0 0 0;
+
       @media (min-width: 640px) {
         grid-column: 11 / span 2;
         grid-row: 2;
