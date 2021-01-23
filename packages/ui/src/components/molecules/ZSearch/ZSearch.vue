@@ -20,7 +20,7 @@
         class="caption"
         tag="span"
       >
-        Wpisz proszę co najmniej 3 znaki
+        Wpisz co najmniej 3 znaki
       </ZText>
     </div>
     <ZButton
