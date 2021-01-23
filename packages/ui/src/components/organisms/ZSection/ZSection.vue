@@ -23,6 +23,15 @@
             v-html="subtitle"
           />
         </slot>
+        <slot name="more">
+          <ZLink
+            v-if="more"
+            :to="more"
+            class="z-section__more"
+          >
+            Zobacz więcej
+          </ZLink>
+        </slot>
       </div>
     </slot>
     <slot name="content">
@@ -56,6 +65,10 @@ export default {
     headingProps: {
       type: Object,
       default: () => ({}),
+    },
+    more: {
+      type: [Object, String],
+      default: '',
     },
   },
   computed: {
@@ -111,6 +124,21 @@ export default {
       margin: var(--section-content-margin, auto);
       gap: var(--section-content-gap, 1.25rem);
       grid-template-columns: var(--section-content-grid-template-columns, repeat(12, minmax(auto, 1fr)));
+    }
+
+    &__more {
+      --link-color: #7ba22e;
+      text-decoration: underline;
+      grid-column: span 12;
+      &:hover{
+        text-decoration: none;
+      }
+      margin: 1rem 0 0 0;
+      @media (min-width: 640px) {
+        grid-column: 11 / span 2;
+        grid-row: 2;
+        place-self: end;
+      }
     }
   }
 </style>

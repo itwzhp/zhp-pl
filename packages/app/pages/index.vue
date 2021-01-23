@@ -133,8 +133,9 @@
     </ZSection>
     <ZSection
       class="section-events"
-      title="Przedsięwzięcia i wydarzenia"
-      subtitle=" Szukasz rajdu dla swojej drużyny? Albo konkursu dla swojej gromady? A&nbsp;może chcesz wziąć udział w&nbsp;kursie? Sprawdź, co odbywa się w&nbsp;ZHP w&nbsp;najbliższym czasie."
+      title="Przedsięwzięcia i&nbsp;wydarzenia"
+      subtitle="Szukasz rajdu dla swojej drużyny? Albo konkursu dla swojej gromady? A&nbsp;może chcesz wziąć udział w&nbsp;kursie? Sprawdź, co odbywa się w&nbsp;ZHP w&nbsp;najbliższym czasie."
+      :more="{name: 'wydarzenia'}"
     >
       <ZCarousel
         v-if="events.length > 0"
@@ -277,14 +278,16 @@ export default {
   async asyncData ({ $axios, store }) {
     const homepageRes = await $axios.get('pages', { params: { slug: 'strona-glowna', _embed: true } })
     const homepage = homepageRes.data.shift()
+    // eslint-disable-next-line
+    const event_categories = homepage?.rest_acf?.event_categories;
     // last 8 post for posts ZCarousel
-    const postsRes = await $axios.get('posts', { params: { per_page: 8, tags: 432, _embed: true } })
+    const postsRes = await $axios.get('posts', { params: { per_page: 25, tags: 432, _embed: true } })
     const posts = postsRes.data
     // // last 5 posts for ZHighlighted component
     // const highlightedPostsRes = await $axios.get('posts', { params: { per_page: 5 } })
     // const highlightedPosts = highlightedPostsRes.data.map(post => ({ ...post, title: post.title.rendered }))
     // last 8 events for events ZCarousel
-    const eventsRes = await $axios.get('events', { params: { per_page: 8, _embed: true } })
+    const eventsRes = await $axios.get('events', { params: { per_page: 25, _embed: true, event_categories } })
     const events = eventsRes.data
     // partners
     const partnersRes = await $axios.get('logos', { params: { per_page: 99, logos_categories: 25, _embed: true } })
