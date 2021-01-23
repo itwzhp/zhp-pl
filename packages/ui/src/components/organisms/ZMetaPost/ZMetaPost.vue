@@ -103,6 +103,7 @@ export default {
 
     &:last-of-type {
       margin: 4px 0 0 0;
+
       &::after {
         content: none;
       }

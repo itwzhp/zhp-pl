@@ -95,6 +95,7 @@ export default {
 <style lang="scss">
 .z-search {
   $this: &;
+
   --input-background: #a6ce39;
   --input-color: #fff;
   --icon-color: #fff;

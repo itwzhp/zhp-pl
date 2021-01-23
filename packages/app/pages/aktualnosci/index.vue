@@ -22,6 +22,11 @@
           :selected="{...selectedFilters}"
           @submit="updateQuery"
         />
+        <ZSearch
+          class="section-hero__search"
+          :input="{placeholder: 'Czego dzisiaj chcesz dowiedzieć się o ZHP?'}"
+          @submit="search"
+        />
       </ZSection>
     </div>
     <ZSection>
@@ -65,7 +70,8 @@ import {
   ZHeading,
   ZFiltersPosts,
   ZPagination,
-  ZClipPath
+  ZClipPath,
+  ZSearch
 } from '@nowa-zhp/ui'
 
 export default {
@@ -76,7 +82,8 @@ export default {
     ZPost,
     ZHeading,
     ZPagination,
-    ZClipPath
+    ZClipPath,
+    ZSearch
   },
   async asyncData ({ $axios, params, query }) {
     const newsRes = await $axios.get('pages', { params: { slug: 'aktualnosci', _embed: true, parent: 0 } })
@@ -131,6 +138,12 @@ export default {
               ? { ...accumulator, [param]: requestQuery[param] }
               : accumulator
           }, {})
+      })
+    },
+    search (query) {
+      this.$router.push({
+        path: '/szukaj',
+        query: { search: query, subtype: 'post' }
       })
     }
   },
@@ -208,7 +221,7 @@ export default {
       place-self: end stretch;
 
       @media (min-width: 640px) {
-        grid-column: span 13;
+        grid-column: 10 / span 13;
       }
     }
 
@@ -217,7 +230,19 @@ export default {
       place-self: start stretch;
 
       @media (min-width: 640px) {
-        grid-column: span 13;
+        grid-column: 10 / span 13;
+        grid-row: 2;
+      }
+    }
+
+    &__search {
+      grid-column: span 12;
+      place-self: start stretch;
+
+      @media (min-width: 640px) {
+        margin: 56px 16% 0 0;
+        grid-column: 10 / span 13;
+        grid-row: 2;
       }
     }
   }

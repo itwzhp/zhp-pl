@@ -5,15 +5,7 @@
   >
     <header class="z-header">
       <div class="z-header__bar">
-        <div class="z-header__actions">
-          <ZSearch
-            class="z-search--condensed z-header__search"
-            :has-label="false"
-            :min-char="0"
-            :input="{placeholder: 'Jakich aktualności szukasz?'}"
-            @submit="search"
-          />
-        </div>
+        <div class="z-header__actions"></div>
         <div class="z-header__logo">
           <ZLink
             to="/"
@@ -386,10 +378,6 @@ export default {
 
   &__nav {
     background: transparent;
-  }
-
-  &__search {
-    max-width: 250px;
   }
 }
 
