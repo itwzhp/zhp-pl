@@ -149,7 +149,6 @@ import {
   ZMegaMenu,
   ZList,
   ZCookies,
-  ZSearch
 } from '@nowa-zhp/ui'
 
 export default {
@@ -165,7 +164,6 @@ export default {
     ZMegaMenu,
     ZList,
     ZCookies,
-    ZSearch
   },
   async middleware ({ store, $axios }) {
     if (!Object.keys(store.state.theme.options).length) {
