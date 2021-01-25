@@ -40,7 +40,10 @@ export default {
         },
         onValueUpdate: (selectedDates) => {
           if (selectedDates.length === 2) {
-            this.$emit('input', selectedDates.map((date) => (new Date(date).toISOString())));
+            this.$emit('input', selectedDates.map((date) => {
+              const tzoffset = (new Date()).getTimezoneOffset() * 60000;
+              return new Date(date - tzoffset).toISOString();
+            }));
           }
         },
       },

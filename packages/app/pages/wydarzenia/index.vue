@@ -18,7 +18,7 @@
           :thumbnail="event.rest_media"
           :title="event.title.rendered"
           :date="event.rest_acf.date"
-          :location="{name: event._embedded['wp:term'][0][0] && event._embedded['wp:term'][0][0].name, to:'#'}"
+          :location="{name: event.rest_localization && event.rest_localization.name, to:'#'}"
           :type="event.rest_event_type"
           :audiences="event.age_groups.map((ageGroup)=>(ageGroups[ageGroup]))"
           :excerpt="page === '1' && index === 0 ? event.excerpt.rendered : ''"
@@ -69,7 +69,7 @@ export default {
         : `${option.taxonomy}s` // FIXME: hack for differences from taxonomy name and rest_base
     })
     // events
-    const eventsRes = await $axios.get('events', { params: { _embed: true, per_page: 13, page: 1, ...query } })
+    const eventsRes = await $axios.get('acf-events', { params: { per_page: 13, page: 1, ...query } })
     const events = eventsRes.data
     const totalPages = eventsRes.headers['x-wp-totalpages']
     // TODO: move event_types to vuex

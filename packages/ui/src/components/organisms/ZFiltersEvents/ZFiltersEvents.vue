@@ -74,7 +74,6 @@
         </template>
         <!-- TODO: include it to API request; ACF integration -->
         <ZFormField
-          v-if="false"
           label="Kiedy"
         >
           <template #input>
@@ -85,6 +84,7 @@
               :settings="{
                 inline: false,
                 dateFormat: 'd/m/Y',
+                maxDate: null
               }"
               class="z-input"
             />
