@@ -211,7 +211,7 @@ export default {
 
       @media (min-width: 640px) {
         grid-column: span 9;
-        grid-row: span 2;
+        grid-row: span 3;
       }
     }
 
@@ -240,9 +240,8 @@ export default {
       place-self: start stretch;
 
       @media (min-width: 640px) {
-        margin: 56px 16% 0 0;
+        margin: 0 16% 0 0;
         grid-column: 10 / span 13;
-        grid-row: 2;
       }
     }
   }

@@ -3,6 +3,33 @@
     :is="tag"
     class="z-filters-posts"
   >
+    <ZList
+        v-if="mappedDate.length === 2 || mappedTaxonomies.length > 0"
+        class="z-filters-posts__selected"
+    >
+      <template v-if="mappedDate.length === 2">
+        <li>
+          <ZBubble
+              :checked="true"
+              type="filter"
+              @change="unselectDate"
+          >
+            {{ mappedDate.join(' - ') }}
+          </ZBubble>
+        </li>
+      </template>
+      <template v-for="select in mappedTaxonomies">
+        <li :key="select">
+          <ZBubble
+              :checked="true"
+              type="filter"
+              @change="unselectTaxonomies(taxonomies[select])"
+          >
+            {{ taxonomies[select] && taxonomies[select].label }}
+          </ZBubble>
+        </li>
+      </template>
+    </ZList>
     <div class="z-filters-posts__selectors">
       <ZDropdown
         class="z-dropdown--has-chevron z-filters-posts__date"
@@ -88,33 +115,6 @@
         </template>
       </ZDropdown>
     </div>
-    <ZList
-      v-if="mappedDate.length === 2 || mappedTaxonomies.length > 0"
-      class="z-filters-posts__selected"
-    >
-      <template v-if="mappedDate.length === 2">
-        <li>
-          <ZBubble
-            :checked="true"
-            type="filter"
-            @change="unselectDate"
-          >
-            {{ mappedDate.join(' - ') }}
-          </ZBubble>
-        </li>
-      </template>
-      <template v-for="select in mappedTaxonomies">
-        <li :key="select">
-          <ZBubble
-            :checked="true"
-            type="filter"
-            @change="unselectTaxonomies(taxonomies[select])"
-          >
-            {{ taxonomies[select] && taxonomies[select].label }}
-          </ZBubble>
-        </li>
-      </template>
-    </ZList>
   </component>
 </template>
 

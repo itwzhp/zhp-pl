@@ -5,7 +5,7 @@
   >
     <header class="z-header">
       <div class="z-header__bar">
-        <div class="z-header__actions"></div>
+        <div class="z-header__actions" />
         <div class="z-header__logo">
           <ZLink
             to="/"
@@ -148,7 +148,7 @@ import {
   ZMenu,
   ZMegaMenu,
   ZList,
-  ZCookies,
+  ZCookies
 } from '@nowa-zhp/ui'
 
 export default {
@@ -163,7 +163,7 @@ export default {
     ZMenu,
     ZMegaMenu,
     ZList,
-    ZCookies,
+    ZCookies
   },
   async middleware ({ store, $axios }) {
     if (!Object.keys(store.state.theme.options).length) {

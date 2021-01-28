@@ -51,6 +51,7 @@ export default {
 </script>
 <style lang="scss">
   .z-select {
+    overflow: hidden;
     width: var(--select-width, 100%);
     height: var(--select-height, 48px);
     padding: var(--select-padding, 0 16px);
@@ -61,7 +62,6 @@ export default {
     color: var(--select-color, #1e152f);
     font: inherit;
     font-size: 0.75rem;
-    overflow: hidden;
 
     &::placeholder {
       color: var(--select-color, #1e152f);
