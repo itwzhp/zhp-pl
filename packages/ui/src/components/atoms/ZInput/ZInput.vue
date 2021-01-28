@@ -35,9 +35,12 @@ export default {
     border-radius: var(--input-border-radius, 10px);
     box-shadow: none;
     color: var(--input-color, #1e152f);
+    font: inherit;
+    font-size: 0.75rem;
 
     &::placeholder {
       color: var(--input-color, #1e152f);
+      font: inherit;
     }
   }
 </style>

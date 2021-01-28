@@ -1,8 +1,8 @@
 <template>
   <select
+    v-model="v"
     v-outline
     class="z-select"
-    @input="$emit('input', $event.target.value)"
   >
     <slot name="options">
       <option
@@ -26,13 +26,26 @@ export default {
   },
   props: {
     value: {
-      type: [String, Number],
+      type: [String, Number, Array],
       default: '',
     },
     options: {
       type: [Array, Object],
       default: () => ({}),
     },
+  },
+  data() {
+    return {
+      v: [],
+    };
+  },
+  watch: {
+    v() {
+      this.$emit('input', this.v);
+    },
+  },
+  mounted() {
+    this.v = this.value;
   },
 };
 </script>
@@ -46,9 +59,18 @@ export default {
     background: var(--select-background, #fff);
     border-radius: var(--select-border-radius, 10px);
     color: var(--select-color, #1e152f);
+    font: inherit;
+    font-size: 0.75rem;
+    overflow: hidden;
 
     &::placeholder {
       color: var(--select-color, #1e152f);
+    }
+
+    &[multiple] {
+      --select-height: auto;
+
+      overflow-y: auto;
     }
   }
 </style>

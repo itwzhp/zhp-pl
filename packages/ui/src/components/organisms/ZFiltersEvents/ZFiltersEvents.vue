@@ -64,7 +64,9 @@
             <template #input="{id}">
               <ZSelect
                 :id="id"
-                :value="selectedCategories[category.id]"
+                :multiple="true"
+                size="5"
+                :value="selectedCategories[category.id] || []"
                 :options="category.options"
                 class="z-form-field__input"
                 @input="selectHandler(category.id, $event)"
@@ -159,10 +161,9 @@ export default {
     mappedTaxonomies() {
       const exclude = ['after', 'before'];
       return Object.keys(this.selected).reduce((accumulator, option) => {
-        if (typeof this.selected[option] === 'object') {
-          return [...accumulator, ...this.selected[option]];
-        }
-        return exclude.includes(option) ? accumulator : [...accumulator, this.selected[option]];
+        const selected = this.selected[option].search(',') > -1 ? this.selected[option].split(',') : [this.selected[option]];
+
+        return exclude.includes(option) ? accumulator : [...accumulator, ...selected];
       }, []);
     },
   },
@@ -185,8 +186,11 @@ export default {
     },
     updateCategories(selected, categories) {
       this.selectedCategories = Object.keys(categories).reduce((accumulator, category) => {
-        if (selected[category]) {
-          return { ...accumulator, [category]: selected[category] };
+        const result = selected[category] && selected[category].search(',') > -1
+          ? selected[category].split(',')
+          : selected[category];
+        if (result) {
+          return { ...accumulator, [category]: result };
         }
         return accumulator;
       }, {});
@@ -206,11 +210,14 @@ export default {
     },
     submit() {
       const date = { after: this.selectedDate[0] || '', before: this.selectedDate[1] || '' };
-      this.$emit('submit', { ...this.selectedCategories, ...date });
+      const categories = Object.keys(this.selectedCategories).reduce((object, category) => (
+        { ...object, [category]: Array.isArray(this.selectedCategories[category]) ? this.selectedCategories[category].filter((item) => (item !== '0')).join(',') : this.selectedCategories[category] }
+      ), {});
+      this.$emit('submit', { ...categories, ...date });
     },
     clear() {
       const date = { after: '', before: '' };
-      const categories = Object.keys(this.selectedCategories).reduce((object, key) => ({ ...object, [key]: '' }), {});
+      const categories = Object.keys(this.selectedCategories).reduce((object, key) => ({ ...object, [key]: [] }), {});
       this.$emit('submit', { ...categories, ...date });
     },
   },
