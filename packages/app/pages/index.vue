@@ -123,6 +123,7 @@
         title="Statut ZHP i Władze ZHP"
         :thumbnail="`${$config.mediaBaseURL}/wp-content/uploads/2020/12/03.png`"
         class="section-mission__card"
+        to="/organizacja/statut-zhp"
       />
       <ZBanner
         title="Sprawdź Centralny Bank Pomysłów"
