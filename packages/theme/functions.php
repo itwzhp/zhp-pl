@@ -583,11 +583,23 @@ function theme_customize_register($wp_customize) {
         'type' => 'theme_mod',
         'capability' => 'edit_theme_options',
     ));
+    $wp_customize->add_setting('pwa_url', array(
+        'type' => 'theme_mod',
+        'capability' => 'edit_theme_options',
+    ));
     $wp_customize->add_control('mourning', array(
         'type'=>'checkbox',
         'priority'=>10,
         'section'=>'theme_options',
         'label'=>'Żałoba',
+        'description'=>'Cała strona WWW zostaje wyświetlona w odcieniach szarości.'
+    ));
+    $wp_customize->add_control('pwa_url', array(
+        'type'=>'input',
+        'priority'=>10,
+        'section'=>'theme_options',
+        'label'=>'Adres witryny (URL)',
+        'description'=>'Wprowadź adres, jeśli WordPress jest pod innym adresem niż PWA.'
     ));
     $wp_customize->add_section('theme_options', array(
         'title'=>'Ustawienia motywu',
