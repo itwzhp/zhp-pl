@@ -138,9 +138,8 @@ export default {
       }
 
       @media (min-width: 640px) {
-        grid-column: 11 / span 2;
-        grid-row: 2;
-        place-self: end;
+        grid-column: span 6;
+        grid-row: var(--section-more-grid-row, 3);
       }
     }
   }
