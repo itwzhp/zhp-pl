@@ -6,8 +6,13 @@
     <slot name="thumbnail">
       <div class="z-card__thumbnail">
         <ZImage
+          v-if="thumbnail"
           :src="thumbnail"
           alt=""
+        />
+        <div
+          v-else
+          class="z-card__placeholder"
         />
       </div>
     </slot>
@@ -176,6 +181,13 @@ export default {
         opacity: 0.4;
       }
     }
+  }
+
+  &__placeholder {
+    width: 100%;
+    height: 0;
+    padding: 0 0 66% 0;
+    background: #7ba22e;
   }
 }
 </style>
