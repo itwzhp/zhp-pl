@@ -23,6 +23,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    firstOpen: {
+      type: String,
+      default: '',
+    },
   },
   provide() {
     const accordion = {};
@@ -39,6 +43,11 @@ export default {
     return {
       opened: this.multiple ? [] : '',
     };
+  },
+  created() {
+    if (this.firstOpen) {
+      this.opened = this.multiple ? [this.firstOpen] : this.firstOpen;
+    }
   },
   methods: {
     open(payload) {
