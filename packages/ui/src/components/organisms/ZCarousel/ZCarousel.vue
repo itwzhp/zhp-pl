@@ -4,6 +4,23 @@
     :class="{'z-carousel--peeked': peeked}"
   >
     <div
+      v-if="hasControls"
+      class="z-carousel__controls"
+    >
+      <ZButton
+        aria-label="poprzedni"
+        @click="glide.go('<')"
+      >
+        <ZIcon name="arrow-left" />
+      </ZButton>
+      <ZButton
+        aria-label="następny"
+        @click="glide.go('>')"
+      >
+        <ZIcon name="arrow-right" />
+      </ZButton>
+    </div>
+    <div
       class="glide__track"
       data-glide-el="track"
     >
@@ -13,12 +30,19 @@
     </div>
   </div>
 </template>
+
 <script>
 import Glide from '@glidejs/glide';
 import lozad from 'lozad';
+import ZIcon from '../../atoms/ZIcon/ZIcon.vue';
+import ZButton from '../../atoms/ZButton/ZButton.vue';
 
 export default {
   name: 'ZCarousel',
+  components: {
+    ZIcon,
+    ZButton,
+  },
   props: {
     peeked: {
       type: Boolean,
@@ -32,6 +56,10 @@ export default {
         gap: 20,
       }),
     },
+    hasControls: {
+      type: Boolean,
+      default: true,
+    },
   },
   data() {
     return {
@@ -39,6 +67,7 @@ export default {
         type: 'carousel',
         perView: 4,
         gap: 20,
+        glide: null,
       },
     };
   },
@@ -104,18 +133,27 @@ export default {
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         glide.update({ autoplay: false });
       }
+      this.glide = glide;
     });
   },
 };
 </script>
+
 <style lang="scss">
   @import "~@glidejs/glide/src/assets/sass/glide.core";
 
   .z-carousel {
-    .glide {
-      &__slides {
-        align-items: center;
-      }
+    &__controls {
+      --icon-color: #fff;
+      --button-min-width: none;
+      --button-width: 34px;
+      --button-height: 34px;
+      --button-padding: 0;
+
+      display: grid;
+      justify-content: end;
+      gap: 8px;
+      grid-auto-flow: column;
     }
 
     &--peeked {
@@ -153,6 +191,12 @@ export default {
             }
           }
         }
+      }
+    }
+
+    .glide {
+      &__slides {
+        align-items: center;
       }
     }
   }
