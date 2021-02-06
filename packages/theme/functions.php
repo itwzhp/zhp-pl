@@ -689,13 +689,12 @@ function get_acf_events(WP_REST_Request $request) {
 
     // common WP_QUERY args
     $args = array(
-        'post_status' => 'published',
         'post_type' => 'event',
-        'order_by' => 'meta_key',
-        'meta_key' => 'date_begin',
-        'order' => 'ASC',
         'posts_per_page' => $per_page,
         'paged' => $page ? $page : 1,
+        'meta_key' => 'date_begin',
+        'orderby' => 'meta_value',
+        'order' => 'DESC',
     );
 
     if($after && $before) {
@@ -751,4 +750,102 @@ function get_acf_events(WP_REST_Request $request) {
     wp_reset_query();
 
     return $response;
+}
+// none logged users can add new event
+add_action('rest_api_init', 'register_rest_post_events');
+function register_rest_post_events() {
+    register_rest_route('wp/v2', '/post-events', array(
+        'methods' => 'POST',
+        'callback' => 'post_events'
+    ));
+}
+function post_events(WP_REST_Request $request) {
+    // $headers['origin'][0] === 'http://localhost:3000'
+    $file = $request->get_file_params();
+    list(
+        'title'=> $post_title,
+        'description' => $post_description,
+        'conditions' => $post_conditions,
+        'place' => $post_place,
+        'unit' => $organizer_unit,
+        'person' => $organizer_person,
+        'phone' => $organizer_phone,
+        'mail' => $organizer_mail,
+        'web' => $web,
+        'begin' => $date_begin,
+        'end' => $date_end,
+        'plikilinki' => $plikilinki,
+        'age_group' => $tax_age_group,
+        'localization' => $tax_localization,
+        'event_type' => $tax_event_type,
+    ) = $request;
+
+    $post_content = ''
+        .'<!-- wp:heading -->'
+        .'<h2>Opis wydarzenia</h2>'
+        .'<!-- /wp:heading -->'
+        .'<!-- wp:paragraph -->'
+        .'<p>'.$post_description.'</p>'
+        .'<!-- /wp:paragraph -->'
+        .'<!-- wp:heading -->'
+        .'<h2>Warunki uczestnictwa</h2>'
+        .'<!-- /wp:heading -->'
+        .'<!-- wp:paragraph -->'
+        .'<p>'.$post_conditions.'</p>'
+        .'<!-- /wp:paragraph -->'
+        .'<!-- wp:heading -->'
+        .'<h2>Miejsce wydarzenia</h2>'
+        .'<!-- /wp:heading -->'
+        .'<!-- wp:paragraph -->'
+        .'<p>'.$post_place.'</p>'
+        .'<!-- /wp:paragraph -->';
+     $post = array(
+        'post_title' => $post_title,
+        'post_content' => $post_content,
+        'post_status' => 'draft',
+        'post_type' => 'event',
+        'post_author' => '63', // username: user
+    );
+    $post_id = wp_insert_post($post);
+
+     // set ACF fields
+     update_field('organizer', array(
+         'unit'=>$organizer_unit,
+         'person'=>$organizer_person,
+         'phone'=> $organizer_phone,
+         'mail'=>$organizer_mail
+     ), $post_id);
+     update_field('web', $web, $post_id);
+     update_field('date', array(
+         'begin'=>$date_begin,
+         'end'=>$date_end
+     ), $post_id);
+     update_field('plikilinki', $plikilinki, $post_id);
+     // set taxonomies
+      wp_set_post_terms($post_id, $tax_age_group, 'age_group');
+      wp_set_post_terms($post_id, $tax_localization, 'localization');
+      wp_set_post_terms($post_id, $tax_event_type, 'event_type');
+
+     // * set thumbnail
+     // set_post_thumbnail($id, );
+    $uploadedfile = $file['file'];
+    $upload_overrides = array(
+        'test_form' => false,
+    );
+    require_once( ABSPATH . 'wp-admin/includes/file.php' );
+    $file_return = wp_handle_upload($uploadedfile, $upload_overrides);
+    $filename = $file_return['file'];
+    $attachment = array(
+        'post_mime_type' => $file_return['type'],
+        'post_title' => preg_replace( '/\.[^.]+$/', '', basename( $filename ) ),
+        'post_content' => '',
+        'post_status' => 'inherit',
+        'guid' => $file_return['url']
+    );
+    $attachment_id = wp_insert_attachment( $attachment, $file_return['url'] );
+    require_once(ABSPATH . 'wp-admin/includes/image.php');
+    $attachment_data = wp_generate_attachment_metadata( $attachment_id, $filename );
+    wp_update_attachment_metadata( $attachment_id, $attachment_data );
+    set_post_thumbnail($post_id, $attachment_id);
+    return $post_id;
 }
