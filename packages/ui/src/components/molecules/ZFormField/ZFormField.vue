@@ -11,6 +11,7 @@
         class="z-form-field__label uppercase"
       >
         {{ label }}
+        <span v-if="required" class="z-form-field__required">Wymagane</span>
       </ZText>
     </slot>
     <slot
@@ -19,7 +20,7 @@
     >
       <ZInput
         :id="id"
-        :type="type"
+        v-bind="$attrs"
         class="z-form-field__input"
         @input="$emit('input', $event)"
       />
@@ -37,14 +38,11 @@ export default {
     ZText,
     ZInput,
   },
+  inheritAttrs: false,
   props: {
     tag: {
       type: String,
       default: 'div',
-    },
-    type: {
-      type: String,
-      default: 'text',
     },
     label: {
       type: String,
@@ -60,20 +58,28 @@ export default {
       // eslint-disable-next-line no-underscore-dangle
       return this._uid;
     },
+    required() {
+      return this.$attrs.required ? 'wymagane' : '';
+    },
   },
 };
 </script>
 
 <style lang="scss">
   .z-form-field {
+    margin: var(--form-field-margin, 0 0 16px 0);
+
     &__label {
-      display: block;
+      display: flex;
+      align-items: flex-start;
       margin: 0 0 8px 0;
       color: var(--form-field-label-color, #84a311);
+      font-size: var(--form-field-label-font-size);
     }
 
-    &__input {
-      margin: 0 0 16px 0;
+    &__required {
+      margin: 0 0 0 8px;
+      opacity: 0.5;
     }
   }
 </style>

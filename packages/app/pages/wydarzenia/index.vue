@@ -11,6 +11,16 @@
           :selected="selectedFilters"
           @submit="updateQuery"
         />
+        <ZButton class="new-event">
+          Dodaj nowe wydarzenie
+        </ZButton>
+        <ZModal class="new-event-modal">
+          <NewEventModal
+            :categories="categories"
+            @submit="submitHandler"
+            @click:cancel="cancelHandler"
+          />
+        </ZModal>
       </div>
       <template v-for="(event, index) in events">
         <ZEvent
@@ -42,16 +52,20 @@ import {
   ZSection,
   ZPagination,
   ZFiltersEvents,
-  ZEvent
+  ZEvent,
+  ZModal
 } from '@nowa-zhp/ui'
+import NewEventModal from '@/pages/wydarzenia/components/NewEventForm.vue'
 
 export default {
   watchQuery: true,
   components: {
+    NewEventModal,
     ZSection,
     ZPagination,
     ZFiltersEvents,
-    ZEvent
+    ZEvent,
+    ZModal
   },
   async asyncData ({ $axios, params, query }) {
     // helpers
@@ -144,6 +158,14 @@ export default {
     }
   },
   methods: {
+    submitHandler (value) {
+      this.$axios.post('post-events', value, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+    },
+    cancelHandler () {},
     updateQuery (query) {
       const requestQuery = { ...this.$route.query, ...query }
       this.$router.push({
@@ -256,6 +278,16 @@ export default {
     @media (min-width: 640px) {
       --section-margin: 3rem 0;
     }
+  }
+
+  .new-event {
+    margin: 16px 0 0 0;
+  }
+
+  .new-event-modal {
+    --form-field-margin: 0 0 8px 0;
+    --accordion-item-text-transform: uppercase;
+    --form-field-label-font-size: 0.876rem;
   }
 }
 </style>

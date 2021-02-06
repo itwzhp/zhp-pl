@@ -81,6 +81,7 @@ export default {
     --button-min-width: 100%;
     --button-justify-content: flex-start;
     --button-height: auto;
+    --button-text-transform: var(--accordion-item-text-transform);
 
     text-align: left;
   }
