@@ -154,6 +154,14 @@
                 * to pole jest wymagane
               </div>
             </div>
+            <div
+              v-if="$v.form.place.$dirty && !$v.form.description.maxLength"
+              class="z-form-field__error"
+            >
+              <div class="caption">
+                * dozwolona długość tekstu to 500 znaków
+              </div>
+            </div>
           </template>
         </ZFormField>
         <ZFormField
@@ -175,6 +183,14 @@
             >
               <div class="caption">
                 * to pole jest wymagane
+              </div>
+            </div>
+            <div
+              v-if="$v.form.place.$dirty && !$v.form.conditions.maxLength"
+              class="z-form-field__error"
+            >
+              <div class="caption">
+                * dozwolona długość tekstu to 500 znaków
               </div>
             </div>
           </template>
@@ -200,12 +216,20 @@
                 * to pole jest wymagane
               </div>
             </div>
+            <div
+              v-if="$v.form.place.$dirty && !$v.form.place.maxLength"
+              class="z-form-field__error"
+            >
+              <div class="caption">
+                * dozwolona długość tekstu to 500 znaków
+              </div>
+            </div>
           </template>
         </ZFormField>
         <ZFormField
           label="Kiedy"
           :required="true"
-          :class="{'has-error': $v.form.date.$dirty && !$v.form.date.minLength}"
+          :class="{'has-error': $v.form.date.$dirty && !$v.form.date.required}"
         >
           <template #input>
             <ZDatePicker
@@ -222,7 +246,7 @@
           </template>
           <template #error>
             <div
-              v-if="$v.form.date.$dirty && !$v.form.date.minLength"
+              v-if="$v.form.date.$dirty && !$v.form.date.required"
               class="z-form-field__error"
             >
               <div class="caption">
@@ -234,7 +258,7 @@
         <ZFormField
           label="Rodzaj wydarzenia"
           :required="true"
-          :class="{'has-error': $v.form.event_type.$dirty && !$v.form.event_type.minLength}"
+          :class="{'has-error': $v.form.event_type.$dirty && !$v.form.event_type.required}"
         >
           <template #input="{id}">
             <ZSelect
@@ -246,7 +270,7 @@
           </template>
           <template #error>
             <div
-              v-if="$v.form.event_type.$dirty && !$v.form.event_type.minLength"
+              v-if="$v.form.event_type.$dirty && !$v.form.event_type.required"
               class="z-form-field__error"
             >
               <div class="caption">
@@ -258,7 +282,7 @@
         <ZFormField
           label="Metodyka"
           :required="true"
-          :class="{'has-error': $v.form.age_groups.$dirty && !$v.form.age_groups.minLength}"
+          :class="{'has-error': $v.form.age_groups.$dirty && !$v.form.age_groups.required}"
         >
           <template #input="{id}">
             <ZSelect
@@ -272,7 +296,7 @@
           </template>
           <template #error>
             <div
-              v-if="$v.form.age_groups.$dirty && !$v.form.age_groups.minLength"
+              v-if="$v.form.age_groups.$dirty && !$v.form.age_groups.required"
               class="z-form-field__error"
             >
               <div class="caption">
@@ -284,7 +308,7 @@
         <ZFormField
           label="Województwo"
           :required="true"
-          :class="{'has-error': $v.form.localization.$dirty && !$v.form.localization.minLength}"
+          :class="{'has-error': $v.form.localization.$dirty && !$v.form.localization.required}"
         >
           <template #input="{id}">
             <ZSelect
@@ -296,7 +320,7 @@
           </template>
           <template #error>
             <div
-              v-if="$v.form.localization.$dirty && !$v.form.localization.minLength"
+              v-if="$v.form.localization.$dirty && !$v.form.localization.required"
               class="z-form-field__error"
             >
               <div class="caption">
@@ -307,12 +331,6 @@
         </ZFormField>
       </ZAccordionItem>
     </ZAccordion>
-    <div
-      v-if="$v.form.$error"
-      class="new-event-form__error caption"
-    >
-      * to pole jest wymagane
-    </div>
     <ZText
       class="caption"
       style="--text-margin: 4px 0 8px 0;"
@@ -337,13 +355,19 @@
         </div>
       </template>
     </ZFormField>
+    <div
+        v-if="$v.form.$error"
+        class="new-event-form__error caption"
+    >
+      * formularz zawiera błędzy i nie może zostać wysłany
+    </div>
   </ZForm>
 </template>
 
 <script>
 import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock'
 import { validationMixin } from 'vuelidate'
-import { required, minLength, email } from 'vuelidate/lib/validators'
+import { required, minLength, maxLength, email } from 'vuelidate/lib/validators'
 import {
   ZHeading,
   ZText,
@@ -415,25 +439,28 @@ export default {
         required
       },
       description: {
-        required
+        required,
+        maxLength: maxLength(500)
       },
       conditions: {
-        required
+        required,
+        maxLength: maxLength(500)
       },
       place: {
-        required
+        required,
+        maxLength: maxLength(500)
       },
       date: {
-        minLength: minLength(2)
+        required,
       },
       event_type: {
-        minLength: minLength(1)
+        required,
       },
       age_groups: {
-        minLength: minLength(1)
+        required,
       },
       localization: {
-        minLength: minLength(1)
+        required,
       },
       to_confirm: {
         required,
