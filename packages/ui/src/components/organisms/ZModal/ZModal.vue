@@ -1,16 +1,20 @@
 <template>
   <div class="z-modal">
-    <div
-      v-if="isVisible"
-      class="z-modal__backdrop"
-      @click="$emit('click:close')"
-    />
-    <dialog
-      v-if="isVisible"
-      class="z-modal__dialog"
-    >
-      <slot />
-    </dialog>
+    <transition name="fade">
+      <div
+        v-if="isVisible"
+        class="z-modal__backdrop"
+        @click="$emit('click:close')"
+      />
+    </transition>
+    <transition name="slide">
+      <dialog
+        v-if="isVisible"
+        class="z-modal__dialog"
+      >
+        <slot />
+      </dialog>
+    </transition>
   </div>
 </template>
 
@@ -42,21 +46,40 @@ export default {
   &__dialog {
     position: fixed;
     z-index: 1000;
-    top: 50%;
-    right: auto;
-    left: 50%;
-    display: flex;
-    width: calc(100% - 40px);
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: auto;
+    display: block;
+    overflow: auto;
+    width: 100%;
     max-width: 480px;
-    max-height: 568px;
-    align-items: center;
-    justify-content: center;
+    height: 100%;
     border: 0;
-    transform: translate(-50%, -50%);
+  }
+}
 
-    @media (min-width: 640px) {
-      border-radius: 10px;
-    }
+.slide {
+  &-enter-active,
+  &-leave-active {
+    transition: transform 300ms ease-in-out;
+  }
+
+  &-enter,
+  &-leave-to {
+    transform: translateX(100%);
+  }
+}
+
+.fade {
+  &-enter-active,
+  &-leave-active {
+    transition: opacity 300ms linear;
+  }
+
+  &-enter,
+  &-leave-to {
+    opacity: 0;
   }
 }
 </style>

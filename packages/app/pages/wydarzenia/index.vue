@@ -161,7 +161,7 @@ export default {
   },
   data () {
     return {
-      isNewEventModalVisible: false
+      isNewEventModalVisible: true
     }
   },
   computed: {
