@@ -11,14 +11,20 @@
           :selected="selectedFilters"
           @submit="updateQuery"
         />
-        <ZButton class="new-event">
-          Dodaj nowe wydarzenie
+        <ZButton
+          class="new-event"
+          @click="isNewEventModalVisible = true"
+        >
+          Utwórz nowe
         </ZButton>
-        <ZModal class="new-event-modal">
+        <ZModal
+          :is-visible="isNewEventModalVisible"
+          class="new-event-modal"
+        >
           <NewEventModal
             :categories="categories"
             @submit="submitHandler"
-            @click:cancel="cancelHandler"
+            @click:cancel="isNewEventModalVisible = false"
           />
         </ZModal>
       </div>
@@ -152,6 +158,11 @@ export default {
       totalPages
     }
   },
+  data () {
+    return {
+      isNewEventModalVisible: false
+    }
+  },
   computed: {
     ageGroups () {
       return this.$store.getters['taxonomies/taxonomy']('age_groups')
@@ -281,6 +292,7 @@ export default {
   }
 
   .new-event {
+    width: 100%;
     margin: 16px 0 0 0;
   }
 

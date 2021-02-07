@@ -25,6 +25,7 @@
         @input="$emit('input', $event)"
       />
     </slot>
+    <slot name="error" />
   </component>
 </template>
 
@@ -72,7 +73,7 @@ export default {
     &__label {
       display: flex;
       align-items: flex-start;
-      margin: 0 0 8px 0;
+      margin: var(--form-field-label-margin, 0 0 8px 0);
       color: var(--form-field-label-color, #84a311);
       font-size: var(--form-field-label-font-size);
     }
@@ -80,6 +81,11 @@ export default {
     &__required {
       margin: 0 0 0 8px;
       opacity: 0.5;
+    }
+
+    &__error {
+      margin: 4px 0 0 0;
+      color: #e30613;
     }
   }
 </style>

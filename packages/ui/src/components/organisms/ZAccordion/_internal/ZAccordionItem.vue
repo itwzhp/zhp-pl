@@ -5,6 +5,7 @@
   >
     <slot name="title">
       <ZButton
+        type="button"
         class="z-button--text z-accordion-item__toggler"
         @click="open"
       >

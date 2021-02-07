@@ -1,9 +1,9 @@
 <template>
   <div class="z-modal">
-    <div class="z-modal__backdrop" />
-    <dialog class="z-modal__dialog">
+    <div v-if="isVisible" class="z-modal__backdrop" />
+    <dialog v-if="isVisible" class="z-modal__dialog">
       <div class="z-modal__content">
-        <slot/>
+        <slot />
       </div>
     </dialog>
   </div>
@@ -12,6 +12,12 @@
 <script>
 export default {
   name: 'ZModal',
+  props: {
+    isVisible: {
+      type: Boolean,
+      default: false,
+    },
+  },
 };
 </script>
 

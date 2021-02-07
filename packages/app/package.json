@@ -15,9 +15,11 @@
   "dependencies": {
     "@nuxtjs/axios": "^5.12.1",
     "@nuxtjs/sentry": "^4.5.0",
+    "body-scroll-lock": "^3.1.5",
     "nuxt": "^2.14.3",
     "uid": "^2.0.0",
-    "vue-fragment": "^1.5.1"
+    "vue-fragment": "^1.5.1",
+    "vuelidate": "^0.7.6"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^3.1.0",
