@@ -775,9 +775,10 @@ function post_events(WP_REST_Request $request) {
         'begin' => $date_begin,
         'end' => $date_end,
         'plikilinki' => $plikilinki,
-        'age_group' => $tax_age_group,
+        'age_groups' => $tax_age_groups,
         'localization' => $tax_localization,
         'event_type' => $tax_event_type,
+        'to_confirm' => $to_confirm
     ) = $request;
 
     $post_content = ''
@@ -822,7 +823,7 @@ function post_events(WP_REST_Request $request) {
      ), $post_id);
      update_field('plikilinki', $plikilinki, $post_id);
      // set taxonomies
-      wp_set_post_terms($post_id, $tax_age_group, 'age_group');
+      wp_set_post_terms($post_id, $tax_age_groups, 'age_group');
       wp_set_post_terms($post_id, $tax_localization, 'localization');
       wp_set_post_terms($post_id, $tax_event_type, 'event_type');
 
@@ -847,5 +848,13 @@ function post_events(WP_REST_Request $request) {
     $attachment_data = wp_generate_attachment_metadata( $attachment_id, $filename );
     wp_update_attachment_metadata( $attachment_id, $attachment_data );
     set_post_thumbnail($post_id, $attachment_id);
+
+    // send e-mail
+    $to = $to_confirm;
+    $subject = 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.';
+    $message = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.';
+
+    wp_mail($to, $subject, $message);
+
     return $post_id;
 }
