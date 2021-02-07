@@ -20,6 +20,7 @@
         <ZModal
           :is-visible="isNewEventModalVisible"
           class="new-event-modal"
+          @click:close="isNewEventModalVisible = false"
         >
           <NewEventModal
             :categories="categories"

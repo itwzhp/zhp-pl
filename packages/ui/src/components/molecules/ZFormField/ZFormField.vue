@@ -11,7 +11,10 @@
         class="z-form-field__label uppercase"
       >
         {{ label }}
-        <span v-if="required" class="z-form-field__required">Wymagane</span>
+        <span
+          v-if="required"
+          class="z-form-field__required"
+        >Wymagane</span>
       </ZText>
     </slot>
     <slot

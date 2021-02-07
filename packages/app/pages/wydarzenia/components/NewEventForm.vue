@@ -1,6 +1,7 @@
 <template>
   <ZForm
     novalidate
+    class="new-event-form"
     @submit.prevent="submitHandler"
     @click:cancel="cancelHandler"
   >
@@ -8,303 +9,319 @@
       Twoje wydarzenie
     </ZHeading>
     <ZText class="caption">
-      Gingerbread gummi bears tootsie roll chocolate bonbon marshmallow bonbon brownie lemon drops.
+      Wypełnij poniższy formularz w celu zgłoszenia swojego wydarzenia, które zostanie opublikowane po weryfikacji przez administrację strony.
     </ZText>
-    <ZAccordion first-open="Organizator">
-      <ZAccordionItem title="Organizator">
-        <ZText class="caption">
-          Donut danish cotton candy. Gingerbread pudding candy canes cheesecake jelly-o cheesecake cupcake.
-        </ZText>
-        <ZFormField
-          v-model="form.person"
-          label="Imię i nazwisko"
-          :required="true"
-          :class="{'has-error': $v.form.person.$dirty && !$v.form.person.required}"
-        >
-          <template #error>
-            <div
-              v-if="$v.form.person.$dirty && !$v.form.person.required"
-              class="z-form-field__error"
-            >
-              <div class="caption">
-                * to pole jest wymagane
-              </div>
-            </div>
-          </template>
-        </ZFormField>
-        <ZFormField
-          v-model="form.unit"
-          label="Jednostka"
-          :required="true"
-          :class="{'has-error': $v.form.unit.$dirty && !$v.form.unit.required}"
-        >
-          <template #error>
-            <div
-              v-if="$v.form.unit.$dirty && !$v.form.unit.required"
-              class="z-form-field__error"
-            >
-              <div class="caption">
-                * to pole jest wymagane
-              </div>
-            </div>
-          </template>
-        </ZFormField>
-        <ZFormField
-          v-model="form.phone"
-          type="tel"
-          label="Telefon kontaktowy"
-        />
-        <ZFormField
-          v-model="form.mail"
-          type="mail"
-          label="Mail kontaktowy"
-          :required="true"
-          :class="{'has-error': $v.form.mail.$dirty && !$v.form.mail.required}"
-        >
-          <template #error>
-            <div
-              v-if="$v.form.mail.$dirty && !$v.form.mail.required"
-              class="z-form-field__error"
-            >
-              <div class="caption">
-                * to pole jest wymagane
-              </div>
-            </div>
-          </template>
-        </ZFormField>
-      </ZAccordionItem>
-      <ZAccordionItem title="Wydarzenie">
-        <ZText class="caption">
-          Donut danish cotton candy. Gingerbread pudding candy canes cheesecake jelly-o cheesecake cupcake.
-        </ZText>
-        <ZFormField
-          v-model="form.title"
-          label="Nazwa"
-          :required="true"
-          :class="{'has-error': $v.form.title.$dirty && !$v.form.title.required}"
-        >
-          <template #error>
-            <div
-              v-if="$v.form.title.$dirty && !$v.form.title.required"
-              class="z-form-field__error"
-            >
-              <div class="caption">
-                * to pole jest wymagane
-              </div>
-            </div>
-          </template>
-        </ZFormField>
-        <ZFormField
-          v-model="form.web"
-          label="WWW"
-        />
-        <ZFormField
-          label="Okładka wydarzenia"
-          :required="true"
-          style="--form-field-label-margin: 0 0 4px 0;"
-        >
-          <template
-            #input="{id}"
+    <div
+      ref="scroll"
+      class="new-event-form__scroll"
+    >
+      <ZAccordion first-open="Organizator">
+        <ZAccordionItem title="Organizator">
+          <ZText class="caption">
+            Wprowadź dane, które umożliwią kontakt z organizatorem wydarzenia.
+          </ZText>
+          <ZFormField
+            v-model="form.person"
+            label="Imię i nazwisko"
+            :required="true"
+            :class="{'has-error': $v.form.person.$dirty && !$v.form.person.required}"
           >
-            <ZText
-              class="caption"
-              style="margin: 4px 0 8px 0;"
-            >
-              Donut danish cotton candy. Gingerbread pudding candy canes cheesecake jelly-o cheesecake cupcake.
-            </ZText>
-            <input
-              :id="id"
-              type="file"
-              @change="uploadHandler"
-            >
-          </template>
-          <template #error>
-            <div
-              v-if="$v.form.file.$dirty && !$v.form.file.required"
-              class="z-form-field__error"
-            >
-              <div class="caption">
-                * to pole jest wymagane
+            <template #error>
+              <div
+                v-if="$v.form.person.$dirty && !$v.form.person.required"
+                class="z-form-field__error"
+              >
+                <div class="caption">
+                  * to pole jest wymagane
+                </div>
               </div>
-            </div>
-          </template>
-        </ZFormField>
-        <ZFormField
-          label="Opis"
-          :required="true"
-          :class="{'has-error': $v.form.description.$dirty && !$v.form.description.required}"
-        >
-          <template #input="{id}">
-            <ZTextarea
-              :id="id"
-              v-model="form.description"
-              rows="5"
-            />
-          </template>
-          <template #error>
-            <div
-              v-if="$v.form.description.$dirty && !$v.form.description.required"
-              class="z-form-field__error"
-            >
-              <div class="caption">
-                * to pole jest wymagane
+            </template>
+          </ZFormField>
+          <ZFormField
+            v-model="form.unit"
+            label="Jednostka"
+            :required="true"
+            :class="{'has-error': $v.form.unit.$dirty && !$v.form.unit.required}"
+          >
+            <template #error>
+              <div
+                v-if="$v.form.unit.$dirty && !$v.form.unit.required"
+                class="z-form-field__error"
+              >
+                <div class="caption">
+                  * to pole jest wymagane
+                </div>
               </div>
-            </div>
-          </template>
-        </ZFormField>
-        <ZFormField
-          label="Warunki uczestnictwa"
-          :required="true"
-          :class="{'has-error': $v.form.conditions.$dirty && !$v.form.conditions.required}"
-        >
-          <template #input="{id}">
-            <ZTextarea
-              :id="id"
-              v-model="form.conditions"
-              rows="5"
-            />
-          </template>
-          <template #error>
-            <div
-              v-if="$v.form.conditions.$dirty && !$v.form.conditions.required"
-              class="z-form-field__error"
-            >
-              <div class="caption">
-                * to pole jest wymagane
+            </template>
+          </ZFormField>
+          <ZFormField
+            v-model="form.phone"
+            type="tel"
+            label="Telefon kontaktowy"
+          />
+          <ZFormField
+            v-model="form.mail"
+            type="mail"
+            label="Mail kontaktowy"
+            :required="true"
+            :class="{'has-error': $v.form.mail.$dirty && !$v.form.mail.required}"
+          >
+            <template #error>
+              <div
+                v-if="$v.form.mail.$dirty && !$v.form.mail.required"
+                class="z-form-field__error"
+              >
+                <div class="caption">
+                  * to pole jest wymagane
+                </div>
               </div>
-            </div>
-          </template>
-        </ZFormField>
-        <ZFormField
-          label="Miejsce"
-          :required="true"
-          :class="{'has-error': $v.form.place.$dirty && !$v.form.place.required}"
-        >
-          <template #input="{id}">
-            <ZTextarea
-              :id="id"
-              v-model="form.place"
-              rows="5"
-            />
-          </template>
-          <template #error>
-            <div
-              v-if="$v.form.place.$dirty && !$v.form.place.required"
-              class="z-form-field__error"
-            >
-              <div class="caption">
-                * to pole jest wymagane
+            </template>
+          </ZFormField>
+        </ZAccordionItem>
+        <ZAccordionItem title="Wydarzenie">
+          <ZText class="caption">
+            Wprowadź dane, które pozwolą przyszłym uczestnikom twojego wydarzenia dowiedzieć się o nim czegos więcej.
+          </ZText>
+          <ZFormField
+            v-model="form.title"
+            label="Nazwa"
+            :required="true"
+            :class="{'has-error': $v.form.title.$dirty && !$v.form.title.required}"
+          >
+            <template #error>
+              <div
+                v-if="$v.form.title.$dirty && !$v.form.title.required"
+                class="z-form-field__error"
+              >
+                <div class="caption">
+                  * to pole jest wymagane
+                </div>
               </div>
-            </div>
-          </template>
-        </ZFormField>
-        <ZFormField
-          label="Kiedy"
-          :required="true"
-          :class="{'has-error': $v.form.date.$dirty && !$v.form.date.minLength}"
-        >
-          <template #input>
-            <ZDatePicker
-              v-model="form.date"
-              tag="input"
-              placeholder="Wybierz przedział"
-              :settings="{
-                inline: false,
-                dateFormat: 'd/m/Y',
-                maxDate: null
-              }"
-              class="z-input"
-            />
-          </template>
-          <template #error>
-            <div
-              v-if="$v.form.date.$dirty && !$v.form.date.minLength"
-              class="z-form-field__error"
+            </template>
+          </ZFormField>
+          <ZFormField
+            v-model="form.web"
+            label="WWW"
+          />
+          <ZFormField
+            label="Okładka wydarzenia"
+            :required="true"
+            style="--form-field-label-margin: 0 0 4px 0;"
+          >
+            <template
+              #input="{id}"
             >
-              <div class="caption">
-                * to pole jest wymagane
+              <ZText
+                class="caption"
+                style="margin: 4px 0 8px 0;"
+              >
+                Okładka wydarzenia powinna być plikiem graficznym i mieć wymiary nie mniejszy niż <b>727px&nbsp;x&nbsp;396px</b> i nie większy niż <b>1280px&nbsp;x&nbsp;720px</b>.
+              </ZText>
+              <input
+                ref="file"
+                :id="id"
+                type="file"
+                accept="image/*"
+                @change="uploadHandler"
+              >
+            </template>
+            <template #error>
+              <div
+                v-if="$v.form.file.$dirty && !$v.form.file.required"
+                class="z-form-field__error"
+              >
+                <div class="caption">
+                  * to pole jest wymagane
+                </div>
               </div>
-            </div>
-          </template>
-        </ZFormField>
-        <ZFormField
-          label="Rodzaj wydarzenia"
-          :required="true"
-          :class="{'has-error': $v.form.event_type.$dirty && !$v.form.event_type.minLength}"
-        >
-          <template #input="{id}">
-            <ZSelect
-              :id="id"
-              v-model="form.event_type"
-              :options="categories.event_types.options"
-              class="z-form-field__input"
-            />
-          </template>
-          <template #error>
-            <div
-              v-if="$v.form.event_type.$dirty && !$v.form.event_type.minLength"
-              class="z-form-field__error"
-            >
-              <div class="caption">
-                * to pole jest wymagane
+            </template>
+          </ZFormField>
+          <ZFormField
+            label="Opis"
+            :required="true"
+            :class="{'has-error': $v.form.description.$dirty && !$v.form.description.required}"
+          >
+            <template #input="{id}">
+              <ZTextarea
+                :id="id"
+                v-model="form.description"
+                rows="5"
+              />
+            </template>
+            <template #error>
+              <div
+                v-if="$v.form.description.$dirty && !$v.form.description.required"
+                class="z-form-field__error"
+              >
+                <div class="caption">
+                  * to pole jest wymagane
+                </div>
               </div>
-            </div>
-          </template>
-        </ZFormField>
-        <ZFormField
-          label="Metodyka"
-          :required="true"
-          :class="{'has-error': $v.form.age_groups.$dirty && !$v.form.age_groups.minLength}"
-        >
-          <template #input="{id}">
-            <ZSelect
-              :id="id"
-              v-model="form.age_groups"
-              :multiple="true"
-              size="5"
-              :options="categories.age_groups.options"
-              class="z-form-field__input"
-            />
-          </template>
-          <template #error>
-            <div
-              v-if="$v.form.age_groups.$dirty && !$v.form.age_groups.minLength"
-              class="z-form-field__error"
-            >
-              <div class="caption">
-                * to pole jest wymagane
+            </template>
+          </ZFormField>
+          <ZFormField
+            label="Warunki uczestnictwa"
+            :required="true"
+            :class="{'has-error': $v.form.conditions.$dirty && !$v.form.conditions.required}"
+          >
+            <template #input="{id}">
+              <ZTextarea
+                :id="id"
+                v-model="form.conditions"
+                rows="5"
+              />
+            </template>
+            <template #error>
+              <div
+                v-if="$v.form.conditions.$dirty && !$v.form.conditions.required"
+                class="z-form-field__error"
+              >
+                <div class="caption">
+                  * to pole jest wymagane
+                </div>
               </div>
-            </div>
-          </template>
-        </ZFormField>
-        <ZFormField
-          label="Województwo"
-          :required="true"
-          :class="{'has-error': $v.form.localization.$dirty && !$v.form.localization.minLength}"
-        >
-          <template #input="{id}">
-            <ZSelect
-              :id="id"
-              v-model="form.localization"
-              :options="categories.localizations.options"
-              class="z-form-field__input"
-            />
-          </template>
-          <template #error>
-            <div
-              v-if="$v.form.localization.$dirty && !$v.form.localization.minLength"
-              class="z-form-field__error"
-            >
-              <div class="caption">
-                * to pole jest wymagane
+            </template>
+          </ZFormField>
+          <ZFormField
+            label="Miejsce"
+            :required="true"
+            :class="{'has-error': $v.form.place.$dirty && !$v.form.place.required}"
+          >
+            <template #input="{id}">
+              <ZTextarea
+                :id="id"
+                v-model="form.place"
+                rows="5"
+              />
+            </template>
+            <template #error>
+              <div
+                v-if="$v.form.place.$dirty && !$v.form.place.required"
+                class="z-form-field__error"
+              >
+                <div class="caption">
+                  * to pole jest wymagane
+                </div>
               </div>
-            </div>
-          </template>
-        </ZFormField>
-      </ZAccordionItem>
-    </ZAccordion>
-    <ZText class="caption">
-      Donut danish cotton candy. Gingerbread pudding candy canes cheesecake jelly-o cheesecake cupcake.
+            </template>
+          </ZFormField>
+          <ZFormField
+            label="Kiedy"
+            :required="true"
+            :class="{'has-error': $v.form.date.$dirty && !$v.form.date.minLength}"
+          >
+            <template #input>
+              <ZDatePicker
+                v-model="form.date"
+                tag="input"
+                placeholder="Wybierz przedział"
+                :settings="{
+                  inline: false,
+                  dateFormat: 'd/m/Y',
+                  maxDate: null
+                }"
+                class="z-input"
+              />
+            </template>
+            <template #error>
+              <div
+                v-if="$v.form.date.$dirty && !$v.form.date.minLength"
+                class="z-form-field__error"
+              >
+                <div class="caption">
+                  * to pole jest wymagane
+                </div>
+              </div>
+            </template>
+          </ZFormField>
+          <ZFormField
+            label="Rodzaj wydarzenia"
+            :required="true"
+            :class="{'has-error': $v.form.event_type.$dirty && !$v.form.event_type.minLength}"
+          >
+            <template #input="{id}">
+              <ZSelect
+                :id="id"
+                v-model="form.event_type"
+                :options="categories.event_types.options"
+                class="z-form-field__input"
+              />
+            </template>
+            <template #error>
+              <div
+                v-if="$v.form.event_type.$dirty && !$v.form.event_type.minLength"
+                class="z-form-field__error"
+              >
+                <div class="caption">
+                  * to pole jest wymagane
+                </div>
+              </div>
+            </template>
+          </ZFormField>
+          <ZFormField
+            label="Metodyka"
+            :required="true"
+            :class="{'has-error': $v.form.age_groups.$dirty && !$v.form.age_groups.minLength}"
+          >
+            <template #input="{id}">
+              <ZSelect
+                :id="id"
+                v-model="form.age_groups"
+                :multiple="true"
+                size="5"
+                :options="categories.age_groups.options"
+                class="z-form-field__input"
+              />
+            </template>
+            <template #error>
+              <div
+                v-if="$v.form.age_groups.$dirty && !$v.form.age_groups.minLength"
+                class="z-form-field__error"
+              >
+                <div class="caption">
+                  * to pole jest wymagane
+                </div>
+              </div>
+            </template>
+          </ZFormField>
+          <ZFormField
+            label="Województwo"
+            :required="true"
+            :class="{'has-error': $v.form.localization.$dirty && !$v.form.localization.minLength}"
+          >
+            <template #input="{id}">
+              <ZSelect
+                :id="id"
+                v-model="form.localization"
+                :options="categories.localizations.options"
+                class="z-form-field__input"
+              />
+            </template>
+            <template #error>
+              <div
+                v-if="$v.form.localization.$dirty && !$v.form.localization.minLength"
+                class="z-form-field__error"
+              >
+                <div class="caption">
+                  * to pole jest wymagane
+                </div>
+              </div>
+            </template>
+          </ZFormField>
+        </ZAccordionItem>
+      </ZAccordion>
+      <div
+        v-if="$v.form.$error"
+        class="new-event-form__error caption"
+      >
+        * to pole jest wymagane
+      </div>
+    </div>
+    <ZText
+      class="caption"
+      style="--text-margin: 4px 0 8px 0;"
+    >
+      Na poniższy adres e-mail wyślemy link służący weryfikacji wydarzenia.
     </ZText>
     <ZFormField
       v-model="form.to_confirm"
@@ -324,16 +341,11 @@
         </div>
       </template>
     </ZFormField>
-    <div
-      v-if="$v.form.$error"
-      class="new-event-form__error caption"
-    >
-      * to pole jest wymagane
-    </div>
   </ZForm>
 </template>
 
 <script>
+import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock'
 import { validationMixin } from 'vuelidate'
 import { required, minLength, email } from 'vuelidate/lib/validators'
 import {
@@ -433,6 +445,14 @@ export default {
       }
     }
   },
+  mounted () {
+    this.$nextTick(() => {
+      disableBodyScroll(this.$refs.scroll)
+    })
+  },
+  beforeDestroy () {
+    enableBodyScroll(this.$refs.scroll)
+  },
   methods: {
     submitHandler () {
       this.$v.$touch()
@@ -478,9 +498,21 @@ export default {
     uploadHandler (event) {
       const file = event.target.files[0]
       const img = new Image()
-      img.onload = function () {
-        alert(`width: ${this.width} height: ${this.height}`)
-      }
+      img.addEventListener('load', (event) => {
+        const width = event.path[0].width
+        const height = event.path[0].height
+        const invalid = [true, true]
+        if (width >= 727 && width <= 1280) {
+          invalid[0] = false
+        }
+        if (height >= 396 && height <= 720) {
+          invalid[1] = false
+        }
+        if (!invalid.every(option => (!option))) {
+          this.form.file = null
+          this.$refs.file.value = ''
+        }
+      })
       img.src = URL.createObjectURL(file)
       this.form.file = file
       this.$v.form.file.$touch()
@@ -491,12 +523,22 @@ export default {
 
 <style lang="scss">
 .new-event-form {
+  --text-margin: 0 0 8px 0;
+
   &__error {
     color: #e30613;
+  }
+
+  &__scroll {
+    overflow: auto;
+    height: 225px;
+    padding: 0 8px 0 0;
   }
 }
 
 .has-error {
   --input-border: 1px solid #e30613;
+  --textarea-border: 1px solid #e30613;
+  --select-border: 1px solid #e30613;
 }
 </style>

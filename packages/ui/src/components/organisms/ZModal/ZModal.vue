@@ -1,10 +1,15 @@
 <template>
   <div class="z-modal">
-    <div v-if="isVisible" class="z-modal__backdrop" />
-    <dialog v-if="isVisible" class="z-modal__dialog">
-      <div class="z-modal__content">
-        <slot />
-      </div>
+    <div
+      v-if="isVisible"
+      class="z-modal__backdrop"
+      @click="$emit('click:close')"
+    />
+    <dialog
+      v-if="isVisible"
+      class="z-modal__dialog"
+    >
+      <slot />
     </dialog>
   </div>
 </template>
@@ -40,16 +45,18 @@ export default {
     top: 50%;
     right: auto;
     left: 50%;
-    display: block;
-    overflow: auto;
-    width: 480px;
-    height: 80vh;
-    padding: 16px;
+    display: flex;
+    width: calc(100% - 40px);
+    max-width: 480px;
+    max-height: 568px;
+    align-items: center;
+    justify-content: center;
     border: 0;
-    border-radius: 10px;
     transform: translate(-50%, -50%);
-  }
 
-  // &__content {}
+    @media (min-width: 640px) {
+      border-radius: 10px;
+    }
+  }
 }
 </style>

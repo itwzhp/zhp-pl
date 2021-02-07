@@ -18,5 +18,7 @@ export default {
 };
 </script>
 <style lang="scss">
-  .z-text {}
+  .z-text {
+    margin: var(--text-margin, 1em 0);
+  }
 </style>

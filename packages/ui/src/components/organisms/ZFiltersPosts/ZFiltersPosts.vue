@@ -4,15 +4,15 @@
     class="z-filters-posts"
   >
     <ZList
-        v-if="mappedDate.length === 2 || mappedTaxonomies.length > 0"
-        class="z-filters-posts__selected"
+      v-if="mappedDate.length === 2 || mappedTaxonomies.length > 0"
+      class="z-filters-posts__selected"
     >
       <template v-if="mappedDate.length === 2">
         <li>
           <ZBubble
-              :checked="true"
-              type="filter"
-              @change="unselectDate"
+            :checked="true"
+            type="filter"
+            @change="unselectDate"
           >
             {{ mappedDate.join(' - ') }}
           </ZBubble>
@@ -21,9 +21,9 @@
       <template v-for="select in mappedTaxonomies">
         <li :key="select">
           <ZBubble
-              :checked="true"
-              type="filter"
-              @change="unselectTaxonomies(taxonomies[select])"
+            :checked="true"
+            type="filter"
+            @change="unselectTaxonomies(taxonomies[select])"
           >
             {{ taxonomies[select] && taxonomies[select].label }}
           </ZBubble>
