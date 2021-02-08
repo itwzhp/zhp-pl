@@ -143,6 +143,7 @@
               :id="id"
               v-model="form.excerpt"
               rows="2"
+              :max="144"
             />
           </template>
           <template #error>
@@ -174,6 +175,7 @@
               :id="id"
               v-model="form.description"
               rows="5"
+              :max="500"
             />
           </template>
           <template #error>
@@ -205,6 +207,7 @@
               :id="id"
               v-model="form.conditions"
               rows="5"
+              :max="500"
             />
           </template>
           <template #error>
@@ -236,6 +239,7 @@
               :id="id"
               v-model="form.place"
               rows="5"
+              :max="500"
             />
           </template>
           <template #error>
@@ -399,7 +403,7 @@
 import { mapGetters } from 'vuex'
 import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock'
 import { validationMixin } from 'vuelidate'
-import { required, minLength, maxLength, email } from 'vuelidate/lib/validators'
+import { required, maxLength, email } from 'vuelidate/lib/validators'
 import {
   ZHeading,
   ZText,
