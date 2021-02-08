@@ -85,7 +85,7 @@ export default {
         },
         {
           id: '57696',
-          title: 'Naczelny sąd harcerski',
+          title: 'Naczelny Sąd Harcerski ZHP',
           to: '/nsh'
         },
         {
