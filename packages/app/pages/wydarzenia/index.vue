@@ -51,6 +51,16 @@
       class="pagination"
       @change="updateQuery({page: $event})"
     />
+    <transition name="slideDown">
+      <ZNotification
+        v-if="hasNotification"
+        class="notification"
+        :class="{'z-notification--error': notification.status === 'error'}"
+        @click:cancel="hasNotification = false"
+      >
+        {{ notification.message }}
+      </ZNotification>
+    </transition>
   </div>
 </template>
 
@@ -60,7 +70,8 @@ import {
   ZPagination,
   ZFiltersEvents,
   ZEvent,
-  ZModal
+  ZModal,
+  ZNotification
 } from '@nowa-zhp/ui'
 import NewEventModal from '@/pages/wydarzenia/components/NewEventForm.vue'
 
@@ -72,7 +83,8 @@ export default {
     ZPagination,
     ZFiltersEvents,
     ZEvent,
-    ZModal
+    ZModal,
+    ZNotification
   },
   async asyncData ({ $axios, params, query }) {
     // helpers
@@ -161,7 +173,12 @@ export default {
   },
   data () {
     return {
-      isNewEventModalVisible: true
+      isNewEventModalVisible: false,
+      hasNotification: false,
+      notification: {
+        type: '',
+        message: ''
+      }
     }
   },
   computed: {
@@ -169,15 +186,34 @@ export default {
       return this.$store.getters['taxonomies/taxonomy']('age_groups')
     }
   },
+  watch: {
+    hasNotification (isOpen) {
+      if (isOpen) {
+        setTimeout(() => {
+          this.hasNotification = false
+        }, 5000)
+      }
+    }
+  },
+  async mounted () {
+    const query = this.$route.query
+    if (query.id && query.token) {
+      const { data } = await this.$axios.post('post-events', { id: query.id, token: query.token })
+      this.notification = data
+      this.hasNotification = true
+    }
+  },
   methods: {
-    submitHandler (value) {
-      this.$axios.post('post-events', value, {
+    async submitHandler (value) {
+      const { data } = await this.$axios.post('post-events', value, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       })
+      this.isNewEventModalVisible = false
+      this.notification = data
+      this.hasNotification = true
     },
-    cancelHandler () {},
     updateQuery (query) {
       const requestQuery = { ...this.$route.query, ...query }
       this.$router.push({
@@ -301,6 +337,25 @@ export default {
     --form-field-margin: 0 0 8px 0;
     --accordion-item-text-transform: uppercase;
     --form-field-label-font-size: 0.876rem;
+  }
+
+  .notification {
+    position: fixed;
+    z-index: 1000;
+    top: 20px;
+    right: 20px;
+  }
+
+  .slideDown {
+    &-enter-active,
+    &-leave-active {
+      transition: transform 300ms ease-in-out;
+    }
+
+    &-enter,
+    &-leave-to {
+      transform: translateY(-100%);
+    }
   }
 }
 </style>

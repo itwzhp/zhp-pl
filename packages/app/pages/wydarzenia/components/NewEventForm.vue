@@ -134,6 +134,37 @@
           </template>
         </ZFormField>
         <ZFormField
+          label="Zajawka"
+          :required="true"
+          :class="{'has-error': $v.form.excerpt.$dirty && !$v.form.excerpt.required}"
+        >
+          <template #input="{id}">
+            <ZTextarea
+              :id="id"
+              v-model="form.excerpt"
+              rows="2"
+            />
+          </template>
+          <template #error>
+            <div
+              v-if="$v.form.description.$dirty && !$v.form.description.required"
+              class="z-form-field__error"
+            >
+              <div class="caption">
+                * to pole jest wymagane
+              </div>
+            </div>
+            <div
+              v-if="$v.form.place.$dirty && !$v.form.description.maxLength"
+              class="z-form-field__error"
+            >
+              <div class="caption">
+                * dozwolona długość tekstu to 500 znaków
+              </div>
+            </div>
+          </template>
+        </ZFormField>
+        <ZFormField
           label="Opis"
           :required="true"
           :class="{'has-error': $v.form.description.$dirty && !$v.form.description.required}"
@@ -356,8 +387,8 @@
       </template>
     </ZFormField>
     <div
-        v-if="$v.form.$error"
-        class="new-event-form__error caption"
+      v-if="$v.form.$error"
+      class="new-event-form__error caption"
     >
       * formularz zawiera błędzy i nie może zostać wysłany
     </div>
@@ -365,6 +396,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock'
 import { validationMixin } from 'vuelidate'
 import { required, minLength, maxLength, email } from 'vuelidate/lib/validators'
@@ -408,6 +440,7 @@ export default {
         title: '',
         web: '',
         file: null,
+        excerpt: '',
         description: '',
         conditions: '',
         place: '',
@@ -442,6 +475,10 @@ export default {
         required,
         maxLength: maxLength(500)
       },
+      excerpt: {
+        required,
+        maxLength: maxLength(144)
+      },
       conditions: {
         required,
         maxLength: maxLength(500)
@@ -451,16 +488,16 @@ export default {
         maxLength: maxLength(500)
       },
       date: {
-        required,
+        required
       },
       event_type: {
-        required,
+        required
       },
       age_groups: {
-        required,
+        required
       },
       localization: {
-        required,
+        required
       },
       to_confirm: {
         required,
@@ -469,12 +506,33 @@ export default {
     }
   },
   mounted () {
+    this.form.person = ''
+    this.form.unit = ''
+    this.form.phone = ''
+    this.form.mail = ''
+    this.form.title = ''
+    this.form.web = ''
+    this.form.file = null
+    this.form.description = ''
+    this.form.excerpt = ''
+    this.form.conditions = ''
+    this.form.place = ''
+    this.form.date = []
+    this.form.event_type = ''
+    this.form.age_groups = []
+    this.form.localization = ''
+    this.form.to_confirm = ''
     this.$nextTick(() => {
       disableBodyScroll(this.$refs.scroll.$el)
     })
   },
   beforeDestroy () {
     clearAllBodyScrollLocks(this.$refs.scroll.$el)
+  },
+  computed: {
+    ...mapGetters({
+      domains: 'theme/domains'
+    })
   },
   methods: {
     submitHandler () {
@@ -491,6 +549,7 @@ export default {
       formData.append('web', this.form.web)
       formData.append('file', this.form.file)
       formData.append('description', this.form.description)
+      formData.append('excerpt', this.form.excerpt)
       formData.append('conditions', this.form.conditions)
       formData.append('place', this.form.place)
       formData.append('begin', this.form.date[0])
@@ -500,22 +559,40 @@ export default {
       formData.append('localization', this.form.localization)
       formData.append('to_confirm', this.form.to_confirm)
       this.$emit('submit', formData)
+      // this.form.person = ''
+      // this.form.unit = ''
+      // this.form.phone = ''
+      // this.form.mail = ''
+      // this.form.title = ''
+      // this.form.web = ''
+      // this.form.file = null
+      // this.form.description = ''
+      // this.form.excerpt = ''
+      // this.form.conditions = ''
+      // this.form.place = ''
+      // this.form.date = []
+      // this.form.event_type = ''
+      // this.form.age_groups = []
+      // this.form.localization = ''
+      // this.form.to_confirm = ''
     },
     cancelHandler () {
-      this.person = ''
-      this.unit = ''
-      this.phone = ''
-      this.mail = ''
-      this.title = ''
-      this.web = ''
-      this.file = null
-      this.description = ''
-      this.conditions = ''
-      this.place = ''
-      this.date = []
-      this.event_type = ''
-      this.age_group = []
-      this.localization = ''
+      this.form.person = ''
+      this.form.unit = ''
+      this.form.phone = ''
+      this.form.mail = ''
+      this.form.title = ''
+      this.form.web = ''
+      this.form.file = null
+      this.form.description = ''
+      this.form.excerpt = ''
+      this.form.conditions = ''
+      this.form.place = ''
+      this.form.date = []
+      this.form.event_type = ''
+      this.form.age_groups = []
+      this.form.localization = ''
+      this.form.to_confirm = ''
       this.$emit('click:cancel')
     },
     uploadHandler (event) {

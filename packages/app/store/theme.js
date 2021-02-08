@@ -14,5 +14,8 @@ export const mutations = {
 export const getters = {
   hasMourning (state) {
     return state.options.mourning
+  },
+  domains (state) {
+    return state.options.domains.replace(/ /gm, '').split(',')
   }
 }
