@@ -848,14 +848,16 @@ function post_events(WP_REST_Request $request) {
 
     $pattern = '/@(.*+)$/i';
     $domains = explode(',',str_replace(' ', '',get_theme_mod('domains', '')));
-    preg_match($pattern, $to_confirm, $matches);
-    $domain = $matches[1];
-    $confirmed = in_array($domain, $domains);
-    if(!$confirmed) {
-        return array(
-            'status' => 'error',
-            'message' => 'Domena '.$domain.' nie jest dozwolona.'
-        );
+    if(count($domains) > 0) {
+        preg_match($pattern, $to_confirm, $matches);
+        $domain = $matches[1];
+        $confirmed = in_array($domain, $domains);
+        if(!$confirmed) {
+            return array(
+                'status' => 'error',
+                'message' => 'Domena '.$domain.' nie jest dozwolona.'
+            );
+        }
     }
 
     $post_content = ''
