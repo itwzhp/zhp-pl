@@ -200,6 +200,7 @@
         >
           <ZCarousel
             class="carousel"
+            :has-controls="false"
             :settings="{
               autoplay: 3000,
               perView: 3,

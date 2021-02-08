@@ -12,6 +12,7 @@
         class="carousel"
       >
         <ZCarousel
+          :has-controls="carousel.controls"
           :peeked="carousel.peeked"
           :settings="{
             perView: carousel.perView,
@@ -125,6 +126,7 @@
       >
         <ZCarousel
           :peeked="carousel.peeked"
+          :has-controls="carousel.controls"
           :settings="{
             perView: carousel.perView,
             autoplay: carousel.autoplay,
@@ -212,7 +214,8 @@ export default {
         peeked: carousel.peeked,
         autoplay: parseInt(carousel.autoplay, 10),
         perView: parseInt(carousel.perView, 10),
-        gap: parseInt(carousel.gap, 10)
+        gap: parseInt(carousel.gap, 10),
+        controls: carousel.controls,
       }
     }
     const pageRest = await $axios.get('pages', { params: { _embed: true, ...params } })
