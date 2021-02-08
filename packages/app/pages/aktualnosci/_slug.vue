@@ -34,6 +34,7 @@
       </figure>
       <ZWordPress
         :html="post.content && post.content.rendered"
+        :gutenberg="post.rest_gutenberg"
         class="content"
       />
       <ZFiles
@@ -125,6 +126,7 @@ import {
 } from '@nowa-zhp/ui'
 
 export default {
+  name: 'Post',
   filters: {
     format (date) {
       if (!date) {

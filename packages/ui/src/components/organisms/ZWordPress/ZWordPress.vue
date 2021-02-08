@@ -21,15 +21,46 @@ export default {
       type: String,
       default: '',
     },
+    gutenberg: {
+      type: Array,
+      default: () => ([]),
+    },
   },
   computed: {
+    hasGutenberg() {
+      return this.gutenberg.length;
+    },
+    renderedGutenberg() {
+      const reducer = (accumulator, block) => {
+        let html;
+        switch (block.blockName) {
+          case 'core/paragraph':
+            html = block.innerContent[0].replace(/\n/gm, '');
+            break;
+          case null:
+            html = '';
+            break;
+          default:
+            html = block.innerHTML;
+        }
+        return accumulator + html;
+      };
+      return this.gutenberg.reduce(reducer, '');
+    },
     replacedHTML() {
       const anchor = /<a.+?href="(.+?)">(.+?)<\/a>/gm;
       return this.html.replace(anchor, (match, href, name) => `<z-link to="${href}">${name}</z-link>`);
     },
+    componentHTML() {
+      if (this.hasGutenberg) {
+        return this.renderedGutenberg;
+      }
+      return this.replacedHTML;
+    },
     component() {
       return {
-        template: `<div class="z-word-press">${this.replacedHTML}</div>`,
+        name: 'WordPressContent',
+        template: `<div class="z-wordpress">${this.componentHTML}</div>`,
       };
     },
   },
@@ -43,7 +74,7 @@ export default {
 </script>
 
 <style lang="scss">
-.z-word-press {
+.z-wordpress {
   line-height: 1.4;
 
   p {
