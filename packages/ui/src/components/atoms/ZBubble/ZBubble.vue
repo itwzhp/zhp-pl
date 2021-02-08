@@ -100,6 +100,8 @@ export default {
   .z-bubble {
     $this: &;
 
+    --text-margin: 0;
+
     position: relative;
 
     &:focus-within {

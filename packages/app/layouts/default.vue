@@ -485,6 +485,8 @@ export default {
   --dropdown-content-padding: 16px 0;
   --dropdown-content-transform: translateY(0);
 
+  z-index: 1000;
+
   &__link {
     display: inline-flex;
     width: 100%;
