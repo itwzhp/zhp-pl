@@ -579,32 +579,72 @@ add_filter('rest_page_query', 'custom_parent_dropdown_limit', 20, 2);
 // theme options
 add_action('customize_register','theme_customize_register');
 function theme_customize_register($wp_customize) {
-    $wp_customize->add_setting('mourning', array(
-        'type' => 'theme_mod',
-        'capability' => 'edit_theme_options',
+    $wp_customize->add_panel('theme', array(
+        'title'=> 'Ustawienia motywu',
+        'priority' => 160,
     ));
-    $wp_customize->add_setting('pwa_url', array(
+    $wp_customize->add_section('main', array(
+        'title'=>'Główne',
+        'panel'=>'theme'
+    ));
+    $wp_customize->add_setting('mourning', array(
         'type' => 'theme_mod',
         'capability' => 'edit_theme_options',
     ));
     $wp_customize->add_control('mourning', array(
         'type'=>'checkbox',
         'priority'=>10,
-        'section'=>'theme_options',
+        'section'=>'main',
         'label'=>'Żałoba',
         'description'=>'Cała strona WWW zostaje wyświetlona w odcieniach szarości.'
+    ));
+    $wp_customize->add_setting('pwa_url', array(
+        'type' => 'theme_mod',
+        'capability' => 'edit_theme_options',
     ));
     $wp_customize->add_control('pwa_url', array(
         'type'=>'input',
         'priority'=>10,
-        'section'=>'theme_options',
+        'section'=>'main',
         'label'=>'Adres witryny (URL)',
         'description'=>'Wprowadź adres, jeśli WordPress jest pod innym adresem niż PWA.'
     ));
-    $wp_customize->add_section('theme_options', array(
-        'title'=>'Ustawienia motywu',
-        'priority' => 105,
+    $wp_customize->add_section('event', array(
+        'title'=>'Wydarzenia',
+        'panel'=>'theme',
+    ));
+    $wp_customize->add_setting('domains', array(
+        'type' => 'theme_mod',
         'capability' => 'edit_theme_options',
+    ));
+    $wp_customize->add_control('domains', array(
+        'type'=>'input',
+        'priority'=>10,
+        'section'=>'event',
+        'label'=>'Dozwolone domeny',
+        'description'=>'Wprowadź po przecinku domeny dla maili z których można zgłaszać wydarzenia.'
+    ));
+    $wp_customize->add_setting('subject', array(
+        'type' => 'theme_mod',
+        'capability' => 'edit_theme_options',
+    ));
+    $wp_customize->add_control('subject', array(
+        'type'=>'input',
+        'priority'=>10,
+        'section'=>'event',
+        'label'=>'Tytuł maila z linkiem do potwierdzenia',
+        'description'=>'Wprowadź tytuł maila który zostanie wysłany z tokenem do weryfikacji. Użyj {{ token }} w miejscu gdzie powienine być link.'
+    ));
+    $wp_customize->add_setting('message', array(
+        'type' => 'theme_mod',
+        'capability' => 'edit_theme_options',
+    ));
+    $wp_customize->add_control('message', array(
+        'type'=>'textarea',
+        'priority'=>10,
+        'section'=>'event',
+        'label'=>'Treść maila z linkiem do potwierdzenia',
+        'description'=>'Wprowadź treść maila który zostanie wysłany z tokenem do weryfikacji. Użyj {{ token }} w miejscu gdzie powienine być link.'
     ));
 }
 // register endpoint to REST for theme options
@@ -618,6 +658,7 @@ function register_rest_options() {
 function get_options(WP_REST_Request $request) {
     return (object) array(
         'mourning' => get_theme_mod('mourning', ''),
+        'domains' => get_theme_mod('domains', ''),
     );
 }
 // register endpoint to REST for events
@@ -764,6 +805,7 @@ function post_events(WP_REST_Request $request) {
     $file = $request->get_file_params();
     list(
         'title'=> $post_title,
+        'excerpt' => $post_excerpt,
         'description' => $post_description,
         'conditions' => $post_conditions,
         'place' => $post_place,
@@ -778,48 +820,88 @@ function post_events(WP_REST_Request $request) {
         'age_groups' => $tax_age_groups,
         'localization' => $tax_localization,
         'event_type' => $tax_event_type,
-        'to_confirm' => $to_confirm
+        'to_confirm' => $to_confirm,
+        'id' => $id,
+        'token' => $key
     ) = $request;
+
+    if($id && $key) {
+        $status = get_post_status($id);
+        $token = get_post_meta($id, 'token', true);
+        if($status == 'temporary' && $key == $token) {
+            wp_update_post(array(
+                'ID' => $id,
+                'post_status' => 'pending'
+            ));
+            delete_post_meta($id, 'token');
+
+            return array(
+                'status' => 'success',
+                'message' => 'Zgłoszenie zaakceptowane. Wydarzenie oczekuje na akceptacje ze strony administracji.'
+            );
+        }
+        return array(
+            'status' => 'error',
+            'message' => 'Prawdopodobnie ten link został już wykorzystany a twoje zgłoszenie oczekuje na akceptację.'
+        );
+    }
+
+    $pattern = '/@(.*+)$/i';
+    $domains = explode(',',str_replace(' ', '',get_theme_mod('domains', '')));
+    preg_match($pattern, $to_confirm, $matches);
+    $domain = $matches[1];
+    $confirmed = in_array($domain, $domains);
+    if(!$confirmed) {
+        return array(
+            'status' => 'error',
+            'message' => 'Domena '.$domain.' nie jest dozwolona.'
+        );
+    }
 
     $post_content = ''
         .'<!-- wp:heading -->'
         .'<h2>Opis wydarzenia</h2>'
         .'<!-- /wp:heading -->'
         .'<!-- wp:paragraph -->'
-        .'<p>'.$post_description.'</p>'
+        .'<p>'.wp_kses($post_description, wp_kses_allowed_html()).'</p>'
         .'<!-- /wp:paragraph -->'
         .'<!-- wp:heading -->'
         .'<h2>Warunki uczestnictwa</h2>'
         .'<!-- /wp:heading -->'
         .'<!-- wp:paragraph -->'
-        .'<p>'.$post_conditions.'</p>'
+        .'<p>'.wp_kses($post_conditions, wp_kses_allowed_html()).'</p>'
         .'<!-- /wp:paragraph -->'
         .'<!-- wp:heading -->'
         .'<h2>Miejsce wydarzenia</h2>'
         .'<!-- /wp:heading -->'
         .'<!-- wp:paragraph -->'
-        .'<p>'.$post_place.'</p>'
+        .'<p>'.wp_kses($post_place, wp_kses_allowed_html()).'</p>'
         .'<!-- /wp:paragraph -->';
+
      $post = array(
-        'post_title' => $post_title,
+        'post_title' => wp_kses($post_title, wp_kses_allowed_html('title')),
         'post_content' => $post_content,
-        'post_status' => 'draft',
+        'post_excerpt' => wp_kses($post_excerpt, wp_kses_allowed_html()),
+        'post_status' => 'temporary',
         'post_type' => 'event',
-        'post_author' => '63', // username: user
     );
     $post_id = wp_insert_post($post);
 
+     // set token
+    $date = new DateTime();
+    $token = md5($date->getTimestamp().$to_confirm);
+    add_post_meta($post_id, 'token', $token);
      // set ACF fields
      update_field('organizer', array(
-         'unit'=>$organizer_unit,
-         'person'=>$organizer_person,
-         'phone'=> $organizer_phone,
-         'mail'=>$organizer_mail
+         'unit'=>sanitize_text_field($organizer_unit),
+         'person'=>sanitize_text_field($organizer_person),
+         'phone'=> sanitize_text_field($organizer_phone),
+         'mail'=>sanitize_text_field($organizer_mail)
      ), $post_id);
-     update_field('web', $web, $post_id);
+     update_field('web', sanitize_text_field($web), $post_id);
      update_field('date', array(
-         'begin'=>$date_begin,
-         'end'=>$date_end
+         'begin'=>sanitize_text_field($date_begin),
+         'end'=>sanitize_text_field($date_end)
      ), $post_id);
      update_field('plikilinki', $plikilinki, $post_id);
      // set taxonomies
@@ -851,10 +933,28 @@ function post_events(WP_REST_Request $request) {
 
     // send e-mail
     $to = $to_confirm;
-    $subject = 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.';
-    $message = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.';
+    $subject = get_theme_mod('subject', '');
+    $pattern = '/\/?$/';
+    $url = preg_replace($pattern, '', get_theme_mod( 'pwa_url', '' ));
+    $message = str_replace('{{ token }}', '<a href="'.$url.'/wydarzenia?id='.$post_id.'&token='.$token.'">'.$url.'/wydarzenia?id='.$post_id.'&token='.$token.'</a>', get_theme_mod('message', ''));
+    $headers = array('Content-Type: text/html; charset=UTF-8');
 
-    wp_mail($to, $subject, $message);
+    wp_mail($to_confirm, $subject, $message, $headers);
 
-    return $post_id;
+    return array(
+        'status' => 'success',
+        'message' => 'Sprawdź swojego maila i kliknij w link aby potwierdzić swoje wydarzenie.'
+    );
 }
+// new post status
+function temporary_post_status() {
+
+    $args = array(
+        'label'                     => _x( 'Tymczasowy', 'Status General Name', 'text_domain' ),
+        'label_count'               => _n_noop( 'Tymczasowy (%s)',  'Tymczasowe (%s)', 'text_domain' ),
+        'public'                    => false,
+    );
+    register_post_status( 'temporary', $args );
+
+}
+add_action( 'init', 'temporary_post_status', 0 );
