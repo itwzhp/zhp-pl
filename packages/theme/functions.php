@@ -1,4 +1,39 @@
 <?php
+// remove core patterns
+add_filter('after_setup_theme', 'remove_core_patterns');
+function remove_core_patterns() {
+    remove_theme_support('core-block-patterns');
+}
+// register new block patterns
+add_action( 'init', 'register_block_patterns' );
+function register_block_patterns() {
+//    register_block_pattern_category(
+//        'common',
+//        array( 'label' => 'common' )
+//    );
+//    register_block_pattern(
+//        'my-plugin/my-awesome-pattern',
+//        array(
+//            'title'       => 'title',
+//            'description' => 'description',
+//            'categories'  => array( 'common' ),
+//            'content'     => "",
+//        )
+//    );
+}
+
+// allowed gutenberg blocks
+add_filter( 'allowed_block_types', 'allowed_block_types' );
+function allowed_block_types( $allowed_blocks ) {
+        return $allowed_blocks;
+//      return array(
+//          'core/image',
+//          'core/paragraph',
+//          'core/heading',
+//          'core/list'
+//    );
+}
+
 // register nav menus
 add_action( 'init', 'register_menus' );
 function register_menus() {
