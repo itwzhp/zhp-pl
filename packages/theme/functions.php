@@ -1,4 +1,11 @@
 <?php
+$blocks = array(
+    'accordion',
+    'accordion-item'
+);
+foreach ($blocks as $block) {
+    require __DIR__.'/blocks/'.$block.'/'.$block.'.php';
+}
 // remove core patterns
 add_filter('after_setup_theme', 'remove_core_patterns');
 function remove_core_patterns() {
