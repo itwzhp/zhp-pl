@@ -5,7 +5,7 @@ function create_block_accordion_item_block_init() {
 	$script_asset_path = "$dir/build/index.asset.php";
 	if ( ! file_exists( $script_asset_path ) ) {
 		throw new Error(
-			'You need to run `npm start` or `npm run build` for the "create-block/accordion" block first.'
+			'You need to run `npm start` or `npm run build` for the "create-block/accordion-item" block first.'
 		);
 	}
 	$index_js     = '/blocks/accordion-item/build/index.js';

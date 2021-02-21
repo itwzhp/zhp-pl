@@ -1,7 +1,9 @@
 <?php
 $blocks = array(
     'accordion',
-    'accordion-item'
+    'accordion-item',
+    'section',
+    'column'
 );
 foreach ($blocks as $block) {
     require __DIR__.'/blocks/'.$block.'/'.$block.'.php';
@@ -509,7 +511,7 @@ function get_rest_author( $object, $field_name, $request ) {
 // register field to REST for gutenberg
 add_action( 'rest_api_init', 'register_rest_gutenberg' );
 function register_rest_gutenberg() {
-    register_rest_field( array('post'), 'rest_gutenberg',
+    register_rest_field( array('post', 'page'), 'rest_gutenberg',
         array(
             'get_callback' => 'get_rest_gutenberg',
             'schema' => null

@@ -1,0 +1,23 @@
+/**
+ * The following styles get applied inside the editor only.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+
+.wp-block-zhp-section {
+  background: var(--section-background);
+
+  &__content {
+	background: var(--section-content-background);
+
+	& > .block-editor-inner-blocks{
+	  & > .block-editor-block-list {
+		&__layout {
+		  display: grid;
+		  gap: 1.25rem;
+		  grid-template-columns: repeat(12, minmax(auto, 1fr));
+		}
+	  }
+	}
+  }
+}
