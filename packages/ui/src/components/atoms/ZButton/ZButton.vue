@@ -67,7 +67,7 @@ export default {
 </script>
 <style lang="scss">
   .z-button {
-    display: inline-flex;
+    display: var(--button-display, inline-flex);
     width: var(--button-width);
     min-width: var(--button-min-width);
     height: var(--button-height, 2rem);
@@ -89,7 +89,7 @@ export default {
     text-transform: var(--button-text-transform, uppercase);
 
     &--text {
-      --button-color: var(--color-primary-darken);
+      --button-color: var(--button-text-color, var(--color-primary-darken));
       --button-background: transparent;
       --button-min-width: unset;
       --button-text-transform: none;

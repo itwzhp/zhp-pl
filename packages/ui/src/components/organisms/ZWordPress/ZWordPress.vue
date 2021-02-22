@@ -5,10 +5,12 @@ import Fragment from 'vue-fragment';
 import ZButton from '../../atoms/ZButton/ZButton.vue';
 import ZLink from '../../atoms/ZLink/ZLink.vue';
 import ZAccordion from '../ZAccordion/ZAccordion.vue';
+import ZSection from '../ZSection/ZSection.vue';
 
 Vue.component('ZButton', ZButton);
 Vue.component('ZLink', ZLink);
 Vue.component('ZAccordion', ZAccordion);
+Vue.component('ZSection', ZSection);
 
 function isSlot(element) {
   return element === null;
@@ -19,6 +21,7 @@ function gutenbergToHTML(block) {
   while (innerBlocks.length > 0) {
     blocks.push(gutenbergToHTML(innerBlocks.shift()));
   }
+  const { blockName } = block;
   let index = 0;
   return block.innerContent
     .map((element) => {
@@ -55,8 +58,8 @@ export default {
       return this.gutenberg.length > 0;
     },
     gutenbergToRender() {
-      const html = this.gutenberg
-        .filter((block) => block.blockName)
+      const gutenberg = JSON.parse(JSON.stringify(this.gutenberg));
+      const html = gutenberg.filter((block) => block.blockName)
         .map((block) => gutenbergToHTML(block))
         .join('');
       const anchorPattern = /<a.+?href="(.+?)">(.+?)<\/a>/gm;
@@ -69,7 +72,7 @@ export default {
     toRender() {
       return {
         name: 'WordPressContent',
-        template: `<fragment>${this.hasGutenberg ? this.gutenbergToRender : this.htmlToRender}</fragment>`,
+        template: `<fragment>${this.gutenbergToRender}</fragment>`,
       };
     },
   },
@@ -224,12 +227,33 @@ export default {
     }
   }
 
+  .has-text-align-center {
+    text-align: center;
+  }
+
+  .has-text-align-right {
+    text-align: right;
+  }
+
+  .aligncenter {
+    text-align: center;
+  }
   // temporary
   .wp-block-columns {
     @media (min-width: 640px) {
       display: grid;
       grid-auto-flow: column;
       grid-gap: 1.25rem;
+    }
+  }
+
+  @for $i from 1 through 12 {
+    .z-column-#{$i} {
+      grid-column: span 12;
+
+      @media (min-width: 640px) {
+        grid-column: span #{$i};
+      }
     }
   }
 }

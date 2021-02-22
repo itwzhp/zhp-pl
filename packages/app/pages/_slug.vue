@@ -58,11 +58,13 @@
         </ZCarousel>
       </ZSection>
     </template>
-    <ZSection
+    <component
+      :is="isGutenberg ? 'div' : 'z-section'"
       tag="div"
       class="section"
     >
       <ZHeading
+        v-if="!isGutenberg"
         :level="1"
         class="title t3"
         v-html="hasChildren ? activeChild.title.rendered : page.title.rendered"
@@ -118,7 +120,7 @@
           </ZList>
         </div>
       </div>
-    </ZSection>
+    </component>
     <template v-for="(carousel, key) in bottomCarousels">
       <ZSection
         :key="key"
@@ -172,6 +174,7 @@
         </ZCarousel>
       </ZSection>
     </template>
+    </component>
   </div>
 </template>
 
@@ -216,7 +219,7 @@ export default {
         autoplay: parseInt(carousel.autoplay, 10),
         perView: parseInt(carousel.perView, 10),
         gap: parseInt(carousel.gap, 10),
-        controls: carousel.controls,
+        controls: carousel.controls
       }
     }
     const pageRest = await $axios.get('pages', { params: { _embed: true, ...params } })
@@ -266,6 +269,9 @@ export default {
     },
     isFull () {
       return /page-full/gi.test(this.page.template)
+    },
+    isGutenberg () {
+      return /page-gutenberg/gi.test(this.page.template)
     },
     hasChildren () {
       return Object.keys(this.children).length

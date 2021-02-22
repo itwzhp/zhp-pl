@@ -324,7 +324,7 @@ export default {
 
   .section {
     @media (min-width: 640px) {
-      --section-margin: 3rem 0;
+      --section-desktop-margin: 3rem 0;
     }
   }
 
