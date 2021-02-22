@@ -81,18 +81,27 @@ export default {
 
 <style lang="scss">
   .z-section {
+    position: relative;
     height: var(--section-height);
     padding: var(--section-padding);
     margin: var(--section-margin, 2.25rem 0);
     background: var(--section-background);
-    background-attachment: var(--section-background-attachment);
-    background-position: var(--section-background-position);
-    background-size: var(--section-background-size);
     color: var(--section-color);
 
     @media (min-width: 640px) {
-      padding: var(--section-desktop-padding, var(--section-padding, 5.5rem 0));
+      padding: var(--section-desktop-padding, var(--section-padding));
       margin: var(--section-desktop-margin, var(--section-margin, 5.5rem 0));
+    }
+
+    &::before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--section-overlay-background);
+      content: "";
+      opacity: var(--section-overlay-opacity);
     }
 
     &__header {
@@ -123,6 +132,7 @@ export default {
     }
 
     &__content {
+      position: relative;
       display: grid;
       max-width: var(--section-content-max-width, 1140px);
       height: var(--section-content-height);
@@ -131,9 +141,6 @@ export default {
       justify-content: var(--section-content-justify-content);
       padding: var(--section-content-padding, 0 1.25rem);
       margin: var(--section-content-margin, auto);
-      background: var(--section-content-background);
-      background-attachment: var(--section-content-background-attachment);
-      background-position: var(--section-content-background-position);
       background-size: var(--section-content-background-size);
       gap: var(--section-content-gap, 1.25rem);
       grid-template-columns: var(--section-content-grid-template-columns, repeat(12, minmax(auto, 1fr)));
