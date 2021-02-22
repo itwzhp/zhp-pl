@@ -1,0 +1,33 @@
+/**
+ * The following styles get applied inside the editor only.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+
+.wp-block-zhp-divider {
+  width: var(--divider-width, 15%);
+  height: var(--divider-height, 3px);
+  background: var(--divider-background, #78a22f);
+
+  &.wp-block {
+	margin: 0 auto 0 0;
+  }
+}
+.components-section-boxmodel {
+  margin: 24px 0;
+  &__header {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	margin-bottom: 4px;
+  }
+  &__main {
+	display: flex;
+  }
+  &__input {
+	margin-right: 8px;
+	&:last-child {
+	  margin-right: 0;
+	}
+  }
+}
