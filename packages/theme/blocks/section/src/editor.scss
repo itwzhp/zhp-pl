@@ -4,8 +4,20 @@
  * Replace them with your own styles or remove the file completely.
  */
 .wp-block-zhp-section {
+  position: relative;
   max-width: 100%;
+  &::before {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: var(--section-overlay-background);
+	content: "";
+	opacity: var(--section-overlay-opacity);
+  }
   &__content {
+	position: relative;
 	display: grid;
 	grid-template-columns: repeat(12, minmax(auto, 1fr));
 	column-gap: 1.25rem;

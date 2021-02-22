@@ -121,6 +121,8 @@ function ColumnsEditContainer({attributes, setAttributes, updateAlignment, clien
 			 'padding': Object.values(padding).some((val)=>(val > 0))  && `${padding.top}px ${padding.right}px ${padding.bottom}px ${padding.left}px`,
 			 'margin': Object.values(margin).some((val)=>(val > 0))  && `${margin.top}px ${margin.right}px ${margin.bottom}px ${margin.left}px`,
 			'color': textColor,
+			'--section-overlay-background': overlayColor,
+			'--section-overlay-opacity': `${overlayOpacity}%`,
 			...sectionBackground
 			}
 		const sectionStyle = Object.keys(section).reduce((object,key)=>(

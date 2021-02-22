@@ -43,20 +43,20 @@ export default function save({attributes}) {
 
 		const sectionBackground = fullWidth
 			? {
-				'--section-background': `${backgroundImageSrc ? 'url('+backgroundImageSrc+')' : ''}${backgroundImageSrc && backgroundColor ? ', ' : ''}${backgroundColor ? backgroundColor : ''}`,
-				'--section-background-position': backgroundImagePosition,
-				'--section-background-size': backgroundImageSize,
-				'--section-background-attachment': backgroundImageAttachment
+				'background': `${backgroundImageSrc ? 'url('+backgroundImageSrc+')' : ''}${backgroundImageSrc && backgroundColor ? ', ' : ''}${backgroundColor ? backgroundColor : ''}`,
+				'background-position': backgroundImagePosition,
+				'background-size': backgroundImageSize,
+				'background-attachment': backgroundImageAttachment
 			}
 			: {}
 
 		const contentBackground = fullWidth
 			? {}
 			: {
-				'--section-content-background': `${backgroundImageSrc ? 'url('+backgroundImageSrc+')' : ''}${backgroundImageSrc && backgroundColor ? ', ' : ''}${backgroundColor ? backgroundColor : ''}`,
-				'--section-content-background-position': backgroundImagePosition,
-				'--section-content-background-size': backgroundImageSize,
-				'--section-content-background-attachment': backgroundImageAttachment
+				'background': `${backgroundImageSrc ? 'url('+backgroundImageSrc+')' : ''}${backgroundImageSrc && backgroundColor ? ', ' : ''}${backgroundColor ? backgroundColor : ''}`,
+				'background-position': backgroundImagePosition,
+				'background-size': backgroundImageSize,
+				'background-attachment': backgroundImageAttachment
 			}
 
 		const section = {
@@ -65,6 +65,8 @@ export default function save({attributes}) {
 			'--section-margin': Object.values(margin).some((val)=>(val > 0))  && `${margin.top}px ${margin.right}px ${margin.bottom}px ${margin.left}px`,
 			'--section-desktop-margin': Object.values(marginDesktop).some((val)=>(val > 0))  && `${marginDesktop.top}px ${marginDesktop.right}px ${marginDesktop.bottom}px ${marginDesktop.left}px`,
 			'--section-color': textColor,
+			'--section-overlay-background': overlayColor,
+			'--section-overlay-opacity': `${overlayOpacity}%`,
 			...sectionBackground
 		}
 		const sectionStyle = Object.keys(section).reduce((object,key)=>(
