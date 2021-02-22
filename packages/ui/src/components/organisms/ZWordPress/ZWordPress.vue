@@ -2,11 +2,13 @@
 import Vue from 'vue';
 // eslint-disable-next-line
 import Fragment from 'vue-fragment';
+import ZDivider from '../../atoms/ZDivider/ZDivider.vue';
 import ZButton from '../../atoms/ZButton/ZButton.vue';
 import ZLink from '../../atoms/ZLink/ZLink.vue';
 import ZAccordion from '../ZAccordion/ZAccordion.vue';
 import ZSection from '../ZSection/ZSection.vue';
 
+Vue.component('ZDivider', ZDivider);
 Vue.component('ZButton', ZButton);
 Vue.component('ZLink', ZLink);
 Vue.component('ZAccordion', ZAccordion);
