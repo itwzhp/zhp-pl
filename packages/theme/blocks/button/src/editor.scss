@@ -1,0 +1,24 @@
+/**
+ * The following styles get applied inside the editor only.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+
+.wp-block-zhp-button {
+  display: block;
+  background: #a6ce39;
+  color: #fff;
+  border: 0;
+  box-shadow: none;
+  border-radius: 0.625rem;
+  &.wp-block {
+	margin: 0 auto 0 0;
+  }
+  &--text {
+	background: transparent;
+	color: #a6ce39;
+  }
+  &--full {
+	width: 100%;
+  }
+}

@@ -12,7 +12,8 @@ import {
 	BlockVerticalAlignmentToolbar,
 	MediaUpload,
 	__experimentalBlockVariationPicker as BlockVariationPicker,
-	__experimentalUseInnerBlocksProps as useInnerBlocksProps, ColorPalette
+	__experimentalUseInnerBlocksProps as useInnerBlocksProps,
+	ColorPalette
 } from '@wordpress/block-editor';
 import {
 	createBlock,
@@ -48,7 +49,9 @@ function ColumnsEditContainer({attributes, setAttributes, updateAlignment, clien
 		backgroundImageAttachment,
 		backgroundImagePosition,
 		backgroundImageSize,
+		marginDesktop,
 		margin,
+		paddingDesktop,
 		padding,
 	} = attributes
 	const { count } = useSelect(
@@ -59,20 +62,98 @@ function ColumnsEditContainer({attributes, setAttributes, updateAlignment, clien
 		},
 		[ clientId ]
 	);
-	const blockProps = useBlockProps( );
-	const innerBlocksProps = useInnerBlocksProps(blockProps, {
+	const classes = {}
+	const className = Object.keys(classes).reduce(
+		(array, key) =>
+			(classes[key] ? [...array, key] : array), []
+		)
+		.join(' ')
+	const blockProps = useBlockProps({
+		className: className,
+	});
+	const innerBlocksProps = useInnerBlocksProps({}, {
 		allowedBlocks: ALLOWED_BLOCKS,
 		orientation: 'horizontal',
 		renderAppender: false,
 	})
+	const attributesToStyle = (attributes) => {
+		const {
+			verticalAlignment,
+			fullWidth,
+			heightValue,
+			heightUnit,
+			textColor,
+			backgroundColor,
+			overlayColor,
+			overlayOpacity,
+			backgroundImageSrc,
+			backgroundImageAttachment,
+			backgroundImagePosition,
+			backgroundImageSize,
+			margin,
+			padding,
+		} = attributes;
+		const verticalAlignmentMap = {
+			top: 'start',
+			center: 'center',
+			bottom: 'end'
+		}
+
+		const sectionBackground = fullWidth
+		 ? {
+			'background': `${backgroundImageSrc ? 'url('+backgroundImageSrc+')' : ''}${backgroundImageSrc && backgroundColor ? ', ' : ''}${backgroundColor ? backgroundColor : ''}`,
+			'background-position': backgroundImagePosition,
+			'background-size': backgroundImageSize,
+			'background-attachment': backgroundImageAttachment
+			}
+		: {}
+
+		const contentBackground = fullWidth
+			? {}
+			: {
+				'background': `${backgroundImageSrc ? 'url('+backgroundImageSrc+')' : ''}${backgroundImageSrc && backgroundColor ? ', ' : ''}${backgroundColor ? backgroundColor : ''}`,
+				'background-position': backgroundImagePosition,
+				'background-size': backgroundImageSize,
+				'background-attachment': backgroundImageAttachment
+			}
+
+		const section = {
+			 'padding': Object.values(padding).some((val)=>(val > 0))  && `${padding.top}px ${padding.right}px ${padding.bottom}px ${padding.left}px`,
+			 'margin': Object.values(margin).some((val)=>(val > 0))  && `${margin.top}px ${margin.right}px ${margin.bottom}px ${margin.left}px`,
+			'color': textColor,
+			...sectionBackground
+			}
+		const sectionStyle = Object.keys(section).reduce((object,key)=>(
+			section[key]
+				? {...object, [key]: section[key]}
+				: object
+		), {})
+
+		const content = {
+			'min-height': heightValue !== '0' && `${heightValue}${heightUnit}`,
+			'align-items': verticalAlignmentMap[verticalAlignment],
+			...contentBackground
+		}
+		const contentStyle = Object.keys(content).reduce((object,key)=>(
+			content[key]
+				? {...object, [key]: content[key]}
+				: object
+		), {})
+
+		return {
+			section: sectionStyle,
+			content: contentStyle
+		}
+	}
+	const style = attributesToStyle(attributes);
 	return	(<>
+		<BlockControls>
+			<BlockVerticalAlignmentToolbar
+				onChange={updateAlignment}
+				value={verticalAlignment}
+			/>
+		</BlockControls>
 		<InspectorControls>
-			<BlockControls>
-				<BlockVerticalAlignmentToolbar
-					onChange={updateAlignment}
-					value={verticalAlignment}
-				/>
-			</BlockControls>
 			{/*<PanelBody>
 					<RangeControl
 						label={'Kolumny'}
@@ -89,8 +170,8 @@ function ColumnsEditContainer({attributes, setAttributes, updateAlignment, clien
 				</PanelBody>*/}
 			<PanelBody title={'Rozmiar'}>
 				<ToggleControl
-					label={'Pełna szerokość'}
-					help={fullWidth ? 'Sekcja ma pełną szerokość' : 'Przełącz aby sekcja miałą pełną szerokość.'}
+					label={'Pełna szerokość tła'}
+					help={fullWidth ? 'Tło sekcji ma pełną szerokość' : 'Przełącz aby tło sekcja zakrywało pełną szerokość.'}
 					checked={fullWidth}
 					onChange={(fullWidth)=>{setAttributes({fullWidth})}}
 				/>
@@ -98,7 +179,7 @@ function ColumnsEditContainer({attributes, setAttributes, updateAlignment, clien
 					<NumberControl
 						label={'Wysokość sekcji'}
 						value={heightValue}
-						onChange={(heightValue)=>(setAttributes({heightValue}))}
+						onChange={(heightValue)=>{setAttributes({heightValue})}}
 					/>
 					<SelectControl
 						value={heightUnit}
@@ -109,9 +190,10 @@ function ColumnsEditContainer({attributes, setAttributes, updateAlignment, clien
 				</div>
 				<div className={'components-section-boxmodel'}>
 					<div className={'components-section-boxmodel__header'}>
-						<Text variant={"caption"}>Padding</Text>
+						<Text variant={"caption"}>Margin</Text>
 						<Text variant={"caption"}>px</Text>
 					</div>
+					<Text variant={"caption"}>Mobile</Text>
 					<div className={'components-section-boxmodel__main'}>
 						<NumberControl
 							label={'Góra'}
@@ -142,19 +224,51 @@ function ColumnsEditContainer({attributes, setAttributes, updateAlignment, clien
 							onChange={(left)=>{setAttributes({margin: {...margin, left}})}}
 						/>
 					</div>
+					<Text variant={"caption"}>Desktop</Text>
+					<div className={'components-section-boxmodel__main'}>
+						<NumberControl
+							label={'Góra'}
+							value={marginDesktop.top}
+							labelPosition={'bottom'}
+							className={'components-section-boxmodel__input'}
+							onChange={(top)=>{setAttributes({marginDesktop: {...marginDesktop, top}})}}
+						/>
+						<NumberControl
+							label={'Prawa'}
+							value={marginDesktop.right}
+							labelPosition={'bottom'}
+							className={'components-section-boxmodel__input'}
+							onChange={(right)=>{setAttributes({marginDesktop: {...marginDesktop, right}})}}
+						/>
+						<NumberControl
+							label={'Dół'}
+							value={marginDesktop.bottom}
+							labelPosition={'bottom'}
+							className={'components-section-boxmodel__input'}
+							onChange={(bottom)=>{setAttributes({marginDesktop: {...marginDesktop, bottom}})}}
+						/>
+						<NumberControl
+							label={'Lewa'}
+							value={marginDesktop.left}
+							labelPosition={'bottom'}
+							className={'components-section-boxmodel__input'}
+							onChange={(left)=>{setAttributes({marginDesktop: {...marginDesktop, left}})}}
+						/>
+					</div>
 				</div>
 				<div className={'components-section-boxmodel'}>
 					<div className={'components-section-boxmodel__header'}>
-						<Text variant={"caption"}>Margin</Text>
+						<Text variant={"caption"}>Padding</Text>
 						<Text variant={"caption"}>px</Text>
 					</div>
+					<Text variant={"caption"}>Mobile</Text>
 					<div className={'components-section-boxmodel__main'}>
 						<NumberControl
 							label={'Góra'}
 							value={padding.top}
 							labelPosition={'bottom'}
 							className={'components-section-boxmodel__input'}
-							onChange={(top)=>{setAttributes({padding: {...padding, top}})}}
+							onChange={(top)=>{setAttributes({paddingMobile: {...padding, top}})}}
 						/>
 						<NumberControl
 							label={'Prawa'}
@@ -176,6 +290,37 @@ function ColumnsEditContainer({attributes, setAttributes, updateAlignment, clien
 							labelPosition={'bottom'}
 							className={'components-section-boxmodel__input'}
 							onChange={(left)=>{setAttributes({padding: {...padding, left}})}}
+						/>
+					</div>
+					<Text variant={"caption"}>Desktop</Text>
+					<div className={'components-section-boxmodel__main'}>
+						<NumberControl
+							label={'Góra'}
+							value={paddingDesktop.top}
+							labelPosition={'bottom'}
+							className={'components-section-boxmodel__input'}
+							onChange={(top)=>{setAttributes({paddingDesktop: {...paddingDesktop, top}})}}
+						/>
+						<NumberControl
+							label={'Prawa'}
+							value={paddingDesktop.right}
+							labelPosition={'bottom'}
+							className={'components-section-boxmodel__input'}
+							onChange={(right)=>{setAttributes({paddingDesktop: {...paddingDesktop, right}})}}
+						/>
+						<NumberControl
+							label={'Dół'}
+							value={paddingDesktop.bottom}
+							labelPosition={'bottom'}
+							className={'components-section-boxmodel__input'}
+							onChange={(bottom)=>{setAttributes({paddingDesktop: {...paddingDesktop, bottom}})}}
+						/>
+						<NumberControl
+							label={'Lewa'}
+							value={paddingDesktop.left}
+							labelPosition={'bottom'}
+							className={'components-section-boxmodel__input'}
+							onChange={(left)=>{setAttributes({paddingDesktop: {...paddingDesktop, left}})}}
 						/>
 					</div>
 				</div>
@@ -235,7 +380,9 @@ function ColumnsEditContainer({attributes, setAttributes, updateAlignment, clien
 			{/* procent */}
 			</PanelBody>
 		</InspectorControls>
-		<div { ...innerBlocksProps }/>
+		<div {...blockProps} style={style.section}>
+			<div { ...innerBlocksProps } className={'wp-block-zhp-section__content'} style={style.content}/>
+		</div>
 	</>)
 }
 const ColumnsEditContainerWrapper = withDispatch(

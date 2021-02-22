@@ -3,16 +3,19 @@
  *
  * Replace them with your own styles or remove the file completely.
  */
-
 .wp-block-zhp-section {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(auto, 1fr));
-  column-gap: 1.25rem;
-
-  .block-editor-block-variation-picker {
-	grid-column: span 12;
+  max-width: 100%;
+  &__content {
+	display: grid;
+	grid-template-columns: repeat(12, minmax(auto, 1fr));
+	column-gap: 1.25rem;
+	max-width: 1140px;
+	margin: auto;
   }
-
+  .block-editor-block-variation-picker {
+	max-width: 580px;
+	margin: auto;
+  }
   .dashicon {
 	margin-right: 14.6602px;
   }

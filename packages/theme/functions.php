@@ -3,7 +3,8 @@ $blocks = array(
     'accordion',
     'accordion-item',
     'section',
-    'column'
+    'column',
+    'button'
 );
 foreach ($blocks as $block) {
     require __DIR__.'/blocks/'.$block.'/'.$block.'.php';

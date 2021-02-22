@@ -16,8 +16,9 @@ import { InnerBlocks, useBlockProps } from '@wordpress/block-editor';
  * @return {WPElement} Element to render.
  */
 export default function save({attributes}) {
+	const {column} = attributes;
 	return (
-		<div style={{gridColumn: `span ${attributes.column}`}}>
+		<div className={`z-column-${column}`}>
 			<InnerBlocks.Content />
 		</div>
 	);

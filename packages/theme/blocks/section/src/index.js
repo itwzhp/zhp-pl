@@ -71,7 +71,25 @@ registerBlockType( 'zhp/section', {
 			type: 'string',
 			default: ''
 		},
+		marginDesktop: {
+			type: 'object',
+			default: {
+				top: 0,
+				right: 0,
+				bottom: 0,
+				left: 0
+			}
+		},
 		margin: {
+			type: 'object',
+			default: {
+				top: 0,
+				right: 0,
+				bottom: 0,
+				left: 0
+			}
+		},
+		paddingDesktop: {
 			type: 'object',
 			default: {
 				top: 0,
