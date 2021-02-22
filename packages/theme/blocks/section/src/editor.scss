@@ -5,19 +5,49 @@
  */
 
 .wp-block-zhp-section {
-  background: var(--section-background);
+  display: grid;
+  grid-template-columns: repeat(12, minmax(auto, 1fr));
+  column-gap: 1.25rem;
 
-  &__content {
-	background: var(--section-content-background);
+  .block-editor-block-variation-picker {
+	grid-column: span 12;
+  }
 
-	& > .block-editor-inner-blocks{
-	  & > .block-editor-block-list {
-		&__layout {
-		  display: grid;
-		  gap: 1.25rem;
-		  grid-template-columns: repeat(12, minmax(auto, 1fr));
-		}
-	  }
+  .dashicon {
+	margin-right: 14.6602px;
+  }
+}
+
+.components-section-height {
+  display: flex;
+  align-items: flex-end;
+  .components-input-control {
+	flex: 3;
+	margin-right: 8px;
+  }
+  .components-base-control {
+	flex: 1;
+  }
+  .components-base-control,
+  .components-base-control__field {
+	margin-bottom: 0!important;
+  }
+}
+.components-section-boxmodel {
+  margin: 24px 0;
+  &__header {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	margin-bottom: 4px;
+  }
+  &__main {
+	display: flex;
+  }
+  &__input {
+	margin-right: 8px;
+	&:last-child {
+	  margin-right: 0;
 	}
   }
 }

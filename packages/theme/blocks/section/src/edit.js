@@ -1,213 +1,294 @@
-/**
- * React hook that is used to mark the block wrapper element.
- * It provides all the necessary props like the class name.
- *
- * @see https://developer.wordpress.org/block-editor/packages/packages-block-editor/#useBlockProps
- */
 import {
-	InnerBlocks,
+	dispatch,
+	useDispatch,
+	useSelect,
+	withDispatch
+} from '@wordpress/data';
+import {
 	useBlockProps,
+	InnerBlocks,
 	InspectorControls,
+	BlockControls,
+	BlockVerticalAlignmentToolbar,
 	MediaUpload,
-	ColorPalette,
+	__experimentalBlockVariationPicker as BlockVariationPicker,
+	__experimentalUseInnerBlocksProps as useInnerBlocksProps, ColorPalette
 } from '@wordpress/block-editor';
+import {
+	createBlock,
+	createBlocksFromInnerBlocksTemplate
+} from '@wordpress/blocks'
 import {
 	PanelBody,
 	RangeControl,
+	Notice,
+	ToggleControl,
 	SelectControl,
 	Button,
-	ToggleControl,
-} from "@wordpress/components"
-import { __experimentalNumberControl as NumberControl } from '@wordpress/components';
+	__experimentalText as Text,
+	__experimentalNumberControl as NumberControl
+} from '@wordpress/components';
 import './editor.scss';
-/**
- * The edit function describes the structure of your block in the context of the
- * editor. This represents what the editor will render when the block is used.
- *
- * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#edit
- *
- * @return {WPElement} Element to render.
- */
-export default function Edit({ attributes, setAttributes }) {
-	const ALLOWED_BLOCKS = [ 'zhp/column' ];
-	const ALLOWED_MEDIA_TYPES = ['image']
-	// [...Array(attributes.columns)].map(()=>(['zhp/column']));
-	function setColumns(value) {
-		setAttributes({columns: value})
-	}
-	function setBackgroundColor(value) {
-		setAttributes({backgroundColor: value})
-	}
-	function setTextColor(value) {
-		setAttributes({textColor: value})
-	}
-	function setSrc(value) {
-		setAttributes({backgroundImage: {...attributes.backgroundImage, src: value.sizes.full.url}})
-	}
-	function setSize(value) {
-		setAttributes({backgroundImage: {...attributes.backgroundImage, size: value}})
-	}
-	function setPosition(value) {
-		setAttributes({backgroundImage: {...attributes.backgroundImage, position: value}})
-	}
-	function setAttachment(value) {
-		setAttributes({backgroundImage: {...attributes.backgroundImage, attachment: value}})
-	}
-	function setSectionHeight(value) {
-		setAttributes({size: {...attributes.size, sectionHeight: {...attributes.size.sectionHeight, value}}})
-	}
-	function setSectionHeightUnit(value) {
-		setAttributes({size: {...attributes.size, sectionHeight: {...attributes.size.sectionHeight, unit: value}}})
-	}
-	function setSectionWidth(value) {
-		setAttributes({size: {...attributes.size, fullWidth: value}})
-	}
-	function setAlignmentHorizontal(value) {
-		setAttributes({alignment: {...attributes.alignment, horizontal: value}})
-	}
-	function setAlignmentVertical(value) {
-		setAttributes({alignment: {...attributes.size, vertical: value}})
-	}
-	return ([
+import variations from './variations';
+
+const ALLOWED_BLOCKS = [ 'zhp/column' ];
+const ALLOWED_MEDIA_TYPES = ['image']
+
+function ColumnsEditContainer({attributes, setAttributes, updateAlignment, clientId}) {
+	const {
+		verticalAlignment,
+		fullWidth,
+		heightValue,
+		heightUnit,
+		textColor,
+		backgroundColor,
+		overlayColor,
+		overlayOpacity,
+		backgroundImageSrc,
+		backgroundImageAttachment,
+		backgroundImagePosition,
+		backgroundImageSize,
+		margin,
+		padding,
+	} = attributes
+	const { count } = useSelect(
+		( select ) => {
+			return {
+				count: select( 'core/block-editor' ).getBlockCount( clientId ),
+			};
+		},
+		[ clientId ]
+	);
+	const blockProps = useBlockProps( );
+	const innerBlocksProps = useInnerBlocksProps(blockProps, {
+		allowedBlocks: ALLOWED_BLOCKS,
+		orientation: 'horizontal',
+		renderAppender: false,
+	})
+	return	(<>
 		<InspectorControls>
-			<PanelBody title="Kolumny" initialOpen={ true }>
-				<RangeControl
-					value={attributes.columns}
-					min={1}
-					max={12}
-					onChange={setColumns}
+			<BlockControls>
+				<BlockVerticalAlignmentToolbar
+					onChange={updateAlignment}
+					value={verticalAlignment}
 				/>
-			</PanelBody>
-			<PanelBody title="Rozmiar" initialOpen={false}>
+			</BlockControls>
+			{/*<PanelBody>
+					<RangeControl
+						label={'Kolumny'}
+						value={count}
+						min={1}
+						max={12}
+						onChange={(value)=> updateColumns(count, value)}
+					/>
+					{count > 12 && (
+						<Notice status={"warning"} isDismissible={false}>
+							Ta liczba kolumn przekracza zalecaną ilość i może spowodować problemy.
+						</Notice>
+					)}
+				</PanelBody>*/}
+			<PanelBody title={'Rozmiar'}>
 				<ToggleControl
-					label="Pełna szerokość"
-					help={attributes.size.fullWidth ? 'Sekcja ma pełną szerokość.' : 'Przełącz, aby sekcja miała pełną szerokość.'}
-					checked={attributes.size.fullWidth}
-					onChange={setSectionWidth}
+					label={'Pełna szerokość'}
+					help={fullWidth ? 'Sekcja ma pełną szerokość' : 'Przełącz aby sekcja miałą pełną szerokość.'}
+					checked={fullWidth}
+					onChange={(fullWidth)=>{setAttributes({fullWidth})}}
 				/>
-				{/* begin */}
-				<NumberControl
-				label="Wysokość sekcji"
-				value={attributes.size.sectionHeight.value}
-				onChange={setSectionHeight}
-				/>
-				<SelectControl
-					value={attributes.size.sectionHeight.unit}
-					options={[
-						{label: 'px', value: 'px'},
-						{label: 'vw', value: 'vw'},
-						{label: 'vh', value: 'vh'}
-					]}
-					onChange={setSectionHeightUnit}
-				/>
-				{/*	end */}
+				<div className={'components-section-height'}>
+					<NumberControl
+						label={'Wysokość sekcji'}
+						value={heightValue}
+						onChange={(heightValue)=>(setAttributes({heightValue}))}
+					/>
+					<SelectControl
+						value={heightUnit}
+						options={[{label:'px', value:'px'}, {label:'vw', value:'vw'}, {label:'vh',value:'vh'}, {label:'%', value: '%'}]}
+						className={'components-section-height__select'}
+						onChange={(heightUnit)=>(setAttributes({heightUnit}))}
+					/>
+				</div>
+				<div className={'components-section-boxmodel'}>
+					<div className={'components-section-boxmodel__header'}>
+						<Text variant={"caption"}>Padding</Text>
+						<Text variant={"caption"}>px</Text>
+					</div>
+					<div className={'components-section-boxmodel__main'}>
+						<NumberControl
+							label={'Góra'}
+							value={margin.top}
+							labelPosition={'bottom'}
+							className={'components-section-boxmodel__input'}
+							onChange={(top)=>{setAttributes({margin: {...margin, top}})}}
+						/>
+						<NumberControl
+							label={'Prawa'}
+							value={margin.right}
+							labelPosition={'bottom'}
+							className={'components-section-boxmodel__input'}
+							onChange={(right)=>{setAttributes({margin: {...margin, right}})}}
+						/>
+						<NumberControl
+							label={'Dół'}
+							value={margin.bottom}
+							labelPosition={'bottom'}
+							className={'components-section-boxmodel__input'}
+							onChange={(bottom)=>{setAttributes({margin: {...margin, bottom}})}}
+						/>
+						<NumberControl
+							label={'Lewa'}
+							value={margin.left}
+							labelPosition={'bottom'}
+							className={'components-section-boxmodel__input'}
+							onChange={(left)=>{setAttributes({margin: {...margin, left}})}}
+						/>
+					</div>
+				</div>
+				<div className={'components-section-boxmodel'}>
+					<div className={'components-section-boxmodel__header'}>
+						<Text variant={"caption"}>Margin</Text>
+						<Text variant={"caption"}>px</Text>
+					</div>
+					<div className={'components-section-boxmodel__main'}>
+						<NumberControl
+							label={'Góra'}
+							value={padding.top}
+							labelPosition={'bottom'}
+							className={'components-section-boxmodel__input'}
+							onChange={(top)=>{setAttributes({padding: {...padding, top}})}}
+						/>
+						<NumberControl
+							label={'Prawa'}
+							value={padding.right}
+							labelPosition={'bottom'}
+							className={'components-section-boxmodel__input'}
+							onChange={(right)=>{setAttributes({padding: {...padding, right}})}}
+						/>
+						<NumberControl
+							label={'Dół'}
+							value={padding.bottom}
+							labelPosition={'bottom'}
+							className={'components-section-boxmodel__input'}
+							onChange={(bottom)=>{setAttributes({padding: {...padding, bottom}})}}
+						/>
+						<NumberControl
+							label={'Lewa'}
+							value={padding.left}
+							labelPosition={'bottom'}
+							className={'components-section-boxmodel__input'}
+							onChange={(left)=>{setAttributes({padding: {...padding, left}})}}
+						/>
+					</div>
+				</div>
 			</PanelBody>
-			<PanelBody title="Wyrównanie" initialOpen={false}>
-				<SelectControl
-					label="Wyrównanie w poziomie"
-					value={attributes.alignment.horizontal}
-					options={[
-						{label: 'Domyślne', value: ''},
-						{label: 'Start', value: 'start'},
-						{label: 'End', value: 'end'},
-						{label: 'Center', value: 'center'},
-						{label: 'Stretch', value: 'stretch'},
-						{label: 'Space-around', value: 'space-around'},
-						{label: 'Space-between', value: 'space-between'},
-						{label: 'Space-evenly', value: 'space-evenly'},
-					]}
-					onChange={setAlignmentHorizontal}
-				/>
-				<SelectControl
-					label="Wyrównanie w pionie"
-					value={attributes.alignment.vertical}
-					options={[
-						{label: 'Domyślne', value: ''},
-						{label: 'Start', value: 'start'},
-						{label: 'End', value: 'end'},
-						{label: 'Center', value: 'center'},
-						{label: 'Stretch', value: 'stretch'}
-					]}
-					onChange={setAlignmentVertical}
-				/>
-			</PanelBody>
-			<PanelBody title="Kolor tekstu" initialOpen={ false }>
+			<PanelBody title={'Kolor tekstu'} initialOpen={ false }>
 				<ColorPalette
-					value={attributes.textColor}
-					onChange={setTextColor}
+					value={textColor}
+					onChange={(textColor)=>(setAttributes({textColor}))}
 				/>
 			</PanelBody>
-			<PanelBody title="Kolor tła" initialOpen={ false }>
+			<PanelBody title={'Kolor tła'} initialOpen={ false }>
 				<ColorPalette
-					value={attributes.backgroundColor}
-					onChange={setBackgroundColor}
+					value={backgroundColor}
+					onChange={(backgroundColor)=>(setAttributes({backgroundColor}))}
 				/>
 			</PanelBody>
-			<PanelBody title="Zdjęcie w tle" initialOpen={ false }>
+			<PanelBody title={'Zdjęcie w tle'} initialOpen={ false }>
 				<MediaUpload
 					allowedTypes={ALLOWED_MEDIA_TYPES}
-					value={attributes.backgroundImage.src}
-					render={({open}) => (
-						<Button onClick={open} className="components-button block-editor-media-placeholder__button block-editor-media-placeholder__upload-button is-primary">Biblioteka mediów</Button>
+					value={backgroundImageSrc}
+					render={({open})=>(
+						<Button onClick={open} isPrimary >Biblioteka mediów</Button>
 					)}
-					onSelect={setSrc}
+					onSelect={(image)=>(setAttributes({backgroundImageSrc: image.sizes.full.url}))}
 				/>
 				<SelectControl
-					label="Rozmiar"
-					value={attributes.backgroundImage.size}
-					options={[
-						{label: 'Default', value: ''},
-						{label: 'Cover', value: 'cover'},
-						{label: 'Contain', value: 'contain'},
-						{label: 'Auto', value: 'auto'}
-					]}
-					onChange={setSize}
+					label={'Rozmiar'}
+					value={backgroundImageSize}
+					options={[{label: 'Domyśny', value: ''}, {label: 'Cover', value: 'cover'}, {label: 'Contain', value: 'contain'}, {label: 'Auto', value: 'auto'}]}
+					onChange={(backgroundImageSize)=>(setAttributes({backgroundImageSize}))}
 				/>
 				<SelectControl
-					label="Pozycja"
-					value={attributes.backgroundImage.position}
-					options={[
-						{label: 'Default', value: ''},
-						{label: 'Center', value: 'center'},
-						{label: 'Top', value: 'top'},
-						{label: 'Bottom', value: 'bottom'}
-					]}
-					onChange={setPosition}
+					label={'Pozycja'}
+					value={backgroundImagePosition}
+					options={[{label: 'Domyśna', value: ''}, {label: 'Top', value: 'top'}, {label: 'Center', value: 'center'}, {label: 'Bottom', value: 'bottom'}]}
+					onChange={(backgroundImagePosition)=>(setAttributes({backgroundImagePosition}))}
 				/>
 				<SelectControl
-					label="Położenie"
-					value={attributes.backgroundImage.attachment}
-					options={[
-						{label: 'Default', value: ''},
-						{label: 'Scroll', value: 'scroll'},
-						{label: 'Fixed', value: 'fixed'}
-					]}
-					onChange={setAttachment}
+					label={'Położenie'}
+					value={backgroundImageAttachment}
+					options={[{label: 'Domyśne', value: ''}, {label: 'Scroll', value: 'scroll'}, {label: 'Fixed', value: 'fixed'}]}
+					onChange={(backgroundImageAttachment)=>(setAttributes({backgroundImageAttachment}))}
 				/>
 			</PanelBody>
-		</InspectorControls>,
-		<div
-			{...useBlockProps()}
-			style={{
-				'--section-content-align-items': attributes.alignment.vertical,
-				'--section-content-justify-content': attributes.alignment.horizontal,
-				backgroundImage: `url('${attributes.backgroundImage.src}')`,
-				backgroundSize: attributes.backgroundImage.size,
-				backgroundAttachment: attributes.backgroundImage.attachment,
-				backgroundColor: attributes.backgroundColor,
-				backgroundPosition: attributes.backgroundImage.position,
-				color: attributes.textColor,
-				height: attributes.size.sectionHeight.value ? `${attributes.size.sectionHeight.value}${attributes.size.sectionHeight.unit}` : 'auto'
-			}}
-		>
-			<div className='wp-block-zhp-section__content'>
-				<InnerBlocks
-					key={attributes.columns}
-					allowedBlocks={ALLOWED_BLOCKS}
-					template={[...Array(attributes.columns)].map(()=>(['zhp/column', {cell: 1}]))}
-					templateLock="all"
+			<PanelBody title={'Overlay'} initialOpen={ false }>
+				<ColorPalette
+					value={overlayColor}
+					onChange={(overlayColor)=>(setAttributes({overlayColor}))}
 				/>
-			</div>
-		</div>
-	]);
+				<RangeControl
+					label={'Krycie'}
+					value={overlayOpacity}
+					min={0}
+					max={100}
+					onChange={(overlayOpacity)=> (setAttributes({overlayOpacity}))}
+				/>
+			{/* procent */}
+			</PanelBody>
+		</InspectorControls>
+		<div { ...innerBlocksProps }/>
+	</>)
 }
+const ColumnsEditContainerWrapper = withDispatch(
+	( dispatch, ownProps, registry ) => ( {
+		updateAlignment(verticalAlignment) {
+			const {setAttributes} = ownProps;
+			setAttributes({verticalAlignment})
+		},
+		updateColumns( previousColumns, newColumns ) {
+			const { clientId } = ownProps;
+			const {replaceInnerBlocks} = dispatch('core/block-editor');
+			const {getBlocks} = registry.select('core/block-editor');
+			let innerBlocks = getBlocks(clientId);
+			innerBlocks = [createBlock('zhp/column', {column: 12})]
+			replaceInnerBlocks(clientId, innerBlocks)
+		},
+	} )
+)( ColumnsEditContainer );
+function Placeholder({clientId, name, setAttributes}) {
+	const defaultVariation = variations.filter(({isDefault})=>(isDefault)).shift();
+	const {replaceInnerBlocks} = useDispatch('core/block-editor');
+	const blockProps = useBlockProps()
+	return (<div {...blockProps}>
+		<BlockVariationPicker
+			className={'wp-block-zhp-section__variation-picker'}
+			icon={'align-wide'}
+			label={'Sekcja'}
+			variations={variations}
+			onSelect={(nextVariation = defaultVariation)=>{
+				if(nextVariation.innerBlocks) {
+					replaceInnerBlocks(
+						clientId,
+						createBlocksFromInnerBlocksTemplate(
+							nextVariation.innerBlocks
+						),
+						true
+					)
+				}
+			}}
+			allowSkip
+		/>
+	</div>);
+}
+const ColumnsEdit = (props) => {
+	const {clientId} = props;
+	const hasInnerBlocks = useSelect(
+		( select ) =>
+			select( 'core/block-editor' ).getBlocks( clientId ).length > 0,
+		[ clientId ]
+	)
+	const Component = hasInnerBlocks
+		? ColumnsEditContainerWrapper
+		: Placeholder;
+	return <Component {...props }/>
+}
+export default ColumnsEdit;

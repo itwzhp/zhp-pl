@@ -57,7 +57,7 @@ registerBlockType( 'zhp/column', {
 	parent: ['zhp/section'],
 
 	attributes: {
-		cell: {
+		column: {
 			type: 'number',
 			default: 1,
 		}
