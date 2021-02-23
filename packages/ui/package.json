@@ -1,7 +1,6 @@
 {
   "name": "@nowa-zhp/ui",
   "version": "0.0.0",
-  "private": true,
   "scripts": {
     "create-index": "node scripts/create-index-file.js",
     "test:unit": "vue-cli-service test:unit",
