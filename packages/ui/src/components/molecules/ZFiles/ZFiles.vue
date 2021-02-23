@@ -17,7 +17,7 @@
               {{ file.type }}
             </div>
             <ZLink
-              :to="file.to"
+              :to="file.link"
               class="z-file__name t6"
             >
               {{ file.name }}
