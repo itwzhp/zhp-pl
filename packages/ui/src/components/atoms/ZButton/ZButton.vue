@@ -87,6 +87,7 @@ export default {
     line-height: 1.2;
     text-decoration: var(--button-text-decoration, none);
     text-transform: var(--button-text-transform, uppercase);
+    text-align: var(--button-text-align);
 
     &--text {
       --button-color: var(--button-text-color, var(--color-primary-darken));

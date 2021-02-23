@@ -1,4 +1,7 @@
 <script>
+import '@fortawesome/fontawesome-free/js/brands.min';
+import '@fortawesome/fontawesome-free/js/solid.min'
+import '@fortawesome/fontawesome-free/js/fontawesome.min';
 import Vue from 'vue';
 // eslint-disable-next-line
 import Fragment from 'vue-fragment';
@@ -89,6 +92,10 @@ export default {
 </script>
 <style lang="scss">
 .z-wordpress {
+  --section-padding: 0;
+  --section-margin: 0;
+  --button-height: auto;
+
   line-height: 1.4;
 
   .z-link {
@@ -240,15 +247,10 @@ export default {
   .aligncenter {
     text-align: center;
   }
-  // temporary
-  .wp-block-columns {
-    @media (min-width: 640px) {
-      display: grid;
-      grid-auto-flow: column;
-      grid-gap: 1.25rem;
-    }
-  }
 
+  .icon {
+    display: flex;
+  }
   @for $i from 1 through 12 {
     .z-column-#{$i} {
       grid-column: span 12;
