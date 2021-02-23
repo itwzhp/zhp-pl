@@ -1,6 +1,5 @@
 {
   "name": "@nowa-zhp/app",
-  "version": "0.0.0",
   "private": true,
   "scripts": {
     "dev": "nuxt --hostname 0.0.0.0 --post 3000",
