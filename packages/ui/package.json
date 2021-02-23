@@ -15,6 +15,9 @@
     "src/*",
     "index.js"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "@glidejs/glide": "^3.4.1",
     "body-scroll-lock": "^3.1.5",
