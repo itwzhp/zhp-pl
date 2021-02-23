@@ -1,6 +1,6 @@
 <script>
 import '@fortawesome/fontawesome-free/js/brands.min';
-import '@fortawesome/fontawesome-free/js/solid.min'
+import '@fortawesome/fontawesome-free/js/solid.min';
 import '@fortawesome/fontawesome-free/js/fontawesome.min';
 import Vue from 'vue';
 // eslint-disable-next-line
@@ -251,6 +251,7 @@ export default {
   .icon {
     display: flex;
   }
+
   @for $i from 1 through 12 {
     .z-column-#{$i} {
       grid-column: span 12;

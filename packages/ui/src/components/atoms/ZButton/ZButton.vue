@@ -85,9 +85,9 @@ export default {
     font-size: var(--button-font-size, 0.876rem);
     font-weight: 500;
     line-height: 1.2;
+    text-align: var(--button-text-align);
     text-decoration: var(--button-text-decoration, none);
     text-transform: var(--button-text-transform, uppercase);
-    text-align: var(--button-text-align);
 
     &--text {
       --button-color: var(--button-text-color, var(--color-primary-darken));
