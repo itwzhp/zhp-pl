@@ -10,12 +10,11 @@ RUN apk update && apk upgrade
 RUN apk add git
 
 #copy the app, note .dockerignore
-COPY . /usr/src/nuxt-app/
+COPY /packages/app /usr/src/nuxt-app/
 RUN yarn
-RUN yarn create-index
-RUN yarn nuxt:build
+RUN yarn build
 
 ENV NUXT_HOST=0.0.0.0
 ENV NUXT_PORT=3000
 
-CMD ["yarn", "nuxt:start"]
+CMD ["yarn", "start"]
