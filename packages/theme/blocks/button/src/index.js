@@ -38,7 +38,7 @@ registerBlockType( 'zhp/button', {
 	 * Blocks are grouped into categories to help users browse and discover them.
 	 * The categories provided by core are `text`, `media`, `design`, `widgets`, and `embed`.
 	 */
-	category: 'widgets',
+	category: 'zhp',
 
 	/**
 	 * An icon property should be specified to make it easier to identify a block.
@@ -78,6 +78,10 @@ registerBlockType( 'zhp/button', {
 		alignment: {
 			type: 'string',
 			default: ''
+		},
+		textAlignment: {
+			type: 'string',
+			default: 'left'
 		},
 		hasFullWidth: {
 			type: 'boolean',

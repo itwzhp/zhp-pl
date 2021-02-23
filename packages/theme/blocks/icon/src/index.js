@@ -16,7 +16,7 @@ import save from './save';
  *
  * @see https://developer.wordpress.org/block-editor/developers/block-api/#registering-a-block
  */
-registerBlockType( 'zhp/accordion-item', {
+registerBlockType( 'zhp/icon', {
 	/**
 	 * @see https://make.wordpress.org/core/2020/11/18/block-api-version-2/
 	 */
@@ -26,7 +26,7 @@ registerBlockType( 'zhp/accordion-item', {
 	 * This is the display title for your block, which can be translated with `i18n` functions.
 	 * The block inserter will show this name.
 	 */
-	title: 'Accordion item',
+	title: 'Ikona',
 
 	/**
 	 * This is a short description for your block, can be translated with `i18n` functions.
@@ -44,7 +44,7 @@ registerBlockType( 'zhp/accordion-item', {
 	 * An icon property should be specified to make it easier to identify a block.
 	 * These can be any of WordPress’ Dashicons, or a custom svg element.
 	 */
-	icon: 'plus',
+	icon: 'flag',
 
 	/**
 	 * Optional block extended support features.
@@ -54,11 +54,22 @@ registerBlockType( 'zhp/accordion-item', {
 		html: false,
 	},
 
-	parent: ['zhp/accordion'],
-
 	attributes: {
-		title: {
-			type: 'string'
+		icon: {
+			type: 'string',
+			default: 'fas fa-hand-sparkles',
+		},
+		color: {
+			type: 'string',
+			default: '',
+		},
+		size: {
+			type: 'number',
+			default: 16,
+		},
+		alignment: {
+			type: 'string',
+			default: ''
 		},
 	},
 	/**

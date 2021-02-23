@@ -3,6 +3,8 @@ import {
 	RichText,
 	InspectorControls,
 	ColorPalette,
+	AlignmentToolbar,
+	BlockControls,
 } from "@wordpress/block-editor";
 import {
 	PanelBody,
@@ -16,13 +18,14 @@ export default function Edit({
 	attributes,
 	setAttributes,
 }) {
-	const {to, color, background, label, hasFullWidth, modifier, alignment} = attributes
+	const {to, color, background, label, hasFullWidth, modifier, alignment, textAlignment} = attributes
 	const attributesToStyle = (attributes) => {
 		const {
 			color,
 			background,
 			modifier,
 			alignment,
+			textAlignment,
 		} = attributes;
 
 		const alignmentMap = {
@@ -34,6 +37,7 @@ export default function Edit({
 			'color': color,
 			'background': modifier!== 'text' && background,
 			'margin': alignment && alignmentMap[alignment],
+			'text-align': textAlignment !== 'left' && textAlignment
 		}
 		const buttonStyle = Object.keys(style).reduce((object,key)=>(
 			style[key]
@@ -55,6 +59,12 @@ export default function Edit({
 		.join(' ')
 	const blockProps = useBlockProps({className});
 	return <>
+		<BlockControls>
+			<AlignmentToolbar
+				value={textAlignment}
+				onChange={(textAlignment)=>(setAttributes({textAlignment}))}
+			/>
+		</BlockControls>
 		<InspectorControls>
 			<PanelBody>
 				<Text variant={"caption"}>Kolor przycisku</Text>

@@ -118,8 +118,8 @@ function ColumnsEditContainer({attributes, setAttributes, updateAlignment, clien
 			}
 
 		const section = {
-			 'padding': Object.values(padding).some((val)=>(val > 0))  && `${padding.top}px ${padding.right}px ${padding.bottom}px ${padding.left}px`,
-			 'margin': Object.values(margin).some((val)=>(val > 0))  && `${margin.top}px ${margin.right}px ${margin.bottom}px ${margin.left}px`,
+			 'padding': Object.values(paddingDesktop).some((val)=>(val > 0))  && `${paddingDesktop.top}px ${paddingDesktop.right}px ${paddingDesktop.bottom}px ${paddingDesktop.left}px`,
+			 'margin': Object.values(marginDesktop).some((val)=>(val > 0))  && `${marginDesktop.top}px ${marginDesktop.right}px ${marginDesktop.bottom}px ${marginDesktop.left}px`,
 			'color': textColor,
 			'--section-overlay-background': overlayColor,
 			'--section-overlay-opacity': `${overlayOpacity}%`,
@@ -270,7 +270,7 @@ function ColumnsEditContainer({attributes, setAttributes, updateAlignment, clien
 							value={padding.top}
 							labelPosition={'bottom'}
 							className={'components-section-boxmodel__input'}
-							onChange={(top)=>{setAttributes({paddingMobile: {...padding, top}})}}
+							onChange={(top)=>{setAttributes({padding: {...padding, top}})}}
 						/>
 						<NumberControl
 							label={'Prawa'}

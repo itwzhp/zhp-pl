@@ -13,7 +13,7 @@ registerBlockType( 'zhp/section', {
 	apiVersion: 2,
 	title: 'Sekcja',
 	description: '',
-	category: 'widgets',
+	category: 'zhp',
 	icon: 'align-wide',
 	supports: {
 		html: false,

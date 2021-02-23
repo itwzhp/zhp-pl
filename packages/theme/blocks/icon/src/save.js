@@ -16,50 +16,37 @@ import { InnerBlocks, useBlockProps } from '@wordpress/block-editor';
  * @return {WPElement} Element to render.
  */
 export default function save({attributes}) {
-	const {to, color, background, label, hasFullWidth, modifier} = attributes;
+	const {icon} = attributes;
 	const attributesToStyle = (attributes) => {
 		const {
 			color,
-			background,
-			modifier,
-			hasFullWidth,
 			alignment,
-			textAlignment,
+			size,
 		} = attributes;
 
+
 		const alignmentMap = {
-			center: "0 auto",
-			right: "0 0 0 auto"
+			center: "center",
+			right: "flex-end"
 		}
+
 		const style = {
-			'--button-color': modifier!== 'text' && color,
-			'--button-text-color': modifier === 'text' && color,
-			'--button-background': modifier!== 'text' && background,
-			'margin': alignment && alignmentMap[alignment],
-			'--button-display': alignment && 'flex',
-			'--button-text-align': textAlignment !== 'left' && textAlignment
+			'color': color,
+			'justify-content': alignment && alignmentMap[alignment],
+			'font-size': size !== 16 && size
 		}
-		const buttonStyle = Object.keys(style).reduce((object,key)=>(
+		const iconStyle = Object.keys(style).reduce((object,key)=>(
 			style[key]
 				? {...object, [key]: style[key]}
 				: object
 		), {})
 
-		return buttonStyle
+		return iconStyle
 	}
 	const style = attributesToStyle(attributes);
-	const classes = {
-		'z-button--text': modifier === 'text',
-		'z-button--full': hasFullWidth
-	}
-	const className = Object.keys(classes).reduce(
-		(array, key) =>
-			(classes[key] ? [...array, key] : array), []
-	)
-		.join(' ')
 	return (
-		<z-button to={to} color={color} background={background} style={style} className={className}>
-			{label}
-		</z-button>
+		<div className={'icon'} style={style}>
+			<i className={icon}/>
+		</div>
 	);
 }

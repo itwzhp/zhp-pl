@@ -88,10 +88,6 @@ export default function save({attributes}) {
 
 		const initial = {
 			'--section-content-min-height': '100%',
-			'--section-padding': '0',
-			'--section-margin': '0',
-			'--section-desktop-padding': '0',
-			'--section-desktop-margin': '0',
 		}
 
 		return {

@@ -5,11 +5,24 @@ $blocks = array(
     'section',
     'column',
     'button',
-    'divider'
+    'divider',
+    'icon',
 );
 foreach ($blocks as $block) {
     require __DIR__.'/blocks/'.$block.'/'.$block.'.php';
 }
+function zhp_block_category( $categories, $post ) {
+    return array_merge(
+        $categories,
+        array(
+            array(
+                'slug' => 'zhp',
+                'title' => 'ZHP',
+            ),
+        )
+    );
+}
+add_filter( 'block_categories', 'zhp_block_category', 10, 2);
 // remove core patterns
 add_filter('after_setup_theme', 'remove_core_patterns');
 function remove_core_patterns() {
