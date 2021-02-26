@@ -3,6 +3,7 @@
   "version": "0.1.1",
   "scripts": {
     "create-index": "node scripts/create-index-file.js",
+    "postinstall": "yarn create-index",
     "test:unit": "vue-cli-service test:unit",
     "lint:js": "vue-cli-service lint --fix",
     "lint:scss": "stylelint 'src/**/*.{vue,htm,html,css,sss,less,scss}' --fix",
@@ -19,6 +20,7 @@
     "access": "public"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.2",
     "@glidejs/glide": "^3.4.1",
     "body-scroll-lock": "^3.1.5",
     "core-js": "^3.6.5",
@@ -26,8 +28,10 @@
     "flatpickr": "^4.6.6",
     "lozad": "^1.15.0",
     "portal-vue": "^2.1.7",
-    "vue": "^2.6.12",
     "vue-fragment": "^1.5.1"
+  },
+  "peerDependencies": {
+    "vue": "^2.6.12"
   },
   "devDependencies": {
     "@storybook/addon-a11y": ">=6.0.15",
@@ -44,11 +48,10 @@
     "@vue/eslint-config-airbnb": "^5.1.0",
     "@vue/test-utils": "1.0.4",
     "babel-eslint": "^10.1.0",
-    "chromatic": "^5.1.0",
     "eslint": "^7.7.0",
     "eslint-plugin-vue": "^6.2.2",
-    "sass": "^1.29.0",
-    "sass-loader": "^9.0.3",
+    "sass": "^1.32.8",
+    "sass-loader": "^10.1.1",
     "stylelint": "^13.6.1",
     "stylelint-config-idiomatic-order": "^8.1.0",
     "stylelint-config-standard": "^20.0.0",

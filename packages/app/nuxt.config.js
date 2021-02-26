@@ -69,16 +69,12 @@ export default {
   */
   build: {
     extend (config, { isClient }) {
-      if (isClient) {
-        config.optimization.splitChunks.maxSize = 200000
-      }
       config.resolve.alias = {
         ...config.resolve.alias,
         vue$: 'vue/dist/vue.esm.js'
       }
     },
     transpile: [/^@nowa-zhp/],
-    extractCSS: true
   },
   pwa: {
     meta: {
@@ -138,6 +134,5 @@ export default {
   googleAnalytics: {
     id: process.env.GA
   },
-  telemetry: false,
   ssr: true
 }
