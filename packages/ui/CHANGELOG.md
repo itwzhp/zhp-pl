@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.1](https://github.com/itwzhp/zhp-pl/compare/@zhp-pl/ui@0.1.0...@zhp-pl/ui@0.1.1) (2021-02-27)
+
+
+### Bug Fixes
+
+* no create-index script ([0bccbd7](https://github.com/itwzhp/zhp-pl/commit/0bccbd75de9ecfd2ac6ce539ad0bbd27ca4d1e8f))
+
+
+
+
+
 # 0.1.0 (2021-02-27)
 
 
