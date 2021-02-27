@@ -74,7 +74,7 @@ export default {
         vue$: 'vue/dist/vue.esm.js'
       }
     },
-    transpile: [/^@nowa-zhp/],
+    transpile: [/^@nowa-zhp/]
   },
   pwa: {
     meta: {
