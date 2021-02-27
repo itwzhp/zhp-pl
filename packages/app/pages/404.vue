@@ -25,7 +25,7 @@ import {
   ZClipPath,
   ZSearch,
   ZHeading
-} from '@nowa-zhp/ui'
+} from '@zhp-pl/ui'
 
 export default {
   watchQuery: true,

@@ -26,7 +26,7 @@ export default {
   ** Global CSS
   */
   css: [
-    '@nowa-zhp/ui/src/styles/styles.scss'
+    '@zhp-pl/ui/src/styles/styles.scss'
   ],
   /*
   ** Plugins to load before mounting the App
@@ -74,7 +74,7 @@ export default {
         vue$: 'vue/dist/vue.esm.js'
       }
     },
-    transpile: [/^@nowa-zhp/]
+    transpile: [/^@zhp-pl/]
   },
   pwa: {
     meta: {

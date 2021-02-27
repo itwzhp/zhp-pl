@@ -7,7 +7,7 @@
 <script>
 import {
   ZWordPress
-} from '@nowa-zhp/ui'
+} from '@zhp-pl/ui'
 
 export default {
   components: {

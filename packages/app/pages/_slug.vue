@@ -189,7 +189,7 @@ import {
   ZLink,
   ZImage,
   ZText
-} from '@nowa-zhp/ui'
+} from '@zhp-pl/ui'
 
 export default {
   components: {

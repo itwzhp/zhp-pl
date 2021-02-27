@@ -22,7 +22,7 @@
 import {
   ZSection,
   ZCard
-} from '@nowa-zhp/ui'
+} from '@zhp-pl/ui'
 
 export default {
   components: {

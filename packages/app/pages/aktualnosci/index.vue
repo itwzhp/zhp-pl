@@ -72,7 +72,7 @@ import {
   ZPagination,
   ZClipPath,
   ZSearch
-} from '@nowa-zhp/ui'
+} from '@zhp-pl/ui'
 
 export default {
   watchQuery: true,

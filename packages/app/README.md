@@ -1,4 +1,4 @@
-# @nowa-zhp/app
+# @zhp-pl/app
 
 ## Build Setup
 

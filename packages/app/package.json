@@ -1,8 +1,8 @@
 {
-  "name": "@nowa-zhp/app",
+  "name": "@zhp-pl/app",
   "private": true,
   "license": "MIT",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "scripts": {
     "dev": "nuxt --hostname 0.0.0.0 --post 3000",
     "build": "nuxt build",
@@ -20,7 +20,7 @@
     "uid": "^2.0.0",
     "vue-fragment": "^1.5.1",
     "vuelidate": "^0.7.6",
-    "@nowa-zhp/ui": "^0.0.1"
+    "@zhp-pl/ui": "^0.1.0"
   },
   "devDependencies": {
     "sass": "^1.32.8",

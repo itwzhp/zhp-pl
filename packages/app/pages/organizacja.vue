@@ -45,7 +45,7 @@ import {
   ZCard,
   ZBanner,
   ZPost
-} from '@nowa-zhp/ui'
+} from '@zhp-pl/ui'
 import { mapGetters } from 'vuex'
 
 export default {

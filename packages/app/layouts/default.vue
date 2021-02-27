@@ -149,7 +149,7 @@ import {
   ZMegaMenu,
   ZList,
   ZCookies
-} from '@nowa-zhp/ui'
+} from '@zhp-pl/ui'
 
 export default {
   components: {

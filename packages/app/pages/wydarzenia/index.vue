@@ -72,7 +72,7 @@ import {
   ZEvent,
   ZModal,
   ZNotification
-} from '@nowa-zhp/ui'
+} from '@zhp-pl/ui'
 import NewEventModal from '@/pages/wydarzenia/components/NewEventForm.vue'
 
 export default {

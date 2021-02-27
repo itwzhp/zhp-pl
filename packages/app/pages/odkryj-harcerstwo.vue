@@ -101,7 +101,7 @@ import {
   ZPost,
   ZCarousel,
   ZSearch
-} from '@nowa-zhp/ui'
+} from '@zhp-pl/ui'
 import { mapGetters } from 'vuex'
 
 export default {
