@@ -20,6 +20,8 @@ jobs:
         username: zhpadmin
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+# TODO improve caching in Dockerfile and use github cache to speed up build: https://github.com/docker/build-push-action/blob/master/docs/advanced/cache.md#github-cache
+# possibly, we could wait for this to be implemented: https://github.com/docker/buildx/pull/535
     - name: Build docker
       uses: docker/build-push-action@v2
       with:
@@ -28,12 +30,9 @@ jobs:
           gkzhp/zhp-pl:latest
           gkzhp/zhp-pl:${{ github.sha	}}
 
-    # - name: Upload package
-    #   uses: actions/upload-artifact@v2
-    #   with:
-    #     name: App
-    #     path: app
+# TODO prepare docker-compose with the specified tag (git SHA) and env name. Choose proper env file in docker
 
+# TODO deploy the docker image,
   # deploy:
   #   name: Deploy
   #   runs-on: ubuntu-latest
@@ -44,23 +43,3 @@ jobs:
   #     uses: actions/download-artifact@v2
   #     with:
   #       name: App
-
-  #   - name: Login to Azure
-  #     uses: azure/login@v1
-  #     with:
-  #       creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-  #   - name: Deploy ARM
-  #     uses: azure/arm-deploy@v1
-  #     with:
-  #       deploymentMode: Complete
-  #       subscriptionId: 69111246-db23-463c-82b2-7815ed5f8a1a
-  #       resourceGroupName: office-accountmanagement
-  #       template: deployment.arm.json
-  #       parameters: JiraPassword=${{ secrets.JIRA_API_PASSWORD }} ActiveDirectoryCertBase64=${{ secrets.AAD_APP_CERTIFICATE }} ActiveDirectoryCertPassword=${{ secrets.AAD_APP_CERTIFICATE_PASSWORD }}
-
-  #   - name: Upload files
-  #     uses: Azure/functions-action@v1
-  #     with:
-  #       app-name: zhp-officeaccounts
-  #       package: .
