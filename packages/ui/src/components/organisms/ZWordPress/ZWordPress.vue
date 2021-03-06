@@ -31,7 +31,7 @@ export default {
     toRender() {
       return {
         name: 'WordPressContent',
-        template: `<fragment>${this.htmlToRender}</fragment>`,
+        template: `<div>${this.htmlToRender}</div>`,
       };
     },
   },
