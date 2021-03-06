@@ -92,8 +92,7 @@
       <ZWordPress
         v-else
         :html="page.content && page.content.rendered"
-        :gutenberg="page.rest_gutenberg"
-        class="content"
+        :class="{content: !isGutenberg}"
       />
       <div class="sidebar">
         <div

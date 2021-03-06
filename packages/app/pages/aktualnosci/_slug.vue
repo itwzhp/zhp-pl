@@ -34,7 +34,6 @@
       </figure>
       <ZWordPress
         :html="post.content && post.content.rendered"
-        :gutenberg="post.rest_gutenberg"
         class="content"
       />
       <ZFiles
