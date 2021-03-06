@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.2](https://github.com/itwzhp/zhp-pl/compare/@zhp-pl/ui@0.1.1...@zhp-pl/ui@0.1.2) (2021-03-06)
+
+
+### Bug Fixes
+
+* make ZWordPress component simplest ([9b5a2bf](https://github.com/itwzhp/zhp-pl/commit/9b5a2bf36c9fa9351658bade3b88bf5bae9ba23c))
+* remove fragment from ZWordPress component ([82e021f](https://github.com/itwzhp/zhp-pl/commit/82e021f7b1c722a4d53fbb8684156eb2a89ca70b))
+
+
+
+
+
 ## [0.1.1](https://github.com/itwzhp/zhp-pl/compare/@zhp-pl/ui@0.1.0...@zhp-pl/ui@0.1.1) (2021-02-27)
 
 
