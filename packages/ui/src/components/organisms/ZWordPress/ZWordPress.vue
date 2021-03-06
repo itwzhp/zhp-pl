@@ -1,15 +1,13 @@
 <script>
-import '@fortawesome/fontawesome-free/js/brands.min';
-import '@fortawesome/fontawesome-free/js/solid.min';
-import '@fortawesome/fontawesome-free/js/fontawesome.min';
 import Vue from 'vue';
-// eslint-disable-next-line
-import Fragment from 'vue-fragment';
 import ZDivider from '../../atoms/ZDivider/ZDivider.vue';
 import ZButton from '../../atoms/ZButton/ZButton.vue';
 import ZLink from '../../atoms/ZLink/ZLink.vue';
 import ZAccordion from '../ZAccordion/ZAccordion.vue';
 import ZSection from '../ZSection/ZSection.vue';
+import '@fortawesome/fontawesome-free/js/brands.min';
+import '@fortawesome/fontawesome-free/js/solid.min';
+import '@fortawesome/fontawesome-free/js/fontawesome.min';
 
 Vue.component('ZDivider', ZDivider);
 Vue.component('ZButton', ZButton);
@@ -17,59 +15,15 @@ Vue.component('ZLink', ZLink);
 Vue.component('ZAccordion', ZAccordion);
 Vue.component('ZSection', ZSection);
 
-function isSlot(element) {
-  return element === null;
-}
-function gutenbergToHTML(block) {
-  const { innerBlocks } = block;
-  const blocks = [];
-  while (innerBlocks.length > 0) {
-    blocks.push(gutenbergToHTML(innerBlocks.shift()));
-  }
-  const { blockName } = block;
-  let index = 0;
-  return block.innerContent
-    .map((element) => {
-      if (isSlot(element)) {
-        const slot = blocks[index];
-        index += 1;
-        return slot;
-      }
-      return element;
-    })
-    .join('')
-    .replace(/\n/gm, '');
-}
-
 export default {
   name: 'ZWordPress',
-  components: {
-    ZButton,
-    ZLink,
-    ZAccordion,
-  },
   props: {
     html: {
       type: String,
       default: '',
     },
-    gutenberg: {
-      type: Array,
-      default: () => ([]),
-    },
   },
   computed: {
-    hasGutenberg() {
-      return this.gutenberg.length > 0;
-    },
-    gutenbergToRender() {
-      const gutenberg = JSON.parse(JSON.stringify(this.gutenberg));
-      const html = gutenberg.filter((block) => block.blockName)
-        .map((block) => gutenbergToHTML(block))
-        .join('');
-      const anchorPattern = /<a.+?href="(.+?)">(.+?)<\/a>/gm;
-      return html.replace(anchorPattern, (match, href, name) => (`<z-link to="${href}">${name}</z-link>`));
-    },
     htmlToRender() {
       const anchorPattern = /<a.+?href="(.+?)">(.+?)<\/a>/gm;
       return this.html.replace(anchorPattern, (match, href, name) => (`<z-link to="${href}">${name}</z-link>`));
@@ -77,7 +31,7 @@ export default {
     toRender() {
       return {
         name: 'WordPressContent',
-        template: `<fragment>${this.gutenbergToRender}</fragment>`,
+        template: `<fragment>${this.htmlToRender}</fragment>`,
       };
     },
   },
@@ -97,6 +51,7 @@ export default {
   --button-height: auto;
 
   line-height: 1.4;
+  margin: 0;
 
   .z-link {
     font-size: 1rem;
