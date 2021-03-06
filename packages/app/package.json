@@ -20,7 +20,7 @@
     "uid": "^2.0.0",
     "vue-fragment": "^1.5.1",
     "vuelidate": "^0.7.6",
-    "@zhp-pl/ui": "^0.1.0",
+    "@zhp-pl/ui": "^0.1.2",
     "@nuxtjs/google-analytics": "^2.4.0",
     "@nuxtjs/pwa": "^3.1.2"
   },
