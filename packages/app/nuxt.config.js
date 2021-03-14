@@ -74,7 +74,8 @@ export default {
         vue$: 'vue/dist/vue.esm.js'
       }
     },
-    transpile: [/^@zhp-pl/]
+    transpile: [/^@zhp-pl/],
+    publicPath: '/wp-content/themes/zhp-pl/_nuxt'
   },
   pwa: {
     meta: {
@@ -87,15 +88,7 @@ export default {
       useWebmanifestExtension: false
     }
   },
-  publicRuntimeConfig: {
-    mediaBaseURL: process.env.MEDIA_BASE_URL
-  },
-  sentry: {
-    dsn: 'https://dbc6503ec4004c37a3f7706daa89aa73@o479654.ingest.sentry.io/5524988',
-    config: {
-      environment: process.env.NODE_ENV
-    }
-  },
+  publicRuntimeConfig: {},
   router: {
     extendRoutes (routes, resolve) {
       routes.push({
@@ -131,8 +124,19 @@ export default {
       sortRoutes(routes)
     }
   },
-  googleAnalytics: {
-    id: process.env.GA
-  },
-  ssr: true
+  ssr: false,
+  generate: {
+    exclude: [/^\/.+/],
+    subFolders: false,
+    fallback: false
+  }
+  // googleAnalytics: {
+  //   id: process.env.GA
+  // },
+  // sentry: {
+  //   dsn: 'https://dbc6503ec4004c37a3f7706daa89aa73@o479654.ingest.sentry.io/5524988',
+  //   config: {
+  //     environment: process.env.NODE_ENV
+  //   }
+  // },
 }
