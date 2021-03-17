@@ -38,9 +38,9 @@ if( function_exists('acf_add_local_field_group') ):
         'location' => array(
             array(
                 array(
-                    'param' => 'page',
+                    'param' => 'page_type',
                     'operator' => '==',
-                    'value' => '872',
+                    'value' => 'front_page',
                 ),
             ),
         ),
@@ -822,9 +822,9 @@ if( function_exists('acf_add_local_field_group') ):
                     'value' => 'page',
                 ),
                 array(
-                    'param' => 'page',
+                    'param' => 'page_type',
                     'operator' => '!=',
-                    'value' => '872',
+                    'value' => 'front_page',
                 ),
             ),
         ),
@@ -839,6 +839,7 @@ if( function_exists('acf_add_local_field_group') ):
     ));
 
 endif;
+// Gutenberg
 $blocks = array(
     'accordion',
     'accordion-item',
