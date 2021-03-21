@@ -17,5 +17,14 @@ export const getters = {
   },
   domains (state) {
     return state.options.domains.replace(/ /gm, '').split(',')
+  },
+  title (state) {
+    return state.options.title
+  },
+  logo (state) {
+    return state.options.logo
+  },
+  placeholder (state) {
+    return state.options.placeholder
   }
 }

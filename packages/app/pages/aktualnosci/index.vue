@@ -24,7 +24,7 @@
         />
         <ZSearch
           class="section-hero__search"
-          :input="{placeholder: 'Czego dzisiaj chcesz dowiedzieć się o ZHP?'}"
+          :input="{placeholder: 'Czego dzisiaj chcesz się dowiedzieć?'}"
           @submit="search"
         />
       </ZSection>
