@@ -164,13 +164,6 @@ export default {
     closeCookies () {
       this.cookies = false
       localStorage.setItem('cookies', JSON.stringify(true))
-    },
-    search (query) {
-      if (!query.trim().length) { return }
-      this.$router.push({
-        path: '/szukaj',
-        query: { search: query, subtype: 'post' }
-      })
     }
   }
 }

@@ -30,6 +30,22 @@
       </ZSection>
     </div>
     <ZSection
+      :title="about.title"
+      :subtitle="about.subtitle"
+      class="section-about-us"
+    >
+      <template v-for="(tile, key) in about.tiles">
+        <ZCard
+          :key="key"
+          :thumbnail="tile.thumbnail || placeholder"
+          :title="tile.title"
+          :description="tile.description"
+          :to="tile.to"
+          class="z-card--pictured z-card--overlayed section-about-us__tile"
+        />
+      </template>
+    </ZSection>
+    <ZSection
       v-if="posts.length > 0"
       title="Polecamy"
       class="section-posts"
@@ -68,7 +84,7 @@
     </ZSection>
     <ZSection class="section-join-us">
       <ZBanner
-        :thumbnail="{src: `${$config.mediaBaseURL}/wp-content/uploads/2020/12/Agnieszka_Madetko-Kurczab_ZHP.jpg`}"
+        :thumbnail="{src: join.thumbnail}"
         title="Chcesz zapisać swoje dziecko do harcerstwa?"
         content="Harcerstwo to nie tylko niesamowita przygoda, ale także możliwość zdobycia sprawności na całe życie. Chcesz, aby Twoje dziecko wkroczyło z nami na szlak? Tutaj znajdziesz najważniejsze informacje."
         :calls-to-action="[
@@ -79,11 +95,11 @@
       />
       <!-- TODO: add to theme_options join_us_post_category -->
       <ZPost
-        v-if="cards['>>>']"
-        :title="cards['>>>'].title.rendered"
-        :thumbnail="cards['>>>']._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url"
-        :to="cards['>>>'].rest_redirect ? cards['>>>'].rest_redirect :`/${cards['>>>'].date.split('-')[0]}/${cards['>>>'].slug}`"
-        :date="cards['>>>'].date"
+        v-if="joinUs"
+        :title="joinUs.title.rendered"
+        :thumbnail="joinUs._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url"
+        :to="joinUs.rest_redirect ? joinUs.rest_redirect :`/${joinUs.date.split('-')[0]}/${joinUs.slug}`"
+        :date="joinUs.date"
         class="section-join-us__post"
       />
     </ZSection>
@@ -116,7 +132,7 @@
             class="glide__slide"
           >
             <ZEvent
-              :thumbnail="event.rest_media"
+              :thumbnail="event.rest_media || placeholder"
               :title="event.title && event.title.rendered"
               :to="`/wydarzenia/${event.slug}`"
               :author="event.rest_author"
@@ -124,6 +140,49 @@
               :location="{name: event._embedded['wp:term'][0][0] && event._embedded['wp:term'][0][0].name, to:'#'}"
               :type="event.rest_event_type"
               :audiences="event.age_groups.map((ageGroup)=>(ageGroups[ageGroup]))"
+            />
+          </li>
+        </template>
+      </ZCarousel>
+    </ZSection>
+    <ZSection
+      v-if="partners.length > 0"
+      class="section-partners"
+      :title="partnersMeta.title"
+    >
+      <template #title>
+        <ZHeading class="z-section__title">
+          <ZLink
+            :to="partnersMeta.to"
+            class="t4 uppercase"
+            style="--link-text-decoration: none;"
+            v-html="partnersMeta.title"
+          />
+        </ZHeading>
+      </template>
+      <ZCarousel
+        :has-controls="false"
+        :settings="{
+          autoplay: 3000,
+          breakpoints: {
+            640: {
+              perView: 1,
+              peek: {
+                before: 20,
+                after: 20
+              }
+            }
+          }
+        }"
+        class="carousel"
+      >
+        <template v-for="(partner, key) in partners">
+          <li
+            :key="key"
+            class="glide__slide"
+          >
+            <ZImage
+              :src="partner._embedded['wp:featuredmedia'][0].media_details.sizes.medium ? partner._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url : partner._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url"
             />
           </li>
         </template>
@@ -142,7 +201,9 @@ import {
   ZSearch,
   ZSection,
   ZClipPath,
-  ZImage
+  ZImage,
+  ZCard,
+  ZLink
 } from '@zhp-pl/ui'
 import { mapGetters } from 'vuex'
 
@@ -156,25 +217,44 @@ export default {
     ZSearch,
     ZSection,
     ZClipPath,
-    ZImage
+    ZImage,
+    ZCard,
+    ZLink
   },
   async asyncData ({ $axios, store }) {
     const homepageRes = await $axios.get('pages', { params: { slug: 'strona-glowna', _embed: true } })
     const homepage = homepageRes.data.shift()
-
-    // TODO: add to ACF post_categories
-    const postsRes = await $axios.get('posts', { params: { per_page: 25, _embed: true } })
+    const postsParams = { per_page: 25, _embed: true }
+    if (homepage.rest_acf.posts.categories) {
+      postsParams.categories = homepage.rest_acf.posts.categories
+    }
+    const postsRes = await $axios.get('posts', { params: postsParams })
     const posts = postsRes.data
-
-    // TODO: add to ACF event_categories
-    const eventsRes = await $axios.get('events', { params: { per_page: 25, _embed: true } })
+    const eventsParams = { per_page: 25, _embed: true }
+    if (homepage.rest_acf.events.categories) {
+      eventsParams.event_categories = homepage.rest_acf.events.categories
+    }
+    const eventsRes = await $axios.get('events', { params: eventsParams })
     const events = eventsRes.data
-
-    // TODO: add to ACF partners_categories
-    const partnersRes = await $axios.get('logos', { params: { per_page: 99, logos_categories: 25, _embed: true } })
+    const joinUsParams = {
+      per_page: 1,
+      _embed: true
+    }
+    if (homepage.rest_acf.join.tags) {
+      joinUsParams.tags = homepage.rest_acf.join.tags
+    }
+    const joinUsRes = await $axios.get('posts', { params: joinUsParams })
+    const joinUs = joinUsRes.data.shift()
+    const partnersParams = {
+      per_page: 99,
+      _embed: true
+    }
+    if (homepage.rest_acf.partners.categories) {
+      partnersParams.logos_categories = homepage.rest_acf.partners.categories
+    }
+    const partnersRes = await $axios.get('logos', { params: partnersParams })
     const partners = partnersRes.data
-
-    return { homepage, posts, events, partners }
+    return { homepage, posts, events, partners, joinUs }
   },
   computed: {
     ...mapGetters({
@@ -186,6 +266,15 @@ export default {
     ageGroups () {
       return this.$store.getters['taxonomies/taxonomy']('age_groups')
     },
+    about () {
+      return this.homepage.rest_acf.about
+    },
+    join () {
+      return this.homepage.rest_acf.join
+    },
+    partnersMeta () {
+      return this.homepage.rest_acf.partners
+    }
   },
   methods: {
     search (query) {
@@ -308,15 +397,11 @@ export default {
   }
 
   .section-about-us {
-    --section-content-max-width: 1235px;
-
-    &__banner {
+    &__tile {
       grid-column: span 12;
 
       @media (min-width: 640px) {
-        --banner-title-grid-column: span 5;
-        --banner-description-grid-column: span 5;
-        --banner-thumbnail-z-index: 10;
+        grid-column: span 4;
       }
     }
   }
@@ -342,83 +427,9 @@ export default {
     }
   }
 
-  .section-mission {
-    --section-content-align-items: end;
-
-    @media (min-width: 640px) {
-      --section-content-grid-template-columns: repeat(24, minmax(auto, 1fr));
-    }
-
-    &__card {
-      grid-column: span 12;
-
-      @media (min-width: 640px) {
-        grid-column: span 5;
-      }
-
-      &--bigger {
-        overflow: hidden;
-
-        @media (min-width: 640px) {
-          height: calc(100% + 2rem);
-          transform: translateY(16px);
-        }
-      }
-
-      &--first {
-        @media (min-width: 640px) {
-          grid-column: 3 / span 5;
-        }
-      }
-    }
-
-    &__banner {
-      --banner-description-grid-row: 1;
-      --banner-description-grid-column: span 12;
-      --banner-title-grid-row: 2;
-      --banner-title-grid-column: span 12;
-      --banner-title-margin: 0 0 2rem 0;
-      --banner-title-font-size: var(--font-size-subtitle-1);
-      --banner-title-text-transform: normal;
-      --banner-cta-grid-column: span 12;
-
-      grid-column: span 12;
-
-      @media (min-width: 640px) {
-        grid-column: span 5;
-      }
-    }
-  }
-
   .section-events {
     @media (min-width: 640px) {
       --section-title-grid-column: span 3;
-    }
-  }
-
-  .section-social {
-    &__instagram {
-      grid-column: span 12;
-
-      @media (min-width: 640px) {
-        grid-column: span 4;
-      }
-    }
-
-    &__facebook {
-      grid-column: span 12;
-
-      @media (min-width: 640px) {
-        grid-column: span 3;
-      }
-    }
-
-    &__partners {
-      grid-column: span 12;
-
-      @media (min-width: 640px) {
-        grid-column: span 5;
-      }
     }
   }
 
@@ -447,6 +458,12 @@ export default {
       transform: translate(-50%, -50%);
       width: 100%;
       padding: 10%;
+    }
+  }
+
+  .section-partners {
+    &::before {
+      content: none;
     }
   }
 }
