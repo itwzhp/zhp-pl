@@ -10,51 +10,6 @@ $updateChecker = Puc_v4_Factory::buildUpdateChecker(
 if( function_exists('acf_add_local_field_group') ):
 
     acf_add_local_field_group(array(
-        'key' => 'group_600bdfb0b8074',
-        'title' => 'Strona główna',
-        'fields' => array(
-            array(
-                'key' => 'field_600bdfb8ea5d6',
-                'label' => 'Kategoria wydarzeń',
-                'name' => 'event_categories',
-                'type' => 'number',
-                'instructions' => '',
-                'required' => 0,
-                'conditional_logic' => 0,
-                'wrapper' => array(
-                    'width' => '',
-                    'class' => '',
-                    'id' => '',
-                ),
-                'default_value' => '',
-                'placeholder' => '',
-                'prepend' => '',
-                'append' => '',
-                'min' => '',
-                'max' => '',
-                'step' => '',
-            ),
-        ),
-        'location' => array(
-            array(
-                array(
-                    'param' => 'page_type',
-                    'operator' => '==',
-                    'value' => 'front_page',
-                ),
-            ),
-        ),
-        'menu_order' => -1,
-        'position' => 'normal',
-        'style' => 'default',
-        'label_placement' => 'top',
-        'instruction_placement' => 'label',
-        'hide_on_screen' => '',
-        'active' => true,
-        'description' => '',
-    ));
-
-    acf_add_local_field_group(array(
         'key' => 'group_5f76360116175',
         'title' => 'Logotypy',
         'fields' => array(
@@ -890,7 +845,7 @@ function register_block_patterns() {
 // allowed gutenberg blocks
 add_filter( 'allowed_block_types', 'allowed_block_types' );
 function allowed_block_types( $allowed_blocks ) {
-        return $allowed_blocks;
+    return $allowed_blocks;
 //      return array(
 //          'core/image',
 //          'core/paragraph',
@@ -1498,6 +1453,28 @@ function theme_customize_register($wp_customize) {
         'label'=>'Żałoba',
         'description'=>'Cała strona WWW zostaje wyświetlona w odcieniach szarości.'
     ));
+    $wp_customize->add_setting('logo', array(
+        'type' => 'theme_mod',
+        'capability' => 'edit_theme_options',
+    ));
+    $wp_customize->add_control(new WP_Customize_Media_Control($wp_customize, 'logo', array(
+        'priority'=>10,
+        'section'=>'main',
+        'label'=>'Logo',
+        'description'=>'Logo zostanie wyświetlone w nagłówku strony.',
+        'mime_type' => 'image'
+    )));
+    $wp_customize->add_setting('placeholder', array(
+        'type' => 'theme_mod',
+        'capability' => 'edit_theme_options',
+    ));
+    $wp_customize->add_control(new WP_Customize_Media_Control($wp_customize, 'placeholder', array(
+        'priority'=>10,
+        'section'=>'main',
+        'label'=>'Placeholder',
+        'description'=>'Placeholder zostanie wyświetlone w momencie gdy nie ustawisz zdjęcia wyróżnionego wpisu.',
+        'mime_type' => 'image'
+    )));
     $wp_customize->add_setting('pwa_url', array(
         'type' => 'theme_mod',
         'capability' => 'edit_theme_options',
@@ -1557,8 +1534,12 @@ function register_rest_options() {
 }
 function get_options(WP_REST_Request $request) {
     return (object) array(
+        'title' => get_bloginfo('name'),
+        'descriptions' => get_bloginfo('description'),
         'mourning' => get_theme_mod('mourning', ''),
         'domains' => get_theme_mod('domains', ''),
+        'logo' => wp_get_attachment_image_src(get_theme_mod('logo', ''), 'medium')[0],
+        'placeholder' => wp_get_attachment_image_src(get_theme_mod('placeholder', ''), 'medium')[0],
     );
 }
 // register endpoint to REST for events
@@ -1723,7 +1704,7 @@ function post_events(WP_REST_Request $request) {
         'to_confirm' => $to_confirm,
         'id' => $id,
         'token' => $key
-    ) = $request;
+        ) = $request;
 
     if($id && $key) {
         $status = get_post_status($id);
@@ -1781,7 +1762,7 @@ function post_events(WP_REST_Request $request) {
         .'<p>'.wp_kses($post_place, wp_kses_allowed_html()).'</p>'
         .'<!-- /wp:paragraph -->';
 
-     $post = array(
+    $post = array(
         'post_title' => wp_kses($post_title, wp_kses_allowed_html('title')),
         'post_content' => $post_content,
         'post_excerpt' => wp_kses($post_excerpt, wp_kses_allowed_html()),
@@ -1790,30 +1771,30 @@ function post_events(WP_REST_Request $request) {
     );
     $post_id = wp_insert_post($post);
 
-     // set token
+    // set token
     $date = new DateTime();
     $token = md5($date->getTimestamp().$to_confirm);
     add_post_meta($post_id, 'token', $token);
-     // set ACF fields
-     update_field('organizer', array(
-         'unit'=>sanitize_text_field($organizer_unit),
-         'person'=>sanitize_text_field($organizer_person),
-         'phone'=> sanitize_text_field($organizer_phone),
-         'mail'=>sanitize_text_field($organizer_mail)
-     ), $post_id);
-     update_field('web', sanitize_text_field($web), $post_id);
-     update_field('date', array(
-         'begin'=>sanitize_text_field($date_begin),
-         'end'=>sanitize_text_field($date_end)
-     ), $post_id);
-     update_field('plikilinki', $plikilinki, $post_id);
-     // set taxonomies
-      wp_set_post_terms($post_id, $tax_age_groups, 'age_group');
-      wp_set_post_terms($post_id, $tax_localization, 'localization');
-      wp_set_post_terms($post_id, $tax_event_type, 'event_type');
+    // set ACF fields
+    update_field('organizer', array(
+        'unit'=>sanitize_text_field($organizer_unit),
+        'person'=>sanitize_text_field($organizer_person),
+        'phone'=> sanitize_text_field($organizer_phone),
+        'mail'=>sanitize_text_field($organizer_mail)
+    ), $post_id);
+    update_field('web', sanitize_text_field($web), $post_id);
+    update_field('date', array(
+        'begin'=>sanitize_text_field($date_begin),
+        'end'=>sanitize_text_field($date_end)
+    ), $post_id);
+    update_field('plikilinki', $plikilinki, $post_id);
+    // set taxonomies
+    wp_set_post_terms($post_id, $tax_age_groups, 'age_group');
+    wp_set_post_terms($post_id, $tax_localization, 'localization');
+    wp_set_post_terms($post_id, $tax_event_type, 'event_type');
 
-     // * set thumbnail
-     // set_post_thumbnail($id, );
+    // * set thumbnail
+    // set_post_thumbnail($id, );
     $uploadedfile = $file['file'];
     $upload_overrides = array(
         'test_form' => false,
