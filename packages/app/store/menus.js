@@ -24,11 +24,15 @@ export const mutations = {
       }
       return array
     }, [])
-    state[menu.location] = links
+    console.log(menu)
+    state[menu.location] = { links, name: menu.name }
   }
 }
 export const getters = {
   menu: state => (menu) => {
-    return state[menu]
+    return state[menu].links
+  },
+  menuName: state => (menu) => {
+    return state[menu].name
   }
 }

@@ -1,6 +1,6 @@
 import { sortRoutes } from '@nuxt/utils'
 export default {
-  target: 'static',
+  target: 'server',
   head: {
     meta: [
       { charset: 'utf-8' },

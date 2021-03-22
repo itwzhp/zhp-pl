@@ -17,7 +17,32 @@
             />
           </ZLink>
         </div>
-        <div class="z-header__actions z-header__actions--right"/>
+        <div class="z-header__actions z-header__actions--right">
+          <ZDropdown class="z-districts z-dropdown--has-chevron">
+            <template #toggle="{toggle}">
+              <ZButton
+                class="z-button--text"
+                @click="toggle"
+              >
+                {{ headerUnitsLabel }}
+              </ZButton>
+            </template>
+            <template>
+              <ZList>
+                <template v-for="(unit, key) in headerUnits">
+                  <ZListItem :key="key">
+                    <ZLink
+                      :to="unit.to"
+                      class="z-districts__link"
+                    >
+                      {{ unit.name }}
+                    </ZLink>
+                  </ZListItem>
+                </template>
+              </ZList>
+            </template>
+          </ZDropdown>
+        </div>
       </div>
       <ZMegaMenu :menu="headerMenu" />
     </header>
@@ -46,7 +71,7 @@
         >
           <ZLink to="/copyright">
             Copyright
-          </ZLink> ©{{ year }} {{title}}
+          </ZLink> ©{{ year }} {{ title }}
         </ZText>
         <ZMenu
           class="z-menu--horizontal z-footer__menu"
@@ -72,7 +97,9 @@ import {
   ZLink,
   ZMenu,
   ZMegaMenu,
-  ZCookies
+  ZCookies,
+  ZDropdown,
+  ZList
 } from '@zhp-pl/ui'
 
 export default {
@@ -84,7 +111,9 @@ export default {
     ZLink,
     ZMenu,
     ZMegaMenu,
-    ZCookies
+    ZCookies,
+    ZDropdown,
+    ZList
   },
   async middleware ({ store, $axios }) {
     if (!Object.keys(store.state.theme.options).length) {
@@ -97,10 +126,11 @@ export default {
       const menus = menusRes.data
       const locations = {
         'header-menu': 'headerMenu',
-        'footer-menu': 'footerMenu'
+        'footer-menu': 'footerMenu',
+        'header-units': 'headerUnits'
       }
       menus.forEach((menu) => {
-        store.commit('menus/update', { location: locations[menu.location], items: menu.items })
+        store.commit('menus/update', { location: locations[menu.location], items: menu.items, name: menu.name })
       })
     }
     if (!Object.keys(store.getters['random/text']).length) {
@@ -150,6 +180,12 @@ export default {
     },
     footerMenu () {
       return this.$store.getters['menus/menu']('footerMenu')
+    },
+    headerUnits () {
+      return this.$store.getters['menus/menu']('headerUnits')
+    },
+    headerUnitsLabel () {
+      return this.$store.getters['menus/menuName']('headerUnits')
     },
     year () {
       return new Date().getFullYear()
