@@ -94,7 +94,7 @@
           >
             <ZPost
               :key="relatedPost.id"
-              :thumbnail="relatedPost.rest_media || require('~/assets/placeholder.png')"
+              :thumbnail="relatedPost.rest_media || placeholder"
               :title="relatedPost.title.rendered"
               :to="relatedPost.rest_redirect ? relatedPost.rest_redirect : `/${relatedPost.date.split('-')[0]}/${relatedPost.slug}`"
               :author="relatedPost.rest_author"
@@ -123,6 +123,7 @@ import {
   ZLink,
   ZText
 } from '@zhp-pl/ui'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Post',
@@ -176,6 +177,10 @@ export default {
     return { post, relatedPosts, files }
   },
   computed: {
+    ...mapGetters({
+      title: 'theme/title',
+      placeholder: 'theme/placeholder'
+    }),
     hasFiles () {
       return this.files.length > 0
     },
@@ -184,11 +189,11 @@ export default {
     }
   },
   head () {
-    const title = this.post.title.rendered + ' | Związek Harcerstwa Polskiego'
+    const title = this.post.title.rendered + ' | ' + this.title
     const description = ''
     const image = this.post._embedded['wp:featuredmedia'] && this.post._embedded['wp:featuredmedia'][0].media_details
       ? this.post._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url
-      : 'https://zhp.pl/wp-content/uploads/2015/01/zhp_fb.png'
+      : this.placeholder
     return {
       title,
       meta: [

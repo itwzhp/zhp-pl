@@ -11,7 +11,7 @@
         {{ event.title.rendered }}
       </ZHeading>
       <ZMetaEvent
-        :thumbnail="event.rest_media"
+        :thumbnail="event.rest_media || placeholder"
         :date="event.rest_acf.date"
         :location="{name: event._embedded['wp:term'][0][0] && event._embedded['wp:term'][0][0].name, to:'#'}"
         :type="event.rest_event_type"
@@ -62,7 +62,7 @@
           >
             <ZEvent
               :key="relatedEvent.id"
-              :thumbnail="relatedEvent.rest_media"
+              :thumbnail="relatedEvent.rest_media || placeholder"
               :title="relatedEvent.title.rendered"
               :date="relatedEvent.rest_acf.date"
               :location="{name: relatedEvent._embedded['wp:term'][0][0] && relatedEvent._embedded['wp:term'][0][0].name, to:'#'}"
@@ -88,6 +88,7 @@ import {
   ZEventOrganizer,
   ZMetaEvent
 } from '@zhp-pl/ui'
+import { mapGetters } from 'vuex'
 
 export default {
   components: {
@@ -119,6 +120,10 @@ export default {
     return { event, relatedEvents, files }
   },
   computed: {
+    ...mapGetters({
+      title: 'theme/title',
+      placeholder: 'theme/placeholder'
+    }),
     hasFiles () {
       return this.files.length > 0
     },
@@ -127,9 +132,9 @@ export default {
     }
   },
   head () {
-    const title = this.event.title.rendered + ' | Związek Harcerstwa Polskiego'
+    const title = this.event.title.rendered + ' | ' + this.title
     const description = ''
-    const image = this.event.rest_media ? this.event.rest_media : 'https://zhp.pl/wp-content/uploads/2015/01/zhp_fb.png'
+    const image = this.event.rest_media ? this.event.rest_media : this.placeholder
     return {
       title,
       meta: [

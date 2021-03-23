@@ -70,7 +70,7 @@
         v-html="hasChildren ? activeChild.title.rendered : page.title.rendered"
       />
       <figure
-        v-if="page._embedded['wp:featuredmedia']"
+        v-if="page._embedded['wp:featuredmedia'] && !isGutenberg"
         class="thumbnail"
       >
         <ZImage
@@ -189,6 +189,7 @@ import {
   ZImage,
   ZText
 } from '@zhp-pl/ui'
+import { mapGetters } from 'vuex'
 
 export default {
   components: {
@@ -263,6 +264,10 @@ export default {
     }
   },
   computed: {
+    ...mapGetters({
+      title: 'theme/title',
+      placeholder: 'theme/placeholder'
+    }),
     activeChild () {
       return this.hasChildren && this.children[this.$route.params.id]
     },
@@ -291,11 +296,11 @@ export default {
     }
   },
   head () {
-    const title = (this.hasChildren ? this.activeChild.title.rendered : this.page.title.rendered) + ' | Związek Harcerstwa Polskiego'
+    const title = (this.hasChildren ? this.activeChild.title.rendered : this.page.title.rendered) + ' | ' + this.title
     const description = ''
     const image = this.page._embedded['wp:featuredmedia']
       ? this.page._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url
-      : 'https://zhp.pl/wp-content/uploads/2015/01/zhp_fb.png'
+      : this.placeholder
     return {
       title,
       meta: [

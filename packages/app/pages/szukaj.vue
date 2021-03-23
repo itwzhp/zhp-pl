@@ -24,7 +24,7 @@
             :to="`/${post._embedded.self[0].date.split('-')[0]}/${post._embedded.self[0].slug}`"
             :title="post.title"
             :date="post._embedded.self[0].date"
-            :thumbnail="post._embedded.self[0].rest_media || require('~/assets/placeholder.png')"
+            :thumbnail="post._embedded.self[0].rest_media || placeholder"
             :author="post._embedded.self[0].rest_author"
             class="post"
           />
@@ -36,7 +36,7 @@
             :title="post.title"
             :date="post._embedded.self[0].rest_acf.date"
             :type="post._embedded.self[0].rest_acf.rest_event_type"
-            :thumbnail="post._embedded.self[0].rest_media || require('~/assets/placeholder.png')"
+            :thumbnail="post._embedded.self[0].rest_media || placeholder"
             class="post"
           />
         </template>
@@ -45,7 +45,7 @@
             :key="post.id"
             :to="post.url"
             :title="post.title"
-            :thumbnail="post._embedded.self[0].rest_media || require('~/assets/placeholder.png')"
+            :thumbnail="post._embedded.self[0].rest_media || placeholder"
             class="post"
           />
         </template>
@@ -71,6 +71,7 @@ import {
   ZHeading,
   ZPagination
 } from '@zhp-pl/ui'
+import { mapGetters } from 'vuex'
 
 export default {
   watchQuery: true,
@@ -96,6 +97,10 @@ export default {
     return { posts, page: query.page || '1', totalPages, search, query }
   },
   computed: {
+    ...mapGetters({
+      title: 'theme/title',
+      placeholder: 'theme/placeholder'
+    }),
     title () {
       return `Wyniki wyszukiwania dla "${this.query.search}"`
     }
@@ -129,9 +134,9 @@ export default {
     }
   },
   head () {
-    const title = this.query.search + ' | Związek Harcerstwa Polskiego'
+    const title = this.query.search + ' | ' + this.title
     const description = ''
-    const image = 'https://zhp.pl/wp-content/uploads/2015/01/zhp_fb.png'
+    const image = this.placeholder
     return {
       title,
       meta: [
