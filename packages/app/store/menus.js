@@ -24,7 +24,6 @@ export const mutations = {
       }
       return array
     }, [])
-    console.log(menu)
     state[menu.location] = { links, name: menu.name }
   }
 }
