@@ -40,7 +40,7 @@
               <template v-if="post.type === 'post'">
                 <ZPost
                   :key="post.id"
-                  :thumbnail="post.rest_media"
+                  :thumbnail="post.rest_media || placeholder"
                   :title="post.title.rendered"
                   :to="post.rest_redirect ? post.rest_redirect :`/${post.date.split('-')[0]}/${post.slug}`"
                   :author="post.rest_author"
@@ -155,7 +155,7 @@
               <template v-if="post.type === 'post'">
                 <ZPost
                   :key="post.id"
-                  :thumbnail="post.rest_media"
+                  :thumbnail="post.rest_media || placeholder"
                   :title="post.title.rendered"
                   :to="post.rest_redirect ? post.rest_redirect :`/${post.date.split('-')[0]}/${post.slug}`"
                   :author="post.rest_author"

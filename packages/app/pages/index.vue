@@ -30,6 +30,7 @@
       </ZSection>
     </div>
     <ZSection
+      v-if="false"
       :title="about.title"
       :subtitle="about.subtitle"
       class="section-about-us"
@@ -46,7 +47,7 @@
       </template>
     </ZSection>
     <ZSection
-      v-if="posts.length > 0"
+      v-if="posts.length >= 4"
       title="Polecamy"
       class="section-posts"
     >
@@ -82,7 +83,9 @@
         </template>
       </ZCarousel>
     </ZSection>
-    <ZSection class="section-join-us">
+    <ZSection
+      class="section-join-us"
+    >
       <ZBanner
         :thumbnail="{src: join.thumbnail}"
         title="Chcesz zapisać swoje dziecko do harcerstwa?"
@@ -95,22 +98,21 @@
       />
       <!-- TODO: add to theme_options join_us_post_category -->
       <ZPost
-        v-if="joinUs"
         :title="joinUs.title.rendered"
-        :thumbnail="joinUs._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url"
+        :thumbnail="joinUs._embedded['wp:featuredmedia'] ? joinUs._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url : placeholder"
         :to="joinUs.rest_redirect ? joinUs.rest_redirect :`/${joinUs.date.split('-')[0]}/${joinUs.slug}`"
         :date="joinUs.date"
         class="section-join-us__post"
       />
     </ZSection>
     <ZSection
+      v-if="events.length >= 4"
       class="section-events"
       title="Przedsięwzięcia i&nbsp;wydarzenia"
       subtitle="Szukasz rajdu dla swojej drużyny? Albo konkursu dla swojej gromady? A&nbsp;może chcesz wziąć udział w&nbsp;kursie? Sprawdź, co odbywa się w&nbsp;najbliższym czasie."
       :more="{name: 'wydarzenia'}"
     >
       <ZCarousel
-        v-if="events.length > 0"
         :peeked="true"
         :settings="{
           autoplay: 3000,
@@ -146,7 +148,7 @@
       </ZCarousel>
     </ZSection>
     <ZSection
-      v-if="partners.length > 0"
+      v-if="partners.length >= 4"
       class="section-partners"
       :title="partnersMeta.title"
     >
