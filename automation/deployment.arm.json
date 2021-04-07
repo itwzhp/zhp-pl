@@ -2,13 +2,13 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "variables": {
-        "storageAccountName": "zhpplstorage"
+        "storName": "zhpplstorage"
       },
     
     "resources": [
         {
             "type": "Microsoft.Storage/storageAccounts",
-            "name": "[variables('storageAccountName')]",
+            "name": "[variables('storName')]",
             "apiVersion": "2019-06-01",
             "location": "[resourceGroup().location]",
             "kind": "StorageV2",
