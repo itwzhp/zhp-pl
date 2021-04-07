@@ -1,19 +1,17 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
-    /*"parameters": {
-        "JiraPassword": {
-            "type": "securestring",
-            "minLength": 1
+    "parameters": {
+        "storageAccountName": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 24
         },
-        "ActiveDirectoryCertBase64": {
-            "type": "securestring",
-            "minLength": 1
-        },
-        "ActiveDirectoryCertPassword": {
-            "type": "securestring",
-            "minLength": 1
-        }*/
+        "location": {
+          "type": "string",
+          "defaultValue": "[resourceGroup().location]"
+        }
+      },
     
     "resources": [
         {
