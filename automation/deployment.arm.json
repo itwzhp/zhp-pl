@@ -14,7 +14,7 @@
             "type": "securestring",
             "minLength": 1
         }*/
-    },
+    
     "resources": [
         {
             "type": "Microsoft.Storage/storageAccounts",
