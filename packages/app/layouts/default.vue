@@ -131,7 +131,6 @@ export default {
       }
       const origin = window.location.origin
       menus.forEach((menu) => {
-        console.log(menu.items)
         store.commit('menus/update', { location: locations[menu.location], items: menu.items.map(item => ({ ...item, url: item.url.replace(origin, '') })), name: menu.name })
       })
     }
