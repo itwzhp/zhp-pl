@@ -30,7 +30,7 @@
       </ZSection>
     </div>
     <ZSection
-      v-if="false"
+      v-if="about.tiles"
       :title="about.title"
       :subtitle="about.subtitle"
       class="section-about-us"
