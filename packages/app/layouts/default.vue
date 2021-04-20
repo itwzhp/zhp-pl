@@ -129,8 +129,10 @@ export default {
         'footer-menu': 'footerMenu',
         'header-units': 'headerUnits'
       }
+      const origin = window.location.origin
       menus.forEach((menu) => {
-        store.commit('menus/update', { location: locations[menu.location], items: menu.items, name: menu.name })
+        console.log(menu.items)
+        store.commit('menus/update', { location: locations[menu.location], items: menu.items.map(item => ({ ...item, url: item.url.replace(origin, '') })), name: menu.name })
       })
     }
     if (!Object.keys(store.getters['random/text']).length) {
