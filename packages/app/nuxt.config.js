@@ -10,7 +10,7 @@ export default {
     ],
     link: [
       { rel: 'stylesheet', href: 'https://use.typekit.net/lqw5sjc.css' },
-      { rel: 'icon', type: 'image/png', href: '/favicon.png' }
+      { rel: 'icon', type: 'image/png', href: '/wp-content/themes/zhp-pl/favicon.png' }
     ]
   },
   css: [
