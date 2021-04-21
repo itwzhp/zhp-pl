@@ -32,7 +32,7 @@ export default {
     [
       '@netsells/nuxt-hotjar', {
         id: process.env.HJID,
-        sv: process.env.SV
+        sv: process.env.HJSV
       }
     ]
   ],
