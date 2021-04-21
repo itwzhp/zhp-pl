@@ -1,72 +1,67 @@
 import { sortRoutes } from '@nuxt/utils'
 export default {
-  /*
-  ** Nuxt target
-  ** See https://nuxtjs.org/api/configuration-target
-  */
   target: 'server',
-  /*
-  ** Headers of the page
-  ** See https://nuxtjs.org/api/configuration-head
-  */
+  ssr: true,
   head: {
     title: 'Związek Harcerstwa Polskiego',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: process.env.npm_package_description || '' },
-      { rel: 'stylesheet', href: 'https://use.typekit.net/lqw5sjc.css' }
+      { hid: 'description', name: 'description', content: '' }
     ],
     link: [
       { rel: 'stylesheet', href: 'https://use.typekit.net/lqw5sjc.css' },
       { rel: 'icon', type: 'image/png', href: '/favicon.png' }
     ]
   },
-  /*
-  ** Global CSS
-  */
   css: [
     '@zhp-pl/ui/src/styles/styles.scss'
   ],
-  /*
-  ** Plugins to load before mounting the App
-  ** https://nuxtjs.org/guide/plugins
-  */
-  plugins: ['~plugins/fragment'],
-  /*
-  ** Auto import components
-  ** See https://nuxtjs.org/api/configuration-components
-  */
-  components: true,
-  /*
-  ** Nuxt.js dev-modules
-  */
   buildModules: [
-    // '@nuxtjs/eslint-module',
-    // '@nuxtjs/stylelint-module',
     '@nuxtjs/pwa',
     '@nuxtjs/google-analytics'
   ],
-  /*
-  ** Nuxt.js modules
-  */
+  googleAnalytics: {
+    id: process.env.GA
+  },
   modules: [
-    // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
-    '@nuxtjs/sentry'
+    '@nuxtjs/sentry',
+    'nuxt-facebook-pixel-module',
+    [
+      '@netsells/nuxt-hotjar', {
+        id: process.env.HJID,
+        sv: process.env.HJSV
+      }
+    ]
   ],
-  /*
-  ** Axios module configuration
-  ** See https://axios.nuxtjs.org/options
-  */
   axios: {
     baseURL: process.env.REST_API
   },
-  /*
-  ** Build configuration
-  ** See https://nuxtjs.org/api/configuration-build/
-  */
+  pwa: {
+    meta: {
+      name: 'Związek Harcerstwa Polskiego',
+      theme: '#78a22f'
+    },
+    manifest: {
+      name: 'Związek Harcerstwa Polskiego',
+      tag: 'pl',
+      useWebmanifestExtension: false
+    }
+  },
+  sentry: {
+    dsn: process.env.DSN,
+    config: {
+      environment: process.env.NODE_ENV
+    }
+  },
+  facebook: {
+    track: 'PageView',
+    pixelId: process.env.FB,
+    autoPageView: true,
+    disabled: false
+  },
   build: {
     extend (config, { isClient }) {
       config.resolve.alias = {
@@ -76,25 +71,8 @@ export default {
     },
     transpile: [/^@zhp-pl/]
   },
-  pwa: {
-    meta: {
-      name: 'Związek Harcerstwa Polskiego',
-      theme_color: '#78a22f'
-    },
-    manifest: {
-      name: 'Związek Harcerstwa Polskiego',
-      lang: 'pl',
-      useWebmanifestExtension: false
-    }
-  },
   publicRuntimeConfig: {
     mediaBaseURL: process.env.MEDIA_BASE_URL
-  },
-  sentry: {
-    dsn: 'https://dbc6503ec4004c37a3f7706daa89aa73@o479654.ingest.sentry.io/5524988',
-    config: {
-      environment: process.env.NODE_ENV
-    }
   },
   router: {
     extendRoutes (routes, resolve) {
@@ -130,9 +108,5 @@ export default {
       }
       sortRoutes(routes)
     }
-  },
-  googleAnalytics: {
-    id: process.env.GA
-  },
-  ssr: true
+  }
 }
