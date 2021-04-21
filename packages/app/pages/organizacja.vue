@@ -60,7 +60,7 @@ export default {
       questions: [
         {
           id: '315',
-          title: 'Naczelniczka ZHP',
+          title: 'Naczelnik ZHP',
           to: '/naczelnik-zhp'
         },
         {
