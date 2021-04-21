@@ -70,7 +70,7 @@
         v-html="hasChildren ? activeChild.title.rendered : page.title.rendered"
       />
       <figure
-        v-if="page._embedded['wp:featuredmedia']"
+        v-if="page._embedded['wp:featuredmedia'] && !isGutenberg"
         class="thumbnail"
       >
         <ZImage
