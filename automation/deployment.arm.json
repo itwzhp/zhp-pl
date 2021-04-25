@@ -3,8 +3,8 @@
     "contentVersion": "1.0.0.0",
     "variables": {
         "storageAccountName": "zhpplstorage"
-      },
-    
+    },
+
     "resources": [
         {
             "name": "[variables('storageAccountName')]",
@@ -32,9 +32,21 @@
             "properties": {},
             "dependsOn": [
                 "[concat('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]"
+            ],
+            "resources": [
+                {
+                    "type": "containers",
+                    "apiVersion": "2019-06-01",
+                    "name": "public-files",
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Storage/storageAccounts/blobServices', variables('storageAccountName'), 'default')]"
+                    ],
+                    "properties": {
+                        "publicAccess": "Blob"
+                    }
+                }
             ]
         }
     ],
     "outputs": {}
 }
-
