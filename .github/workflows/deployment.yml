@@ -28,11 +28,25 @@ jobs:
             with:
               creds: ${{ secrets.AZURE_CREDENTIALS }}
           
-          - name: Deploy to Azure #rename?
+          - name: Validate ARM
             uses: azure/arm-deploy@v1
             with:
               deploymentMode: Validate
               subscriptionId: 69111246-db23-463c-82b2-7815ed5f8a1a
               resourceGroupName: zhp-pl-wordpress-theme
               template: automation/deployment.arm.json
-              #parameters: #JiraPassword='${{ secrets.JIRA_API_PASSWORD }}' ActiveDirectoryCertBase64='${{ secrets.AAD_APP_CERTIFICATE }}' ActiveDirectoryCertPassword='${{ secrets.AAD_APP_CERTIFICATE_PASSWORD }}'
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      
+      - name: Deploy ARM to Azure
+        uses: azure/arm-deploy@v1
+        with:
+          deploymentMode: Complete
+          subscriptionId: 69111246-db23-463c-82b2-7815ed5f8a1a
+          resourceGroupName: zhp-pl-wordpress-theme
+          template: automation/deployment.arm.json
