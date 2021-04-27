@@ -198,7 +198,11 @@ export default {
       })
     )
     if (!Object.keys(store.state.posts.posts).length) {
-      const postsRes = await $axios.get('posts', { params: { per_page: 9 } })
+      const postParams = {
+        per_page: 9,
+        categories: 82,
+      }
+      const postsRes = await $axios.get('posts', { params:  postParams})
       const posts = postsRes.data
       store.commit('posts/update', posts)
     }

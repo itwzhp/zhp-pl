@@ -283,10 +283,8 @@ export default {
     // last 8 post for posts ZCarousel
     const postsParams = {
       per_page: 25,
-      _embed: true
-    }
-    if (homepage.rest_acf.post_categories) {
-      postsParams.categories = homepage.rest_acf.post_categories
+      _embed: true,
+      tags: 432 // Polecane
     }
     const postsRes = await $axios.get('posts', { params: postsParams })
     const posts = postsRes.data
