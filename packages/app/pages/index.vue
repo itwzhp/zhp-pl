@@ -45,7 +45,7 @@
             class="glide__slide"
           >
             <ZPost
-              :thumbnail="post.rest_media"
+              :thumbnail="post.rest_media || require('~/assets/placeholder.png')"
               :title="post.title.rendered"
               :to="post.rest_redirect ? post.rest_redirect :`/${post.date.split('-')[0]}/${post.slug}`"
               :author="post.rest_author"
@@ -280,16 +280,28 @@ export default {
   async asyncData ({ $axios, store }) {
     const homepageRes = await $axios.get('pages', { params: { slug: 'strona-glowna', _embed: true } })
     const homepage = homepageRes.data.shift()
-    // eslint-disable-next-line
-    const event_categories = homepage?.rest_acf?.event_categories;
     // last 8 post for posts ZCarousel
-    const postsRes = await $axios.get('posts', { params: { per_page: 25, tags: 432, _embed: true } })
+    const postsParams = {
+      per_page: 25,
+      _embed: true
+    }
+    if (homepage.rest_acf.post_categories) {
+      postsParams.categories = homepage.rest_acf.post_categories
+    }
+    const postsRes = await $axios.get('posts', { params: postsParams })
     const posts = postsRes.data
     // // last 5 posts for ZHighlighted component
     // const highlightedPostsRes = await $axios.get('posts', { params: { per_page: 5 } })
     // const highlightedPosts = highlightedPostsRes.data.map(post => ({ ...post, title: post.title.rendered }))
     // last 8 events for events ZCarousel
-    const eventsRes = await $axios.get('events', { params: { per_page: 25, _embed: true, event_categories } })
+    const eventsParams = {
+      per_page: 25,
+      _embed: true
+    }
+    if (homepage.rest_acf.event_categories) {
+      eventsParams.event_categories = homepage.rest_acf.event_categories
+    }
+    const eventsRes = await $axios.get('events', { params: eventsParams })
     const events = eventsRes.data
     // partners
     const partnersRes = await $axios.get('logos', { params: { per_page: 99, logos_categories: 25, _embed: true } })
