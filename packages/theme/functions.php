@@ -1872,6 +1872,17 @@ function theme_customize_register($wp_customize) {
         'label'=>'Żałoba',
         'description'=>'Cała strona WWW zostaje wyświetlona w odcieniach szarości.'
     ));
+    $wp_customize->add_setting('add_event', array(
+        'type' => 'theme_mod',
+        'capability' => 'edit_theme_options',
+    ));
+    $wp_customize->add_control('add_event', array(
+        'type'=>'checkbox',
+        'priority'=>10,
+        'section'=>'event',
+        'label'=>'Dodawanie wydarzeń',
+        'description'=>'Niezalogowani użytkownicy mogą dodaważ wydarzenia'
+    ));
     $wp_customize->add_setting('logo', array(
         'type' => 'theme_mod',
         'capability' => 'edit_theme_options',
@@ -1955,7 +1966,8 @@ function get_options(WP_REST_Request $request) {
     return (object) array(
         'title' => get_bloginfo('name'),
         'descriptions' => get_bloginfo('description'),
-        'mourning' => get_theme_mod('mourning', ''),
+        'mourning' => get_theme_mod('mourning', false),
+        'add_event' => get_theme_mod('add_event', false),
         'domains' => get_theme_mod('domains', ''),
         'logo' => wp_get_attachment_image_src(get_theme_mod('logo', ''), 'medium')[0],
         'placeholder' => wp_get_attachment_image_src(get_theme_mod('placeholder', ''), 'medium')[0],

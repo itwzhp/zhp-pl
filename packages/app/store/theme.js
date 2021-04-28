@@ -26,5 +26,8 @@ export const getters = {
   },
   placeholder (state) {
     return state.options.placeholder
+  },
+  addEventEnable (state) {
+    return state.options.add_event
   }
 }
