@@ -18,16 +18,13 @@ export default {
     '@zhp-pl/ui/src/styles/styles.scss'
   ],
   buildModules: [
-    '@nuxtjs/pwa',
-    '@nuxtjs/google-analytics'
+    '@nuxtjs/pwa'
   ],
-  googleAnalytics: {
-    id: process.env.GA
-  },
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
     '@nuxtjs/sentry',
+    '@nuxtjs/gtm',
     'nuxt-facebook-pixel-module',
     [
       '@netsells/nuxt-hotjar', {
@@ -56,6 +53,9 @@ export default {
       environment: process.env.NODE_ENV
     }
   },
+  gtm: {
+    id: process.env.GTM
+  },
   facebook: {
     track: 'PageView',
     pixelId: process.env.FB,
@@ -72,7 +72,7 @@ export default {
     transpile: [/^@zhp-pl/]
   },
   publicRuntimeConfig: {
-    mediaBaseURL: process.env.MEDIA_BASE_URL
+    mediaBaseURL: process.env.MEDIA_BASE_URL,
   },
   router: {
     extendRoutes (routes, resolve) {
