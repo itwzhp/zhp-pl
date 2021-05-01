@@ -11,6 +11,7 @@ FROM node:14.15.0-alpine as run
 
 WORKDIR /usr/src/app
 
+COPY --from=build /usr/src/app/static static
 COPY --from=build /usr/src/app/node_modules node_modules
 COPY --from=build /usr/src/app/package.json .
 COPY --from=build /usr/src/app/nuxt.config.js .
