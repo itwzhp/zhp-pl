@@ -24,8 +24,6 @@ jobs:
         tags: |
           gkzhp/zhp-pl:latest
           gkzhp/zhp-pl:${{ github.sha	}}
-        cache-from: type=gha
-        cache-to: type=gha
 
 # based on https://blog.benoitblanchon.fr/github-action-run-ssh-commands/
   deploy-dev:
