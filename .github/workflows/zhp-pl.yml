@@ -29,8 +29,7 @@ jobs:
   deploy-dev:
     name: Deploy DEV
     runs-on: ubuntu-latest
-# DONOTMERGE!
-#    if: success() && github.ref == 'refs/heads/master'
+    if: success() && github.ref == 'refs/heads/master'
     needs: build
     env:
       IMAGE_TAG: gkzhp/zhp-pl:${{ github.sha }}
