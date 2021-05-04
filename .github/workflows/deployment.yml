@@ -67,7 +67,7 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: zhp-pl-
-          path: ${{ github.workspace }}/result.zip
+          path: ${{ github.workspace }}/zhp-pl-.zip
 
   deploy:
     runs-on: ubuntu-latest
