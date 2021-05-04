@@ -37,18 +37,36 @@ jobs:
           subscriptionId: 69111246-db23-463c-82b2-7815ed5f8a1a
           resourceGroupName: zhp-pl-wordpress-theme
           template: automation/deployment.arm.json
-
+          
+#List of files to be compressed and their locations in the repository
+#_nuxt
+#blocks                       packages/theme
+#includes
+#plugin-update-checker-4.11
+#favicon.png                  packages/app/static
+#functions.php                packages/theme
+#icon.png                     packages/app/static
+#index.php                    packages/theme
+#page-full.php                packages/theme
+#page-gutenberg.php           packages/theme
+#screenshot.png               packages/theme
+#style.css                    packages/theme
+#sw.js
   zip-files:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+
+      - name: Compressing files
       - uses: papeloto/action-zip@v1
         with:
-          files: packages/
-          dest: result.zip
+          files: packages/theme packages/app/static
+          dest: zhp-pl-.zip #TO DO add version number
+
+      - name: Output check
       - uses: actions/upload-artifact@v1
         with:
-          name: my-artifact
+          name: zhp-pl- 
           path: ${{ github.workspace }}/result.zip
 
   deploy:
