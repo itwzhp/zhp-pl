@@ -32,7 +32,7 @@
           v-html="`fot. ${post._embedded['wp:featuredmedia'][0].caption.rendered}`"
         />
       </figure>
-      <ZWordPress
+      <ZWordPressContent
         :html="post.content && post.content.rendered"
         class="content"
       />
@@ -117,12 +117,12 @@ import {
   ZImage,
   ZCarousel,
   ZPost,
-  ZWordPress,
   ZFiles,
   ZList,
   ZLink,
   ZText
 } from '@zhp-pl/ui'
+import ZWordPressContent from '@/components/organisms/ZWordPressContent'
 
 export default {
   name: 'Post',
@@ -135,13 +135,13 @@ export default {
     }
   },
   components: {
+    ZWordPressContent,
     ZSection,
     ZHeading,
     ZMetaPost,
     ZImage,
     ZCarousel,
     ZPost,
-    ZWordPress,
     ZFiles,
     ZList,
     ZLink,
