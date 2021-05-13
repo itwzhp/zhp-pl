@@ -45,10 +45,11 @@
 <script>
 import ZHeading from '../../atoms/ZHeading/ZHeading.vue';
 import ZText from '../../atoms/ZText/ZText.vue';
+import ZLink from '../../atoms/ZLink/ZLink.vue';
 
 export default {
   name: 'ZSection',
-  components: { ZText, ZHeading },
+  components: { ZText, ZHeading, ZLink },
   props: {
     tag: {
       type: String,
