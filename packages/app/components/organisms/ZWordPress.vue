@@ -1,5 +1,6 @@
 <script>
 import Vue from 'vue'
+import urlParser from '@/helpers/urlParser'
 import { ZDivider, ZButton, ZLink, ZAccordion, ZSection } from '@zhp-pl/ui'
 import '@fortawesome/fontawesome-free/js/brands.min'
 import '@fortawesome/fontawesome-free/js/solid.min'
@@ -22,7 +23,7 @@ export default {
   computed: {
     htmlToRender () {
       const anchorPattern = /<a.+?href="(.+?)">(.+?)<\/a>/gm
-      return this.html.replace(anchorPattern, (match, href, name) => (`<z-link to="${href}">${name}</z-link>`))
+      return this.html.replace(anchorPattern, (match, href, name) => (`<z-link to="${urlParser(href)}">${name}</z-link>`))
     },
     toRender () {
       return {
