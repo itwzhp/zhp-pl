@@ -1,6 +1,6 @@
 {
   "name": "@zhp-pl/ui",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "scripts": {
     "create-index": "node scripts/create-index-file.js",
     "version": "yarn create-index",

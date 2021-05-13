@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/itwzhp/zhp-pl/compare/@zhp-pl/ui@0.1.1...@zhp-pl/ui@0.2.0) (2021-05-13)
+
+
+### Bug Fixes
+
+* [#48](https://github.com/itwzhp/zhp-pl/issues/48) section background outside section content ([eb2018a](https://github.com/itwzhp/zhp-pl/commit/eb2018a9422080c258f8f49c4efb13fc041a42cb))
+* eslint ([b1803ec](https://github.com/itwzhp/zhp-pl/commit/b1803ec04eff829dc2b110ea67a7667c215d2e24))
+* import link in section ([094edb7](https://github.com/itwzhp/zhp-pl/commit/094edb72d1c63e80db3d4d98a93195ea3ec9a516))
+* No content on pages ([621a99d](https://github.com/itwzhp/zhp-pl/commit/621a99d65b0acd7c9c0a1121e1932c87ec323b59))
+
+
+### Features
+
+* GA v3 ([359525e](https://github.com/itwzhp/zhp-pl/commit/359525e0ace4fc49bbf300e37f3f28e019a9b1df))
+* remove hack from ZLink ([1832010](https://github.com/itwzhp/zhp-pl/commit/18320107719b3825e5230a7e1bf6b5f6dae817fd))
+
+
+
+
+
 ## [0.1.1](https://github.com/itwzhp/zhp-pl/compare/@zhp-pl/ui@0.1.0...@zhp-pl/ui@0.1.1) (2021-02-27)
 
 
