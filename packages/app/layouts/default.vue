@@ -99,7 +99,8 @@ import {
   ZMegaMenu,
   ZCookies,
   ZDropdown,
-  ZList
+  ZList,
+  ZButton
 } from '@zhp-pl/ui'
 
 export default {
@@ -113,7 +114,8 @@ export default {
     ZMegaMenu,
     ZCookies,
     ZDropdown,
-    ZList
+    ZList,
+    ZButton
   },
   async middleware ({ store, $axios }) {
     if (!Object.keys(store.state.theme.options).length) {

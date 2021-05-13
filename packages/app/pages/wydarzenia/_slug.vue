@@ -84,10 +84,10 @@ import {
   ZCarousel,
   ZEvent,
   ZFiles,
-  ZWordPress,
   ZEventOrganizer,
   ZMetaEvent
 } from '@zhp-pl/ui'
+import ZWordPress from '@/components/organisms/ZWordPress.vue'
 import { mapGetters } from 'vuex'
 
 export default {

@@ -41,7 +41,7 @@
           :thumbnail="tile.thumbnail || placeholder"
           :title="tile.title"
           :description="tile.description"
-          :to="tile.to"
+          :to="urlParser(tile.to)"
           class="z-card--pictured z-card--overlayed section-about-us__tile"
         />
       </template>
@@ -155,7 +155,7 @@
       <template #title>
         <ZHeading class="z-section__title">
           <ZLink
-            :to="partnersMeta.to"
+            :to="urlParser(partnersMeta.to)"
             class="t4 uppercase"
             style="--link-text-decoration: none;"
             v-html="partnersMeta.title"
@@ -194,6 +194,7 @@
 </template>
 
 <script>
+import urlParser from '@/helpers/urlParser'
 import {
   ZBanner,
   ZCarousel,
@@ -284,7 +285,8 @@ export default {
         path: '/szukaj',
         query: { search: query }
       })
-    }
+    },
+    urlParser
   },
   head () {
     const title = this.title

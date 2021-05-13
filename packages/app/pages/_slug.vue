@@ -183,12 +183,12 @@ import {
   ZHeading,
   ZCarousel,
   ZPost,
-  ZWordPress,
   ZList,
   ZLink,
   ZImage,
   ZText
 } from '@zhp-pl/ui'
+import ZWordPress from '@/components/organisms/ZWordPress.vue'
 import { mapGetters } from 'vuex'
 
 export default {
