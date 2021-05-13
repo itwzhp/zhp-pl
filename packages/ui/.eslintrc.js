@@ -4,7 +4,6 @@ module.exports = {
     jest: true,
   },
   extends: [
-    '@vue/eslint-config-airbnb',
     'plugin:vue/recommended',
   ],
   rules: {

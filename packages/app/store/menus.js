@@ -1,13 +1,14 @@
+import urlParser from '@/helpers/urlParser'
 export const state = () => ({})
 export const mutations = {
   update (state, menu) {
     const itemsAsObject = menu.items.reduce((object, item) => ({ ...object, [item.ID]: item }), {})
-    const items = menu.items
+    const { items } = menu
     const links = items.reduce((array, item) => {
-      const parent = item.menu_item_parent
+      const { menu_item_parent: parent } = item
       if (parent === '0') {
         itemsAsObject[item.ID].index = array.length
-        return [...array, { to: item.url, name: item.title, id: item.ID }]
+        return [...array, { to: urlParser(item.url), name: item.title, id: item.ID }]
       } else if (itemsAsObject[parent].index) {
         const copyOfItem = { name: item.title, id: item.ID }
         array[itemsAsObject[parent].index].submenu = array[itemsAsObject[parent].index].submenu
@@ -16,10 +17,10 @@ export const mutations = {
         itemsAsObject[item.ID].root_index = itemsAsObject[parent].index
         itemsAsObject[item.ID].submenu_index = array[itemsAsObject[parent].index].submenu.length - 1
       } else if (itemsAsObject[parent].root_index) {
-        const { root_index, submenu_index } = itemsAsObject[parent]
-        const copyOfItem = { to: item.url, name: item.title, id: item.ID }
-        array[root_index].submenu[submenu_index].mega_menu = array[root_index].submenu[submenu_index].mega_menu
-          ? [...array[root_index].submenu[submenu_index].mega_menu, copyOfItem]
+        const { root_index: rootIndex, submenu_index: submenuIndex } = itemsAsObject[parent]
+        const copyOfItem = { to: urlParser(item.url), name: item.title, id: item.ID }
+        array[rootIndex].submenu[submenuIndex].mega_menu = array[rootIndex].submenu[submenuIndex].mega_menu
+          ? [...array[rootIndex].submenu[submenuIndex].mega_menu, copyOfItem]
           : [copyOfItem]
       }
       return array

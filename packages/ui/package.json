@@ -17,33 +17,29 @@
     "access": "public"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.15.2",
+    "@fortawesome/fontawesome-free": "^5.15.3",
     "@glidejs/glide": "^3.4.1",
     "body-scroll-lock": "^3.1.5",
-    "core-js": "^3.6.5",
-    "date-fns": "^2.16.1",
-    "flatpickr": "^4.6.6",
-    "lozad": "^1.15.0",
+    "core-js": "^3.12.1",
+    "date-fns": "^2.21.3",
+    "flatpickr": "^4.6.9",
+    "lozad": "^1.16.0",
     "portal-vue": "^2.1.7",
-    "vue-fragment": "^1.5.1"
+    "vue-fragment": "^1.5.2"
   },
   "peerDependencies": {
     "vue": "^2.6.12"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.5.4",
-    "@vue/cli-plugin-eslint": "~4.5.4",
-    "@vue/cli-service": "~4.5.4",
-    "@vue/eslint-config-airbnb": "^5.1.0",
     "babel-eslint": "^10.1.0",
-    "eslint": "^7.7.0",
-    "eslint-plugin-vue": "^6.2.2",
-    "sass": "^1.32.8",
-    "sass-loader": "^10.1.1",
-    "stylelint": "^13.6.1",
+    "eslint": "^7.26.0",
+    "eslint-plugin-vue": "^7.9.0",
+    "sass": "^1.32.13",
+    "sass-loader": "^10.2.0",
+    "stylelint": "^13.13.1",
     "stylelint-config-idiomatic-order": "^8.1.0",
-    "stylelint-config-standard": "^20.0.0",
-    "stylelint-scss": "^3.18.0",
+    "stylelint-config-standard": "^22.0.0",
+    "stylelint-scss": "^3.19.0",
     "vue-template-compiler": "^2.6.12"
   },
   "browserslist": [

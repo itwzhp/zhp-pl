@@ -117,12 +117,12 @@ import {
   ZImage,
   ZCarousel,
   ZPost,
-  ZWordPress,
   ZFiles,
   ZList,
   ZLink,
   ZText
 } from '@zhp-pl/ui'
+import ZWordPress from '@/components/organisms/ZWordPress'
 
 export default {
   name: 'Post',
@@ -135,13 +135,13 @@ export default {
     }
   },
   components: {
+    ZWordPress,
     ZSection,
     ZHeading,
     ZMetaPost,
     ZImage,
     ZCarousel,
     ZPost,
-    ZWordPress,
     ZFiles,
     ZList,
     ZLink,

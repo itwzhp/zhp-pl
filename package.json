@@ -2,13 +2,13 @@
   "private": true,
   "version": "0.1.0",
   "devDependencies": {
-    "@commitlint/cli": "^9.1.2",
-    "@commitlint/config-conventional": "^9.1.2",
+    "@commitlint/cli": "^12.1.4",
+    "@commitlint/config-conventional": "^12.1.4",
     "file-save": "^0.2.0",
-    "glob": "^7.1.6",
-    "husky": "^4.2.5",
+    "glob": "^7.1.7",
+    "husky": "^6.0.0",
     "lerna": "^4.0.0",
-    "prompts": "^2.3.2",
+    "prompts": "^2.4.1",
     "uppercamelcase": "^3.0.0"
   },
   "scripts": {

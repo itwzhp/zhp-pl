@@ -45,10 +45,11 @@
 <script>
 import ZHeading from '../../atoms/ZHeading/ZHeading.vue';
 import ZText from '../../atoms/ZText/ZText.vue';
+import ZLink from '../../atoms/ZLink/ZLink.vue';
 
 export default {
   name: 'ZSection',
-  components: { ZText, ZHeading },
+  components: { ZText, ZHeading, ZLink },
   props: {
     tag: {
       type: String,
@@ -105,6 +106,7 @@ export default {
     }
 
     &__header {
+      position: relative;
       display: grid;
       max-width: var(--section-header-max-width, 1140px);
       padding: var(--section-header-padding, 0 1.25rem);

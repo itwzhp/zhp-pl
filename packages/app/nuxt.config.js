@@ -75,6 +75,9 @@ export default {
     mediaBaseURL: process.env.MEDIA_BASE_URL
   },
   router: {
+    scrollBehavior () {
+      return { x: 0, y: 0 }
+    },
     extendRoutes (routes, resolve) {
       routes.push({
         name: 'custom',

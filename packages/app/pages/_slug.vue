@@ -183,20 +183,20 @@ import {
   ZHeading,
   ZCarousel,
   ZPost,
-  ZWordPress,
   ZList,
   ZLink,
   ZImage,
   ZText
 } from '@zhp-pl/ui'
+import ZWordPress from '@/components/organisms/ZWordPress'
 
 export default {
   components: {
+    ZWordPress,
     ZSection,
     ZHeading,
     ZCarousel,
     ZPost,
-    ZWordPress,
     ZList,
     ZLink,
     ZImage,

@@ -84,10 +84,10 @@ import {
   ZCarousel,
   ZEvent,
   ZFiles,
-  ZWordPress,
   ZEventOrganizer,
   ZMetaEvent
 } from '@zhp-pl/ui'
+import ZWordPress from '@/components/organisms/ZWordPress'
 
 export default {
   components: {
@@ -117,14 +117,6 @@ export default {
       : []
 
     return { event, relatedEvents, files }
-  },
-  computed: {
-    hasFiles () {
-      return this.files.length > 0
-    },
-    ageGroups () {
-      return this.$store.getters['taxonomies/taxonomy']('age_groups')
-    }
   },
   head () {
     const title = this.event.title.rendered + ' | Związek Harcerstwa Polskiego'
@@ -166,6 +158,14 @@ export default {
           content: description
         }
       ]
+    }
+  },
+  computed: {
+    hasFiles () {
+      return this.files.length > 0
+    },
+    ageGroups () {
+      return this.$store.getters['taxonomies/taxonomy']('age_groups')
     }
   }
 }
