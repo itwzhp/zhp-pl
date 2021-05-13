@@ -1,15 +1,15 @@
 <template>
   <div>
-    <ZWordPressContent :html="page.content.rendered" />
+    <ZWordPress :html="page.content.rendered" />
   </div>
 </template>
 
 <script>
-import ZWordPressContent from '@/components/organisms/ZWordPressContent'
+import ZWordPress from '@/components/organisms/ZWordPress'
 
 export default {
   components: {
-    ZWordPressContent
+    ZWordPress
   },
   props: {
     children: {

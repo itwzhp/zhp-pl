@@ -89,7 +89,7 @@
         :children="children"
         class="content"
       />
-      <ZWordPressContent
+      <ZWordPress
         v-else
         :html="page.content && page.content.rendered"
         :class="{content: !isGutenberg}"
@@ -188,11 +188,11 @@ import {
   ZImage,
   ZText
 } from '@zhp-pl/ui'
-import ZWordPressContent from '@/components/organisms/ZWordPressContent'
+import ZWordPress from '@/components/organisms/ZWordPress'
 
 export default {
   components: {
-    ZWordPressContent,
+    ZWordPress,
     ZSection,
     ZHeading,
     ZCarousel,
