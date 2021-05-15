@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.1](https://github.com/itwzhp/zhp-pl/compare/@zhp-pl/ui@0.2.0...@zhp-pl/ui@0.2.1) (2021-05-15)
+
+
+### Features
+
+* customizable facebook and instagram ([57d3de7](https://github.com/itwzhp/zhp-pl/commit/57d3de742ec242423c2082c3765b323f1f6b98b5))
+
+
+
+
+
 # [0.2.0](https://github.com/itwzhp/zhp-pl/compare/@zhp-pl/ui@0.1.1...@zhp-pl/ui@0.2.0) (2021-05-13)
 
 
