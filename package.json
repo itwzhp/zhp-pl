@@ -6,7 +6,6 @@
     "@commitlint/config-conventional": "^12.1.4",
     "file-save": "^0.2.0",
     "glob": "^7.1.7",
-    "husky": "^6.0.0",
     "lerna": "^4.0.0",
     "prompts": "^2.4.1",
     "uppercamelcase": "^3.0.0"
@@ -26,10 +25,5 @@
   "license": "MIT",
   "workspaces": [
     "packages/*"
-  ],
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
-  }
+  ]
 }
