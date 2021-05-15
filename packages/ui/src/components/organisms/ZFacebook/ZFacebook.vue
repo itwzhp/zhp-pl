@@ -1,27 +1,30 @@
 <template>
-  <div class="z-facebook">
-    <div
-      class="fb-page"
-      data-href="https://www.facebook.com/ZHPpl"
-      data-tabs="timeline"
-      data-width="260"
-      data-height="446"
-      data-small-header="false"
-      data-adapt-container-width="true"
-      data-hide-cover="false"
-      data-show-facepile="true"
-    />
-  </div>
+  <div
+    class="fb-page z-facebook"
+    :data-href="fbPageUrl"
+    data-tabs="timeline"
+    data-width="260"
+    data-height="446"
+    data-small-header="false"
+    data-adapt-container-width="true"
+    data-hide-cover="false"
+    data-show-facepile="true"
+    data-lazy="true"
+  />
 </template>
 
 <script>
 export default {
   name: 'ZFacebook',
   props: {
-    tag: {
+    appId: {
       type: String,
-      default: 'div',
+      default: '',
     },
+    fbPageUrl: {
+      type: String,
+      default: ''
+    }
   },
   mounted() {
     const installFacebookSdkScript = (d, s, id) => {
@@ -38,7 +41,7 @@ export default {
     installFacebookSdkScript(document, 'script', 'facebook-jssdk');
     window.fbAsyncInit = () => {
       FB.init({
-        appId: '2797653613806518',
+        appId: this.appId,
         cookie: true,
         xfbml: true,
         version: 'v3.2',
@@ -47,8 +50,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss">
-.z-facebook {
-}
-</style>

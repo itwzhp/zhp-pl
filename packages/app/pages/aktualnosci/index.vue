@@ -75,7 +75,6 @@ import {
 } from '@zhp-pl/ui'
 
 export default {
-  watchQuery: true,
   components: {
     ZSection,
     ZFiltersPosts,
@@ -119,34 +118,6 @@ export default {
       }, {})
     return { news, posts, page: query.page || '1', totalPages, categories, selectedFilters }
   },
-  methods: {
-    updateQuery (query) {
-      const requestQuery = { ...this.$route.query, ...query }
-      this.$router.push({
-        path: this.$route.path,
-        query: Object.keys(requestQuery)
-          .filter((param) => {
-            switch (param) {
-              case 'page':
-                return parseInt(requestQuery[param], 10) > 1
-              default:
-                return true
-            }
-          })
-          .reduce((accumulator, param) => {
-            return requestQuery[param]
-              ? { ...accumulator, [param]: requestQuery[param] }
-              : accumulator
-          }, {})
-      })
-    },
-    search (query) {
-      this.$router.push({
-        path: '/szukaj',
-        query: { search: query, subtype: 'post' }
-      })
-    }
-  },
   head () {
     const title = 'Aktualności | Związek Harcerstwa Polskiego'
     const description = ''
@@ -187,6 +158,35 @@ export default {
           content: description
         }
       ]
+    }
+  },
+  watchQuery: true,
+  methods: {
+    updateQuery (query) {
+      const requestQuery = { ...this.$route.query, ...query }
+      this.$router.push({
+        path: this.$route.path,
+        query: Object.keys(requestQuery)
+          .filter((param) => {
+            switch (param) {
+              case 'page':
+                return parseInt(requestQuery[param], 10) > 1
+              default:
+                return true
+            }
+          })
+          .reduce((accumulator, param) => {
+            return requestQuery[param]
+              ? { ...accumulator, [param]: requestQuery[param] }
+              : accumulator
+          }, {})
+      })
+    },
+    search (query) {
+      this.$router.push({
+        path: '/szukaj',
+        query: { search: query, subtype: 'post' }
+      })
     }
   }
 }

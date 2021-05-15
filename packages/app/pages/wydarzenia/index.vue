@@ -76,7 +76,6 @@ import {
 import NewEventModal from '@/pages/wydarzenia/components/NewEventForm.vue'
 
 export default {
-  watchQuery: true,
   components: {
     NewEventModal,
     ZSection,
@@ -181,60 +180,6 @@ export default {
       }
     }
   },
-  computed: {
-    ageGroups () {
-      return this.$store.getters['taxonomies/taxonomy']('age_groups')
-    }
-  },
-  watch: {
-    hasNotification (isOpen) {
-      if (isOpen) {
-        setTimeout(() => {
-          this.hasNotification = false
-        }, 5000)
-      }
-    }
-  },
-  async mounted () {
-    const query = this.$route.query
-    if (query.id && query.token) {
-      const { data } = await this.$axios.post('post-events', { id: query.id, token: query.token })
-      this.notification = data
-      this.hasNotification = true
-    }
-  },
-  methods: {
-    async submitHandler (value) {
-      const { data } = await this.$axios.post('post-events', value, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      })
-      this.isNewEventModalVisible = false
-      this.notification = data
-      this.hasNotification = true
-    },
-    updateQuery (query) {
-      const requestQuery = { ...this.$route.query, ...query }
-      this.$router.push({
-        path: this.$route.path,
-        query: Object.keys(requestQuery)
-          .filter((param) => {
-            switch (param) {
-              case 'page':
-                return parseInt(requestQuery[param], 10) > 1
-              default:
-                return true
-            }
-          })
-          .reduce((accumulator, param) => {
-            return requestQuery[param]
-              ? { ...accumulator, [param]: requestQuery[param] }
-              : accumulator
-          }, {})
-      })
-    }
-  },
   head () {
     const title = 'Wydarzenia | Związek Harcerstwa Polskiego'
     const description = ''
@@ -275,6 +220,61 @@ export default {
           content: description
         }
       ]
+    }
+  },
+  computed: {
+    ageGroups () {
+      return this.$store.getters['taxonomies/taxonomy']('age_groups')
+    }
+  },
+  watch: {
+    hasNotification (isOpen) {
+      if (isOpen) {
+        setTimeout(() => {
+          this.hasNotification = false
+        }, 5000)
+      }
+    }
+  },
+  watchQuery: true,
+  async mounted () {
+    const query = this.$route.query
+    if (query.id && query.token) {
+      const { data } = await this.$axios.post('post-events', { id: query.id, token: query.token })
+      this.notification = data
+      this.hasNotification = true
+    }
+  },
+  methods: {
+    async submitHandler (value) {
+      const { data } = await this.$axios.post('post-events', value, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+      this.isNewEventModalVisible = false
+      this.notification = data
+      this.hasNotification = true
+    },
+    updateQuery (query) {
+      const requestQuery = { ...this.$route.query, ...query }
+      this.$router.push({
+        path: this.$route.path,
+        query: Object.keys(requestQuery)
+          .filter((param) => {
+            switch (param) {
+              case 'page':
+                return parseInt(requestQuery[param], 10) > 1
+              default:
+                return true
+            }
+          })
+          .reduce((accumulator, param) => {
+            return requestQuery[param]
+              ? { ...accumulator, [param]: requestQuery[param] }
+              : accumulator
+          }, {})
+      })
     }
   }
 }

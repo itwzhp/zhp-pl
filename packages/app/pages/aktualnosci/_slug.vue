@@ -175,14 +175,6 @@ export default {
 
     return { post, relatedPosts, files }
   },
-  computed: {
-    hasFiles () {
-      return this.files.length > 0
-    },
-    newses () {
-      return this.$store.getters['posts/posts'].filter(post => (post.id !== this.post.id)).slice(0, 4)
-    }
-  },
   head () {
     const title = this.post.title.rendered + ' | Związek Harcerstwa Polskiego'
     const description = ''
@@ -225,6 +217,14 @@ export default {
           content: description
         }
       ]
+    }
+  },
+  computed: {
+    hasFiles () {
+      return this.files.length > 0
+    },
+    newses () {
+      return this.$store.getters['posts/posts'].filter(post => (post.id !== this.post.id)).slice(0, 4)
     }
   }
 }

@@ -73,7 +73,6 @@ import {
 } from '@zhp-pl/ui'
 
 export default {
-  watchQuery: true,
   components: {
     ZSection,
     ZClipPath,
@@ -94,39 +93,6 @@ export default {
     const totalPages = postsRes.headers['x-wp-totalpages']
 
     return { posts, page: query.page || '1', totalPages, search, query }
-  },
-  computed: {
-    title () {
-      return `Wyniki wyszukiwania dla "${this.query.search}"`
-    }
-  },
-  methods: {
-    updateQuery (query) {
-      const requestQuery = { ...this.$route.query, ...query }
-      this.$router.push({
-        path: this.$route.path,
-        query: Object.keys(requestQuery)
-          .filter((param) => {
-            switch (param) {
-              case 'page':
-                return parseInt(requestQuery[param], 10) > 1
-              default:
-                return true
-            }
-          })
-          .reduce((accumulator, param) => {
-            return requestQuery[param]
-              ? { ...accumulator, [param]: requestQuery[param] }
-              : accumulator
-          }, {})
-      })
-    },
-    submit (query) {
-      this.$router.push({
-        path: '/szukaj',
-        query: { search: query }
-      })
-    }
   },
   head () {
     const title = this.query.search + ' | Związek Harcerstwa Polskiego'
@@ -168,6 +134,40 @@ export default {
           content: description
         }
       ]
+    }
+  },
+  computed: {
+    title () {
+      return `Wyniki wyszukiwania dla "${this.query.search}"`
+    }
+  },
+  watchQuery: true,
+  methods: {
+    updateQuery (query) {
+      const requestQuery = { ...this.$route.query, ...query }
+      this.$router.push({
+        path: this.$route.path,
+        query: Object.keys(requestQuery)
+          .filter((param) => {
+            switch (param) {
+              case 'page':
+                return parseInt(requestQuery[param], 10) > 1
+              default:
+                return true
+            }
+          })
+          .reduce((accumulator, param) => {
+            return requestQuery[param]
+              ? { ...accumulator, [param]: requestQuery[param] }
+              : accumulator
+          }, {})
+      })
+    },
+    submit (query) {
+      this.$router.push({
+        path: '/szukaj',
+        query: { search: query }
+      })
     }
   }
 }

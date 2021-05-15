@@ -179,10 +179,16 @@
         <ZInstagram
           :image="`${$config.mediaBaseURL}/wp-content/uploads/2020/11/instagram.jpg`"
           :feed="feed"
+          name="Związek Harcerstwa Polskiego"
+          user="zhp_pl"
+          :description="instagramDescription"
         />
       </div>
       <div class="section-social__facebook">
-        <ZFacebook />
+        <ZFacebook
+          app-id="2797653613806518"
+          fb-page-url="https://www.facebook.com/ZHPpl"
+        />
       </div>
       <div class="section-social__partners">
         <ZHeading>
@@ -328,6 +334,27 @@ export default {
     },
     highlightedPosts () {
       return this.$store.getters['posts/posts'].map(post => ({ ...post, title: post.title.rendered })).slice(0, 5)
+    },
+    instagramDescription () {
+      return `⚜️ Największa organizacja harcerska w Polsce <a
+            class="z-link"
+            href="https://www.instagram.com/explore/tags/zhp/"
+            target="_blank"
+          >
+            #ZHP
+          </a>| The Polish Scouting and Guiding Association official | <a
+            class="z-link"
+            href="https://www.instagram.com/explore/tags/sprawnościnacałeżycie/"
+            target="_blank"
+          >
+            #sprawnościnacałeżycie
+          </a> <a
+            class="z-link"
+            href="https://www.instagram.com/explore/tags/harcerstwo/"
+            target="_blank"
+          >
+            #harcerstwo
+          </a> ⚜️`
     }
   },
   methods: {

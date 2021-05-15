@@ -202,7 +202,6 @@ export default {
     ZImage,
     ZText
   },
-  watchQuery: true,
   async asyncData ({ $axios, params, redirect, route }) {
     if (!params) {
       return
@@ -262,34 +261,6 @@ export default {
       }), {})
     }
   },
-  computed: {
-    activeChild () {
-      return this.hasChildren && this.children[this.$route.params.id]
-    },
-    isFull () {
-      return /page-full/gi.test(this.page.template)
-    },
-    isGutenberg () {
-      return /page-gutenberg/gi.test(this.page.template)
-    },
-    hasChildren () {
-      return Object.keys(this.children).length
-    },
-    topCarousels () {
-      return this.carousels.filter(carosuel => carosuel.location === 'before')
-    },
-    bottomCarousels () {
-      return this.carousels.filter(carosuel => carosuel.location === 'after')
-    },
-    custom () {
-      return this.page.rest_acf.featuredmedia
-        ? {
-          '--cover-mobile-height': this.page.rest_acf.featuredmedia.mobile && `${this.page.rest_acf.featuredmedia.mobile}px`,
-          '--cover-height': this.page.rest_acf.featuredmedia.desktop && `${this.page.rest_acf.featuredmedia.desktop}px`
-        }
-        : {}
-    }
-  },
   head () {
     const title = (this.hasChildren ? this.activeChild.title.rendered : this.page.title.rendered) + ' | Związek Harcerstwa Polskiego'
     const description = ''
@@ -333,7 +304,36 @@ export default {
         }
       ]
     }
-  }
+  },
+  computed: {
+    activeChild () {
+      return this.hasChildren && this.children[this.$route.params.id]
+    },
+    isFull () {
+      return /page-full/gi.test(this.page.template)
+    },
+    isGutenberg () {
+      return /page-gutenberg/gi.test(this.page.template)
+    },
+    hasChildren () {
+      return Object.keys(this.children).length
+    },
+    topCarousels () {
+      return this.carousels.filter(carosuel => carosuel.location === 'before')
+    },
+    bottomCarousels () {
+      return this.carousels.filter(carosuel => carosuel.location === 'after')
+    },
+    custom () {
+      return this.page.rest_acf.featuredmedia
+        ? {
+            '--cover-mobile-height': this.page.rest_acf.featuredmedia.mobile && `${this.page.rest_acf.featuredmedia.mobile}px`,
+            '--cover-height': this.page.rest_acf.featuredmedia.desktop && `${this.page.rest_acf.featuredmedia.desktop}px`
+          }
+        : {}
+    }
+  },
+  watchQuery: true
 }
 </script>
 
