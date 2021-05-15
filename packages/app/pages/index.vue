@@ -86,7 +86,7 @@
     <ZSection class="section-highlighted">
       <ZCard
         :title="newsCard.title.rendered"
-        :thumbnail="joinUs._embedded['wp:featuredmedia'] ?newsCard._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url : placeholder"
+        :thumbnail="newsCard._embedded['wp:featuredmedia'] ? newsCard._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url : placeholder"
         :to="newsCard.rest_redirect ? newsCard.rest_redirect :`/${newsCard.date.split('-')[0]}/${newsCard.slug}`"
         class="section-highlighted__card"
       />
