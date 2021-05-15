@@ -83,6 +83,19 @@
         </template>
       </ZCarousel>
     </ZSection>
+    <ZSection class="section-highlighted">
+      <ZCard
+        :title="newsCard.title.rendered"
+        :thumbnail="joinUs._embedded['wp:featuredmedia'] ?newsCard._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url : placeholder"
+        :to="newsCard.rest_redirect ? newsCard.rest_redirect :`/${newsCard.date.split('-')[0]}/${newsCard.slug}`"
+        class="section-highlighted__card"
+      />
+      <ZHighlighted
+        :title="highlighted.title"
+        :posts="news"
+        class="section-highlighted__posts"
+      />
+    </ZSection>
     <ZSection
       class="section-join-us"
     >
@@ -206,7 +219,8 @@ import {
   ZClipPath,
   ZImage,
   ZCard,
-  ZLink
+  ZLink,
+  ZHighlighted
 } from '@zhp-pl/ui'
 import { mapGetters } from 'vuex'
 
@@ -222,23 +236,31 @@ export default {
     ZClipPath,
     ZImage,
     ZCard,
-    ZLink
+    ZLink,
+    ZHighlighted
   },
   async asyncData ({ $axios, store }) {
+    // * get homepage settings
     const homepageRes = await $axios.get('pages', { params: { slug: 'strona-glowna', _embed: true } })
     const homepage = homepageRes.data.shift()
+
+    // * get posts for Polecamy
     const postsParams = { per_page: 25, _embed: true }
     if (homepage.rest_acf.posts.categories) {
       postsParams.categories = homepage.rest_acf.posts.categories
     }
     const postsRes = await $axios.get('posts', { params: postsParams })
     const posts = postsRes.data
+
+    // * get events for Przedsięwziecia i wydarzenia
     const eventsParams = { per_page: 25, _embed: true }
     if (homepage.rest_acf.events.categories) {
       eventsParams.event_categories = homepage.rest_acf.events.categories
     }
     const eventsRes = await $axios.get('events', { params: eventsParams })
     const events = eventsRes.data
+
+    // * get post for Chcesz zapisać...
     const joinUsParams = {
       per_page: 1,
       _embed: true
@@ -248,6 +270,8 @@ export default {
     }
     const joinUsRes = await $axios.get('posts', { params: joinUsParams })
     const joinUs = joinUsRes.data.shift()
+
+    // * get logos for Partnerzy
     const partnersParams = {
       per_page: 99,
       _embed: true
@@ -257,7 +281,24 @@ export default {
     }
     const partnersRes = await $axios.get('logos', { params: partnersParams })
     const partners = partnersRes.data
-    return { homepage, posts, events, partners, joinUs }
+
+    // * get posts for Aktualności
+    const newsParams = { per_page: 5 }
+    if (homepage.rest_acf.highlighted.categories) {
+      newsParams.categories = homepage.rest_acf.highlighted.categories
+    }
+    const newsRes = await $axios.get('posts', { params: newsParams })
+    const news = newsRes.data.map(news => ({ ...news, title: news.title.rendered }))
+
+    // * get post for Aktualności
+    const newsCardParams = { per_page: 1, _embed: true }
+    if (homepage.rest_acf.highlighted.tags) {
+      newsCardParams.tags = homepage.rest_acf.highlighted.tags
+    }
+    const newsCardRes = await $axios.get('posts', { params: newsCardParams })
+    const newsCard = newsCardRes.data.shift()
+
+    return { homepage, posts, events, partners, joinUs, news, newsCard }
   },
   computed: {
     ...mapGetters({
@@ -271,6 +312,9 @@ export default {
     },
     about () {
       return this.homepage.rest_acf.about
+    },
+    highlighted () {
+      return this.homepage.rest_acf.highlighted
     },
     join () {
       return this.homepage.rest_acf.join

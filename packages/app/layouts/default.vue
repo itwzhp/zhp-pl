@@ -151,6 +151,7 @@ export default {
         }
       })
     )
+    // Warto przeczytać on single post page
     if (!Object.keys(store.state.posts.posts).length) {
       const postsRes = await $axios.get('posts', { params: { per_page: 9 } })
       const posts = postsRes.data
