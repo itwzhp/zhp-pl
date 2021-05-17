@@ -23,9 +23,9 @@ export default {
       return this.html.replace(/<a.*?href="(.*?)".*?>(.*?)<\/a>/gm, (match, href, name) => {
         const isDownloadButton = match.search('wp-block-file__button') > -1
         if (isDownloadButton) {
-          return `<z-button to="${href}">${name}</z-button>`
+          return `<z-button to="${urlParser(href)}">${name}</z-button>`
         }
-        return `<z-link to="${href}">${name}</z-link>`
+        return `<z-link to="${urlParser(href)}">${name}</z-link>`
       })
     },
     toRender () {
