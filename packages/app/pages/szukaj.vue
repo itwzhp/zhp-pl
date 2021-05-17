@@ -74,7 +74,6 @@ import {
 import { mapGetters } from 'vuex'
 
 export default {
-  watchQuery: true,
   components: {
     ZSection,
     ZClipPath,
@@ -96,6 +95,7 @@ export default {
 
     return { posts, page: query.page || '1', totalPages, search, query }
   },
+  watchQuery: true,
   computed: {
     ...mapGetters({
       title: 'theme/title',

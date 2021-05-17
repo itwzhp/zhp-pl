@@ -97,6 +97,23 @@
       />
     </ZSection>
     <ZSection
+      v-if="hasMeet"
+      class="section-about-us"
+    >
+      <ZBanner
+        v-bind="meet"
+        cover-type="video"
+        class="section-about-us__banner"
+      >
+        <template #thumbnail="{thumbnail}">
+          <ZVideo
+            class="z-banner__thumbnail section-about-us__video"
+            v-bind="thumbnail"
+          />
+        </template>
+      </ZBanner>
+    </ZSection>
+    <ZSection
       class="section-join-us"
     >
       <ZBanner
@@ -161,7 +178,64 @@
       </ZCarousel>
     </ZSection>
     <ZSection
-      v-if="partners.length >= 4"
+      v-if="hasSocial"
+      class="section-social"
+    >
+      <ZInstagram
+        v-if="hasInstagram"
+        v-bind="instagram"
+        :feed="feed"
+        class="section-social__instagram"
+      />
+      <ZFacebook
+        v-if="hasFacebook"
+        v-bind="facebook"
+        class="section-social__facebook"
+      />
+      <div class="section-social__partners">
+        <ZLink
+          :to="urlParser(partnersMeta.to)"
+          class="t4 uppercase"
+          style="--link-text-decoration: none;"
+          v-html="partnersMeta.title"
+        />
+        <ZCarousel
+          v-if="partners.length >= 4"
+          :has-controls="false"
+          :settings="{
+            autoplay: 3000,
+            perView: 3,
+            peek: {
+              before: 0,
+              after: 55
+            },
+            breakpoints: {
+              640: {
+                perView: 1,
+                peek: {
+                  before: 0,
+                  after: 20
+                }
+              }
+            }
+          }"
+          class="carousel"
+        >
+          <template v-for="(partner, key) in partners">
+            <li
+              :key="key"
+              class="glide__slide"
+            >
+              <ZImage
+                :src="partner._embedded['wp:featuredmedia'][0].media_details.sizes.medium ? partner._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url : partner._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url"
+              />
+            </li>
+          </template>
+        </ZCarousel>
+      </div>
+    </ZSection>
+    <ZSection
+      v-else-if="partners.length >= 4"
       class="section-partners"
       :title="partnersMeta.title"
     >
@@ -220,12 +294,16 @@ import {
   ZImage,
   ZCard,
   ZLink,
-  ZHighlighted
+  ZHighlighted,
+  ZInstagram,
+  ZVideo
 } from '@zhp-pl/ui'
+import ZFacebook from '@/components/organisms/ZFacebook.vue'
 import { mapGetters } from 'vuex'
 
 export default {
   components: {
+    ZVideo,
     ZBanner,
     ZCarousel,
     ZEvent,
@@ -237,7 +315,9 @@ export default {
     ZImage,
     ZCard,
     ZLink,
-    ZHighlighted
+    ZHighlighted,
+    ZFacebook,
+    ZInstagram
   },
   async asyncData ({ $axios, store }) {
     // * get homepage settings
@@ -298,6 +378,21 @@ export default {
     const newsCardRes = await $axios.get('posts', { params: newsCardParams })
     const newsCard = newsCardRes.data.shift()
 
+    // * get instagram html to parse, and store it in store
+    const instagram = homepage.rest_acf.social.instagram
+    const hasInstagram = instagram.image &&
+        instagram.user &&
+        instagram.name &&
+        instagram.description
+    if (hasInstagram && !Object.keys(store.state.instagram.posts).length) {
+      const instagramRes = await $axios.get('instagram')
+      const instagram = instagramRes.data
+      const feed = instagram.match(/href="(.+?)".+?data-full-res="(.+?)"/gm).map(match => (
+        { href: match.match(/href="(.+?)"/)[1], src: match.match(/data-full-res="(.+?)"/)[1] }
+      ))
+      store.commit('instagram/update', feed)
+    }
+
     return { homepage, posts, events, partners, joinUs, news, newsCard }
   },
   computed: {
@@ -313,6 +408,13 @@ export default {
     about () {
       return this.homepage.rest_acf.about
     },
+    meet () {
+      return { ...this.homepage.rest_acf.meet, thumbnail: { src: this.homepage.rest_acf.meet.thumbnail } }
+    },
+    hasMeet () {
+      const meet = this.homepage.rest_acf.meet
+      return meet.visible && meet.thumbnail
+    },
     highlighted () {
       return this.homepage.rest_acf.highlighted
     },
@@ -321,6 +423,31 @@ export default {
     },
     partnersMeta () {
       return this.homepage.rest_acf.partners
+    },
+    social () {
+      return this.homepage.rest_acf.social
+    },
+    facebook () {
+      return this.social.facebook
+    },
+    hasFacebook () {
+      return this.facebook.appId &&
+          this.facebook.fbPageUrl
+    },
+    instagram () {
+      return this.social.instagram
+    },
+    hasInstagram () {
+      return this.instagram.image &&
+          this.instagram.user &&
+          this.instagram.name &&
+          this.instagram.description
+    },
+    hasSocial () {
+      return this.hasFacebook || this.hasInstagram
+    },
+    feed () {
+      return this.$store.getters['instagram/posts']
     }
   },
   methods: {
@@ -512,6 +639,64 @@ export default {
   .section-partners {
     &::before {
       content: none;
+    }
+  }
+
+  .section-social {
+    &__instagram {
+      grid-column: span 12;
+
+      @media (min-width: 640px) {
+        grid-column: span 4;
+      }
+
+      & + .section-social__facebook {
+        @media (min-width: 640px) {
+          grid-column: span 3;
+        }
+      }
+
+      & + .section-social__partners {
+        @media (min-width: 640px) {
+          grid-column: span 8;
+        }
+      }
+    }
+
+    &__facebook {
+      grid-column: span 12;
+
+      @media (min-width: 640px) {
+        grid-column: span 4;
+      }
+
+      &:not(:first-of-type) + .section-social__partners {
+        @media (min-width: 640px) {
+          grid-column: span 5;
+        }
+      }
+
+      & + .section-social__partners {
+        grid-column: span 8;
+      }
+    }
+
+    &__partners {
+      grid-column: span 12;
+    }
+  }
+
+  .section-about-us {
+    --section-content-max-width: 1235px;
+
+    &__banner {
+      grid-column: span 12;
+
+      @media (min-width: 640px) {
+        --banner-title-grid-column: span 5;
+        --banner-description-grid-column: span 5;
+        --banner-thumbnail-z-index: 10;
+      }
     }
   }
 }

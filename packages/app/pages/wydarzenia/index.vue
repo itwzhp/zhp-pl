@@ -77,7 +77,6 @@ import {
 import { mapGetters } from 'vuex'
 
 export default {
-  watchQuery: true,
   components: {
     NewEventModal: () => (/* webpackChunkName: "NewEventModal" */ import('./components/NewEventForm.vue')),
     ZSection,
@@ -167,11 +166,12 @@ export default {
       }
     }
   },
+  watchQuery: true,
   computed: {
     ...mapGetters({
       title: 'theme/title',
       placeholder: 'theme/placeholder',
-      addEventEnable: 'theme/addEventEnable',
+      addEventEnable: 'theme/addEventEnable'
     }),
     ageGroups () {
       return this.$store.getters['taxonomies/taxonomy']('age_groups')

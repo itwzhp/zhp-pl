@@ -203,7 +203,6 @@ export default {
     ZImage,
     ZText
   },
-  watchQuery: true,
   async asyncData ({ $axios, params, redirect, route }) {
     if (!params) {
       return
@@ -263,6 +262,7 @@ export default {
       }), {})
     }
   },
+  watchQuery: true,
   computed: {
     ...mapGetters({
       title: 'theme/title',
@@ -289,9 +289,9 @@ export default {
     custom () {
       return this.page.rest_acf.featuredmedia
         ? {
-          '--cover-mobile-height': this.page.rest_acf.featuredmedia.mobile && `${this.page.rest_acf.featuredmedia.mobile}px`,
-          '--cover-height': this.page.rest_acf.featuredmedia.desktop && `${this.page.rest_acf.featuredmedia.desktop}px`
-        }
+            '--cover-mobile-height': this.page.rest_acf.featuredmedia.mobile && `${this.page.rest_acf.featuredmedia.mobile}px`,
+            '--cover-height': this.page.rest_acf.featuredmedia.desktop && `${this.page.rest_acf.featuredmedia.desktop}px`
+          }
         : {}
     }
   },

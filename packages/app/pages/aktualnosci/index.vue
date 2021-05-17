@@ -76,7 +76,6 @@ import {
 import { mapGetters } from 'vuex'
 
 export default {
-  watchQuery: true,
   components: {
     ZSection,
     ZFiltersPosts,
@@ -120,6 +119,7 @@ export default {
       }, {})
     return { news, posts, page: query.page || '1', totalPages, categories, selectedFilters }
   },
+  watchQuery: true,
   methods: {
     updateQuery (query) {
       const requestQuery = { ...this.$route.query, ...query }
