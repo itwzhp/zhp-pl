@@ -44,7 +44,7 @@
           </ZDropdown>
         </div>
       </div>
-      <ZMegaMenu :menu="headerMenu" />
+      <ZMegaMenu :menu="megaMenu" />
     </header>
     <Nuxt class="layout__page" />
     <footer class="z-footer">
@@ -170,7 +170,8 @@ export default {
   },
   data () {
     return {
-      cookies: false
+      cookies: false,
+      isMobile: false
     }
   },
   computed: {
@@ -181,6 +182,13 @@ export default {
     }),
     headerMenu () {
       return this.$store.getters['menus/menu']('headerMenu')
+    },
+    megaMenu () {
+      const headerMenu = this.headerMenu
+      const headerUnits = this.headerUnits
+      return this.isMobile
+        ? [...headerMenu, { name: 'Więcej', to: '#', submenu: [{ name: this.headerUnitsLabel, to: '#', mega_menu: headerUnits }] }]
+        : headerMenu
     },
     footerMenu () {
       return this.$store.getters['menus/menu']('footerMenu')
@@ -196,6 +204,8 @@ export default {
     }
   },
   mounted () {
+    this.isMobile = matchMedia('(max-width: 640px)').matches
+    matchMedia('(max-width: 640px)').addListener((e) => { this.isMobile = e.matches })
     if (localStorage.getItem('cookies')) { return }
     this.cookies = true
     setTimeout(this.closeCookies, 60000)
