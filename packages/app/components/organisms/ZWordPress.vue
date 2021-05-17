@@ -210,8 +210,39 @@ export default {
 
   .wp-block-file {
     display: flex;
-    justify-content: space-between;
     align-content: center;
+    justify-content: space-between;
+  }
+
+  .wp-block-gallery {
+    margin: 1.5rem 0;
+
+    .blocks-gallery-grid {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 0;
+      margin: -0.5rem 0 0 -0.5rem;
+      list-style-type: none;
+    }
+
+    .blocks-gallery-item {
+      padding: 0.5rem 0 0 0.5rem;
+
+      &__caption {
+        font-size: 0.75rem;
+        font-weight: 300;
+      }
+    }
+
+    @for $i from 1 through 6 {
+      &.columns-#{$i} {
+        .blocks-gallery-item {
+          @media (min-width: 640px) {
+            flex: 1 1 calc(100%/#{$i});
+          }
+        }
+      }
+    }
   }
 
   @for $i from 1 through 12 {
