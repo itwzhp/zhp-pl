@@ -22,8 +22,13 @@ export default {
   },
   computed: {
     htmlToRender () {
-      const anchorPattern = /<a.+?href="(.+?)">(.+?)<\/a>/gm
-      return this.html.replace(anchorPattern, (match, href, name) => (`<z-link to="${urlParser(href)}">${name}</z-link>`))
+      return this.html.replace(/<a.*?href="(.*?)".*?>(.*?)<\/a>/gm, (match, href, name) => {
+        const isDownloadButton = match.search('wp-block-file__button') > -1
+        if (isDownloadButton) {
+          return `<z-button to="${href}">${name}</z-button>`
+        }
+        return `<z-link to="${href}">${name}</z-link>`
+      })
     },
     toRender () {
       return {
@@ -201,6 +206,12 @@ export default {
 
   .icon {
     display: flex;
+  }
+
+  .wp-block-file {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
   }
 
   @for $i from 1 through 12 {
