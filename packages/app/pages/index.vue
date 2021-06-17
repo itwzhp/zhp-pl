@@ -387,7 +387,8 @@ export default {
     if (hasInstagram && !Object.keys(store.state.instagram.posts).length) {
       const instagramRes = await $axios.get('instagram')
       const instagram = instagramRes.data
-      const feed = instagram.match(/href="(.+?)".+?data-full-res="(.+?)"/gm).map(match => (
+      const images = instagram.match(/href="(.+?)".+?data-full-res="(.+?)"/gm) || []
+      const feed = images.map(match => (
         { href: match.match(/href="(.+?)"/)[1], src: match.match(/data-full-res="(.+?)"/)[1] }
       ))
       store.commit('instagram/update', feed)
@@ -441,7 +442,8 @@ export default {
       return this.instagram.image &&
           this.instagram.user &&
           this.instagram.name &&
-          this.instagram.description
+          this.instagram.description &&
+          this.feed.length > 0
     },
     hasSocial () {
       return this.hasFacebook || this.hasInstagram
