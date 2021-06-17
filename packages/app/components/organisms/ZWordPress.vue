@@ -20,13 +20,18 @@ export default {
   },
   computed: {
     htmlToRender () {
-      return this.html.replace(/<a.*?href="(.*?)".*?>(.*?)<\/a>/gm, (match, href, name) => {
+      const html = this.html
+      const withLinks = html.replace(/<a.*?href="(.*?)".*?>(.*?)<\/a>/gm, (match, href, name) => {
         const isDownloadButton = match.search('wp-block-file__button') > -1
         if (isDownloadButton) {
           return `<z-button to="${urlParser(href)}">${name}</z-button>`
         }
         return `<z-link to="${urlParser(href)}">${name}</z-link>`
       })
+      const withFigcaption = withLinks.replace(/<figcaption.*?>(.*?)<\/figcaption>/gm, (match, label) => {
+        return `<z-text class="caption">fot. ${label}</z-text>`
+      })
+      return withFigcaption
     },
     toRender () {
       return {
