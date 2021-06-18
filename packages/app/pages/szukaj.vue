@@ -90,10 +90,12 @@ export default {
 
     const postsRes = await $axios.get('search', { params: { _embed: true, subtype: ['post', 'page', 'event'], ...query } })
     const posts = postsRes.data
+    // console.log(posts);
 
     const totalPages = postsRes.headers['x-wp-totalpages']
+    const total = postsRes.headers['X-WP-Total']
 
-    return { posts, page: query.page || '1', totalPages, search, query }
+    return { posts, page: query.page || '1', totalPages, total, search, query }
   },
   watchQuery: true,
   computed: {
@@ -102,7 +104,9 @@ export default {
       placeholder: 'theme/placeholder'
     }),
     title () {
-      return `Wyniki wyszukiwania dla "${this.query.search}"`
+      return this.total > 0
+        ? `Wyniki wyszukiwania dla "${this.query.search}"`
+        : `Nie znaleziono treści dla "${this.query.search}"`
     }
   },
   methods: {
