@@ -87,10 +87,12 @@
       v-if="hasHighlighted"
       class="section-highlighted"
     >
-      <ZCard
+      <component
+        :is="highlightedComponent"
         :title="newsCard.title.rendered"
         :thumbnail="newsCard._embedded['wp:featuredmedia'] ? newsCard._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url : placeholder"
         :to="newsCard.rest_redirect ? newsCard.rest_redirect :`/${newsCard.date.split('-')[0]}/${newsCard.slug}`"
+        :date="newsCard.date"
         class="section-highlighted__card"
       />
       <ZHighlighted
@@ -131,7 +133,8 @@
         class="section-join-us__banner"
       />
       <!-- TODO: add to theme_options join_us_post_category -->
-      <ZPost
+      <component
+        :is="joinComponent"
         :title="joinUs.title.rendered"
         :thumbnail="joinUs._embedded['wp:featuredmedia'] ? joinUs._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url : placeholder"
         :to="joinUs.rest_redirect ? joinUs.rest_redirect :`/${joinUs.date.split('-')[0]}/${joinUs.slug}`"
@@ -435,8 +438,14 @@ export default {
     hasHighlighted () {
       return this.highlighted.visible
     },
+    highlightedComponent () {
+      return `z-${this.highlighted.component}`
+    },
     join () {
       return this.homepage.rest_acf.join
+    },
+    joinComponent () {
+      return `z-${this.join.component}`
     },
     hasJoin () {
       return this.homepage.rest_acf.join.visible
@@ -576,6 +585,7 @@ export default {
     --section-content-align-items: center;
 
     &__card {
+      --post-grid-template-rows: 1fr 128px;
       grid-column: span 12;
 
       @media (min-width: 640px) {
