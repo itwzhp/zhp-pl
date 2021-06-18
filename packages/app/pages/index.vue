@@ -30,7 +30,7 @@
       </ZSection>
     </div>
     <ZSection
-      v-if="about.tiles"
+      v-if="hasAbout"
       :title="about.title"
       :subtitle="about.subtitle"
       class="section-about-us"
@@ -47,7 +47,7 @@
       </template>
     </ZSection>
     <ZSection
-      v-if="posts.length >= 4"
+      v-if="hasPosts"
       title="Polecamy"
       class="section-posts"
     >
@@ -83,7 +83,10 @@
         </template>
       </ZCarousel>
     </ZSection>
-    <ZSection class="section-highlighted">
+    <ZSection
+      v-if="hasHighlighted"
+      class="section-highlighted"
+    >
       <ZCard
         :title="newsCard.title.rendered"
         :thumbnail="newsCard._embedded['wp:featuredmedia'] ? newsCard._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url : placeholder"
@@ -114,6 +117,7 @@
       </ZBanner>
     </ZSection>
     <ZSection
+      v-if="hasJoin"
       class="section-join-us"
     >
       <ZBanner
@@ -136,7 +140,7 @@
       />
     </ZSection>
     <ZSection
-      v-if="events.length >= 4"
+      v-if="hasEvents"
       class="section-events"
       title="Przedsięwzięcia i&nbsp;wydarzenia"
       subtitle="Szukasz rajdu dla swojej drużyny? Albo konkursu dla swojej gromady? A&nbsp;może chcesz wziąć udział w&nbsp;kursie? Sprawdź, co odbywa się w&nbsp;najbliższym czasie."
@@ -235,7 +239,7 @@
       </div>
     </ZSection>
     <ZSection
-      v-else-if="partners.length >= 4"
+      v-else-if="this.partners.length >= 4"
       class="section-partners"
       :title="partnersMeta.title"
     >
@@ -409,6 +413,15 @@ export default {
     about () {
       return this.homepage.rest_acf.about
     },
+    hasAbout () {
+      return this.about.visible && this.about.tiles
+    },
+    hasPosts () {
+      return this.homepage.rest_acf.posts.visible && this.posts.length >= 4
+    },
+    hasEvents () {
+      return this.homepage.rest_acf.events.visible && this.events.length >= 4
+    },
     meet () {
       return { ...this.homepage.rest_acf.meet, thumbnail: { src: this.homepage.rest_acf.meet.thumbnail } }
     },
@@ -419,8 +432,14 @@ export default {
     highlighted () {
       return this.homepage.rest_acf.highlighted
     },
+    hasHighlighted () {
+      return this.highlighted.visible
+    },
     join () {
       return this.homepage.rest_acf.join
+    },
+    hasJoin () {
+      return this.homepage.rest_acf.join.visible
     },
     partnersMeta () {
       return this.homepage.rest_acf.partners
@@ -446,7 +465,7 @@ export default {
           this.feed.length > 0
     },
     hasSocial () {
-      return this.hasFacebook || this.hasInstagram
+      return this.social.visible && (this.hasFacebook || this.hasInstagram)
     },
     feed () {
       return this.$store.getters['instagram/posts']
