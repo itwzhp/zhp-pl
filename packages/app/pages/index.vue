@@ -42,7 +42,11 @@
           :title="tile.title"
           :description="tile.description"
           :to="urlParser(tile.to)"
-          class="z-card--pictured z-card--overlayed section-about-us__tile"
+          class="section-about-us__tile"
+          :class="{
+            'z-card--pictured': isOverlayed,
+            'z-card--overlayed': isOverlayed,
+          }"
         />
       </template>
     </ZSection>
@@ -418,6 +422,9 @@ export default {
     },
     hasAbout () {
       return this.about.visible && this.about.tiles
+    },
+    isOverlayed () {
+      return this.about.overlayed
     },
     hasPosts () {
       return this.homepage.rest_acf.posts.visible && this.posts.length >= 4
