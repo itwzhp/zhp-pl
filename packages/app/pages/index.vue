@@ -303,6 +303,7 @@
 </template>
 
 <script>
+import debounce from 'lodash.debounce'
 import urlParser from '@/helpers/urlParser'
 import {
   ZBanner,
@@ -322,7 +323,10 @@ import {
 } from '@zhp-pl/ui'
 import ZFacebook from '@/components/organisms/ZFacebook.vue'
 import { mapGetters } from 'vuex'
-
+const resize = debounce(() => {
+  if (!window.FB) { return }
+  window.FB.XFBML.parse()
+}, 300)
 export default {
   components: {
     ZVideo,
@@ -501,6 +505,12 @@ export default {
       const social = [this.hasInstagram, this.hasFacebook, true]
       return social.filter(state => (state)).length === 3
     }
+  },
+  mounted () {
+    window.addEventListener('resize', resize)
+  },
+  beforeDestroy () {
+    window.removeEventListener('resize', resize)
   },
   methods: {
     search (query) {
@@ -698,28 +708,34 @@ export default {
 
   .section-social {
     &__instagram {
+      grid-column: span 12;
       @media (min-width: 640px) {
         grid-column: span 4;
+      }
+      &--just-two {
+        @media (min-width: 640px) {
+          grid-column: span 6;
+        }
       }
     }
 
     &__facebook {
+      grid-column: span 12;
       @media (min-width: 640px) {
         grid-column: span 3;
       }
-    }
-
-    &__partners {
-      @media (min-width: 640px) {
-        grid-column: span 5;
+      &--just-two {
+        @media (min-width: 640px) {
+          grid-column: span 6;
+        }
       }
     }
 
-    &__instagram,
-    &__facebook,
     &__partners {
       grid-column: span 12;
-
+      @media (min-width: 640px) {
+        grid-column: span 5;
+      }
       &--just-two {
         @media (min-width: 640px) {
           grid-column: span 6;

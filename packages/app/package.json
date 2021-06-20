@@ -20,6 +20,7 @@
     "@nuxtjs/sentry": "^5.0.3",
     "@zhp-pl/ui": "^0.2.1",
     "body-scroll-lock": "^3.1.5",
+    "lodash.debounce": "^4.0.8",
     "nuxt": "^2.15.6",
     "nuxt-facebook-pixel-module": "^1.5.0",
     "uid": "^2.0.0",
