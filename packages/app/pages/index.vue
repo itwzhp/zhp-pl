@@ -222,10 +222,11 @@
           v-html="partnersMeta.title"
         />
         <ZCarousel
-          v-if="partners.length >= 4"
+          ref="partners"
           :has-controls="false"
           :settings="{
-            autoplay: 3000,
+            autoplay: partners.length >= 4 ? 3000 : 0,
+            type: partners.length >= 4 ? 'carousel' : 'slider',
             perView: 3,
             peek: {
               before: 0,
@@ -233,6 +234,8 @@
             },
             breakpoints: {
               640: {
+                autoplay: 3000,
+                type: 'carousel',
                 perView: 1,
                 peek: {
                   before: 0,
@@ -250,6 +253,7 @@
             >
               <ZImage
                 :src="partner._embedded['wp:featuredmedia'][0].media_details.sizes.medium ? partner._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url : partner._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url"
+                :lazy="false"
               />
             </li>
           </template>
@@ -257,7 +261,7 @@
       </div>
     </ZSection>
     <ZSection
-      v-else-if="this.partners.length >= 4"
+      v-else
       class="section-partners"
       :title="partnersMeta.title"
     >
@@ -272,11 +276,15 @@
         </ZHeading>
       </template>
       <ZCarousel
+        ref="partners"
         :has-controls="false"
         :settings="{
-          autoplay: 3000,
+          autoplay: partners.length >= 4 ? 3000 : 0,
+          type: partners.length >= 4 ? 'carousel' : 'slider',
           breakpoints: {
             640: {
+              autoplay: 3000,
+              type: 'carousel',
               perView: 1,
               peek: {
                 before: 20,
@@ -294,6 +302,7 @@
           >
             <ZImage
               :src="partner._embedded['wp:featuredmedia'][0].media_details.sizes.medium ? partner._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url : partner._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url"
+              :lazy="false"
             />
           </li>
         </template>
@@ -507,6 +516,22 @@ export default {
     }
   },
   mounted () {
+    this.$nextTick(() => {
+      const glide = this.$refs.partners.glide
+      const isMobile = matchMedia('(max-width: 640px)').matches
+      if (!isMobile) {
+        glide.index = 0
+        glide.disabled = true
+      }
+      matchMedia('(max-width: 640px)').addListener((e) => {
+        if (e.matches) {
+          glide.disabled = false
+          return
+        }
+        glide.index = 0
+        glide.disabled = true
+      })
+    })
     window.addEventListener('resize', resize)
   },
   beforeDestroy () {
