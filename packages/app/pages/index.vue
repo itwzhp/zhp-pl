@@ -709,9 +709,11 @@ export default {
   .section-social {
     &__instagram {
       grid-column: span 12;
+
       @media (min-width: 640px) {
         grid-column: span 4;
       }
+
       &--just-two {
         @media (min-width: 640px) {
           grid-column: span 6;
@@ -721,9 +723,11 @@ export default {
 
     &__facebook {
       grid-column: span 12;
+
       @media (min-width: 640px) {
         grid-column: span 3;
       }
+
       &--just-two {
         @media (min-width: 640px) {
           grid-column: span 6;
@@ -733,9 +737,11 @@ export default {
 
     &__partners {
       grid-column: span 12;
+
       @media (min-width: 640px) {
         grid-column: span 5;
       }
+
       &--just-two {
         @media (min-width: 640px) {
           grid-column: span 6;
