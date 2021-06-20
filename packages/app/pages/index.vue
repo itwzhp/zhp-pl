@@ -197,13 +197,24 @@
         v-bind="instagram"
         :feed="feed"
         class="section-social__instagram"
+        :class="{
+          'section-social__instagram--just-two': !hasAllSocialWidgets
+        }"
       />
       <ZFacebook
         v-if="hasFacebook"
         v-bind="facebook"
         class="section-social__facebook"
+        :class="{
+          'section-social__facebook--just-two': !hasAllSocialWidgets
+        }"
       />
-      <div class="section-social__partners">
+      <div
+        class="section-social__partners"
+        :class="{
+          'section-social__partners--just-two': !hasAllSocialWidgets
+        }"
+      >
         <ZLink
           :to="urlParser(partnersMeta.to)"
           class="t4 uppercase"
@@ -485,6 +496,10 @@ export default {
     },
     feed () {
       return this.$store.getters['instagram/posts']
+    },
+    hasAllSocialWidgets () {
+      const social = [this.hasInstagram, this.hasFacebook, true]
+      return social.filter(state => (state)).length === 3
     }
   },
   methods: {
@@ -682,45 +697,30 @@ export default {
 
   .section-social {
     &__instagram {
-      grid-column: span 12;
-
       @media (min-width: 640px) {
         grid-column: span 4;
       }
-
-      & + .section-social__facebook {
-        @media (min-width: 640px) {
-          grid-column: span 3;
-        }
-      }
-
-      & + .section-social__partners {
-        @media (min-width: 640px) {
-          grid-column: span 8;
-        }
-      }
     }
-
     &__facebook {
-      grid-column: span 12;
-
       @media (min-width: 640px) {
-        grid-column: span 4;
+        grid-column: span 3;
       }
-
-      &:not(:first-of-type) + .section-social__partners {
-        @media (min-width: 640px) {
-          grid-column: span 5;
-        }
-      }
-
-      & + .section-social__partners {
-        grid-column: span 8;
+    }
+    &__partners {
+      @media (min-width: 640px) {
+        grid-column: span 5;
       }
     }
 
+    &__instagram,
+    &__facebook,
     &__partners {
       grid-column: span 12;
+      &--just-two {
+        @media (min-width: 640px) {
+          grid-column: span 6;
+        }
+      }
     }
   }
 
