@@ -608,6 +608,7 @@ export default {
 
     &__card {
       --post-grid-template-rows: 1fr 128px;
+
       grid-column: span 12;
 
       @media (min-width: 640px) {
@@ -701,11 +702,13 @@ export default {
         grid-column: span 4;
       }
     }
+
     &__facebook {
       @media (min-width: 640px) {
         grid-column: span 3;
       }
     }
+
     &__partners {
       @media (min-width: 640px) {
         grid-column: span 5;
@@ -716,6 +719,7 @@ export default {
     &__facebook,
     &__partners {
       grid-column: span 12;
+
       &--just-two {
         @media (min-width: 640px) {
           grid-column: span 6;
