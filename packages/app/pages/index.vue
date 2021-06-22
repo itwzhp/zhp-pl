@@ -258,6 +258,18 @@
             </li>
           </template>
         </ZCarousel>
+        <div
+          v-if="banners.length"
+          class="partner-banners"
+        >
+          <template v-for="(banner, key) in banners">
+            <ZImage
+              :key="key"
+              :src="banner._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url"
+              class="partner-banners__banner"
+            />
+          </template>
+        </div>
       </div>
     </ZSection>
     <ZSection
@@ -307,6 +319,18 @@
           </li>
         </template>
       </ZCarousel>
+      <div
+        v-if="banners.length"
+        class="partner-banners"
+      >
+        <template v-for="(banner, key) in banners">
+          <ZImage
+            :key="key"
+            :src="banner._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url"
+            class="partner-banners__banner"
+          />
+        </template>
+      </div>
     </ZSection>
   </div>
 </template>
@@ -392,10 +416,21 @@ export default {
       _embed: true
     }
     if (homepage.rest_acf.partners.categories) {
-      partnersParams.logos_categories = homepage.rest_acf.partners.categories
+      partnersParams.logo_categories = homepage.rest_acf.partners.categories
     }
+
     const partnersRes = await $axios.get('logos', { params: partnersParams })
     const partners = partnersRes.data
+
+    const bannersParams = {
+      per_page: 99,
+      _embed: true
+    }
+    if (homepage.rest_acf.partners.banner_categories) {
+      bannersParams.logo_categories = homepage.rest_acf.partners.banner_categories
+    }
+    const bannersRes = await $axios.get('logos', { params: bannersParams })
+    const banners = bannersRes.data
 
     // * get posts for Aktualności
     const newsParams = { per_page: 5 }
@@ -429,7 +464,7 @@ export default {
       store.commit('instagram/update', feed)
     }
 
-    return { homepage, posts, events, partners, joinUs, news, newsCard }
+    return { homepage, posts, events, partners, banners, joinUs, news, newsCard }
   },
   computed: {
     ...mapGetters({
@@ -785,6 +820,17 @@ export default {
         --banner-title-grid-column: span 5;
         --banner-description-grid-column: span 5;
         --banner-thumbnail-z-index: 10;
+      }
+    }
+  }
+
+  .partner-banners {
+    margin: 1rem 0 0 0;
+    grid-column: span 12;
+
+    &__banner {
+      &:not(:first-of-type) {
+        margin: 0.5rem 0 0 0;
       }
     }
   }
