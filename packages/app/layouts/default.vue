@@ -184,11 +184,20 @@ export default {
       return this.$store.getters['menus/menu']('headerMenu')
     },
     megaMenu () {
-      const headerMenu = this.headerMenu
-      const headerUnits = this.headerUnits
-      return this.isMobile
-        ? [...headerMenu, { name: 'Więcej', to: '#', submenu: [{ name: this.headerUnitsLabel, to: '#', mega_menu: headerUnits }] }]
-        : headerMenu
+      const headerMenu = [...this.headerMenu]
+      const headerUnits = [...this.headerUnits]
+      if (this.isMobile && headerUnits.length > 0) {
+        headerMenu.push({
+          name: this.headerUnitsLabel,
+          to: '#',
+          submenu: [{
+            name: '',
+            to: '',
+            mega_menu: headerUnits
+          }]
+        })
+      }
+      return headerMenu
     },
     footerMenu () {
       return this.$store.getters['menus/menu']('footerMenu')
