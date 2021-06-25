@@ -1,13 +1,15 @@
 module.exports = {
     lang: 'pl-PL',
     title: 'Motyw ZHP',
-    description: 'This is my first VuePress site',
+    head: [['link', { rel: 'icon', type: 'image/png', href: '/images/logo.png' }]],
     plugins: [
         ['@vuepress/search', {
             searchMaxSuggestions: 10
         }],
     ],
     themeConfig: {
+        lastUpdatedText: 'Zaktualizowano',
+        contributors: false,
         darkMode: false,
         sidebar: [
             '',
