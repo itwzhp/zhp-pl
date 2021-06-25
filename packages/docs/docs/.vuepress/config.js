@@ -1,18 +1,28 @@
 module.exports = {
     lang: 'pl-PL',
-    title: 'WordPress Motyw ZHP',
+    title: 'Motyw ZHP',
     description: 'This is my first VuePress site',
-
+    plugins: [
+        ['@vuepress/search', {
+            searchMaxSuggestions: 10
+        }],
+    ],
     themeConfig: {
-        logo: 'https://vuejs.org/images/logo.png',
+        darkMode: false,
         sidebar: [
-            '/motyw/',
-            '/motyw/rozwiazywanie-problemow.md',
-            '/motyw/nawigacja.md',
-            '/motyw/dostosowanie-motywu.md',
-            '/motyw/typy-tresci.md',
-            '/motyw/wymagane-podstrony.md',
-            '/motyw/strona-glowna.md',
-        ]
+            '',
+            '/nawigacja.md',
+            '/dostosowanie-motywu.md',
+            '/typy-tresci.md',
+            '/wymagane-podstrony.md',
+            '/strona-glowna.md',
+            '/bloki-gutenberg.md',
+            '/dodatkowe-funkcje.md',
+            '/rozwiazywanie-problemow.md',
+            '/bledy.md',
+        ],
+        themePlugins: {
+            backToTop: false
+        },
     },
 }

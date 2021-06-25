@@ -1,4 +1,5 @@
 # Wymagane wtyczki
+
 - WP Mail SMTP
 - Quick Page/Post Redirect Plugin
 - Search Exclude

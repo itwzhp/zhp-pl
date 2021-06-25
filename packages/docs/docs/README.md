@@ -1,6 +1,8 @@
-# WordPress Motyw ZHP
+---
+home: false
+---
 
-## Instalacja
+# Instalacja
 
 1. pobierz paczkę .zip z motywem
 2. w WordPress  

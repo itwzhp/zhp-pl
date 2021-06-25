@@ -1,6 +1,7 @@
 # Konfiguracja WordPressa
 
 ## Bezpośrednie odnośniki
+
 Motyw wspiera tylko jeden format “odnośników” `/rok/nazwa-wpisu`, dlatego należy wprowadzić zmiany w bezpośrednich odnośnikach WordPress
 
 Ustawienia > Bezpośrednie odnośniki, wybieramy Własny format i w polu wpisujemy `/%year%/%postname%/`
@@ -12,6 +13,7 @@ Wygląd > Dostosuj, tutaj też możesz utworzyć menu :)
 ## Ustawienia motywu
 
 ### Główne
+
 1. Żałoba - strona zostaje “pokolorowana” na czarno
 2. Logo - pozwala ustawić logotyp jednostki na stronie głównej
 ![An image](/images/settings.png)  
@@ -19,6 +21,7 @@ Wygląd > Dostosuj, tutaj też możesz utworzyć menu :)
 4. Adres witryny (URL) - nie dotyczy motywu dla Chorągwi / Hufców
 
 ### Wydarzenia
+
 1. Dodawanie wydarzeń - zaznaczona opcja umożliwia dodawanie wydarzeń przez niezalogowanych użytkowników
 2. Dozwolone domeny - domeny z maile mogą być użyte do potwierdzenia dodania Wydarzenia
 3. Tytuł maila z linkiem potwierdzającym

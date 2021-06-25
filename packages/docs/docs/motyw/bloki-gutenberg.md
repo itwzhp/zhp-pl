@@ -1,1 +1,0 @@
-# Dedykowane bloki gutenberg
