@@ -175,12 +175,12 @@
             class="glide__slide"
           >
             <ZEvent
-              :thumbnail="event.rest_media || placeholder"
+              :thumbnail="event.rest_media"
               :title="event.title && event.title.rendered"
               :to="`/wydarzenia/${event.slug}`"
               :author="event.rest_author"
               :date="event.rest_acf.date"
-              :location="{name: event._embedded['wp:term'][0][0] && event._embedded['wp:term'][0][0].name, to:'#'}"
+              :location="{name: event.rest_localization && event.rest_localization.name, to:'#'}"
               :type="event.rest_event_type"
               :audiences="event.age_groups.map((ageGroup)=>(ageGroups[ageGroup]))"
             />
@@ -392,11 +392,15 @@ export default {
     const posts = postsRes.data
 
     // * get events for Przedsięwziecia i wydarzenia
-    const eventsParams = { per_page: 25, _embed: true }
-    if (homepage.rest_acf.events.categories) {
-      eventsParams.event_categories = homepage.rest_acf.events.categories
+    const eventsParams = {
+      per_page: 25,
+      page: 1,
+      without_outdated: true,
     }
-    const eventsRes = await $axios.get('events', { params: eventsParams })
+    if (homepage.rest_acf.event_categories) {
+      eventsParams.event_categories = homepage.rest_acf.event_categories.join(',');
+    }
+    const eventsRes = await $axios.get('acf-events', { params: eventsParams })
     const events = eventsRes.data
 
     // * get post for Chcesz zapisać...

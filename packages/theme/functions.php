@@ -2566,6 +2566,8 @@ function get_acf_events(WP_REST_Request $request) {
         'age_groups' => $age_groups,
         'event_types' => $even_types,
         'localizations' => $localizations,
+        'without_outdated' => $without_outdated,
+        'event_categories' => $event_categories,
         ) = $request;
 
     // meta_query -> date from ACF
@@ -2614,6 +2616,14 @@ function get_acf_events(WP_REST_Request $request) {
         ));
         $has_tax_query = true;
     }
+    if($event_categories) {
+        array_push($tax_query, array(
+            'taxonomy' => 'event_category',
+            'field' => 'term_id',
+            'terms' => explode(',', $event_categories)
+        ));
+        $has_tax_query = true;
+    }
 
     // common WP_QUERY args
     $args = array(
@@ -2624,6 +2634,17 @@ function get_acf_events(WP_REST_Request $request) {
         'orderby' => 'meta_value',
         'order' => 'DESC',
     );
+
+    if($without_outdated) {
+        $args['meta_query'] = array(
+            array(
+                'key' => 'date_end',
+                'value' => date('Y-m-d'),
+                'compare' => '>=',
+                'type' => 'DATE'
+            )
+        );
+    }
 
     if($after && $before) {
         $args['meta_query'] = $meta_query;
