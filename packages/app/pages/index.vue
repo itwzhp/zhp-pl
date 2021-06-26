@@ -166,7 +166,7 @@
               :to="`/wydarzenia/${event.slug}`"
               :author="event.rest_author"
               :date="event.rest_acf.date"
-              :location="{name: event._embedded['wp:term'][0][0] && event._embedded['wp:term'][0][0].name, to:'#'}"
+              :location="{name: event.rest_localization && event.rest_localization.name, to:'#'}"
               :type="event.rest_event_type"
               :audiences="event.age_groups.map((ageGroup)=>(ageGroups[ageGroup]))"
             />
@@ -300,12 +300,13 @@ export default {
     // last 8 events for events ZCarousel
     const eventsParams = {
       per_page: 25,
-      _embed: true
+      page: 1,
+      without_outdated: true,
     }
     if (homepage.rest_acf.event_categories) {
-      eventsParams.event_categories = homepage.rest_acf.event_categories
+      eventsParams.event_categories = homepage.rest_acf.event_categories.join(',');
     }
-    const eventsRes = await $axios.get('events', { params: eventsParams })
+    const eventsRes = await $axios.get('acf-events', { params: eventsParams })
     const events = eventsRes.data
     // partners
     const partnersRes = await $axios.get('logos', { params: { per_page: 99, logos_categories: 25, _embed: true } })
