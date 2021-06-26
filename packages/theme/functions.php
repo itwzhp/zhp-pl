@@ -2469,17 +2469,6 @@ function theme_customize_register($wp_customize) {
         'description'=>'Placeholder zostanie wyświetlone w momencie gdy nie ustawisz zdjęcia wyróżnionego wpisu.',
         'mime_type' => 'image'
     )));
-    $wp_customize->add_setting('pwa_url', array(
-        'type' => 'theme_mod',
-        'capability' => 'edit_theme_options',
-    ));
-    $wp_customize->add_control('pwa_url', array(
-        'type'=>'input',
-        'priority'=>10,
-        'section'=>'main',
-        'label'=>'Adres witryny (URL)',
-        'description'=>'Wprowadź adres, jeśli WordPress jest pod innym adresem niż PWA.'
-    ));
     $wp_customize->add_section('event', array(
         'title'=>'Wydarzenia',
         'panel'=>'theme',
@@ -2516,6 +2505,28 @@ function theme_customize_register($wp_customize) {
         'section'=>'event',
         'label'=>'Treść maila z linkiem do potwierdzenia',
         'description'=>'Wprowadź treść maila który zostanie wysłany z tokenem do weryfikacji. Użyj {{ token }} w miejscu gdzie powienine być link.'
+    ));
+    $wp_customize->add_setting('email', array(
+        'type' => 'theme_mod',
+        'capability' => 'edit_theme_options',
+    ));
+    $wp_customize->add_control('email', array(
+        'type'=>'input',
+        'priority'=>10,
+        'section'=>'event',
+        'label'=>'Adres e-mail dla powiadomień',
+        'description'=>'Wprowadź adres e-maila, na który zostanie wysłane powiadomienie.'
+    ));
+    $wp_customize->add_setting('title', array(
+        'type' => 'theme_mod',
+        'capability' => 'edit_theme_options',
+    ));
+    $wp_customize->add_control('title', array(
+        'type'=>'input',
+        'priority'=>10,
+        'section'=>'event',
+        'label'=>'Tytuł maila z powiadomieniem',
+        'description'=>'Wprowadź tytuł maila który zostanie wysłany z powiadomieniem.'
     ));
 }
 // register endpoint to REST for theme options
@@ -2813,12 +2824,11 @@ function post_events(WP_REST_Request $request) {
     // send e-mail
     $to = $to_confirm;
     $subject = get_theme_mod('subject', '');
-    $pattern = '/\/?$/';
-    $url = preg_replace($pattern, '', get_theme_mod( 'pwa_url', '' ));
+    $url = site_url();
     $message = str_replace('{{ token }}', '<a href="'.$url.'/wydarzenia?id='.$post_id.'&token='.$token.'">'.$url.'/wydarzenia?id='.$post_id.'&token='.$token.'</a>', get_theme_mod('message', ''));
     $headers = array('Content-Type: text/html; charset=UTF-8');
 
-    wp_mail($to_confirm, $subject, $message, $headers);
+    wp_mail($to, $subject, $message, $headers);
 
     return array(
         'status' => 'success',
@@ -2837,3 +2847,17 @@ function temporary_post_status() {
 
 }
 add_action( 'init', 'temporary_post_status', 0 );
+// notification after transition event status from temporaty to pending
+function transition_post_to_pending($new_status, $old_status, $post) {
+    if(!get_theme_mod('email', '')) return;
+    if(('pending' === $new_status && 'temporary' === $old_status) && 'event' === $post->post_type) {
+        $to = get_theme_mod('email', '');
+        $subject = get_theme_mod('title', '');
+        $site_url = site_url();
+        $message = "Ktoś dodał szkic \"$post->post_title\" zaakceptuj wydarzenie <a href=\"$site_url/wp-admin/post.php?post=$post->ID&action=edit\" target=\"_blank\">$site_url/wp-admin/post.php?post=$post->ID&action=edit</a>";
+        $headers = array('Content-Type: text/html; charset=UTF-8');
+
+        wp_mail($to, $subject, $message, $headers);
+    }
+}
+add_action('transition_post_status', 'transition_post_to_pending', 10, 3);
