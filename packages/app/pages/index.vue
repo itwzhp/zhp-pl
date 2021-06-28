@@ -395,10 +395,10 @@ export default {
     const eventsParams = {
       per_page: 25,
       page: 1,
-      without_outdated: true,
+      without_outdated: true
     }
     if (homepage.rest_acf.event_categories) {
-      eventsParams.event_categories = homepage.rest_acf.event_categories.join(',');
+      eventsParams.event_categories = homepage.rest_acf.event_categories.join(',')
     }
     const eventsRes = await $axios.get('acf-events', { params: eventsParams })
     const events = eventsRes.data

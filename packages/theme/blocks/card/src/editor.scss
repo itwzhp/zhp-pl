@@ -1,0 +1,87 @@
+/**
+ * The following styles get applied inside the editor only.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+
+.wp-block-zhp-card {
+  $this: &;
+  position: relative;
+  display: grid;
+  overflow: hidden;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px 0 rgba(157, 157, 157, 0.5);
+  grid-template-rows: 1fr minmax(128px, auto);
+
+  &__thumbnail {
+	position: relative;
+	overflow: hidden;
+  }
+
+  &__image  {
+  	display: flex;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+  }
+
+  &__content {
+	display: grid;
+	align-items: end;
+	padding: 16px 24px;
+	grid-auto-flow: row;
+  }
+
+  &__title {
+	color: #78a22f;
+	text-transform: var(--text-transform);
+  }
+
+  &__description {
+	color: #fff;
+	margin-bottom: 0!important;
+	margin-top: 0!important;
+  }
+
+  &--overlayed {
+	grid-template-rows: auto auto;
+
+	#{$this}__thumbnail {
+	  position: relative;
+
+	  &::before {
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		background: #78a22f;
+		content: "";
+		opacity: 0.4;
+	  }
+	}
+  }
+
+  &--pictured {
+	grid-template-rows: auto auto;
+
+	#{$this}__title {
+	  color: #fff;
+	}
+	#{$this}__thumbnail {
+	  grid-column: 1;
+	  grid-row: 1 / span 2;
+
+	  &::after {
+		content: none;
+	  }
+	}
+	#{$this}__content {
+	  z-index: 1;
+	  align-items: end;
+	  grid-column: 1;
+	  grid-row: 2;
+	}
+  }
+}
