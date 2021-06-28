@@ -1,7 +1,7 @@
 <script>
 import Vue from 'vue'
 import urlParser from '@/helpers/urlParser'
-import { ZDivider, ZButton, ZLink, ZAccordion, ZSection } from '@zhp-pl/ui'
+import { ZDivider, ZButton, ZLink, ZAccordion, ZSection, ZCard } from '@zhp-pl/ui'
 import '@fortawesome/fontawesome-free/js/brands.min'
 import '@fortawesome/fontawesome-free/js/solid.min'
 import '@fortawesome/fontawesome-free/js/fontawesome.min'
@@ -11,6 +11,7 @@ Vue.component('ZButton', ZButton)
 Vue.component('ZLink', ZLink)
 Vue.component('ZAccordion', ZAccordion)
 Vue.component('ZSection', ZSection)
+Vue.component('ZCard', ZCard)
 
 export default {
   name: 'ZWordPress',
@@ -251,6 +252,18 @@ export default {
 
       @media (min-width: 640px) {
         grid-column: span #{$i};
+      }
+    }
+  }
+
+  .z-card--pictured {
+    .z-card {
+      &__title {
+        color: #fff;
+      }
+
+      &__description {
+        margin: 0;
       }
     }
   }
