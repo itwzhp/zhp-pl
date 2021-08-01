@@ -188,150 +188,6 @@
         </template>
       </ZCarousel>
     </ZSection>
-    <ZSection
-      v-if="hasSocial"
-      class="section-social"
-    >
-      <ZInstagram
-        v-if="hasInstagram"
-        v-bind="instagram"
-        :feed="feed"
-        class="section-social__instagram"
-        :class="{
-          'section-social__instagram--just-two': !hasAllSocialWidgets
-        }"
-      />
-      <ZFacebook
-        v-if="hasFacebook"
-        v-bind="facebook"
-        class="section-social__facebook"
-        :class="{
-          'section-social__facebook--just-two': !hasAllSocialWidgets
-        }"
-      />
-      <div
-        class="section-social__partners"
-        :class="{
-          'section-social__partners--just-two': !hasAllSocialWidgets
-        }"
-      >
-        <ZLink
-          :to="urlParser(partnersMeta.to)"
-          class="t4 uppercase"
-          style="--link-text-decoration: none;"
-          v-html="partnersMeta.title"
-        />
-        <ZCarousel
-          ref="partners"
-          :has-controls="false"
-          :settings="{
-            autoplay: partners.length >= 4 ? 3000 : 0,
-            type: partners.length >= 4 ? 'carousel' : 'slider',
-            perView: 3,
-            peek: {
-              before: 0,
-              after: 55
-            },
-            breakpoints: {
-              640: {
-                autoplay: 3000,
-                type: 'carousel',
-                perView: 1,
-                peek: {
-                  before: 0,
-                  after: 20
-                }
-              }
-            }
-          }"
-          class="carousel"
-        >
-          <template v-for="(partner, key) in partners">
-            <li
-              :key="key"
-              class="glide__slide"
-            >
-              <ZImage
-                :src="partner._embedded['wp:featuredmedia'][0].media_details.sizes.medium ? partner._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url : partner._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url"
-                :lazy="false"
-              />
-            </li>
-          </template>
-        </ZCarousel>
-        <div
-          v-if="banners.length"
-          class="partner-banners"
-        >
-          <template v-for="(banner, key) in banners">
-            <ZImage
-              :key="key"
-              :src="banner._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url"
-              class="partner-banners__banner"
-            />
-          </template>
-        </div>
-      </div>
-    </ZSection>
-    <ZSection
-      v-else
-      class="section-partners"
-      :title="partnersMeta.title"
-    >
-      <template #title>
-        <ZHeading class="z-section__title">
-          <ZLink
-            :to="urlParser(partnersMeta.to)"
-            class="t4 uppercase"
-            style="--link-text-decoration: none;"
-            v-html="partnersMeta.title"
-          />
-        </ZHeading>
-      </template>
-      <ZCarousel
-        ref="partners"
-        :has-controls="false"
-        :settings="{
-          autoplay: partners.length >= 4 ? 3000 : 0,
-          type: partners.length >= 4 ? 'carousel' : 'slider',
-          breakpoints: {
-            640: {
-              autoplay: 3000,
-              type: 'carousel',
-              perView: 1,
-              peek: {
-                before: 20,
-                after: 20
-              }
-            }
-          }
-        }"
-        class="carousel"
-      >
-        <template v-for="(partner, key) in partners">
-          <li
-            :key="key"
-            class="glide__slide"
-          >
-            <ZImage
-              :src="partner._embedded['wp:featuredmedia'][0].media_details.sizes.medium ? partner._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url : partner._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url"
-              :lazy="false"
-            />
-          </li>
-        </template>
-      </ZCarousel>
-      <div
-        v-if="banners.length"
-        class="partner-banners"
-      >
-        <template v-for="(banner, key) in banners">
-          <ZImage
-            :key="key"
-            :src="banner._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url"
-            class="partner-banners__banner"
-          />
-        </template>
-      </div>
-    </ZSection>
   </div>
 </template>
 
@@ -556,19 +412,25 @@ export default {
   },
   mounted () {
     this.$nextTick(() => {
-      const glide = this.$refs.partners.glide
+      const glide = this.$refs?.partners?.glide
       const isMobile = matchMedia('(max-width: 640px)').matches
       if (!isMobile) {
-        glide.index = 0
-        glide.disabled = true
+        if (glide) {
+          glide.index = 0
+          glide.disabled = true
+        }
       }
       matchMedia('(max-width: 640px)').addListener((e) => {
         if (e.matches) {
-          glide.disabled = false
+          if (glide) {
+            glide.disabled = false
+          }
           return
         }
-        glide.index = 0
-        glide.disabled = true
+        if (glide) {
+          glide.index = 0
+          glide.disabled = true
+        }
       })
     })
     window.addEventListener('resize', resize)
