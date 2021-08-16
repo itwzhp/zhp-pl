@@ -341,7 +341,7 @@
           </template>
         </ZFormField>
         <ZFormField
-          label="Województwo"
+          label="Lokalizacja"
           :required="true"
           :class="{'has-error': $v.form.localization.$dirty && !$v.form.localization.required}"
         >

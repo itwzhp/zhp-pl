@@ -12,12 +12,14 @@
           @submit="updateQuery"
         />
         <ZButton
+          v-if="addEventEnable"
           class="new-event"
           @click="isNewEventModalVisible = true"
         >
           Utwórz nowe
         </ZButton>
         <ZModal
+          v-if="addEventEnable"
           :is-visible="isNewEventModalVisible"
           class="new-event-modal"
           @click:close="isNewEventModalVisible = false"
@@ -32,7 +34,7 @@
       <template v-for="(event, index) in events">
         <ZEvent
           :key="event.id"
-          :thumbnail="event.rest_media"
+          :thumbnail="event.rest_media || placeholder"
           :title="event.title.rendered"
           :date="event.rest_acf.date"
           :location="{name: event.rest_localization && event.rest_localization.name, to:'#'}"
@@ -70,20 +72,18 @@ import {
   ZPagination,
   ZFiltersEvents,
   ZEvent,
-  ZModal,
   ZNotification
 } from '@zhp-pl/ui'
-import NewEventModal from '@/pages/wydarzenia/components/NewEventForm.vue'
+import { mapGetters } from 'vuex'
 
 export default {
-  watchQuery: true,
   components: {
-    NewEventModal,
+    NewEventModal: () => (/* webpackChunkName: "NewEventModal" */ import('./components/NewEventForm.vue')),
     ZSection,
     ZPagination,
     ZFiltersEvents,
     ZEvent,
-    ZModal,
+    ZModal: () => (import(/* webpackChunkName: "ZModal" */ '@zhp-pl/ui/src/components/organisms/ZModal/ZModal.vue')),
     ZNotification
   },
   async asyncData ({ $axios, params, query }) {
@@ -119,11 +119,6 @@ export default {
         id: 'event_types',
         label: 'Rodzaj wydarzenia',
         options: [
-          {
-            id: 0,
-            label: 'Wybierz rodzaj wydarzenia',
-            value: ''
-          },
           ...eventTypes
         ]
       },
@@ -131,11 +126,6 @@ export default {
         id: 'age_groups',
         label: 'Dla kogo',
         options: [
-          {
-            id: 0,
-            label: 'Wybierz dla kogo',
-            value: ''
-          },
           ...ageGroups
         ]
       },
@@ -143,11 +133,6 @@ export default {
         id: 'localizations',
         label: 'Gdzie',
         options: [
-          {
-            id: 0,
-            label: 'Wybierz gdzie',
-            value: ''
-          },
           ...localizations
         ]
       }
@@ -181,7 +166,13 @@ export default {
       }
     }
   },
+  watchQuery: true,
   computed: {
+    ...mapGetters({
+      title: 'theme/title',
+      placeholder: 'theme/placeholder',
+      addEventEnable: 'theme/addEventEnable'
+    }),
     ageGroups () {
       return this.$store.getters['taxonomies/taxonomy']('age_groups')
     }
@@ -236,9 +227,9 @@ export default {
     }
   },
   head () {
-    const title = 'Wydarzenia | Związek Harcerstwa Polskiego'
+    const title = 'Wydarzenia | ' + this.title
     const description = ''
-    const image = 'https://zhp.pl/wp-content/uploads/2015/01/zhp_fb.png'
+    const image = this.placeholder
     return {
       title,
       meta: [

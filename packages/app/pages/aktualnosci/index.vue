@@ -24,7 +24,7 @@
         />
         <ZSearch
           class="section-hero__search"
-          :input="{placeholder: 'Czego dzisiaj chcesz dowiedzieć się o ZHP?'}"
+          :input="{placeholder: 'Czego dzisiaj chcesz się dowiedzieć?'}"
           @submit="search"
         />
       </ZSection>
@@ -35,7 +35,7 @@
         <ZPost
           :key="post.id"
           :to="post.rest_redirect ? post.rest_redirect : `/${post.date.split('-')[0]}/${post.slug}`"
-          :thumbnail="post.rest_media || require('~/assets/placeholder.png')"
+          :thumbnail="post.rest_media || placeholder"
           :title="post.title && post.title.rendered"
           :author="post.rest_author"
           :date="post.date"
@@ -73,9 +73,9 @@ import {
   ZClipPath,
   ZSearch
 } from '@zhp-pl/ui'
+import { mapGetters } from 'vuex'
 
 export default {
-  watchQuery: true,
   components: {
     ZSection,
     ZFiltersPosts,
@@ -119,6 +119,7 @@ export default {
       }, {})
     return { news, posts, page: query.page || '1', totalPages, categories, selectedFilters }
   },
+  watchQuery: true,
   methods: {
     updateQuery (query) {
       const requestQuery = { ...this.$route.query, ...query }
@@ -147,10 +148,16 @@ export default {
       })
     }
   },
+  computed: {
+    ...mapGetters({
+      title: 'theme/title',
+      placeholder: 'theme/placeholder'
+    })
+  },
   head () {
-    const title = 'Aktualności | Związek Harcerstwa Polskiego'
+    const title = `Aktualności | ${this.title}`
     const description = ''
-    const image = 'https://zhp.pl/wp-content/uploads/2015/01/zhp_fb.png'
+    const image = this.news._embedded['wp:featuredmedia'][0].media_details.sizes.medium_large.source_url
     return {
       title,
       meta: [
