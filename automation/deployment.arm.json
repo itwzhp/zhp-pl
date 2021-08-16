@@ -25,6 +25,7 @@
             "kind": "StorageV2",
             "tags": {}
         },
+        
         {
             "name": "[concat(variables('storageAccountName'), '/default')]",
             "type": "Microsoft.Storage/storageAccounts/blobServices",
