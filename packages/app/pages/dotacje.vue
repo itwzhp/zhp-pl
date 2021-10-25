@@ -55,6 +55,12 @@ export default {
           thumbnail: `${this.$config.mediaBaseURL}/wp-content/uploads/2020/11/harp-scaled.jpg`,
           title: 'Harcerska Akademia Rozwoju Pedagogicznego (HARP)',
           to: 'harp'
+        },
+        {
+          id: '548',
+          thumbnail: `${this.$config.mediaBaseURL}/wp-content/uploads/2021/10/pfron.png`,
+          title: 'Kolory Życia',
+          to: 'PFRON'
         }
       ]
     }
