@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 # Files to be compressed:
 #   [d] _nuxt
 #   [d] blocks
