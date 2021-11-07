@@ -62,7 +62,7 @@ jobs:
         shell: bash
         run: |
           chmod +x .github/zipTheme.sh
-          .github/zipTheme.sh
+          .github/zipTheme.sh npm
 
       - name: Output check
         uses: actions/upload-artifact@v1
