@@ -58,8 +58,8 @@ export default {
         },
         {
           id: '548',
-          thumbnail: `${this.$config.mediaBaseURL}/wp-content/uploads/2021/10/pfron.png`,
-          title: 'Kolory Życia',
+          thumbnail: `${this.$config.mediaBaseURL}/wp-content/uploads/2021/09/PFRON_wersja_podstawowa_RGB-01.jpg`,
+          title: 'Dotacje PFRON',
           to: 'PFRON'
         }
       ]
