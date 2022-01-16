@@ -314,8 +314,8 @@ export default {
 
     if (!Object.keys(store.state.instagram.posts).length) {
       const instagramRes = await $axios.get('instagram')
-      const instagram = instagramRes.data
-      const feed = instagram.match(/href="(.+?)".+?data-full-res="(.+?)"/gm).map(match => (
+      const instagram = instagramRes.data || ''
+      const feed = (instagram.match(/href="(.+?)".+?data-full-res="(.+?)"/gm) || []).map(match => (
         { href: match.match(/href="(.+?)"/)[1], src: match.match(/data-full-res="(.+?)"/)[1] }
       ))
       store.commit('instagram/update', feed)
