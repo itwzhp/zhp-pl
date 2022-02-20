@@ -40,7 +40,7 @@
               <template v-if="post.type === 'post'">
                 <ZPost
                   :key="post.id"
-                  :thumbnail="post.rest_media"
+                  :thumbnail="post.rest_media || placeholder"
                   :title="post.title.rendered"
                   :to="post.rest_redirect ? post.rest_redirect :`/${post.date.split('-')[0]}/${post.slug}`"
                   :author="post.rest_author"
@@ -70,7 +70,7 @@
         v-html="hasChildren ? activeChild.title.rendered : page.title.rendered"
       />
       <figure
-        v-if="page._embedded['wp:featuredmedia']"
+        v-if="page._embedded['wp:featuredmedia'] && !isGutenberg"
         class="thumbnail"
       >
         <ZImage
@@ -155,7 +155,7 @@
               <template v-if="post.type === 'post'">
                 <ZPost
                   :key="post.id"
-                  :thumbnail="post.rest_media"
+                  :thumbnail="post.rest_media || placeholder"
                   :title="post.title.rendered"
                   :to="post.rest_redirect ? post.rest_redirect :`/${post.date.split('-')[0]}/${post.slug}`"
                   :author="post.rest_author"
@@ -183,12 +183,13 @@ import {
   ZHeading,
   ZCarousel,
   ZPost,
-  ZWordPress,
   ZList,
   ZLink,
   ZImage,
   ZText
 } from '@zhp-pl/ui'
+import ZWordPress from '@/components/organisms/ZWordPress.vue'
+import { mapGetters } from 'vuex'
 
 export default {
   components: {
@@ -202,7 +203,6 @@ export default {
     ZImage,
     ZText
   },
-  watchQuery: true,
   async asyncData ({ $axios, params, redirect, route }) {
     if (!params) {
       return
@@ -262,7 +262,12 @@ export default {
       }), {})
     }
   },
+  watchQuery: true,
   computed: {
+    ...mapGetters({
+      title: 'theme/title',
+      placeholder: 'theme/placeholder'
+    }),
     activeChild () {
       return this.hasChildren && this.children[this.$route.params.id]
     },
@@ -284,18 +289,18 @@ export default {
     custom () {
       return this.page.rest_acf.featuredmedia
         ? {
-          '--cover-mobile-height': this.page.rest_acf.featuredmedia.mobile && `${this.page.rest_acf.featuredmedia.mobile}px`,
-          '--cover-height': this.page.rest_acf.featuredmedia.desktop && `${this.page.rest_acf.featuredmedia.desktop}px`
-        }
+            '--cover-mobile-height': this.page.rest_acf.featuredmedia.mobile && `${this.page.rest_acf.featuredmedia.mobile}px`,
+            '--cover-height': this.page.rest_acf.featuredmedia.desktop && `${this.page.rest_acf.featuredmedia.desktop}px`
+          }
         : {}
     }
   },
   head () {
-    const title = (this.hasChildren ? this.activeChild.title.rendered : this.page.title.rendered) + ' | Związek Harcerstwa Polskiego'
+    const title = (this.hasChildren ? this.activeChild.title.rendered : this.page.title.rendered) + ' | ' + this.title
     const description = ''
     const image = this.page._embedded['wp:featuredmedia']
       ? this.page._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url
-      : 'https://zhp.pl/wp-content/uploads/2015/01/zhp_fb.png'
+      : this.placeholder
     return {
       title,
       meta: [

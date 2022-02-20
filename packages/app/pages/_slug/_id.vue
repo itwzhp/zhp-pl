@@ -5,9 +5,7 @@
 </template>
 
 <script>
-import {
-  ZWordPress
-} from '@zhp-pl/ui'
+import ZWordPress from '@/components/organisms/ZWordPress'
 
 export default {
   components: {

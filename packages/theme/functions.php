@@ -1,4 +1,1781 @@
 <?php
+// https://github.com/YahnisElsts/plugin-update-checker
+require 'plugin-update-checker-4.11/plugin-update-checker.php';
+$updateChecker = Puc_v4_Factory::buildUpdateChecker(
+    'http://wordpress.przemyslawspaczek.pl/details.json',
+    __FILE__,
+    'zhp-pl'
+);
+// ACF
+// Define path and URL to the ACF plugin.
+define( 'MY_ACF_PATH', get_stylesheet_directory() . '/includes/acf/' );
+define( 'MY_ACF_URL', get_stylesheet_directory_uri() . '/includes/acf/' );
+
+// Include the ACF plugin.
+include_once( MY_ACF_PATH . 'acf.php' );
+
+// Customize the url setting to fix incorrect asset URLs.
+add_filter('acf/settings/url', 'my_acf_settings_url');
+function my_acf_settings_url( $url ) {
+    return MY_ACF_URL;
+}
+
+// (Optional) Hide the ACF admin menu item.
+add_filter('acf/settings/show_admin', 'my_acf_settings_show_admin');
+function my_acf_settings_show_admin( $show_admin ) {
+    return false;
+}
+if( function_exists('acf_add_local_field_group') ):
+
+    acf_add_local_field_group(array(
+        'key' => 'group_6057099b2162c',
+        'title' => 'Strona główna',
+        'fields' => array(
+            array(
+                'key' => 'field_60575bc5fd969',
+                'label' => 'Podstawowe informacje',
+                'name' => 'about',
+                'type' => 'group',
+                'instructions' => '',
+                'required' => 0,
+                'conditional_logic' => 0,
+                'wrapper' => array(
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ),
+                'layout' => 'block',
+                'sub_fields' => array(
+                    array(
+                        'key' => 'field_rcz28j51gcved',
+                        'label' => 'Widoczna',
+                        'name' => 'visible',
+                        'type' => 'true_false',
+                        'instructions' => '',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'message' => '',
+                        'default_value' => 1,
+                        'ui' => 0,
+                        'ui_on_text' => '',
+                        'ui_off_text' => '',
+                    ),
+                    array(
+                        'key' => 'field_60575bfbfd96a',
+                        'label' => 'Tytuł sekcji',
+                        'name' => 'title',
+                        'type' => 'text',
+                        'instructions' => '',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'default_value' => '',
+                        'placeholder' => '',
+                        'prepend' => '',
+                        'append' => '',
+                        'maxlength' => '',
+                    ),
+                    array(
+                        'key' => 'field_60575c0bfd96b',
+                        'label' => 'Podpis',
+                        'name' => 'subtitle',
+                        'type' => 'text',
+                        'instructions' => '',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'default_value' => '',
+                        'placeholder' => '',
+                        'prepend' => '',
+                        'append' => '',
+                        'maxlength' => '',
+                    ),
+                    array(
+                        'key' => 'field_60575c21fd96c',
+                        'label' => 'Kafelki',
+                        'name' => 'tiles',
+                        'type' => 'repeater',
+                        'instructions' => '',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'collapsed' => '',
+                        'min' => 0,
+                        'max' => 0,
+                        'layout' => 'table',
+                        'button_label' => '',
+                        'sub_fields' => array(
+                            array(
+                                'key' => 'field_60575c39fd96d',
+                                'label' => 'Tytuł',
+                                'name' => 'title',
+                                'type' => 'text',
+                                'instructions' => '',
+                                'required' => 0,
+                                'conditional_logic' => 0,
+                                'wrapper' => array(
+                                    'width' => '',
+                                    'class' => '',
+                                    'id' => '',
+                                ),
+                                'default_value' => '',
+                                'placeholder' => '',
+                                'prepend' => '',
+                                'append' => '',
+                                'maxlength' => '',
+                            ),
+                            array(
+                                'key' => 'field_60575c52fd96e',
+                                'label' => 'Opis',
+                                'name' => 'description',
+                                'type' => 'text',
+                                'instructions' => '',
+                                'required' => 0,
+                                'conditional_logic' => 0,
+                                'wrapper' => array(
+                                    'width' => '',
+                                    'class' => '',
+                                    'id' => '',
+                                ),
+                                'default_value' => '',
+                                'placeholder' => '',
+                                'prepend' => '',
+                                'append' => '',
+                                'maxlength' => '',
+                            ),
+                            array(
+                                'key' => 'field_60575c62fd96f',
+                                'label' => 'Link',
+                                'name' => 'to',
+                                'type' => 'text',
+                                'instructions' => '',
+                                'required' => 0,
+                                'conditional_logic' => 0,
+                                'wrapper' => array(
+                                    'width' => '',
+                                    'class' => '',
+                                    'id' => '',
+                                ),
+                                'default_value' => '',
+                                'placeholder' => '',
+                                'prepend' => '',
+                                'append' => '',
+                                'maxlength' => '',
+                            ),
+                            array(
+                                'key' => 'field_60575c75fd970',
+                                'label' => 'Obrazek wyróżniający',
+                                'name' => 'thumbnail',
+                                'type' => 'image',
+                                'instructions' => '',
+                                'required' => 0,
+                                'conditional_logic' => 0,
+                                'wrapper' => array(
+                                    'width' => '',
+                                    'class' => '',
+                                    'id' => '',
+                                ),
+                                'return_format' => 'url',
+                                'preview_size' => 'full',
+                                'library' => 'all',
+                                'min_width' => '',
+                                'min_height' => '',
+                                'min_size' => '',
+                                'max_width' => '',
+                                'max_height' => '',
+                                'max_size' => '',
+                                'mime_types' => '',
+                            ),
+                        ),
+                    ),
+                    array(
+                        'key' => 'field_60ce16920aa94',
+                        'label' => 'Tekst na kafelkach',
+                        'name' => 'overlayed',
+                        'type' => 'true_false',
+                        'instructions' => '',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'message' => '',
+                        'default_value' => 1,
+                        'ui' => 0,
+                        'ui_on_text' => '',
+                        'ui_off_text' => '',
+                    ),
+                ),
+            ),
+            array(
+                'key' => 'field_60576cd98ab01',
+                'label' => 'Polecamy',
+                'name' => 'posts',
+                'type' => 'group',
+                'instructions' => '',
+                'required' => 0,
+                'conditional_logic' => 0,
+                'wrapper' => array(
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ),
+                'layout' => 'block',
+                'sub_fields' => array(
+                    array(
+                        'key' => 'field_2j8w3414ieuxv',
+                        'label' => 'Widoczna',
+                        'name' => 'visible',
+                        'type' => 'true_false',
+                        'instructions' => '',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'message' => '',
+                        'default_value' => 1,
+                        'ui' => 0,
+                        'ui_on_text' => '',
+                        'ui_off_text' => '',
+                    ),
+                    array(
+                        'key' => 'field_60576d4e8ab02',
+                        'label' => 'Kategorie postów',
+                        'name' => 'categories',
+                        'type' => 'taxonomy',
+                        'instructions' => 'Puste pole spowoduje wyświetlenie najnowszych wpisów',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'taxonomy' => 'category',
+                        'field_type' => 'checkbox',
+                        'add_term' => 1,
+                        'save_terms' => 0,
+                        'load_terms' => 0,
+                        'return_format' => 'id',
+                        'multiple' => 0,
+                        'allow_null' => 0,
+                    ),
+                ),
+            ),
+            array(
+                'key' => 'field_609d7d09244e0',
+                'label' => 'Aktualności',
+                'name' => 'highlighted',
+                'type' => 'group',
+                'instructions' => '',
+                'required' => 0,
+                'conditional_logic' => 0,
+                'wrapper' => array(
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ),
+                'layout' => 'block',
+                'sub_fields' => array(
+                    array(
+                        'key' => 'field_furl0a8pf0u1s',
+                        'label' => 'Widoczna',
+                        'name' => 'visible',
+                        'type' => 'true_false',
+                        'instructions' => '',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'message' => '',
+                        'default_value' => 1,
+                        'ui' => 0,
+                        'ui_on_text' => '',
+                        'ui_off_text' => '',
+                    ),
+                    array(
+                        'key' => 'field_609d7ddf244e2',
+                        'label' => 'Tytuł sekcji',
+                        'name' => 'title',
+                        'type' => 'text',
+                        'instructions' => '',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'default_value' => 'Aktualności',
+                        'placeholder' => '',
+                        'prepend' => '',
+                        'append' => '',
+                        'maxlength' => '',
+                    ),
+                    array(
+                        'key' => 'field_609d7d5c244e1',
+                        'label' => 'Kategoria aktualności',
+                        'name' => 'categories',
+                        'type' => 'taxonomy',
+                        'instructions' => 'Puste pole spowoduje wyświetlenie najnowszych wpisów',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'taxonomy' => 'category',
+                        'field_type' => 'checkbox',
+                        'add_term' => 1,
+                        'save_terms' => 0,
+                        'load_terms' => 0,
+                        'return_format' => 'id',
+                        'multiple' => 0,
+                        'allow_null' => 0,
+                    ),
+                    array(
+                        'key' => 'field_609d7e35233d0',
+                        'label' => 'Wyróżniony wpis',
+                        'name' => 'tags',
+                        'type' => 'taxonomy',
+                        'instructions' => '',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'taxonomy' => 'post_tag',
+                        'field_type' => 'checkbox',
+                        'add_term' => 1,
+                        'save_terms' => 0,
+                        'load_terms' => 0,
+                        'return_format' => 'id',
+                        'multiple' => 0,
+                        'allow_null' => 0,
+                    ),
+                    array(
+                        'key' => 'field_h24n6hg5weasz',
+                        'label' => 'Typ',
+                        'name' => 'component',
+                        'type' => 'radio',
+                        'instructions' => '',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'choices' => array(
+                            'post' => 'Post',
+                            'card' => 'Karta',
+                        ),
+                        'allow_null' => 0,
+                        'other_choice' => 0,
+                        'default_value' => 'card',
+                        'layout' => 'vertical',
+                        'return_format' => 'value',
+                        'save_other_choice' => 0,
+                    ),
+                ),
+            ),
+            array(
+                'key' => 'field_60a28b5aaa150',
+                'label' => 'Poznaj nas',
+                'name' => 'meet',
+                'type' => 'group',
+                'instructions' => '',
+                'required' => 0,
+                'conditional_logic' => 0,
+                'wrapper' => array(
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ),
+                'layout' => 'block',
+                'sub_fields' => array(
+                    array(
+                        'key' => 'field_60a28c25aa154',
+                        'label' => 'Widoczna',
+                        'name' => 'visible',
+                        'type' => 'true_false',
+                        'instructions' => '',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'message' => '',
+                        'default_value' => 1,
+                        'ui' => 0,
+                        'ui_on_text' => '',
+                        'ui_off_text' => '',
+                    ),
+                    array(
+                        'key' => 'field_60a28b77aa151',
+                        'label' => 'Tutuł sekcji',
+                        'name' => 'title',
+                        'type' => 'text',
+                        'instructions' => '',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'default_value' => '',
+                        'placeholder' => '',
+                        'prepend' => '',
+                        'append' => '',
+                        'maxlength' => '',
+                    ),
+                    array(
+                        'key' => 'field_60a28bc8aa152',
+                        'label' => 'Opis',
+                        'name' => 'content',
+                        'type' => 'text',
+                        'instructions' => '',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'default_value' => '',
+                        'placeholder' => '',
+                        'prepend' => '',
+                        'append' => '',
+                        'maxlength' => '',
+                    ),
+                    array(
+                        'key' => 'field_60a28beaaa153',
+                        'label' => 'Wideo',
+                        'name' => 'thumbnail',
+                        'type' => 'file',
+                        'instructions' => '',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'return_format' => 'url',
+                        'library' => 'all',
+                        'min_size' => '',
+                        'max_size' => '',
+                        'mime_types' => '',
+                    ),
+                ),
+            ),
+            array(
+                'key' => 'field_605763f5077bf',
+                'label' => 'Dołącz do nas',
+                'name' => 'join',
+                'type' => 'group',
+                'instructions' => '',
+                'required' => 0,
+                'conditional_logic' => 0,
+                'wrapper' => array(
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ),
+                'layout' => 'block',
+                'sub_fields' => array(
+                    array(
+                        'key' => 'field_un84tois85o7u',
+                        'label' => 'Widoczna',
+                        'name' => 'visible',
+                        'type' => 'true_false',
+                        'instructions' => '',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'message' => '',
+                        'default_value' => 1,
+                        'ui' => 0,
+                        'ui_on_text' => '',
+                        'ui_off_text' => '',
+                    ),
+                    array(
+                        'key' => 'field_6057644f077c0',
+                        'label' => 'Obrazek wyróżniający',
+                        'name' => 'thumbnail',
+                        'type' => 'image',
+                        'instructions' => '',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'return_format' => 'url',
+                        'preview_size' => 'full',
+                        'library' => 'all',
+                        'min_width' => '',
+                        'min_height' => '',
+                        'min_size' => '',
+                        'max_width' => '',
+                        'max_height' => '',
+                        'max_size' => '',
+                        'mime_types' => '',
+                    ),
+                    array(
+                        'key' => 'field_605767f0d2bb7',
+                        'label' => 'Wyróżniony wpis',
+                        'name' => 'tags',
+                        'type' => 'taxonomy',
+                        'instructions' => '',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'taxonomy' => 'post_tag',
+                        'field_type' => 'checkbox',
+                        'add_term' => 0,
+                        'save_terms' => 0,
+                        'load_terms' => 0,
+                        'return_format' => 'id',
+                        'multiple' => 0,
+                        'allow_null' => 0,
+                    ),
+                    array(
+                        'key' => 'field_60cccc2bdb4ae',
+                        'label' => 'Typ',
+                        'name' => 'component',
+                        'type' => 'radio',
+                        'instructions' => '',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'choices' => array(
+                            'post' => 'Post',
+                            'card' => 'Karta',
+                        ),
+                        'allow_null' => 0,
+                        'other_choice' => 0,
+                        'default_value' => 'post',
+                        'layout' => 'vertical',
+                        'return_format' => 'value',
+                        'save_other_choice' => 0,
+                    ),
+                ),
+            ),
+            array(
+                'key' => 'field_60576fbb51c48',
+                'label' => 'Wydarzenia',
+                'name' => 'events',
+                'type' => 'group',
+                'instructions' => '',
+                'required' => 0,
+                'conditional_logic' => 0,
+                'wrapper' => array(
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ),
+                'layout' => 'block',
+                'sub_fields' => array(
+                    array(
+                        'key' => 'field_5o2o2ihlt89nv',
+                        'label' => 'Widoczna',
+                        'name' => 'visible',
+                        'type' => 'true_false',
+                        'instructions' => '',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'message' => '',
+                        'default_value' => 1,
+                        'ui' => 0,
+                        'ui_on_text' => '',
+                        'ui_off_text' => '',
+                    ),
+                    array(
+                        'key' => 'field_60576fbb51c49',
+                        'label' => 'Kategorie wydarzeń',
+                        'name' => 'categories',
+                        'type' => 'taxonomy',
+                        'instructions' => 'Puste pole spowoduje wyświetlenie najnowszych wydarzeń',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'taxonomy' => 'event_category',
+                        'field_type' => 'checkbox',
+                        'add_term' => 1,
+                        'save_terms' => 0,
+                        'load_terms' => 0,
+                        'return_format' => 'id',
+                        'multiple' => 0,
+                        'allow_null' => 0,
+                    ),
+                ),
+            ),
+            array(
+                'key' => 'field_6057725f38fe6',
+                'label' => 'Partnerzy',
+                'name' => 'partners',
+                'type' => 'group',
+                'instructions' => '',
+                'required' => 0,
+                'conditional_logic' => 0,
+                'wrapper' => array(
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ),
+                'layout' => 'block',
+                'sub_fields' => array(
+                    array(
+                        'key' => 'field_605774db1a231',
+                        'label' => 'Tytuł sekcji',
+                        'name' => 'title',
+                        'type' => 'text',
+                        'instructions' => '',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'default_value' => '',
+                        'placeholder' => '',
+                        'prepend' => '',
+                        'append' => '',
+                        'maxlength' => '',
+                    ),
+                    array(
+                        'key' => 'field_605774eb1a232',
+                        'label' => 'Link',
+                        'name' => 'to',
+                        'type' => 'text',
+                        'instructions' => '',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'default_value' => '',
+                        'placeholder' => '',
+                        'prepend' => '',
+                        'append' => '',
+                        'maxlength' => '',
+                    ),
+                    array(
+                        'key' => 'field_6057725f38fe7',
+                        'label' => 'Kategorie partnerów',
+                        'name' => 'categories',
+                        'type' => 'taxonomy',
+                        'instructions' => 'Puste pole spowoduje wyświetlenie najnowszych partnerów',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'taxonomy' => 'logo_category',
+                        'field_type' => 'checkbox',
+                        'add_term' => 1,
+                        'save_terms' => 0,
+                        'load_terms' => 0,
+                        'return_format' => 'id',
+                        'multiple' => 0,
+                        'allow_null' => 0,
+                    ),
+                    array(
+                        'key' => 'field_i2zl2ddzjxy1',
+                        'label' => 'Kategorie banerów',
+                        'name' => 'banner_categories',
+                        'type' => 'taxonomy',
+                        'instructions' => 'Puste pole spowoduje wyświetlenie najnowszych partnerów',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'taxonomy' => 'logo_category',
+                        'field_type' => 'checkbox',
+                        'add_term' => 1,
+                        'save_terms' => 0,
+                        'load_terms' => 0,
+                        'return_format' => 'id',
+                        'multiple' => 0,
+                        'allow_null' => 0,
+                    ),
+                ),
+            ),
+            array(
+                'key' => 'field_609fe9c7aa36a',
+                'label' => 'Social media',
+                'name' => 'social',
+                'type' => 'group',
+                'instructions' => '',
+                'required' => 0,
+                'conditional_logic' => 0,
+                'wrapper' => array(
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ),
+                'layout' => 'block',
+                'sub_fields' => array(
+                    array(
+                        'key' => 'field_fxnov896puo5v',
+                        'label' => 'Widoczna',
+                        'name' => 'visible',
+                        'type' => 'true_false',
+                        'instructions' => '',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'message' => '',
+                        'default_value' => 1,
+                        'ui' => 0,
+                        'ui_on_text' => '',
+                        'ui_off_text' => '',
+                    ),
+                    array(
+                        'key' => 'field_609feaa3aa36b',
+                        'label' => 'Instagram',
+                        'name' => 'instagram',
+                        'type' => 'group',
+                        'instructions' => '',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'layout' => 'block',
+                        'sub_fields' => array(
+                            array(
+                                'key' => 'field_609feba863bdf',
+                                'label' => 'Użytkownik',
+                                'name' => 'user',
+                                'type' => 'text',
+                                'instructions' => '',
+                                'required' => 0,
+                                'conditional_logic' => 0,
+                                'wrapper' => array(
+                                    'width' => '',
+                                    'class' => '',
+                                    'id' => '',
+                                ),
+                                'default_value' => '',
+                                'placeholder' => 'zhp_pl',
+                                'prepend' => '',
+                                'append' => '',
+                                'maxlength' => '',
+                            ),
+                            array(
+                                'key' => 'field_609febc863be0',
+                                'label' => 'Nazwa',
+                                'name' => 'name',
+                                'type' => 'text',
+                                'instructions' => '',
+                                'required' => 0,
+                                'conditional_logic' => 0,
+                                'wrapper' => array(
+                                    'width' => '',
+                                    'class' => '',
+                                    'id' => '',
+                                ),
+                                'default_value' => '',
+                                'placeholder' => 'Związek Harcerstwa Polskiego',
+                                'prepend' => '',
+                                'append' => '',
+                                'maxlength' => '',
+                            ),
+                            array(
+                                'key' => 'field_609febd663be1',
+                                'label' => 'Opis',
+                                'name' => 'description',
+                                'type' => 'wysiwyg',
+                                'instructions' => '',
+                                'required' => 0,
+                                'conditional_logic' => 0,
+                                'wrapper' => array(
+                                    'width' => '',
+                                    'class' => '',
+                                    'id' => '',
+                                ),
+                                'default_value' => '',
+                                'tabs' => 'all',
+                                'toolbar' => 'full',
+                                'media_upload' => 1,
+                                'delay' => 0,
+                            ),
+                            array(
+                                'key' => 'field_609febe163be2',
+                                'label' => 'Avatar',
+                                'name' => 'image',
+                                'type' => 'image',
+                                'instructions' => '',
+                                'required' => 0,
+                                'conditional_logic' => 0,
+                                'wrapper' => array(
+                                    'width' => '',
+                                    'class' => '',
+                                    'id' => '',
+                                ),
+                                'return_format' => 'url',
+                                'preview_size' => 'medium',
+                                'library' => 'all',
+                                'min_width' => '',
+                                'min_height' => '',
+                                'min_size' => '',
+                                'max_width' => 150,
+                                'max_height' => 150,
+                                'max_size' => '',
+                                'mime_types' => '',
+                            ),
+                        ),
+                    ),
+                    array(
+                        'key' => 'field_609feb9f63bde',
+                        'label' => 'Facebook',
+                        'name' => 'facebook',
+                        'type' => 'group',
+                        'instructions' => 'https://developers.facebook.com/docs/plugins/page-plugin/',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'layout' => 'block',
+                        'sub_fields' => array(
+                            array(
+                                'key' => 'field_609fec3d3a85b',
+                                'label' => 'App ID',
+                                'name' => 'appId',
+                                'type' => 'text',
+                                'instructions' => '',
+                                'required' => 0,
+                                'conditional_logic' => 0,
+                                'wrapper' => array(
+                                    'width' => '',
+                                    'class' => '',
+                                    'id' => '',
+                                ),
+                                'default_value' => '',
+                                'placeholder' => '',
+                                'prepend' => '',
+                                'append' => '',
+                                'maxlength' => '',
+                            ),
+                            array(
+                                'key' => 'field_609fec8f3a85c',
+                                'label' => 'URL',
+                                'name' => 'fbPageUrl',
+                                'type' => 'url',
+                                'instructions' => '',
+                                'required' => 0,
+                                'conditional_logic' => 0,
+                                'wrapper' => array(
+                                    'width' => '',
+                                    'class' => '',
+                                    'id' => '',
+                                ),
+                                'default_value' => '',
+                                'placeholder' => '',
+                            ),
+                            array(
+                                'key' => 'field_60a287f8669c4',
+                                'label' => 'Wysokość',
+                                'name' => 'height',
+                                'type' => 'number',
+                                'instructions' => '',
+                                'required' => 0,
+                                'conditional_logic' => 0,
+                                'wrapper' => array(
+                                    'width' => '',
+                                    'class' => '',
+                                    'id' => '',
+                                ),
+                                'default_value' => '',
+                                'placeholder' => '',
+                                'prepend' => '',
+                                'append' => '',
+                                'min' => '',
+                                'max' => '',
+                                'step' => '',
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        ),
+        'location' => array(
+            array(
+                array(
+                    'param' => 'page_type',
+                    'operator' => '==',
+                    'value' => 'front_page',
+                ),
+            ),
+        ),
+        'menu_order' => 0,
+        'position' => 'normal',
+        'style' => 'default',
+        'label_placement' => 'top',
+        'instruction_placement' => 'label',
+        'hide_on_screen' => '',
+        'active' => true,
+        'description' => '',
+    ));
+
+    acf_add_local_field_group(array(
+        'key' => 'group_5f76360116175',
+        'title' => 'Logotypy',
+        'fields' => array(
+            array(
+                'key' => 'field_5f76360e9629e',
+                'label' => 'Adres URL',
+                'name' => 'url',
+                'type' => 'url',
+                'instructions' => 'Podaj adres URL strony do której ma przekierować logo po kliknięciu. Puste pole oznacza brak linku.',
+                'required' => 0,
+                'conditional_logic' => 0,
+                'wrapper' => array(
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ),
+                'default_value' => '',
+                'placeholder' => '',
+            ),
+        ),
+        'location' => array(
+            array(
+                array(
+                    'param' => 'post_type',
+                    'operator' => '==',
+                    'value' => 'logo',
+                ),
+            ),
+        ),
+        'menu_order' => 0,
+        'position' => 'normal',
+        'style' => 'default',
+        'label_placement' => 'top',
+        'instruction_placement' => 'label',
+        'hide_on_screen' => '',
+        'active' => true,
+        'description' => '',
+    ));
+
+    acf_add_local_field_group(array(
+        'key' => 'group_5f76392ed72f2',
+        'title' => 'Metodyki',
+        'fields' => array(
+            array(
+                'key' => 'field_5f7639428fd0b',
+                'label' => 'Kolor',
+                'name' => 'color',
+                'type' => 'color_picker',
+                'instructions' => 'Wybierz kolor tekstu dla elementów znajdujących się na wybranym tle. W większości przypadków wartość tego pola to #FFFFFF',
+                'required' => 1,
+                'conditional_logic' => 0,
+                'wrapper' => array(
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ),
+                'default_value' => '',
+            ),
+            array(
+                'key' => 'field_5f7639878fd0c',
+                'label' => 'Tło',
+                'name' => 'background',
+                'type' => 'color_picker',
+                'instructions' => 'Wybierz kolor tła dla wybranych elementów na karcie.',
+                'required' => 1,
+                'conditional_logic' => 0,
+                'wrapper' => array(
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ),
+                'default_value' => '',
+            ),
+        ),
+        'location' => array(
+            array(
+                array(
+                    'param' => 'taxonomy',
+                    'operator' => '==',
+                    'value' => 'age_group',
+                ),
+            ),
+        ),
+        'menu_order' => 0,
+        'position' => 'normal',
+        'style' => 'default',
+        'label_placement' => 'top',
+        'instruction_placement' => 'label',
+        'hide_on_screen' => '',
+        'active' => true,
+        'description' => '',
+    ));
+
+    acf_add_local_field_group(array(
+        'key' => 'group_5f8cb875902d4',
+        'title' => 'Pliki/Linki',
+        'fields' => array(
+            array(
+                'key' => 'field_5f8cb8845535f',
+                'label' => 'Pliki/Linki',
+                'name' => 'plikilinki',
+                'type' => 'repeater',
+                'instructions' => '',
+                'required' => 0,
+                'conditional_logic' => 0,
+                'wrapper' => array(
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ),
+                'collapsed' => '',
+                'min' => 0,
+                'max' => 0,
+                'layout' => 'table',
+                'button_label' => '',
+                'sub_fields' => array(
+                    array(
+                        'key' => 'field_5f8cb8a555360',
+                        'label' => 'Nazwa',
+                        'name' => 'name',
+                        'type' => 'text',
+                        'instructions' => '',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'default_value' => '',
+                        'placeholder' => '',
+                        'prepend' => '',
+                        'append' => '',
+                        'maxlength' => '',
+                    ),
+                    array(
+                        'key' => 'field_5f8cb8bd55361',
+                        'label' => 'Plik',
+                        'name' => 'file',
+                        'type' => 'file',
+                        'instructions' => '',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'return_format' => 'array',
+                        'library' => 'all',
+                        'min_size' => '',
+                        'max_size' => '',
+                        'mime_types' => '',
+                    ),
+                    array(
+                        'key' => 'field_5f8f2fd964f4b',
+                        'label' => 'Format Pliku',
+                        'name' => 'mimeType',
+                        'type' => 'text',
+                        'instructions' => '',
+                        'required' => 0,
+                        'conditional_logic' => array(
+                            array(
+                                array(
+                                    'field' => 'field_5f8cb8bd55361',
+                                    'operator' => '!=empty',
+                                ),
+                            ),
+                        ),
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'default_value' => '',
+                        'placeholder' => '',
+                        'prepend' => '',
+                        'append' => '',
+                        'maxlength' => '',
+                    ),
+                    array(
+                        'key' => 'field_5f8cb9aac66f6',
+                        'label' => 'Link',
+                        'name' => 'link',
+                        'type' => 'url',
+                        'instructions' => '',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'default_value' => '',
+                        'placeholder' => '',
+                    ),
+                ),
+            ),
+        ),
+        'location' => array(
+            array(
+                array(
+                    'param' => 'post_type',
+                    'operator' => '==',
+                    'value' => 'event',
+                ),
+            ),
+            array(
+                array(
+                    'param' => 'post_type',
+                    'operator' => '==',
+                    'value' => 'post',
+                ),
+            ),
+        ),
+        'menu_order' => 0,
+        'position' => 'normal',
+        'style' => 'default',
+        'label_placement' => 'top',
+        'instruction_placement' => 'label',
+        'hide_on_screen' => '',
+        'active' => true,
+        'description' => '',
+    ));
+
+    acf_add_local_field_group(array(
+        'key' => 'group_5fba84405b63a',
+        'title' => 'Wpis',
+        'fields' => array(
+        ),
+        'location' => array(
+            array(
+                array(
+                    'param' => 'post_type',
+                    'operator' => '==',
+                    'value' => 'post',
+                ),
+            ),
+        ),
+        'menu_order' => 0,
+        'position' => 'normal',
+        'style' => 'default',
+        'label_placement' => 'top',
+        'instruction_placement' => 'label',
+        'hide_on_screen' => '',
+        'active' => true,
+        'description' => '',
+    ));
+
+    acf_add_local_field_group(array(
+        'key' => 'group_5f58674458ed2',
+        'title' => 'Wydarzenia',
+        'fields' => array(
+            array(
+                'key' => 'field_5f58674a04d77',
+                'label' => 'Data',
+                'name' => 'date',
+                'type' => 'group',
+                'instructions' => '',
+                'required' => 0,
+                'conditional_logic' => 0,
+                'wrapper' => array(
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ),
+                'layout' => 'block',
+                'sub_fields' => array(
+                    array(
+                        'key' => 'field_5f58676204d78',
+                        'label' => 'Rozpoczęcie',
+                        'name' => 'begin',
+                        'type' => 'date_picker',
+                        'instructions' => '',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'display_format' => 'd/m/Y',
+                        'return_format' => 'Y-m-d\\T00:00:00',
+                        'first_day' => 1,
+                    ),
+                    array(
+                        'key' => 'field_5f58682f04d7a',
+                        'label' => 'Zakończenie',
+                        'name' => 'end',
+                        'type' => 'date_picker',
+                        'instructions' => '',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'display_format' => 'd/m/Y',
+                        'return_format' => 'Y-m-d\\T00:00:00',
+                        'first_day' => 1,
+                    ),
+                ),
+            ),
+            array(
+                'key' => 'field_5f830a5b1aa7c',
+                'label' => 'Organizator',
+                'name' => 'organizer',
+                'type' => 'group',
+                'instructions' => '',
+                'required' => 0,
+                'conditional_logic' => 0,
+                'wrapper' => array(
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ),
+                'layout' => 'block',
+                'sub_fields' => array(
+                    array(
+                        'key' => 'field_5f830a681aa7d',
+                        'label' => 'Jednostka',
+                        'name' => 'unit',
+                        'type' => 'text',
+                        'instructions' => '',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'default_value' => '',
+                        'placeholder' => '',
+                        'prepend' => '',
+                        'append' => '',
+                        'maxlength' => '',
+                    ),
+                    array(
+                        'key' => 'field_5f830a761aa7e',
+                        'label' => 'Instruktor',
+                        'name' => 'person',
+                        'type' => 'text',
+                        'instructions' => '',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'default_value' => '',
+                        'placeholder' => '',
+                        'prepend' => '',
+                        'append' => '',
+                        'maxlength' => '',
+                    ),
+                    array(
+                        'key' => 'field_5f830a821aa7f',
+                        'label' => 'Telefon',
+                        'name' => 'phone',
+                        'type' => 'text',
+                        'instructions' => '',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'default_value' => '',
+                        'placeholder' => '',
+                        'prepend' => '',
+                        'append' => '',
+                        'maxlength' => '',
+                    ),
+                    array(
+                        'key' => 'field_5f830a9b1aa80',
+                        'label' => 'E-mail',
+                        'name' => 'mail',
+                        'type' => 'email',
+                        'instructions' => '',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'default_value' => '',
+                        'placeholder' => '',
+                        'prepend' => '',
+                        'append' => '',
+                    ),
+                ),
+            ),
+            array(
+                'key' => 'field_5f830ab41aa81',
+                'label' => 'Strona WWW',
+                'name' => 'web',
+                'type' => 'url',
+                'instructions' => '',
+                'required' => 0,
+                'conditional_logic' => 0,
+                'wrapper' => array(
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ),
+                'default_value' => '',
+                'placeholder' => '',
+            ),
+        ),
+        'location' => array(
+            array(
+                array(
+                    'param' => 'post_type',
+                    'operator' => '==',
+                    'value' => 'event',
+                ),
+            ),
+        ),
+        'menu_order' => 0,
+        'position' => 'normal',
+        'style' => 'default',
+        'label_placement' => 'top',
+        'instruction_placement' => 'label',
+        'hide_on_screen' => '',
+        'active' => true,
+        'description' => '',
+    ));
+
+    acf_add_local_field_group(array(
+        'key' => 'group_5fb3e41d8eeb3',
+        'title' => 'Strona',
+        'fields' => array(
+            array(
+                'key' => 'field_5fb3e4234ff7d',
+                'label' => 'Karuzele',
+                'name' => 'carousels',
+                'type' => 'repeater',
+                'instructions' => '',
+                'required' => 0,
+                'conditional_logic' => 0,
+                'wrapper' => array(
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ),
+                'collapsed' => '',
+                'min' => 0,
+                'max' => 0,
+                'layout' => 'table',
+                'button_label' => '',
+                'sub_fields' => array(
+                    array(
+                        'key' => 'field_5fb3e43c4ff7e',
+                        'label' => 'Karuzela',
+                        'name' => 'carousel',
+                        'type' => 'group',
+                        'instructions' => '',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'layout' => 'block',
+                        'sub_fields' => array(
+                            array(
+                                'key' => 'field_5fb3e4554ff7f',
+                                'label' => 'Nagłówek',
+                                'name' => 'title',
+                                'type' => 'text',
+                                'instructions' => '',
+                                'required' => 0,
+                                'conditional_logic' => 0,
+                                'wrapper' => array(
+                                    'width' => '',
+                                    'class' => '',
+                                    'id' => '',
+                                ),
+                                'default_value' => '',
+                                'placeholder' => '',
+                                'prepend' => '',
+                                'append' => '',
+                                'maxlength' => '',
+                            ),
+                            array(
+                                'key' => 'field_5fb3e51c9c6ba',
+                                'label' => 'Typ treści',
+                                'name' => 'post_type',
+                                'type' => 'text',
+                                'instructions' => '',
+                                'required' => 0,
+                                'conditional_logic' => 0,
+                                'wrapper' => array(
+                                    'width' => '',
+                                    'class' => '',
+                                    'id' => '',
+                                ),
+                                'default_value' => '',
+                                'placeholder' => '',
+                                'prepend' => '',
+                                'append' => '',
+                                'maxlength' => '',
+                            ),
+                            array(
+                                'key' => 'field_5fb3e52d9c6bb',
+                                'label' => 'Taxonomia',
+                                'name' => 'taxonomy',
+                                'type' => 'text',
+                                'instructions' => '',
+                                'required' => 0,
+                                'conditional_logic' => 0,
+                                'wrapper' => array(
+                                    'width' => '',
+                                    'class' => '',
+                                    'id' => '',
+                                ),
+                                'default_value' => '',
+                                'placeholder' => '',
+                                'prepend' => '',
+                                'append' => '',
+                                'maxlength' => '',
+                            ),
+                            array(
+                                'key' => 'field_5fb3e53d9c6bc',
+                                'label' => 'ID taxonomi',
+                                'name' => 'id',
+                                'type' => 'number',
+                                'instructions' => '',
+                                'required' => 0,
+                                'conditional_logic' => 0,
+                                'wrapper' => array(
+                                    'width' => '',
+                                    'class' => '',
+                                    'id' => '',
+                                ),
+                                'default_value' => '',
+                                'placeholder' => '',
+                                'prepend' => '',
+                                'append' => '',
+                                'min' => '',
+                                'max' => '',
+                                'step' => '',
+                            ),
+                            array(
+                                'key' => 'field_5fb3e5b6556d7',
+                                'label' => 'Lokalizacja',
+                                'name' => 'location',
+                                'type' => 'select',
+                                'instructions' => '',
+                                'required' => 0,
+                                'conditional_logic' => 0,
+                                'wrapper' => array(
+                                    'width' => '',
+                                    'class' => '',
+                                    'id' => '',
+                                ),
+                                'choices' => array(
+                                    'before' => 'przed treścią',
+                                    'after' => 'po treści',
+                                ),
+                                'default_value' => 'after',
+                                'allow_null' => 0,
+                                'multiple' => 0,
+                                'ui' => 0,
+                                'return_format' => 'value',
+                                'ajax' => 0,
+                                'placeholder' => '',
+                            ),
+                            array(
+                                'key' => 'field_5fb3f656396b4',
+                                'label' => 'Ilość elementów w karuzeli',
+                                'name' => 'per_page',
+                                'type' => 'number',
+                                'instructions' => '',
+                                'required' => 0,
+                                'conditional_logic' => 0,
+                                'wrapper' => array(
+                                    'width' => '',
+                                    'class' => '',
+                                    'id' => '',
+                                ),
+                                'default_value' => 8,
+                                'placeholder' => '',
+                                'prepend' => '',
+                                'append' => '',
+                                'min' => '',
+                                'max' => '',
+                                'step' => '',
+                            ),
+                            array(
+                                'key' => 'field_5fb910d38937c',
+                                'label' => 'Ilość elementów w widoku',
+                                'name' => 'perView',
+                                'type' => 'number',
+                                'instructions' => '',
+                                'required' => 0,
+                                'conditional_logic' => 0,
+                                'wrapper' => array(
+                                    'width' => '',
+                                    'class' => '',
+                                    'id' => '',
+                                ),
+                                'default_value' => 4,
+                                'placeholder' => '',
+                                'prepend' => '',
+                                'append' => '',
+                                'min' => '',
+                                'max' => '',
+                                'step' => '',
+                            ),
+                            array(
+                                'key' => 'field_5fb911348937d',
+                                'label' => 'Autoplay',
+                                'name' => 'autoplay',
+                                'type' => 'number',
+                                'instructions' => 'podaj czas w milisekundach, 0 wyłącza autoplay',
+                                'required' => 0,
+                                'conditional_logic' => 0,
+                                'wrapper' => array(
+                                    'width' => '',
+                                    'class' => '',
+                                    'id' => '',
+                                ),
+                                'default_value' => 0,
+                                'placeholder' => '',
+                                'prepend' => '',
+                                'append' => '',
+                                'min' => '',
+                                'max' => '',
+                                'step' => '',
+                            ),
+                            array(
+                                'key' => 'field_5fb911e78937e',
+                                'label' => 'Poza szerokością strony',
+                                'name' => 'peeked',
+                                'type' => 'true_false',
+                                'instructions' => '',
+                                'required' => 0,
+                                'conditional_logic' => 0,
+                                'wrapper' => array(
+                                    'width' => '',
+                                    'class' => '',
+                                    'id' => '',
+                                ),
+                                'message' => '',
+                                'default_value' => 0,
+                                'ui' => 0,
+                                'ui_on_text' => '',
+                                'ui_off_text' => '',
+                            ),
+                            array(
+                                'key' => 'field_5fb91499a31aa',
+                                'label' => 'Odstęp',
+                                'name' => 'gap',
+                                'type' => 'number',
+                                'instructions' => '',
+                                'required' => 0,
+                                'conditional_logic' => 0,
+                                'wrapper' => array(
+                                    'width' => '',
+                                    'class' => '',
+                                    'id' => '',
+                                ),
+                                'default_value' => 20,
+                                'placeholder' => '',
+                                'prepend' => '',
+                                'append' => '',
+                                'min' => '',
+                                'max' => '',
+                                'step' => '',
+                            ),
+                            array(
+                                'key' => 'field_602150f9420fa',
+                                'label' => 'Kontrolki',
+                                'name' => 'controls',
+                                'type' => 'true_false',
+                                'instructions' => '',
+                                'required' => 0,
+                                'conditional_logic' => 0,
+                                'wrapper' => array(
+                                    'width' => '',
+                                    'class' => '',
+                                    'id' => '',
+                                ),
+                                'message' => '',
+                                'default_value' => 1,
+                                'ui' => 0,
+                                'ui_on_text' => '',
+                                'ui_off_text' => '',
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+            array(
+                'key' => 'field_5fb920c85ea13',
+                'label' => 'Obrazek wyróżniający',
+                'name' => 'featuredmedia',
+                'type' => 'group',
+                'instructions' => '',
+                'required' => 0,
+                'conditional_logic' => 0,
+                'wrapper' => array(
+                    'width' => '',
+                    'class' => '',
+                    'id' => '',
+                ),
+                'layout' => 'block',
+                'sub_fields' => array(
+                    array(
+                        'key' => 'field_5fb9212c5ea14',
+                        'label' => 'Mobile',
+                        'name' => 'mobile',
+                        'type' => 'number',
+                        'instructions' => '',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'default_value' => 198,
+                        'placeholder' => '',
+                        'prepend' => '',
+                        'append' => '',
+                        'min' => '',
+                        'max' => '',
+                        'step' => '',
+                    ),
+                    array(
+                        'key' => 'field_5fb921405ea15',
+                        'label' => 'Desktop',
+                        'name' => 'desktop',
+                        'type' => 'number',
+                        'instructions' => '',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'wrapper' => array(
+                            'width' => '',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'default_value' => 396,
+                        'placeholder' => '',
+                        'prepend' => '',
+                        'append' => '',
+                        'min' => '',
+                        'max' => '',
+                        'step' => '',
+                    ),
+                ),
+            ),
+        ),
+        'location' => array(
+            array(
+                array(
+                    'param' => 'post_type',
+                    'operator' => '==',
+                    'value' => 'page',
+                ),
+                array(
+                    'param' => 'page_type',
+                    'operator' => '!=',
+                    'value' => 'front_page',
+                ),
+            ),
+        ),
+        'menu_order' => 1,
+        'position' => 'normal',
+        'style' => 'default',
+        'label_placement' => 'top',
+        'instruction_placement' => 'label',
+        'hide_on_screen' => '',
+        'active' => true,
+        'description' => '',
+    ));
+
+endif;
+// Gutenberg
 $blocks = array(
     'accordion',
     'accordion-item',
@@ -6,7 +1783,7 @@ $blocks = array(
     'column',
     'button',
     'divider',
-    'icon',
+    'icon'
 );
 foreach ($blocks as $block) {
     require __DIR__.'/blocks/'.$block.'/'.$block.'.php';
@@ -49,7 +1826,7 @@ function register_block_patterns() {
 // allowed gutenberg blocks
 add_filter( 'allowed_block_types', 'allowed_block_types' );
 function allowed_block_types( $allowed_blocks ) {
-        return $allowed_blocks;
+    return $allowed_blocks;
 //      return array(
 //          'core/image',
 //          'core/paragraph',
@@ -63,8 +1840,9 @@ add_action( 'init', 'register_menus' );
 function register_menus() {
     register_nav_menus(
         array(
-            'header-menu' => __( 'Poziome menu w nagłówku' ),
-            'footer-menu' => __( 'Menu stopki' )
+            'header-menu' => 'Poziome menu w nagłówku',
+            'footer-menu' => 'Menu stopki',
+            'header-units' => 'Menu z listą jednostek'
         )
     );
 }
@@ -587,7 +2365,8 @@ function get_menus(WP_REST_Request $request) {
         $menu = (object) array(
             'id' => $id,
             'location' => $location,
-            'items' => wp_get_nav_menu_items($id)
+            'name' => wp_get_nav_menu_name($location),
+            'items' => wp_get_nav_menu_items($id),
         );
         array_push($nav_menus, $menu);
     }
@@ -657,17 +2436,39 @@ function theme_customize_register($wp_customize) {
         'label'=>'Żałoba',
         'description'=>'Cała strona WWW zostaje wyświetlona w odcieniach szarości.'
     ));
-    $wp_customize->add_setting('pwa_url', array(
+    $wp_customize->add_setting('add_event', array(
         'type' => 'theme_mod',
         'capability' => 'edit_theme_options',
     ));
-    $wp_customize->add_control('pwa_url', array(
-        'type'=>'input',
+    $wp_customize->add_control('add_event', array(
+        'type'=>'checkbox',
+        'priority'=>10,
+        'section'=>'event',
+        'label'=>'Dodawanie wydarzeń',
+        'description'=>'Niezalogowani użytkownicy mogą dodaważ wydarzenia'
+    ));
+    $wp_customize->add_setting('logo', array(
+        'type' => 'theme_mod',
+        'capability' => 'edit_theme_options',
+    ));
+    $wp_customize->add_control(new WP_Customize_Media_Control($wp_customize, 'logo', array(
         'priority'=>10,
         'section'=>'main',
-        'label'=>'Adres witryny (URL)',
-        'description'=>'Wprowadź adres, jeśli WordPress jest pod innym adresem niż PWA.'
+        'label'=>'Logo',
+        'description'=>'Logo zostanie wyświetlone w nagłówku strony.',
+        'mime_type' => 'image'
+    )));
+    $wp_customize->add_setting('placeholder', array(
+        'type' => 'theme_mod',
+        'capability' => 'edit_theme_options',
     ));
+    $wp_customize->add_control(new WP_Customize_Media_Control($wp_customize, 'placeholder', array(
+        'priority'=>10,
+        'section'=>'main',
+        'label'=>'Placeholder',
+        'description'=>'Placeholder zostanie wyświetlone w momencie gdy nie ustawisz zdjęcia wyróżnionego wpisu.',
+        'mime_type' => 'image'
+    )));
     $wp_customize->add_section('event', array(
         'title'=>'Wydarzenia',
         'panel'=>'theme',
@@ -705,6 +2506,28 @@ function theme_customize_register($wp_customize) {
         'label'=>'Treść maila z linkiem do potwierdzenia',
         'description'=>'Wprowadź treść maila który zostanie wysłany z tokenem do weryfikacji. Użyj {{ token }} w miejscu gdzie powienine być link.'
     ));
+    $wp_customize->add_setting('email', array(
+        'type' => 'theme_mod',
+        'capability' => 'edit_theme_options',
+    ));
+    $wp_customize->add_control('email', array(
+        'type'=>'input',
+        'priority'=>10,
+        'section'=>'event',
+        'label'=>'Adres e-mail dla powiadomień',
+        'description'=>'Wprowadź adres e-maila, na który zostanie wysłane powiadomienie.'
+    ));
+    $wp_customize->add_setting('title', array(
+        'type' => 'theme_mod',
+        'capability' => 'edit_theme_options',
+    ));
+    $wp_customize->add_control('title', array(
+        'type'=>'input',
+        'priority'=>10,
+        'section'=>'event',
+        'label'=>'Tytuł maila z powiadomieniem',
+        'description'=>'Wprowadź tytuł maila który zostanie wysłany z powiadomieniem.'
+    ));
 }
 // register endpoint to REST for theme options
 add_action('rest_api_init', 'register_rest_options');
@@ -716,8 +2539,13 @@ function register_rest_options() {
 }
 function get_options(WP_REST_Request $request) {
     return (object) array(
-        'mourning' => get_theme_mod('mourning', ''),
+        'title' => get_bloginfo('name'),
+        'descriptions' => get_bloginfo('description'),
+        'mourning' => get_theme_mod('mourning', false),
+        'add_event' => get_theme_mod('add_event', false),
         'domains' => get_theme_mod('domains', ''),
+        'logo' => wp_get_attachment_image_src(get_theme_mod('logo', ''), 'medium')[0],
+        'placeholder' => wp_get_attachment_image_src(get_theme_mod('placeholder', ''), 'medium')[0],
     );
 }
 // register endpoint to REST for events
@@ -738,6 +2566,8 @@ function get_acf_events(WP_REST_Request $request) {
         'age_groups' => $age_groups,
         'event_types' => $even_types,
         'localizations' => $localizations,
+        'without_outdated' => $without_outdated,
+        'event_categories' => $event_categories,
         ) = $request;
 
     // meta_query -> date from ACF
@@ -786,6 +2616,14 @@ function get_acf_events(WP_REST_Request $request) {
         ));
         $has_tax_query = true;
     }
+    if($event_categories) {
+        array_push($tax_query, array(
+            'taxonomy' => 'event_category',
+            'field' => 'term_id',
+            'terms' => explode(',', $event_categories)
+        ));
+        $has_tax_query = true;
+    }
 
     // common WP_QUERY args
     $args = array(
@@ -796,6 +2634,17 @@ function get_acf_events(WP_REST_Request $request) {
         'orderby' => 'meta_value',
         'order' => 'DESC',
     );
+
+    if($without_outdated) {
+        $args['meta_query'] = array(
+            array(
+                'key' => 'date_end',
+                'value' => date('Y-m-d'),
+                'compare' => '>=',
+                'type' => 'DATE'
+            )
+        );
+    }
 
     if($after && $before) {
         $args['meta_query'] = $meta_query;
@@ -882,7 +2731,7 @@ function post_events(WP_REST_Request $request) {
         'to_confirm' => $to_confirm,
         'id' => $id,
         'token' => $key
-    ) = $request;
+        ) = $request;
 
     if($id && $key) {
         $status = get_post_status($id);
@@ -940,7 +2789,7 @@ function post_events(WP_REST_Request $request) {
         .'<p>'.wp_kses($post_place, wp_kses_allowed_html()).'</p>'
         .'<!-- /wp:paragraph -->';
 
-     $post = array(
+    $post = array(
         'post_title' => wp_kses($post_title, wp_kses_allowed_html('title')),
         'post_content' => $post_content,
         'post_excerpt' => wp_kses($post_excerpt, wp_kses_allowed_html()),
@@ -949,30 +2798,30 @@ function post_events(WP_REST_Request $request) {
     );
     $post_id = wp_insert_post($post);
 
-     // set token
+    // set token
     $date = new DateTime();
     $token = md5($date->getTimestamp().$to_confirm);
     add_post_meta($post_id, 'token', $token);
-     // set ACF fields
-     update_field('organizer', array(
-         'unit'=>sanitize_text_field($organizer_unit),
-         'person'=>sanitize_text_field($organizer_person),
-         'phone'=> sanitize_text_field($organizer_phone),
-         'mail'=>sanitize_text_field($organizer_mail)
-     ), $post_id);
-     update_field('web', sanitize_text_field($web), $post_id);
-     update_field('date', array(
-         'begin'=>sanitize_text_field($date_begin),
-         'end'=>sanitize_text_field($date_end)
-     ), $post_id);
-     update_field('plikilinki', $plikilinki, $post_id);
-     // set taxonomies
-      wp_set_post_terms($post_id, $tax_age_groups, 'age_group');
-      wp_set_post_terms($post_id, $tax_localization, 'localization');
-      wp_set_post_terms($post_id, $tax_event_type, 'event_type');
+    // set ACF fields
+    update_field('organizer', array(
+        'unit'=>sanitize_text_field($organizer_unit),
+        'person'=>sanitize_text_field($organizer_person),
+        'phone'=> sanitize_text_field($organizer_phone),
+        'mail'=>sanitize_text_field($organizer_mail)
+    ), $post_id);
+    update_field('web', sanitize_text_field($web), $post_id);
+    update_field('date', array(
+        'begin'=>sanitize_text_field($date_begin),
+        'end'=>sanitize_text_field($date_end)
+    ), $post_id);
+    update_field('plikilinki', $plikilinki, $post_id);
+    // set taxonomies
+    wp_set_post_terms($post_id, $tax_age_groups, 'age_group');
+    wp_set_post_terms($post_id, $tax_localization, 'localization');
+    wp_set_post_terms($post_id, $tax_event_type, 'event_type');
 
-     // * set thumbnail
-     // set_post_thumbnail($id, );
+    // * set thumbnail
+    // set_post_thumbnail($id, );
     $uploadedfile = $file['file'];
     $upload_overrides = array(
         'test_form' => false,
@@ -996,12 +2845,11 @@ function post_events(WP_REST_Request $request) {
     // send e-mail
     $to = $to_confirm;
     $subject = get_theme_mod('subject', '');
-    $pattern = '/\/?$/';
-    $url = preg_replace($pattern, '', get_theme_mod( 'pwa_url', '' ));
+    $url = site_url();
     $message = str_replace('{{ token }}', '<a href="'.$url.'/wydarzenia?id='.$post_id.'&token='.$token.'">'.$url.'/wydarzenia?id='.$post_id.'&token='.$token.'</a>', get_theme_mod('message', ''));
     $headers = array('Content-Type: text/html; charset=UTF-8');
 
-    wp_mail($to_confirm, $subject, $message, $headers);
+    wp_mail($to, $subject, $message, $headers);
 
     return array(
         'status' => 'success',
@@ -1020,3 +2868,17 @@ function temporary_post_status() {
 
 }
 add_action( 'init', 'temporary_post_status', 0 );
+// notification after transition event status from temporaty to pending
+function transition_post_to_pending($new_status, $old_status, $post) {
+    if(!get_theme_mod('email', '')) return;
+    if(('pending' === $new_status && 'temporary' === $old_status) && 'event' === $post->post_type) {
+        $to = get_theme_mod('email', '');
+        $subject = get_theme_mod('title', '');
+        $site_url = site_url();
+        $message = "Ktoś dodał szkic \"$post->post_title\" zaakceptuj wydarzenie <a href=\"$site_url/wp-admin/post.php?post=$post->ID&action=edit\" target=\"_blank\">$site_url/wp-admin/post.php?post=$post->ID&action=edit</a>";
+        $headers = array('Content-Type: text/html; charset=UTF-8');
+
+        wp_mail($to, $subject, $message, $headers);
+    }
+}
+add_action('transition_post_status', 'transition_post_to_pending', 10, 3);

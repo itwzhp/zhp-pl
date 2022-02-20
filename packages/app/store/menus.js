@@ -2,9 +2,9 @@ export const state = () => ({})
 export const mutations = {
   update (state, menu) {
     const itemsAsObject = menu.items.reduce((object, item) => ({ ...object, [item.ID]: item }), {})
-    const items = menu.items
+    const { items } = menu
     const links = items.reduce((array, item) => {
-      const parent = item.menu_item_parent
+      const { menu_item_parent: parent } = item
       if (parent === '0') {
         itemsAsObject[item.ID].index = array.length
         return [...array, { to: item.url, name: item.title, id: item.ID }]
@@ -16,19 +16,22 @@ export const mutations = {
         itemsAsObject[item.ID].root_index = itemsAsObject[parent].index
         itemsAsObject[item.ID].submenu_index = array[itemsAsObject[parent].index].submenu.length - 1
       } else if (itemsAsObject[parent].root_index) {
-        const { root_index, submenu_index } = itemsAsObject[parent]
+        const { root_index: rootIndex, submenu_index: submenuIndex } = itemsAsObject[parent]
         const copyOfItem = { to: item.url, name: item.title, id: item.ID }
-        array[root_index].submenu[submenu_index].mega_menu = array[root_index].submenu[submenu_index].mega_menu
-          ? [...array[root_index].submenu[submenu_index].mega_menu, copyOfItem]
+        array[rootIndex].submenu[submenuIndex].mega_menu = array[rootIndex].submenu[submenuIndex].mega_menu
+          ? [...array[rootIndex].submenu[submenuIndex].mega_menu, copyOfItem]
           : [copyOfItem]
       }
       return array
     }, [])
-    state[menu.location] = links
+    state[menu.location] = { links, name: menu.name }
   }
 }
 export const getters = {
   menu: state => (menu) => {
-    return state[menu]
+    return state[menu].links
+  },
+  menuName: state => (menu) => {
+    return state[menu].name
   }
 }

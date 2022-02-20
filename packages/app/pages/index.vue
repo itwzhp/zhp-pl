@@ -2,28 +2,60 @@
   <div id="home">
     <div class="hero-wrapper">
       <ZSection class="section-hero">
-        <div class="section-hero__picture">
-          <ZClipPath :hero-image="homepage._embedded['wp:featuredmedia'][0].media_details.sizes.medium_large.source_url" />
+        <div
+          class="section-hero__picture"
+        >
+          <div style="position: relative;">
+            <ZClipPath :hero-image="homepage._embedded['wp:featuredmedia'][0].media_details.sizes.medium_large.source_url" />
+            <div class="clip-path-logo">
+              <ZImage
+                :src="logo"
+                :alt="title"
+                class="clip-path-logo__image"
+              />
+            </div>
+          </div>
         </div>
         <ZHeading
           :level="1"
           class="section-hero__title t3"
         >
-          ZHP - sprawności na&nbsp;całe życie
+          {{ title }}
         </ZHeading>
         <ZSearch
           class="section-hero__search"
-          :input="{placeholder: 'Czego dzisiaj chcesz dowiedzieć się o ZHP?'}"
+          :input="{placeholder: 'Czego dzisiaj chcesz się dowiedzieć?'}"
           @submit="search"
         />
       </ZSection>
     </div>
     <ZSection
+      v-if="hasAbout"
+      :title="about.title"
+      :subtitle="about.subtitle"
+      class="section-about-us"
+    >
+      <template v-for="(tile, key) in about.tiles">
+        <ZCard
+          :key="key"
+          :thumbnail="tile.thumbnail || placeholder"
+          :title="tile.title"
+          :description="tile.description"
+          :to="urlParser(tile.to)"
+          class="section-about-us__tile"
+          :class="{
+            'z-card--pictured': isOverlayed,
+            'z-card--overlayed': isOverlayed,
+          }"
+        />
+      </template>
+    </ZSection>
+    <ZSection
+      v-if="hasPosts"
       title="Polecamy"
       class="section-posts"
     >
       <ZCarousel
-        v-if="posts.length > 0"
         :peeked="true"
         :settings="{
           autoplay: 3000,
@@ -45,7 +77,7 @@
             class="glide__slide"
           >
             <ZPost
-              :thumbnail="post.rest_media"
+              :thumbnail="post.rest_media || placeholder"
               :title="post.title.rendered"
               :to="post.rest_redirect ? post.rest_redirect :`/${post.date.split('-')[0]}/${post.slug}`"
               :author="post.rest_author"
@@ -55,28 +87,32 @@
         </template>
       </ZCarousel>
     </ZSection>
-    <ZSection class="section-highlighted">
-      <ZCard
-        v-if="cards['>>']"
-        :title="cards['>>'].title.rendered"
-        :thumbnail="cards['>>']._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url"
-        :to="cards['>>'].rest_redirect ? cards['>>'].rest_redirect :`/${cards['>>'].date.split('-')[0]}/${cards['>>'].slug}`"
+    <ZSection
+      v-if="hasHighlighted"
+      class="section-highlighted"
+    >
+      <component
+        :is="highlightedComponent"
+        :title="newsCard.title.rendered"
+        :thumbnail="newsCard._embedded['wp:featuredmedia'] ? newsCard._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url : placeholder"
+        :to="newsCard.rest_redirect ? newsCard.rest_redirect :`/${newsCard.date.split('-')[0]}/${newsCard.slug}`"
+        :date="newsCard.date"
         class="section-highlighted__card"
       />
       <ZHighlighted
-        title="Aktualności"
-        :posts="highlightedPosts"
+        :title="highlighted.title"
+        :posts="news"
         class="section-highlighted__posts"
       />
     </ZSection>
-    <ZSection class="section-about-us">
+    <ZSection
+      v-if="hasMeet"
+      class="section-about-us"
+    >
       <ZBanner
-        :thumbnail="{src: `${$config.mediaBaseURL}/wp-content/uploads/2020/11/Harcerskielatp2019.mp4`}"
+        v-bind="meet"
         cover-type="video"
-        title="Poznaj ZHP"
-        content="Związek Harcerstwa Polskiego to największa organizacja harcerska w Polsce, która zrzesza ponad 100 000 osób! Koniecznie dowiedz się o niej więcej!"
         class="section-about-us__banner"
-        :calls-to-action="[]"
       >
         <template #thumbnail="{thumbnail}">
           <ZVideo
@@ -86,9 +122,12 @@
         </template>
       </ZBanner>
     </ZSection>
-    <ZSection class="section-join-us">
+    <ZSection
+      v-if="hasJoin"
+      class="section-join-us"
+    >
       <ZBanner
-        :thumbnail="{src: `${$config.mediaBaseURL}/wp-content/uploads/2020/12/Agnieszka_Madetko-Kurczab_ZHP.jpg`}"
+        :thumbnail="{src: join.thumbnail}"
         title="Chcesz zapisać swoje dziecko do harcerstwa?"
         content="Harcerstwo to nie tylko niesamowita przygoda, ale także możliwość zdobycia sprawności na całe życie. Chcesz, aby Twoje dziecko wkroczyło z nami na szlak? Tutaj znajdziesz najważniejsze informacje."
         :calls-to-action="[
@@ -97,49 +136,24 @@
           {name:'Gdzie się zapisać?', to: '/gdzie-sie-zapisac'}]"
         class="section-join-us__banner"
       />
-      <ZPost
-        v-if="cards['>>>']"
-        :title="cards['>>>'].title.rendered"
-        :thumbnail="cards['>>>']._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url"
-        :to="cards['>>>'].rest_redirect ? cards['>>>'].rest_redirect :`/${cards['>>>'].date.split('-')[0]}/${cards['>>>'].slug}`"
-        :date="cards['>>>'].date"
+      <!-- TODO: add to theme_options join_us_post_category -->
+      <component
+        :is="joinComponent"
+        :title="joinUs.title.rendered"
+        :thumbnail="joinUs._embedded['wp:featuredmedia'] ? joinUs._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url : placeholder"
+        :to="joinUs.rest_redirect ? joinUs.rest_redirect :`/${joinUs.date.split('-')[0]}/${joinUs.slug}`"
+        :date="joinUs.date"
         class="section-join-us__post"
       />
     </ZSection>
-    <ZSection class="section-mission">
-      <ZCard
-        to="/stopnie-i-sprawnosci"
-        title="Stopnie i sprawności"
-        :thumbnail="`${$config.mediaBaseURL}/wp-content/uploads/2020/12/01.png`"
-        class="section-mission__card section-mission__card--first"
-      />
-      <ZCard
-        to="/czlonkowie-organizacji"
-        title="Członkowie organizacji"
-        :thumbnail="`${$config.mediaBaseURL}/wp-content/uploads/2020/12/02.png`"
-        class="section-mission__card section-mission__card--bigger"
-      />
-      <ZCard
-        title="Statut ZHP i Władze ZHP"
-        :thumbnail="`${$config.mediaBaseURL}/wp-content/uploads/2020/12/03.png`"
-        class="section-mission__card"
-        to="/organizacja"
-      />
-      <ZBanner
-        title="Sprawdź Centralny Bank Pomysłów"
-        content="Szukasz pomysłu na zbiórkę? Inspiracji do pracy z harcerzami?"
-        :calls-to-action="{name: 'Przejdź do strony', to: 'http://cbp.zhp.pl/'}"
-        class="section-mission__banner"
-      />
-    </ZSection>
     <ZSection
+      v-if="hasEvents"
       class="section-events"
       title="Przedsięwzięcia i&nbsp;wydarzenia"
-      subtitle="Szukasz rajdu dla swojej drużyny? Albo konkursu dla swojej gromady? A&nbsp;może chcesz wziąć udział w&nbsp;kursie? Sprawdź, co odbywa się w&nbsp;ZHP w&nbsp;najbliższym czasie."
+      subtitle="Szukasz rajdu dla swojej drużyny? Albo konkursu dla swojej gromady? A&nbsp;może chcesz wziąć udział w&nbsp;kursie? Sprawdź, co odbywa się w&nbsp;najbliższym czasie."
       :more="{name: 'wydarzenia'}"
     >
       <ZCarousel
-        v-if="events.length > 0"
         :peeked="true"
         :settings="{
           autoplay: 3000,
@@ -166,7 +180,7 @@
               :to="`/wydarzenia/${event.slug}`"
               :author="event.rest_author"
               :date="event.rest_acf.date"
-              :location="{name: event._embedded['wp:term'][0][0] && event._embedded['wp:term'][0][0].name, to:'#'}"
+              :location="{name: event.rest_localization && event.rest_localization.name, to:'#'}"
               :type="event.rest_event_type"
               :audiences="event.age_groups.map((ageGroup)=>(ageGroups[ageGroup]))"
             />
@@ -174,151 +188,401 @@
         </template>
       </ZCarousel>
     </ZSection>
-    <ZSection class="section-social">
-      <div class="section-social__instagram">
-        <ZInstagram
-          :image="`${$config.mediaBaseURL}/wp-content/uploads/2020/11/instagram.jpg`"
-          :feed="feed"
+    <ZSection
+      v-if="hasSocial"
+      class="section-social"
+    >
+      <ZInstagram
+        v-if="hasInstagram"
+        v-bind="instagram"
+        :feed="feed"
+        class="section-social__instagram"
+        :class="{
+          'section-social__instagram--just-two': !hasAllSocialWidgets
+        }"
+      />
+      <ZFacebook
+        v-if="hasFacebook"
+        v-bind="facebook"
+        class="section-social__facebook"
+        :class="{
+          'section-social__facebook--just-two': !hasAllSocialWidgets
+        }"
+      />
+      <div
+        class="section-social__partners"
+        :class="{
+          'section-social__partners--just-two': !hasAllSocialWidgets
+        }"
+      >
+        <ZLink
+          :to="urlParser(partnersMeta.to)"
+          class="t4 uppercase"
+          style="--link-text-decoration: none;"
+          v-html="partnersMeta.title"
         />
-      </div>
-      <div class="section-social__facebook">
-        <ZFacebook />
-      </div>
-      <div class="section-social__partners">
-        <ZHeading>
-          <ZLink
-            to="/partnerzy"
-            class="t4 uppercase"
-            style="--link-text-decoration: none;"
-          >
-            Partnerzy organizacji
-          </ZLink>
-        </ZHeading>
-        <ZSection
-          tag="div"
-          style="--section-margin: 0;"
-        >
-          <ZCarousel
-            class="carousel"
-            :has-controls="false"
-            :settings="{
-              autoplay: 3000,
-              perView: 3,
-              peek: {
-                before: 0,
-                after: 55
-              },
-              breakpoints: {
-                640: {
-                  perView: 1,
-                  peek: {
-                    before: 0,
-                    after: 20
-                  }
+        <ZCarousel
+          v-if="partners.length"
+          ref="partners"
+          :has-controls="false"
+          :settings="{
+            autoplay: partners.length >= 4 ? 3000 : 0,
+            type: partners.length >= 4 ? 'carousel' : 'slider',
+            perView: 3,
+            peek: {
+              before: 0,
+              after: 55
+            },
+            breakpoints: {
+              640: {
+                autoplay: 3000,
+                type: 'carousel',
+                perView: 1,
+                peek: {
+                  before: 0,
+                  after: 20
                 }
               }
-            }"
+            }
+          }"
+          class="carousel"
+        >
+          <template v-for="(partner, key) in partners">
+            <li
+              :key="key"
+              class="glide__slide"
+            >
+              <ZImage
+                :src="partner._embedded['wp:featuredmedia'][0].media_details.sizes.medium ? partner._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url : partner._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url"
+                :lazy="false"
+              />
+            </li>
+          </template>
+        </ZCarousel>
+        <div
+          v-if="banners.length"
+          class="partner-banners"
+        >
+          <template v-for="(banner, key) in banners">
+            <ZImage
+              :key="key"
+              :src="banner._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url"
+              class="partner-banners__banner"
+            />
+          </template>
+        </div>
+      </div>
+    </ZSection>
+    <ZSection
+      v-else
+      class="section-partners"
+      :title="partnersMeta.title"
+    >
+      <template #title>
+        <ZHeading class="z-section__title">
+          <ZLink
+            :to="urlParser(partnersMeta.to)"
+            class="t4 uppercase"
+            style="--link-text-decoration: none;"
+            v-html="partnersMeta.title"
+          />
+        </ZHeading>
+      </template>
+      <ZCarousel
+        v-if="partners.length"
+        ref="partners"
+        :has-controls="false"
+        :settings="{
+          autoplay: partners.length >= 4 ? 3000 : 0,
+          type: partners.length >= 4 ? 'carousel' : 'slider',
+          breakpoints: {
+            640: {
+              autoplay: 3000,
+              type: 'carousel',
+              perView: 1,
+              peek: {
+                before: 20,
+                after: 20
+              }
+            }
+          }
+        }"
+        class="carousel"
+      >
+        <template v-for="(partner, key) in partners">
+          <li
+            :key="key"
+            class="glide__slide"
           >
-            <template v-for="partner in partners">
-              <li
-                :key="partner.id"
-                class="glide__slide"
-              >
-                <ZImage
-                  :src="partner._embedded['wp:featuredmedia'][0].media_details.sizes.medium ? partner._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url : partner._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url"
-                />
-              </li>
-            </template>
-          </ZCarousel>
-        </ZSection>
-        <ZImage
-          :src="`${$config.mediaBaseURL}/wp-content/uploads/2020/11/ROHIS.png`"
-        />
+            <ZImage
+              :src="partner._embedded['wp:featuredmedia'][0].media_details.sizes.medium ? partner._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url : partner._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url"
+              :lazy="false"
+            />
+          </li>
+        </template>
+      </ZCarousel>
+      <div
+        v-if="banners.length"
+        class="partner-banners"
+      >
+        <template v-for="(banner, key) in banners">
+          <ZImage
+            :key="key"
+            :src="banner._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url"
+            class="partner-banners__banner"
+          />
+        </template>
       </div>
     </ZSection>
   </div>
 </template>
 
 <script>
+import debounce from 'lodash.debounce'
+import urlParser from '@/helpers/urlParser'
 import {
   ZBanner,
-  ZCard,
   ZCarousel,
   ZEvent,
   ZHeading,
-  ZHighlighted,
   ZPost,
   ZSearch,
   ZSection,
   ZClipPath,
-  ZVideo,
   ZImage,
-  ZFacebook,
+  ZCard,
   ZLink,
-  ZInstagram
+  ZHighlighted,
+  ZInstagram,
+  ZVideo
 } from '@zhp-pl/ui'
+import ZFacebook from '@/components/organisms/ZFacebook.vue'
 import { mapGetters } from 'vuex'
-
+const resize = debounce(() => {
+  if (!window.FB) { return }
+  window.FB.XFBML.parse()
+}, 300)
 export default {
   components: {
+    ZVideo,
     ZBanner,
-    ZCard,
     ZCarousel,
     ZEvent,
     ZHeading,
-    ZHighlighted,
     ZPost,
     ZSearch,
     ZSection,
     ZClipPath,
-    ZVideo,
     ZImage,
-    ZFacebook,
+    ZCard,
     ZLink,
+    ZHighlighted,
+    ZFacebook,
     ZInstagram
   },
   async asyncData ({ $axios, store }) {
+    // * get homepage settings
     const homepageRes = await $axios.get('pages', { params: { slug: 'strona-glowna', _embed: true } })
     const homepage = homepageRes.data.shift()
-    // eslint-disable-next-line
-    const event_categories = homepage?.rest_acf?.event_categories;
-    // last 8 post for posts ZCarousel
-    const postsRes = await $axios.get('posts', { params: { per_page: 25, tags: 432, _embed: true } })
+
+    // * get posts for Polecamy
+    const postsParams = { per_page: 25, _embed: true }
+    if (homepage.rest_acf.posts.categories) {
+      postsParams.categories = homepage.rest_acf.posts.categories
+    }
+    const postsRes = await $axios.get('posts', { params: postsParams })
     const posts = postsRes.data
-    // // last 5 posts for ZHighlighted component
-    // const highlightedPostsRes = await $axios.get('posts', { params: { per_page: 5 } })
-    // const highlightedPosts = highlightedPostsRes.data.map(post => ({ ...post, title: post.title.rendered }))
-    // last 8 events for events ZCarousel
-    const eventsRes = await $axios.get('events', { params: { per_page: 25, _embed: true, event_categories } })
+
+    // * get events for Przedsięwziecia i wydarzenia
+    const eventsParams = {
+      per_page: 25,
+      page: 1,
+      without_outdated: true
+    }
+    if (homepage.rest_acf.event_categories) {
+      eventsParams.event_categories = homepage.rest_acf.event_categories.join(',')
+    }
+    const eventsRes = await $axios.get('acf-events', { params: eventsParams })
     const events = eventsRes.data
-    // partners
-    const partnersRes = await $axios.get('logos', { params: { per_page: 99, logos_categories: 25, _embed: true } })
+
+    // * get post for Chcesz zapisać...
+    const joinUsParams = {
+      per_page: 1,
+      _embed: true
+    }
+    if (homepage.rest_acf.join.tags) {
+      joinUsParams.tags = homepage.rest_acf.join.tags
+    }
+    const joinUsRes = await $axios.get('posts', { params: joinUsParams })
+    const joinUs = joinUsRes.data.shift()
+
+    // * get logos for Partnerzy
+    const partnersParams = {
+      per_page: 99,
+      _embed: true
+    }
+    if (homepage.rest_acf.partners.categories) {
+      partnersParams.logo_categories = homepage.rest_acf.partners.categories
+    }
+
+    const partnersRes = await $axios.get('logos', { params: partnersParams })
     const partners = partnersRes.data
 
-    if (!Object.keys(store.state.instagram.posts).length) {
+    const bannersParams = {
+      per_page: 99,
+      _embed: true
+    }
+    if (homepage.rest_acf.partners.banner_categories) {
+      bannersParams.logo_categories = homepage.rest_acf.partners.banner_categories
+    }
+    const bannersRes = await $axios.get('logos', { params: bannersParams })
+    const banners = bannersRes.data
+
+    // * get posts for Aktualności
+    const newsParams = { per_page: 5 }
+    if (homepage.rest_acf.highlighted.categories) {
+      newsParams.categories = homepage.rest_acf.highlighted.categories
+    }
+    const newsRes = await $axios.get('posts', { params: newsParams })
+    const news = newsRes.data.map(news => ({ ...news, title: news.title.rendered }))
+
+    // * get post for Aktualności
+    const newsCardParams = { per_page: 1, _embed: true }
+    if (homepage.rest_acf.highlighted.tags) {
+      newsCardParams.tags = homepage.rest_acf.highlighted.tags
+    }
+    const newsCardRes = await $axios.get('posts', { params: newsCardParams })
+    const newsCard = newsCardRes.data.shift()
+
+    // * get instagram html to parse, and store it in store
+    const instagram = homepage.rest_acf.social.instagram
+    const hasInstagram = instagram.image &&
+        instagram.user &&
+        instagram.name &&
+        instagram.description
+    if (hasInstagram && !Object.keys(store.state.instagram.posts).length) {
       const instagramRes = await $axios.get('instagram')
       const instagram = instagramRes.data
-      const feed = instagram.match(/href="(.+?)".+?data-full-res="(.+?)"/gm).map(match => (
+      const images = instagram.match(/href="(.+?)".+?data-full-res="(.+?)"/gm) || []
+      const feed = images.map(match => (
         { href: match.match(/href="(.+?)"/)[1], src: match.match(/data-full-res="(.+?)"/)[1] }
       ))
       store.commit('instagram/update', feed)
     }
 
-    return { homepage, posts, events, partners }
+    return { homepage, posts, events, partners, banners, joinUs, news, newsCard }
   },
   computed: {
     ...mapGetters({
-      cards: 'cards/posts'
+      cards: 'cards/posts',
+      title: 'theme/title',
+      logo: 'theme/logo',
+      placeholder: 'theme/placeholder'
     }),
     ageGroups () {
       return this.$store.getters['taxonomies/taxonomy']('age_groups')
     },
+    about () {
+      return this.homepage.rest_acf.about
+    },
+    hasAbout () {
+      return this.about.visible && this.about.tiles
+    },
+    isOverlayed () {
+      return this.about.overlayed
+    },
+    hasPosts () {
+      return this.homepage.rest_acf.posts.visible && this.posts.length >= 4
+    },
+    hasEvents () {
+      return this.homepage.rest_acf.events.visible && this.events.length >= 4
+    },
+    meet () {
+      return { ...this.homepage.rest_acf.meet, thumbnail: { src: this.homepage.rest_acf.meet.thumbnail } }
+    },
+    hasMeet () {
+      const meet = this.homepage.rest_acf.meet
+      return meet.visible && meet.thumbnail
+    },
+    highlighted () {
+      return this.homepage.rest_acf.highlighted
+    },
+    hasHighlighted () {
+      return this.highlighted.visible
+    },
+    highlightedComponent () {
+      return `z-${this.highlighted.component}`
+    },
+    join () {
+      return this.homepage.rest_acf.join
+    },
+    joinComponent () {
+      return `z-${this.join.component}`
+    },
+    hasJoin () {
+      return this.homepage.rest_acf.join.visible
+    },
+    partnersMeta () {
+      return this.homepage.rest_acf.partners
+    },
+    social () {
+      return this.homepage.rest_acf.social
+    },
+    facebook () {
+      return this.social.facebook
+    },
+    hasFacebook () {
+      return this.facebook.appId &&
+          this.facebook.fbPageUrl
+    },
+    instagram () {
+      return this.social.instagram
+    },
+    hasInstagram () {
+      return this.instagram.image &&
+          this.instagram.user &&
+          this.instagram.name &&
+          this.instagram.description &&
+          this.feed.length > 0
+    },
+    hasSocial () {
+      return this.social.visible && (this.hasFacebook || this.hasInstagram)
+    },
     feed () {
       return this.$store.getters['instagram/posts']
     },
-    highlightedPosts () {
-      return this.$store.getters['posts/posts'].map(post => ({ ...post, title: post.title.rendered })).slice(0, 5)
+    hasAllSocialWidgets () {
+      const social = [this.hasInstagram, this.hasFacebook, true]
+      return social.filter(state => (state)).length === 3
     }
+  },
+  mounted () {
+    this.$nextTick(() => {
+      const glide = this.$refs?.partners?.glide
+      const isMobile = matchMedia('(max-width: 640px)').matches
+      if (!isMobile) {
+        if (glide) {
+          glide.index = 0
+          glide.disabled = true
+        }
+      }
+      matchMedia('(max-width: 640px)').addListener((e) => {
+        if (e.matches) {
+          if (glide) {
+            glide.disabled = false
+          }
+          return
+        }
+        if (glide) {
+          glide.index = 0
+          glide.disabled = true
+        }
+      })
+    })
+    window.addEventListener('resize', resize)
+  },
+  beforeDestroy () {
+    window.removeEventListener('resize', resize)
   },
   methods: {
     search (query) {
@@ -326,12 +590,13 @@ export default {
         path: '/szukaj',
         query: { search: query }
       })
-    }
+    },
+    urlParser
   },
   head () {
-    const title = 'Związek Harcerstwa Polskiego'
+    const title = this.title
     const description = ''
-    const image = 'https://zhp.pl/wp-content/uploads/2015/01/zhp_fb.png'
+    const image = this.placeholder
     return {
       title,
       meta: [
@@ -390,9 +655,11 @@ export default {
     }
 
     &__picture {
+      margin: 0 0 44px 0;
       grid-column: span 12;
 
       @media (min-width: 640px) {
+        margin: 0;
         grid-column: span 13;
         grid-row: span 2;
       }
@@ -422,6 +689,8 @@ export default {
     --section-content-align-items: center;
 
     &__card {
+      --post-grid-template-rows: 1fr 128px;
+
       grid-column: span 12;
 
       @media (min-width: 640px) {
@@ -439,15 +708,11 @@ export default {
   }
 
   .section-about-us {
-    --section-content-max-width: 1235px;
-
-    &__banner {
+    &__tile {
       grid-column: span 12;
 
       @media (min-width: 640px) {
-        --banner-title-grid-column: span 5;
-        --banner-description-grid-column: span 5;
-        --banner-thumbnail-z-index: 10;
+        grid-column: span 4;
       }
     }
   }
@@ -473,57 +738,43 @@ export default {
     }
   }
 
-  .section-mission {
-    --section-content-align-items: end;
-
-    @media (min-width: 640px) {
-      --section-content-grid-template-columns: repeat(24, minmax(auto, 1fr));
-    }
-
-    &__card {
-      grid-column: span 12;
-
-      @media (min-width: 640px) {
-        grid-column: span 5;
-      }
-
-      &--bigger {
-        overflow: hidden;
-
-        @media (min-width: 640px) {
-          height: calc(100% + 2rem);
-          transform: translateY(16px);
-        }
-      }
-
-      &--first {
-        @media (min-width: 640px) {
-          grid-column: 3 / span 5;
-        }
-      }
-    }
-
-    &__banner {
-      --banner-description-grid-row: 1;
-      --banner-description-grid-column: span 12;
-      --banner-title-grid-row: 2;
-      --banner-title-grid-column: span 12;
-      --banner-title-margin: 0 0 2rem 0;
-      --banner-title-font-size: var(--font-size-subtitle-1);
-      --banner-title-text-transform: normal;
-      --banner-cta-grid-column: span 12;
-
-      grid-column: span 12;
-
-      @media (min-width: 640px) {
-        grid-column: span 5;
-      }
-    }
-  }
-
   .section-events {
     @media (min-width: 640px) {
       --section-title-grid-column: span 3;
+    }
+  }
+
+  .carousel {
+    grid-column: span 12;
+  }
+
+  .section-posts {
+    --section-content-max-width: 1100px;
+  }
+
+  .clip-path-logo {
+    position: absolute;
+    z-index: 1;
+    bottom: -25px;
+    width: 30%;
+    padding-top: 30%;
+    background: #fff;
+    border-radius: 100%;
+    box-shadow: 5px 10px 20px 0 rgba(0, 0, 0, 0.16);
+
+    &__image {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100%;
+      padding: 10%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .section-partners {
+    &::before {
+      content: none;
     }
   }
 
@@ -534,6 +785,12 @@ export default {
       @media (min-width: 640px) {
         grid-column: span 4;
       }
+
+      &--just-two {
+        @media (min-width: 640px) {
+          grid-column: span 6;
+        }
+      }
     }
 
     &__facebook {
@@ -541,6 +798,12 @@ export default {
 
       @media (min-width: 640px) {
         grid-column: span 3;
+      }
+
+      &--just-two {
+        @media (min-width: 640px) {
+          grid-column: span 6;
+        }
       }
     }
 
@@ -550,15 +813,38 @@ export default {
       @media (min-width: 640px) {
         grid-column: span 5;
       }
+
+      &--just-two {
+        @media (min-width: 640px) {
+          grid-column: span 6;
+        }
+      }
     }
   }
 
-  .carousel {
-    grid-column: span 12;
+  .section-about-us {
+    --section-content-max-width: 1235px;
+
+    &__banner {
+      grid-column: span 12;
+
+      @media (min-width: 640px) {
+        --banner-title-grid-column: span 5;
+        --banner-description-grid-column: span 5;
+        --banner-thumbnail-z-index: 10;
+      }
+    }
   }
 
-  .section-posts {
-    --section-content-max-width: 1100px;
+  .partner-banners {
+    margin: 1rem 0 0 0;
+    grid-column: span 12;
+
+    &__banner {
+      &:not(:first-of-type) {
+        margin: 0.5rem 0 0 0;
+      }
+    }
   }
 }
 </style>

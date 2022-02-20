@@ -18,72 +18,24 @@
           </ZLink>
         </div>
         <div class="z-header__actions z-header__actions--right">
-          <ZDropdown class="z-language z-dropdown--has-chevron">
-            <template #toggle="{toggle}">
-              <ZButton
-                class="z-button--text uppercase"
-                @click="toggle"
-              >
-                {{ selectedLanguage }}
-              </ZButton>
-            </template>
-            <template>
-              <ZList>
-                <template v-for="(language, key) in languages">
-                  <ZListItem :key="key">
-                    <ZLink
-                      :to="language.href"
-                      class="z-language__link"
-                    >
-                      {{ language.name }}
-                    </ZLink>
-                  </ZListItem>
-                </template>
-              </ZList>
-            </template>
-          </ZDropdown>
           <ZDropdown class="z-districts z-dropdown--has-chevron">
             <template #toggle="{toggle}">
               <ZButton
                 class="z-button--text"
                 @click="toggle"
               >
-                Chorągwie ZHP
+                {{ headerUnitsLabel }}
               </ZButton>
             </template>
             <template>
               <ZList>
-                <template v-for="(choragiew, key) in choragwie">
+                <template v-for="(unit, key) in headerUnits">
                   <ZListItem :key="key">
                     <ZLink
-                      :to="choragiew.href"
+                      :to="unit.to"
                       class="z-districts__link"
                     >
-                      {{ choragiew.name }}
-                    </ZLink>
-                  </ZListItem>
-                </template>
-              </ZList>
-            </template>
-          </ZDropdown>
-          <ZDropdown class="z-groups z-dropdown--right z-dropdown--has-chevron">
-            <template #toggle="{toggle}">
-              <ZButton
-                class="z-button--text"
-                @click="toggle"
-              >
-                Grupa ZHP
-              </ZButton>
-            </template>
-            <template>
-              <ZList>
-                <template v-for="(jednostka, key) in grupaZHP">
-                  <ZListItem :key="key">
-                    <ZLink
-                      :to="jednostka.href"
-                      class="z-groups__link"
-                    >
-                      {{ jednostka.name }}
+                      {{ unit.name }}
                     </ZLink>
                   </ZListItem>
                 </template>
@@ -92,7 +44,7 @@
           </ZDropdown>
         </div>
       </div>
-      <ZMegaMenu :menu="headerMenu" />
+      <ZMegaMenu :menu="megaMenu" />
     </header>
     <Nuxt class="layout__page" />
     <footer class="z-footer">
@@ -119,7 +71,7 @@
         >
           <ZLink to="/copyright">
             Copyright
-          </ZLink> © 1997-{{ year }}<span class="br" /> Związek Harcerstwa Polskiego
+          </ZLink> ©{{ year }} {{ title }}
         </ZText>
         <ZMenu
           class="z-menu--horizontal z-footer__menu"
@@ -143,12 +95,12 @@ import {
   ZDidYouKnow,
   ZImage,
   ZLink,
-  ZDropdown,
-  ZButton,
   ZMenu,
   ZMegaMenu,
+  ZCookies,
+  ZDropdown,
   ZList,
-  ZCookies
+  ZButton
 } from '@zhp-pl/ui'
 
 export default {
@@ -158,12 +110,12 @@ export default {
     ZDidYouKnow,
     ZImage,
     ZLink,
-    ZDropdown,
-    ZButton,
     ZMenu,
     ZMegaMenu,
+    ZCookies,
+    ZDropdown,
     ZList,
-    ZCookies
+    ZButton
   },
   async middleware ({ store, $axios }) {
     if (!Object.keys(store.state.theme.options).length) {
@@ -176,10 +128,12 @@ export default {
       const menus = menusRes.data
       const locations = {
         'header-menu': 'headerMenu',
-        'footer-menu': 'footerMenu'
+        'footer-menu': 'footerMenu',
+        'header-units': 'headerUnits'
       }
+      const origin = window.location.origin
       menus.forEach((menu) => {
-        store.commit('menus/update', { location: locations[menu.location], items: menu.items })
+        store.commit('menus/update', { location: locations[menu.location], items: menu.items.map(item => ({ ...item, url: item.url.replace(origin, '') })), name: menu.name })
       })
     }
     if (!Object.keys(store.getters['random/text']).length) {
@@ -197,6 +151,7 @@ export default {
         }
       })
     )
+    // Warto przeczytać on single post page
     if (!Object.keys(store.state.posts.posts).length) {
       const postsRes = await $axios.get('posts', { params: { per_page: 9 } })
       const posts = postsRes.data
@@ -215,88 +170,59 @@ export default {
   },
   data () {
     return {
-      isOpen: false,
-      choragwie: [
-        { name: 'Białostocka', href: 'http://bialostocka.zhp.pl/' },
-        { name: 'Dolnośląska', href: 'http://dolnoslaska.zhp.pl/' },
-        { name: 'Gdańska', href: 'https://gdanska.zhp.pl/' },
-        { name: 'Kielecka', href: 'https://kielecka.zhp.pl/' },
-        { name: 'Krakowska', href: 'https://krakowska.zhp.pl/' },
-        { name: 'Kujawsko-Pomorska', href: 'https://kp.zhp.pl/' },
-        { name: 'Lubelska', href: 'https://lubelska.zhp.pl/' },
-        { name: 'Łódzka', href: 'https://lodzka.zhp.pl/' },
-        { name: 'Mazowiecka', href: 'https://mazowiecka.zhp.pl/' },
-        { name: 'Opolska', href: 'https://opolska.zhp.pl/' },
-        { name: 'Podkarpacka', href: 'http://podkarpacka.zhp.pl/' },
-        { name: 'Stołeczna', href: 'https://stoleczna.zhp.pl/' },
-        { name: 'Śląska', href: 'https://slaska.zhp.pl/' },
-        { name: 'Warmińsko-Mazurska', href: 'http://wm.zhp.pl/' },
-        { name: 'Wielkopolska', href: 'http://www.zhp.wlkp.pl/' },
-        { name: 'Zachodniopomorska', href: 'http://zachpom.zhp.pl/' },
-        { name: 'Ziemi Lubuskiej', href: 'http://lubuska.zhp.pl/' }
-      ],
-      grupaZHP: [
-        { name: 'Muzeum Harcerstwa', href: 'http://muzeumharcerstwa.pl/' },
-        { name: 'Schronisko Górskie Głodówka', href: 'http://glodowka.com.pl/pl/home/' },
-        { name: 'OSW Perkoz/Mazury', href: 'https://perkoz.zhp.pl/' },
-        { name: 'Centrum Wychowania Morskiego', href: 'https://cwm.edu.pl/' },
-        { name: 'CSH 4 Żywioły', href: 'https://4zywioly.pl/' },
-        { name: 'SZAiL (Konopnickiej6)', href: 'https://szal.pl/' },
-        { name: 'Fundacja Światowe Jamboree', href: 'http://fsj.zhp.pl/' }
-      ],
-      cookies: false
+      cookies: false,
+      isMobile: false
     }
   },
   computed: {
     ...mapGetters({
       randomText: 'random/text',
-      hasMourning: 'theme/hasMourning'
+      hasMourning: 'theme/hasMourning',
+      title: 'theme/title'
     }),
     headerMenu () {
       return this.$store.getters['menus/menu']('headerMenu')
     },
+    megaMenu () {
+      const headerMenu = [...this.headerMenu]
+      const headerUnits = [...this.headerUnits]
+      if (this.isMobile && headerUnits.length > 0) {
+        headerMenu.push({
+          name: this.headerUnitsLabel,
+          to: '#',
+          submenu: [{
+            name: '',
+            to: '',
+            mega_menu: headerUnits
+          }]
+        })
+      }
+      return headerMenu
+    },
     footerMenu () {
       return this.$store.getters['menus/menu']('footerMenu')
     },
+    headerUnits () {
+      return this.$store.getters['menus/menu']('headerUnits')
+    },
+    headerUnitsLabel () {
+      return this.$store.getters['menus/menuName']('headerUnits')
+    },
     year () {
       return new Date().getFullYear()
-    },
-    languages () {
-      return [
-        { name: 'en', href: '/en' },
-        { name: 'fr', href: '/fr' },
-        { name: 'es', href: '/es' },
-        { name: 'ru', href: '/ru' },
-        { name: 'pl', href: '/' }
-      ].filter(language => (language.name !== this.selectedLanguage))
-    },
-    selectedLanguage () {
-      const languages = ['en', 'fr', 'es', 'ru']
-      return languages.includes(this.$route.params.slug) ? this.$route.params.slug : 'pl'
     }
   },
   mounted () {
+    this.isMobile = matchMedia('(max-width: 640px)').matches
+    matchMedia('(max-width: 640px)').addListener((e) => { this.isMobile = e.matches })
     if (localStorage.getItem('cookies')) { return }
     this.cookies = true
     setTimeout(this.closeCookies, 60000)
   },
   methods: {
-    toggle () {
-      this.isOpen = !this.isOpen
-    },
-    close () {
-      this.isOpen = false
-    },
     closeCookies () {
       this.cookies = false
       localStorage.setItem('cookies', JSON.stringify(true))
-    },
-    search (query) {
-      if (!query.trim().length) { return }
-      this.$router.push({
-        path: '/szukaj',
-        query: { search: query, subtype: 'post' }
-      })
     }
   }
 }
