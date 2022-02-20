@@ -1,29 +1,30 @@
 {
-  "private": true,
-  "version": "0.1.0",
-  "devDependencies": {
-    "@commitlint/cli": "^12.1.4",
-    "@commitlint/config-conventional": "^12.1.4",
-    "file-save": "^0.2.0",
-    "glob": "^7.1.7",
-    "lerna": "^4.0.0",
-    "prompts": "^2.4.1",
-    "uppercamelcase": "^3.0.0"
-  },
-  "scripts": {
-    "create-component": "node ./scripts/create-component.js && cd packages/ui && yarn create-index",
-    "create-index": "cd packages/ui && yarn create-index",
-    "nuxt:dev": "cd packages/app && yarn dev",
-    "nuxt:build": "cd packages/app && yarn build",
-    "nuxt:start": "cd packages/app && yarn start"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/pspaczek/nowa-zhp.git"
-  },
-  "author": "Przemysław Spaczek",
-  "license": "MIT",
-  "workspaces": [
-    "packages/*"
-  ]
+    "private": true,
+    "version": "0.1.0",
+    "devDependencies": {
+        "@commitlint/cli": "^12.1.4",
+        "@commitlint/config-conventional": "^12.1.4",
+        "file-save": "^0.2.0",
+        "glob": "^7.1.7",
+        "lerna": "^4.0.0",
+        "prompts": "^2.4.1",
+        "uppercamelcase": "^3.0.0"
+    },
+    "scripts": {
+        "create-component": "node ./scripts/create-component.js && cd packages/ui && yarn create-index",
+        "create-index": "cd packages/ui && yarn create-index",
+        "nuxt:dev": "cd packages/app && yarn dev",
+        "nuxt:build": "cd packages/app && yarn build",
+        "nuxt:start": "cd packages/app && yarn start"
+    },
+    "author": {
+        "name": "Przemysław Spaczek",
+        "email": "kontakt@przemyslawspaczek.pl",
+        "url": "https://github.com/pspaczek"
+    },
+    "contributors": [],
+    "license": "MIT",
+    "workspaces": [
+        "packages/*"
+    ]
 }
