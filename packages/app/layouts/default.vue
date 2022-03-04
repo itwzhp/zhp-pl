@@ -534,6 +534,6 @@ a[href="/zhpdlaukrainy/"].z-mega-menu__link {
   border-radius: 4px;
 }
 a[href="/zhpdlaukrainy/"].z-mega-menu__link.nuxt-link-active {
-  color: #fff;
+  color: #000;
 }
 </style>
