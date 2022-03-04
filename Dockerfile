@@ -1,9 +1,10 @@
 FROM node:14.15.0-alpine as build
 
 WORKDIR /usr/src/app
-COPY /packages/app /usr/src/app
-
+COPY /packages/app/package.json /usr/src/app/package.json
 RUN yarn install --silent
+
+COPY /packages/app /usr/src/app
 RUN yarn build
 RUN yarn install --prod
 
