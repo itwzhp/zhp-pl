@@ -4,7 +4,7 @@
     <div>
       <a href="/2022/konta-do-darowizn/">
         <ZImage
-          :src="`${$config.mediaBaseURL}/wp-content/uploads/2022/03/logo-1.png`"
+          :src="`${$config.mediaBaseURL}/wp-content/uploads/2022/03/logo-2.png`"
         />
       </a>
     </div>
