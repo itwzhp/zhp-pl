@@ -18,7 +18,7 @@
           </ZLink>
         </div>
         <div class="z-header__actions z-header__actions--right">
-          <ZDropdown class="z-districts z-dropdown--has-chevron">
+          <ZDropdown class="z-districts z-dropdown--right z-dropdown--has-chevron">
             <template #toggle="{toggle}">
               <ZButton
                 class="z-button--text"
@@ -46,7 +46,9 @@
       </div>
       <ZMegaMenu :menu="megaMenu" />
     </header>
+    
     <Nuxt class="layout__page" />
+
     <footer class="z-footer">
       <ZSection class="z-footer__content">
         <ZDidYouKnow
