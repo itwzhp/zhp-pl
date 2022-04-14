@@ -2,7 +2,7 @@
 // https://github.com/YahnisElsts/plugin-update-checker
 require 'plugin-update-checker-4.11/plugin-update-checker.php';
 $updateChecker = Puc_v4_Factory::buildUpdateChecker(
-    'http://wordpress.przemyslawspaczek.pl/details.json',
+    '{UPDATE_DETAILS_URL}',
     __FILE__,
     'zhp-pl'
 );
