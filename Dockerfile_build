@@ -1,0 +1,61 @@
+FROM node:16.14.2-alpine3.15 as build
+
+COPY . /usr/src/app
+WORKDIR /usr/src/app
+
+
+RUN apk --no-cache add zip
+RUN npm install --quiet
+RUN npm run create-index
+RUN npm run nuxt:build 
+
+# TODO: może da się jakąś pętlę zrobić?
+RUN cd /usr/src/app/packages/theme/blocks/accordion \
+    && npm install --quiet  \
+    && npm run build
+RUN cd /usr/src/app/packages/theme/blocks/accordion-item \
+    && npm install --quiet \
+    && npm run build
+RUN cd /usr/src/app/packages/theme/blocks/button \
+    && npm install --quiet \
+    && npm run build
+RUN cd /usr/src/app/packages/theme/blocks/card \
+    && npm install --quiet \
+    && npm run build
+RUN cd /usr/src/app/packages/theme/blocks/column \
+    && npm install --quiet \
+    && npm run build
+RUN cd /usr/src/app/packages/theme/blocks/divider \
+    && npm install --quiet \
+    && npm run build
+RUN cd /usr/src/app/packages/theme/blocks/icon \
+    && npm install --quiet \
+    && npm run build
+RUN cd /usr/src/app/packages/theme/blocks/section \
+    && npm install --quiet \
+    && npm run build
+
+
+RUN cp -r packages/app/dist/wp-content/themes/zhp-pl/_nuxt packages/theme/ \
+    && rm packages/theme/index.php \
+    && mv packages/app/dist/index.html packages/theme/index.php \
+    && VERSION=`date '+%Y.%m.%d.%H.%M.%S'` \
+    && sed -i 's/{VERSION}/${VERSION}/g' packages/theme/style.css
+
+# TODO: może da się jakąś pętlę zrobić?
+RUN cd packages/theme \
+    && zip -r ../../zhp-pl.zip * \
+        -x blocks/accordion/node_modules/**\* \
+        -x blocks/accordion-item/node_modules/**\* \
+        -x blocks/button/node_modules/**\* \
+        -x blocks/card/node_modules/**\* \
+        -x blocks/column/node_modules/**\* \
+        -x blocks/divider/node_modules/**\* \
+        -x blocks/icon/node_modules/**\* \
+        -x blocks/section/node_modules/**\* 
+
+FROM alpine:3.15
+
+VOLUME /usr/dist
+COPY --from=build /usr/src/app/zhp-pl.zip zhp-pl.zip
+CMD mv zhp-pl.zip /usr/dist/zhp-pl.zip
