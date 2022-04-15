@@ -13,7 +13,7 @@ define( 'MY_ACF_URL', get_stylesheet_directory_uri() . '/includes/acf/' );
 
 // Require ACF plugin
 if (!class_exists('ACF')) {
-    throw new Exception('ACF plugin not activated');
+    include_once( MY_ACF_PATH . 'acf.php' );
 }
 
 // Customize the url setting to fix incorrect asset URLs.
