@@ -1,5 +1,5 @@
 # Nowa ZHP
-[![Build theme for WP sites](https://github.com/zhp-wlkp/zhp-pl/actions/workflows/build.yml/badge.svg)](https://github.com/zhp-wlkp/zhp-pl/actions/workflows/build.yml)
+[![Build theme for WP sites](https://github.com/itwzhp/zhp-pl/actions/workflows/build.yml/badge.svg)](https://github.com/itwzhp/zhp-pl/actions/workflows/build.yml)
 
 **Current status:** Alpha
 

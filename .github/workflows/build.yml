@@ -2,8 +2,9 @@ name: Build theme for WP sites
 
 on: 
   push:
-    branches:
-      - theme
+    branches: [theme]
+    pull_request:
+      branches: [theme]
   workflow_dispatch:
 
 jobs:
@@ -37,6 +38,7 @@ jobs:
           release_name: Release ${{ env.VERSION }}
           draft: false
           prerelease: false
+        if: success() && env.GITHUB_EVENT_NAME == 'push'
       - name: Upload Theme
         id: upload-theme
         uses: actions/upload-release-asset@v1
