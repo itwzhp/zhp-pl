@@ -173,7 +173,6 @@
         </ZCarousel>
       </ZSection>
     </template>
-    </component>
   </div>
 </template>
 
@@ -188,8 +187,8 @@ import {
   ZImage,
   ZText
 } from '@zhp-pl/ui'
-import ZWordPress from '@/components/organisms/ZWordPress.vue'
 import { mapGetters } from 'vuex'
+import ZWordPress from '@/components/organisms/ZWordPress.vue'
 
 export default {
   components: {

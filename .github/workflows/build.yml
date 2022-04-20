@@ -1,0 +1,63 @@
+name: Build theme for WP sites
+
+on: 
+  push:
+    branches:
+      - theme
+  workflow_dispatch:
+
+jobs:
+  
+  build:
+    name: Build 
+    runs-on: ubuntu-latest  
+    env:
+      UPDATE_DETAILS_URL: 'https://github.com/${{ github.repository }}/releases/latest/download/details.json'
+    steps:
+      - name: Set current version
+        run: echo "VERSION=$(date '+%Y.%m.%d.%H.%M.%S')" >> $GITHUB_ENV
+      - uses: actions/checkout@v3
+      - name: Build the Docker image
+        run: |
+          docker build \
+            --file Dockerfile_build \
+            --tag zhp-pl:latest \
+            --build-arg THEME_VERSION="${VERSION}" \
+            --build-arg UPDATE_DETAILS_URL=${{ env.UPDATE_DETAILS_URL }} \
+            .
+      - name: Extract theme
+        run: docker run -v ${PWD}:/usr/dist zhp-pl:latest
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{env.VERSION}}
+          release_name: Release ${{ env.VERSION }}
+          draft: false
+          prerelease: false
+      - name: Upload Theme
+        id: upload-theme
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} 
+          asset_path: ./zhp-pl.zip
+          asset_name: zhp-pl.zip
+          asset_content_type: application/zip
+      - name: Create details.json
+        run: |
+          echo "{ \"version\": \"$VERSION\", \"details_url\": \"${{ steps.create_release.outputs.html_url }}\",\"download_url\":\"${{ steps.upload-theme.outputs.browser_download_url }}\"  }" > details.json
+
+      - name: Upload release details
+        id: upload-details
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} 
+          asset_path: ./details.json
+          asset_name: details.json
+          asset_content_type: application/json
