@@ -8,17 +8,27 @@ $updateChecker = Puc_v4_Factory::buildUpdateChecker(
 );
 // ACF
 // Define path and URL to the ACF plugin.
-define( 'MY_ACF_PATH', get_stylesheet_directory() . '/includes/acf/' );
-define( 'MY_ACF_URL', get_stylesheet_directory_uri() . '/includes/acf/' );
+function zhppl_dependencies_error_acf()
+{
+    echo '<div class="error"><p>'.__('ZHP-PL, Błąd: Zainstaluj ACF przed włączeniem szablonu.', 'zhp-pl').'</p></div>';
+}
 
 // Require ACF plugin
 if (!class_exists('ACF')) {
-    include_once( MY_ACF_PATH . 'acf.php' );
+    $acfPath = WP_CONTENT_DIR.'/acf/acf.php';
+    if (file_exists($acfPath)) {
+        define('MY_ACF_PATH', WP_CONTENT_DIR.'/acf/');
+        define('MY_ACF_URL', WP_CONTENT_URL.'/acf/');
+        include_once $acfPath;
+        add_filter('acf/settings/url', 'my_acf_settings_url');
+    } else {
+        add_action('admin_notices', 'zhppl_dependencies_error_acf');
+    }
 }
 
 // Customize the url setting to fix incorrect asset URLs.
-add_filter('acf/settings/url', 'my_acf_settings_url');
-function my_acf_settings_url( $url ) {
+function my_acf_settings_url($url)
+{
     return MY_ACF_URL;
 }
 
