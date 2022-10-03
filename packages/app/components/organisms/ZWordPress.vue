@@ -213,7 +213,7 @@ export default {
   }
 
   .wp-block-file {
-    display: flex;
+    display: block;
     align-content: center;
     justify-content: space-between;
   }
