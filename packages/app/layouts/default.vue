@@ -2,6 +2,7 @@
   <div
     class="layout"
     :class="{'layout--mourning': hasMourning}"
+    :style="cssVars"
   >
  
     <header class="z-header">
@@ -20,8 +21,9 @@
           </ZLink>
 
           <ZLink
-            v-for="logo in headerLogos"
+            v-for="(logo,key) in headerLogos"
             v-if="hasHeaderLogos && logo " 
+            :key="key"
             to="/"
             aria-label="powrót do strony głównej"
           >
@@ -200,6 +202,21 @@ export default {
       headerLogos: 'theme/headerLogos',
       hasHeaderLogos: 'theme/hasHeaderLogos'
     }),
+    cssVars(){
+      let colors = this.$store.getters['theme/colors'];
+      console.log(colors);
+      return {
+        '--button-background': colors['button_background'],
+        '--color-primary': colors['primary_color'],
+        '--color-primary-darken': colors['primary_darken'],
+        '--button-color': colors['button_text'],
+        '--button-text-color':  colors['primary_darken'],
+        '--color-primary-lighten': colors['primary_lighten'],
+        '--theme-input-background': colors['input_background'],
+        '--input-border-color':  colors['input_background'],
+        '--theme-input-color':  colors['input_text']
+      }
+    },  
     headerMenu () {
       return this.$store.getters['menus/menu']('headerMenu')
     },

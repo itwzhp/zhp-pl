@@ -96,9 +96,9 @@ export default {
 .z-search {
   $this: &;
 
-  --input-background: #a6ce39;
-  --input-color: #fff;
-  --icon-color: #fff;
+  --input-background: var(--theme-input-background,#a6ce39);
+  --input-color: var(--theme-input-color, #fff);
+  --icon-color: var(--theme-input-color, #fff);
   --button-min-width: 168px;
 
   display: grid;
