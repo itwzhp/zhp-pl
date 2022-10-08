@@ -171,7 +171,7 @@ export default {
           right: 0;
           bottom: 0;
           left: 0;
-          background: #78a22f;
+          background: var(--z-banner--image-overlay-color, #78a22f);
           content: "";
           opacity: 0.4;
         }

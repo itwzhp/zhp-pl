@@ -121,7 +121,7 @@ export default {
   }
 
   &__title {
-    color: #78a22f;
+    color: var(--z-card--title--text-color, #78a22f);
     text-transform: var(--text-transform);
 
     &::after {

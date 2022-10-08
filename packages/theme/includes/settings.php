@@ -79,6 +79,39 @@ function theme_customize_register($wp_customize)
 		'section'  => 'colors',
 	)));
 
+
+    $wp_customize->add_setting('question_marks', array(
+        'capability'        => 'edit_theme_options',
+        'default'           => '#4a7b26',
+    ) );
+    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'question_marks',
+	array(
+		'label'    => '"Czy wiesz, że..." - kolor znaków zapytania',
+		'section'  => 'colors',
+	)));
+
+    $wp_customize->add_setting('banner_background', array(
+        'capability'        => 'edit_theme_options',
+        'default'           => '#78a22f',
+    ) );
+    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'banner_background',
+	array(
+		'label'    => 'Baner - kolor tła',
+		'section'  => 'colors',
+	)));
+
+    $wp_customize->add_setting('banner_overlay', array(
+        'capability'        => 'edit_theme_options',
+        'default'           => '#78a22f',
+    ) );
+    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'banner_overlay',
+	array(
+		'label'    => 'Baner - "odcień" obrazka',
+		'section'  => 'colors',
+	)));
+
+
+
     $wp_customize->add_section('main', array(
         'title'=>'Główne',
         'panel'=>'theme'

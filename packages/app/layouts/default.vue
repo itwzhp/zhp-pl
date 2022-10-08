@@ -221,7 +221,9 @@ export default {
         '--z-meta-text-color': colors['primary_lighten'],
         '--z-filter-posts--categories-toggle--background': colors['primary_darken'],
         '--z-card--title--text-color': colors['primary_darken'],
-        '--banner-background': colors['primary_darken']
+        '--banner-background': colors['banner_background'],
+        '--z-banner--image-overlay-color': colors['banner_overlay'],
+        '--z-did-you-know--question-marks--color': colors['question_marks']
       }
     },  
     headerMenu () {
