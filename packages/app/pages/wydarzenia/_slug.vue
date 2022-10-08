@@ -109,7 +109,7 @@ export default {
     const relatedEventsRes = await $axios.get('events', { params: { per_page: 8, _embed: true } })
     const relatedEvents = relatedEventsRes.data
     // files
-    const files = event.rest_acf.plikilinki
+    const files = Array.isArray(event.rest_acf.plikilinki)
       ? event.rest_acf.plikilinki.map(file => ({
         ...file,
         type: file.file ? 'Dokument' : 'Link',

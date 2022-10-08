@@ -41,7 +41,7 @@
           :thumbnail="tile.thumbnail || placeholder"
           :title="tile.title"
           :description="tile.description"
-          :to="urlParser(tile.to)"
+          :to="tile.to ? urlParser(tile.to) : ''"
           class="section-about-us__tile"
           :class="{
             'z-card--pictured': isOverlayed,
@@ -253,7 +253,8 @@
               class="glide__slide"
             >
               <ZImage
-                :src="partner._embedded['wp:featuredmedia'][0].media_details.sizes.medium ? partner._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url : partner._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url"
+                v-if="partner.hasFeaturedImage"
+                :src="partner.featuredImage.url"
                 :lazy="false"
               />
             </li>
@@ -265,8 +266,9 @@
         >
           <template v-for="(banner, key) in banners">
             <ZImage
+              v-if="banner.hasFeaturedImage"
               :key="key"
-              :src="banner._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url"
+              :src="banner.featuredImage.url"
               class="partner-banners__banner"
             />
           </template>
@@ -315,7 +317,8 @@
             class="glide__slide"
           >
             <ZImage
-              :src="partner._embedded['wp:featuredmedia'][0].media_details.sizes.medium ? partner._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url : partner._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url"
+              v-if="partner.hasFeaturedImage"
+              :src="partner.featuredImage.url"
               :lazy="false"
             />
           </li>
@@ -327,8 +330,9 @@
       >
         <template v-for="(banner, key) in banners">
           <ZImage
-            :key="key"
-            :src="banner._embedded['wp:featuredmedia'][0].media_details.sizes.full.source_url"
+              v-if="banner.hasFeaturedImage"
+              :key="key"
+              :src="banner.featuredImage.url"
             class="partner-banners__banner"
           />
         </template>
@@ -357,6 +361,8 @@ import {
   ZVideo
 } from '@zhp-pl/ui'
 import ZFacebook from '@/components/organisms/ZFacebook.vue'
+import Partner from '@/viewModel/Partner'
+import Banner from '@/viewModel/Banner'
 import { mapGetters } from 'vuex'
 const resize = debounce(() => {
   if (!window.FB) { return }
@@ -426,7 +432,7 @@ export default {
     }
 
     const partnersRes = await $axios.get('logos', { params: partnersParams })
-    const partners = partnersRes.data
+    const partners = partnersRes.data.map((responseItem)=>new Partner(responseItem))
 
     const bannersParams = {
       per_page: 99,
@@ -436,7 +442,7 @@ export default {
       bannersParams.logo_categories = homepage.rest_acf.partners.banner_categories
     }
     const bannersRes = await $axios.get('logos', { params: bannersParams })
-    const banners = bannersRes.data
+    const banners = bannersRes.data.map((responseItem)=> new Banner(responseItem))
 
     // * get posts for Aktualności
     const newsParams = { per_page: 5 }

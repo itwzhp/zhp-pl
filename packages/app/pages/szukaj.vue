@@ -3,7 +3,9 @@
     <div class="hero-wrapper">
       <ZSection class="section-hero">
         <div class="section-hero__picture">
-          <ZClipPath :hero-image="search._embedded['wp:featuredmedia'][0].media_details.sizes.medium_large.source_url" />
+          <ZClipPath
+              v-if="search._embedded['wp:featuredmedia']"
+              :hero-image="search._embedded['wp:featuredmedia'][0].media_details.sizes.medium_large.source_url" />
         </div>
         <ZHeading
           class="t4 section-hero__title uppercase"
