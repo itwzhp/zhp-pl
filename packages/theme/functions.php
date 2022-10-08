@@ -2245,19 +2245,24 @@ function add_logo_category_to_taxonomy()
     );
     register_taxonomy('logo_category', array( 'logo' ), $args);
 }
-
-/**
- * Dostarcza configuracji szablonu do frontendu.
- *
- * @todo extract to another module
- *
- * @return void
- */
-function zhp_get_theme_config(\WP_REST_Request $request): array
+// register field to REST for ACF
+add_action('rest_api_init', 'register_rest_acf');
+function register_rest_acf(){
+    register_rest_field(array('post', 'page', 'event', 'age_group'), 'rest_acf',
+        array(
+            'get_callback' => 'get_rest_acf',
+            'schema' => null
+        )
+    );
+}
+function get_rest_acf($object, $field_name, $request)
 {
-    return [
-        
-    ];
+    if ($taxonomy = $object['taxonomy']) {
+        $acf = get_fields($taxonomy.'_'.$object[id]);
+    } else {
+        $acf = get_fields($object['id']);
+    }
+    return $acf;
 }
 // register field to REST for age_group
 add_action('rest_api_init', 'register_rest_age_group');

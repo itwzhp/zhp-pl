@@ -231,7 +231,6 @@ export default {
     }
   },
   head(){
-    console.log( Object.entries(this.favicon));
       return {
         link: Object.entries(this.favicon).map((options, index)=>{return {
           hid: 'icon-'+options[0]+'x'+options[0],
