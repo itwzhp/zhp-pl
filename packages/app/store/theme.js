@@ -38,5 +38,8 @@ export const getters = {
   },
   addEventEnable (state) {
     return state.options.add_event
+  },
+  colors(state){
+    return state.options.colors;
   }
 }
