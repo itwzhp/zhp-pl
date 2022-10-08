@@ -3,6 +3,7 @@
     class="layout"
     :class="{'layout--mourning': hasMourning}"
   >
+ 
     <header class="z-header">
       <div class="z-header__bar">
         <div class="z-header__actions" />
@@ -123,6 +124,7 @@ export default {
       const options = optionsRes.data
       store.dispatch('theme/update', options)
     }
+
     if (!Object.keys(store.state.menus).length) {
       const menusRes = await $axios.get('menus')
       const menus = menusRes.data
@@ -178,7 +180,8 @@ export default {
     ...mapGetters({
       randomText: 'random/text',
       hasMourning: 'theme/hasMourning',
-      title: 'theme/title'
+      title: 'theme/title',
+      favicon: 'theme/favicon'
     }),
     headerMenu () {
       return this.$store.getters['menus/menu']('headerMenu')
@@ -224,7 +227,19 @@ export default {
       this.cookies = false
       localStorage.setItem('cookies', JSON.stringify(true))
     }
-  }
+  },
+  head(){
+    console.log( Object.entries(this.favicon));
+      return {
+        link: Object.entries(this.favicon).map((options, index)=>{return {
+          hid: 'icon-'+options[0]+'x'+options[0],
+          rel: 'icon',
+          type: 'image/png',
+          sizes: options[0]+'x'+options[0],
+          href: options[1]
+        }})
+      }
+    }
 }
 </script>
 

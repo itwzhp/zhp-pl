@@ -281,7 +281,7 @@
       <template #title>
         <ZHeading class="z-section__title">
           <ZLink
-            :to="urlParser(partnersMeta.to)"
+            :to="urlParser(partnersMeta.to )"
             class="t4 uppercase"
             style="--link-text-decoration: none;"
             v-html="partnersMeta.title"

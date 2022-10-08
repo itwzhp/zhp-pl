@@ -1,4 +1,5 @@
 <?php
+
 // https://github.com/YahnisElsts/plugin-update-checker
 require 'plugin-update-checker-4.11/plugin-update-checker.php';
 $updateChecker = Puc_v4_Factory::buildUpdateChecker(
@@ -8,26 +9,28 @@ $updateChecker = Puc_v4_Factory::buildUpdateChecker(
 );
 // ACF
 // Define path and URL to the ACF plugin.
-define( 'MY_ACF_PATH', get_stylesheet_directory() . '/includes/acf/' );
-define( 'MY_ACF_URL', get_stylesheet_directory_uri() . '/includes/acf/' );
+define('MY_ACF_PATH', get_stylesheet_directory() . '/includes/acf/');
+define('MY_ACF_URL', get_stylesheet_directory_uri() . '/includes/acf/');
 
 // Require ACF plugin
 if (!class_exists('ACF')) {
-    include_once( MY_ACF_PATH . 'acf.php' );
+    include_once(MY_ACF_PATH . 'acf.php');
 }
 
 // Customize the url setting to fix incorrect asset URLs.
 add_filter('acf/settings/url', 'my_acf_settings_url');
-function my_acf_settings_url( $url ) {
+function my_acf_settings_url($url)
+{
     return MY_ACF_URL;
 }
 
 // (Optional) Hide the ACF admin menu item.
 add_filter('acf/settings/show_admin', 'my_acf_settings_show_admin');
-function my_acf_settings_show_admin( $show_admin ) {
+function my_acf_settings_show_admin($show_admin)
+{
     return false;
 }
-if( function_exists('acf_add_local_field_group') ):
+if(function_exists('acf_add_local_field_group')):
 
     acf_add_local_field_group(array(
         'key' => 'group_6057099b2162c',
@@ -1790,7 +1793,8 @@ $blocks = array(
 foreach ($blocks as $block) {
     require __DIR__.'/blocks/'.$block.'/'.$block.'.php';
 }
-function zhp_block_category( $categories, $post ) {
+function zhp_block_category($categories, $post)
+{
     return array_merge(
         $categories,
         array(
@@ -1801,15 +1805,17 @@ function zhp_block_category( $categories, $post ) {
         )
     );
 }
-add_filter( 'block_categories', 'zhp_block_category', 10, 2);
+add_filter('block_categories', 'zhp_block_category', 10, 2);
 // remove core patterns
 add_filter('after_setup_theme', 'remove_core_patterns');
-function remove_core_patterns() {
+function remove_core_patterns()
+{
     remove_theme_support('core-block-patterns');
 }
 // register new block patterns
-add_action( 'init', 'register_block_patterns' );
-function register_block_patterns() {
+add_action('init', 'register_block_patterns');
+function register_block_patterns()
+{
 //    register_block_pattern_category(
 //        'common',
 //        array( 'label' => 'common' )
@@ -1826,8 +1832,9 @@ function register_block_patterns() {
 }
 
 // allowed gutenberg blocks
-add_filter( 'allowed_block_types', 'allowed_block_types' );
-function allowed_block_types( $allowed_blocks ) {
+add_filter('allowed_block_types', 'allowed_block_types');
+function allowed_block_types($allowed_blocks)
+{
     return $allowed_blocks;
 //      return array(
 //          'core/image',
@@ -1838,8 +1845,9 @@ function allowed_block_types( $allowed_blocks ) {
 }
 
 // register nav menus
-add_action( 'init', 'register_menus' );
-function register_menus() {
+add_action('init', 'register_menus');
+function register_menus()
+{
     register_nav_menus(
         array(
             'header-menu' => 'Poziome menu w nagłówku',
@@ -1849,19 +1857,20 @@ function register_menus() {
     );
 }
 // enable post thumbnails
-add_theme_support( 'post-thumbnails' );
+add_theme_support('post-thumbnails');
 // remove auto <p>
-remove_filter( 'the_content', 'wpautop' );
-remove_filter( 'the_excerpt', 'wpautop' );
+remove_filter('the_content', 'wpautop');
+remove_filter('the_excerpt', 'wpautop');
 // disable wp textualizer
-add_filter( 'run_wptexturize', '__return_false' );
-add_action( 'init', 'add_random_to_post_type', 0 );
-function add_random_to_post_type() {
+add_filter('run_wptexturize', '__return_false');
+add_action('init', 'add_random_to_post_type', 0);
+function add_random_to_post_type()
+{
     $labels = array(
-        'name'                  => _x( 'Losowy tekst', 'Post Type General Name', 'text_domain' ),
-        'singular_name'         => _x( 'Losowy tekst', 'Post Type Singular Name', 'text_domain' ),
-        'menu_name'             => __( 'Losowe teksty', 'text_domain' ),
-        'name_admin_bar'        => __( 'Loswe teksty', 'text_domain' ),
+        'name'                  => _x('Losowy tekst', 'Post Type General Name', 'text_domain'),
+        'singular_name'         => _x('Losowy tekst', 'Post Type Singular Name', 'text_domain'),
+        'menu_name'             => __('Losowe teksty', 'text_domain'),
+        'name_admin_bar'        => __('Loswe teksty', 'text_domain'),
     );
     $rewrite = array(
         'slug'                  => 'random',
@@ -1870,7 +1879,7 @@ function add_random_to_post_type() {
         'feeds'                 => true,
     );
     $args = array(
-        'label'                 => __( 'Losowy tekst', 'text_domain' ),
+        'label'                 => __('Losowy tekst', 'text_domain'),
         'labels'                => $labels,
         'supports'              => array( 'title' ),
         'hierarchical'          => true,
@@ -1891,21 +1900,23 @@ function add_random_to_post_type() {
         'rest_base'             => 'randoms',
         'rest_controller_class' => 'WP_REST_Posts_Controller',
     );
-    register_post_type( 'random', $args );
+    register_post_type('random', $args);
 }
-function add_random_orderby_to_rest($query_params) {
+function add_random_orderby_to_rest($query_params)
+{
     $query_params['order']['enum'][] = 'rand';
     return $query_params;
 }
 add_filter('rest_post_collection_params', 'add_random_orderby_to_rest');
 // register custom post type for logo
-add_action( 'init', 'add_logo_to_post_type', 0 );
-function add_logo_to_post_type() {
+add_action('init', 'add_logo_to_post_type', 0);
+function add_logo_to_post_type()
+{
     $labels = array(
-        'name'                  => _x( 'Logotyp', 'Post Type General Name', 'text_domain' ),
-        'singular_name'         => _x( 'Logotyp', 'Post Type Singular Name', 'text_domain' ),
-        'menu_name'             => __( 'Logotypy', 'text_domain' ),
-        'name_admin_bar'        => __( 'Logotyp', 'text_domain' ),
+        'name'                  => _x('Logotyp', 'Post Type General Name', 'text_domain'),
+        'singular_name'         => _x('Logotyp', 'Post Type Singular Name', 'text_domain'),
+        'menu_name'             => __('Logotypy', 'text_domain'),
+        'name_admin_bar'        => __('Logotyp', 'text_domain'),
     );
     $rewrite = array(
         'slug'                  => 'logo',
@@ -1914,7 +1925,7 @@ function add_logo_to_post_type() {
         'feeds'                 => true,
     );
     $args = array(
-        'label'                 => __( 'Logotyp', 'text_domain' ),
+        'label'                 => __('Logotyp', 'text_domain'),
         'labels'                => $labels,
         'supports'              => array( 'title', 'editor', 'thumbnail', 'custom-fields' ),
         'hierarchical'          => true,
@@ -1935,16 +1946,17 @@ function add_logo_to_post_type() {
         'rest_base'             => 'logos',
         'rest_controller_class' => 'WP_REST_Posts_Controller',
     );
-    register_post_type( 'logo', $args );
+    register_post_type('logo', $args);
 }
 // register custom post type for event
-add_action( 'init', 'add_event_to_post_type', 0 );
-function add_event_to_post_type() {
+add_action('init', 'add_event_to_post_type', 0);
+function add_event_to_post_type()
+{
     $labels = array(
-        'name'                  => _x( 'Wydarzenia', 'Post Type General Name', 'text_domain' ),
-        'singular_name'         => _x( 'Wydarzenie', 'Post Type Singular Name', 'text_domain' ),
-        'menu_name'             => __( 'Wydarzenia', 'text_domain' ),
-        'name_admin_bar'        => __( 'Wydarzenie', 'text_domain' ),
+        'name'                  => _x('Wydarzenia', 'Post Type General Name', 'text_domain'),
+        'singular_name'         => _x('Wydarzenie', 'Post Type Singular Name', 'text_domain'),
+        'menu_name'             => __('Wydarzenia', 'text_domain'),
+        'name_admin_bar'        => __('Wydarzenie', 'text_domain'),
     );
     $rewrite = array(
         'slug'                  => 'wydarzenia',
@@ -1953,7 +1965,7 @@ function add_event_to_post_type() {
         'feeds'                 => true,
     );
     $args = array(
-        'label'                 => __( 'Wydarzenie', 'text_domain' ),
+        'label'                 => __('Wydarzenie', 'text_domain'),
         'labels'                => $labels,
         'supports'              => array( 'title', 'editor', 'thumbnail', 'custom-fields', 'excerpt' ),
         'hierarchical'          => true,
@@ -1974,16 +1986,17 @@ function add_event_to_post_type() {
         'rest_base'             => 'events',
         'rest_controller_class' => 'WP_REST_Posts_Controller',
     );
-    register_post_type( 'event', $args );
+    register_post_type('event', $args);
 }
 // register custom taxonomy for teams
 // add_action( 'init', 'add_teams_to_taxonomy', 0 );
-function add_teams_to_taxonomy() {
+function add_teams_to_taxonomy()
+{
     $labels = array(
-        'name'                       => _x( 'Zespoły', 'Taxonomy General Name', 'text_domain' ),
-        'singular_name'              => _x( 'Zespół', 'Taxonomy Singular Name', 'text_domain' ),
-        'menu_name'                  => __( 'Zespoły', 'text_domain' ),
-        'all_items'                  => __( 'Zespoły', 'text_domain' ),
+        'name'                       => _x('Zespoły', 'Taxonomy General Name', 'text_domain'),
+        'singular_name'              => _x('Zespół', 'Taxonomy Singular Name', 'text_domain'),
+        'menu_name'                  => __('Zespoły', 'text_domain'),
+        'all_items'                  => __('Zespoły', 'text_domain'),
     );
     $rewrite = array(
         'slug'                       => 'team',
@@ -2004,16 +2017,17 @@ function add_teams_to_taxonomy() {
         'rest_base'                  => 'teams',
         'rest_controller_class'      => 'WP_REST_Terms_Controller',
     );
-    register_taxonomy( 'team', array( 'post' ), $args );
+    register_taxonomy('team', array( 'post' ), $args);
 }
 // register custom taxonomy for districts
-add_action( 'init', 'add_localization_to_taxonomy', 0 );
-function add_localization_to_taxonomy() {
+add_action('init', 'add_localization_to_taxonomy', 0);
+function add_localization_to_taxonomy()
+{
     $labels = array(
-        'name'                       => _x( 'Lokalizacja', 'Taxonomy General Name', 'text_domain' ),
-        'singular_name'              => _x( 'Lokalizacja', 'Taxonomy Singular Name', 'text_domain' ),
-        'menu_name'                  => __( 'Lokalizacje', 'text_domain' ),
-        'all_items'                  => __( 'Lokalizacjia', 'text_domain' ),
+        'name'                       => _x('Lokalizacja', 'Taxonomy General Name', 'text_domain'),
+        'singular_name'              => _x('Lokalizacja', 'Taxonomy Singular Name', 'text_domain'),
+        'menu_name'                  => __('Lokalizacje', 'text_domain'),
+        'all_items'                  => __('Lokalizacjia', 'text_domain'),
     );
     $rewrite = array(
         'slug'                       => 'localization',
@@ -2034,16 +2048,17 @@ function add_localization_to_taxonomy() {
         'rest_base'                  => 'localizations',
         'rest_controller_class'      => 'WP_REST_Terms_Controller',
     );
-    register_taxonomy( 'localization', array( 'event' ), $args );
+    register_taxonomy('localization', array( 'event' ), $args);
 }
 // register custom taxonomy for unit
 // add_action( 'init', 'add_unit_to_taxonomy', 0 );
-function add_unit_to_taxonomy() {
+function add_unit_to_taxonomy()
+{
     $labels = array(
-        'name'                       => _x( 'Jednostki', 'Taxonomy General Name', 'text_domain' ),
-        'singular_name'              => _x( 'Jednostka', 'Taxonomy Singular Name', 'text_domain' ),
-        'menu_name'                  => __( 'Jednostki', 'text_domain' ),
-        'all_items'                  => __( 'Jednostki', 'text_domain' ),
+        'name'                       => _x('Jednostki', 'Taxonomy General Name', 'text_domain'),
+        'singular_name'              => _x('Jednostka', 'Taxonomy Singular Name', 'text_domain'),
+        'menu_name'                  => __('Jednostki', 'text_domain'),
+        'all_items'                  => __('Jednostki', 'text_domain'),
     );
     $rewrite = array(
         'slug'                       => 'unit',
@@ -2064,16 +2079,17 @@ function add_unit_to_taxonomy() {
         'rest_base'                  => 'units',
         'rest_controller_class'      => 'WP_REST_Terms_Controller',
     );
-    register_taxonomy( 'units', array( 'post', 'event', 'logo' ), $args );
+    register_taxonomy('units', array( 'post', 'event', 'logo' ), $args);
 }
 // register custom taxonomy for random_category
-add_action( 'init', 'add_event_category_to_taxonomy', 0 );
-function add_event_category_to_taxonomy() {
+add_action('init', 'add_event_category_to_taxonomy', 0);
+function add_event_category_to_taxonomy()
+{
     $labels = array(
-        'name'                       => _x( 'Kategorie', 'Taxonomy General Name', 'text_domain' ),
-        'singular_name'              => _x( 'Kategoria', 'Taxonomy Singular Name', 'text_domain' ),
-        'menu_name'                  => __( 'Kategoria', 'text_domain' ),
-        'all_items'                  => __( 'Kategorie', 'text_domain' ),
+        'name'                       => _x('Kategorie', 'Taxonomy General Name', 'text_domain'),
+        'singular_name'              => _x('Kategoria', 'Taxonomy Singular Name', 'text_domain'),
+        'menu_name'                  => __('Kategoria', 'text_domain'),
+        'all_items'                  => __('Kategorie', 'text_domain'),
     );
     $rewrite = array(
         'slug'                       => 'event_category',
@@ -2094,16 +2110,17 @@ function add_event_category_to_taxonomy() {
         'rest_base'                  => 'event_categories',
         'rest_controller_class'      => 'WP_REST_Terms_Controller',
     );
-    register_taxonomy( 'event_category', array( 'event' ), $args );
+    register_taxonomy('event_category', array( 'event' ), $args);
 }
 // register custom taxonomy for event_type
-add_action( 'init', 'add_event_type_to_taxonomy', 0 );
-function add_event_type_to_taxonomy() {
+add_action('init', 'add_event_type_to_taxonomy', 0);
+function add_event_type_to_taxonomy()
+{
     $labels = array(
-        'name'                       => _x( 'Rodzaje wydarzenia', 'Taxonomy General Name', 'text_domain' ),
-        'singular_name'              => _x( 'Rodzaj wydarzenia', 'Taxonomy Singular Name', 'text_domain' ),
-        'menu_name'                  => __( 'Rodzaje wydarzeń', 'text_domain' ),
-        'all_items'                  => __( 'Rodzaje wydarzeń', 'text_domain' ),
+        'name'                       => _x('Rodzaje wydarzenia', 'Taxonomy General Name', 'text_domain'),
+        'singular_name'              => _x('Rodzaj wydarzenia', 'Taxonomy Singular Name', 'text_domain'),
+        'menu_name'                  => __('Rodzaje wydarzeń', 'text_domain'),
+        'all_items'                  => __('Rodzaje wydarzeń', 'text_domain'),
     );
     $rewrite = array(
         'slug'                       => 'event_type',
@@ -2124,16 +2141,17 @@ function add_event_type_to_taxonomy() {
         'rest_base'                  => 'event_types',
         'rest_controller_class'      => 'WP_REST_Terms_Controller',
     );
-    register_taxonomy( 'event_type', array( 'event' ), $args );
+    register_taxonomy('event_type', array( 'event' ), $args);
 }
 // register custom taxonomy for age_group
-add_action( 'init', 'add_age_group_to_taxonomy', 0 );
-function add_age_group_to_taxonomy() {
+add_action('init', 'add_age_group_to_taxonomy', 0);
+function add_age_group_to_taxonomy()
+{
     $labels = array(
-        'name'                       => _x( 'Metodyki', 'Taxonomy General Name', 'text_domain' ),
-        'singular_name'              => _x( 'Metodyka', 'Taxonomy Singular Name', 'text_domain' ),
-        'menu_name'                  => __( 'Metodyki', 'text_domain' ),
-        'all_items'                  => __( 'Metodyki', 'text_domain' ),
+        'name'                       => _x('Metodyki', 'Taxonomy General Name', 'text_domain'),
+        'singular_name'              => _x('Metodyka', 'Taxonomy Singular Name', 'text_domain'),
+        'menu_name'                  => __('Metodyki', 'text_domain'),
+        'all_items'                  => __('Metodyki', 'text_domain'),
     );
     $rewrite = array(
         'slug'                       => 'age_group',
@@ -2154,16 +2172,17 @@ function add_age_group_to_taxonomy() {
         'rest_base'                  => 'age_groups',
         'rest_controller_class'      => 'WP_REST_Terms_Controller',
     );
-    register_taxonomy( 'age_group', array( 'event' ), $args );
+    register_taxonomy('age_group', array( 'event' ), $args);
 }
 // register custom taxonomy for random_category
-add_action( 'init', 'add_random_category_to_taxonomy', 0 );
-function add_random_category_to_taxonomy() {
+add_action('init', 'add_random_category_to_taxonomy', 0);
+function add_random_category_to_taxonomy()
+{
     $labels = array(
-        'name'                       => _x( 'Kategorie', 'Taxonomy General Name', 'text_domain' ),
-        'singular_name'              => _x( 'Kategoria', 'Taxonomy Singular Name', 'text_domain' ),
-        'menu_name'                  => __( 'Kategoria', 'text_domain' ),
-        'all_items'                  => __( 'Kategorie', 'text_domain' ),
+        'name'                       => _x('Kategorie', 'Taxonomy General Name', 'text_domain'),
+        'singular_name'              => _x('Kategoria', 'Taxonomy Singular Name', 'text_domain'),
+        'menu_name'                  => __('Kategoria', 'text_domain'),
+        'all_items'                  => __('Kategorie', 'text_domain'),
     );
     $rewrite = array(
         'slug'                       => 'random_category',
@@ -2184,16 +2203,17 @@ function add_random_category_to_taxonomy() {
         'rest_base'                  => 'random_categories',
         'rest_controller_class'      => 'WP_REST_Terms_Controller',
     );
-    register_taxonomy( 'random_category', array( 'random' ), $args );
+    register_taxonomy('random_category', array( 'random' ), $args);
 }
 // register custom taxonomy for logo_category
-add_action( 'init', 'add_logo_category_to_taxonomy', 0 );
-function add_logo_category_to_taxonomy() {
+add_action('init', 'add_logo_category_to_taxonomy', 0);
+function add_logo_category_to_taxonomy()
+{
     $labels = array(
-        'name'                       => _x( 'Kategorie', 'Taxonomy General Name', 'text_domain' ),
-        'singular_name'              => _x( 'Kategoria', 'Taxonomy Singular Name', 'text_domain' ),
-        'menu_name'                  => __( 'Kategoria', 'text_domain' ),
-        'all_items'                  => __( 'Kategorie', 'text_domain' ),
+        'name'                       => _x('Kategorie', 'Taxonomy General Name', 'text_domain'),
+        'singular_name'              => _x('Kategoria', 'Taxonomy Singular Name', 'text_domain'),
+        'menu_name'                  => __('Kategoria', 'text_domain'),
+        'all_items'                  => __('Kategorie', 'text_domain'),
     );
     $rewrite = array(
         'slug'                       => 'logo_category',
@@ -2214,86 +2234,98 @@ function add_logo_category_to_taxonomy() {
         'rest_base'                  => 'logo_categories',
         'rest_controller_class'      => 'WP_REST_Terms_Controller',
     );
-    register_taxonomy( 'logo_category', array( 'logo' ), $args );
+    register_taxonomy('logo_category', array( 'logo' ), $args);
 }
-// register field to REST for ACF
-add_action('rest_api_init', 'register_rest_acf');
-function register_rest_acf(){
-    register_rest_field(array('post', 'page', 'event', 'age_group'), 'rest_acf',
-        array(
-            'get_callback' => 'get_rest_acf',
-            'schema' => null
-        )
-    );
-}
-function get_rest_acf( $object, $field_name, $request ){
-    if($taxonomy = $object['taxonomy']) {
-        $acf = get_fields($taxonomy.'_'.$object[id]);
-    } else {
-        $acf = get_fields($object['id']);
-    }
-    return $acf;
+
+/**
+ * Dostarcza configuracji szablonu do frontendu.
+ *
+ * @todo extract to another module
+ *
+ * @return void
+ */
+function zhp_get_theme_config(\WP_REST_Request $request): array
+{
+    return [
+        
+    ];
 }
 // register field to REST for age_group
 add_action('rest_api_init', 'register_rest_age_group');
-function register_rest_age_group(){
-    register_rest_field(array('event'), 'rest_age_group',
+function register_rest_age_group()
+{
+    register_rest_field(
+        array('event'),
+        'rest_age_group',
         array(
             'get_callback' => 'get_rest_age_group',
             'schema' => null
         )
     );
 }
-function get_rest_age_group( $object, $field_name, $request ){
+function get_rest_age_group($object, $field_name, $request)
+{
     $term_taxonomy_id = $object['age_groups'][0];
     $age_group = get_term_by('term_taxonomy_id', $term_taxonomy_id);
     $acf = get_fields('age_group_'.$term_taxonomy_id);
-    return (object) array_merge( (array) $age_group, (array) $acf);
+    return (object) array_merge((array) $age_group, (array) $acf);
 }
 // register field to REST for event_type
 add_action('rest_api_init', 'register_rest_event_type');
-function register_rest_event_type(){
-    register_rest_field(array('event'), 'rest_event_type',
+function register_rest_event_type()
+{
+    register_rest_field(
+        array('event'),
+        'rest_event_type',
         array(
             'get_callback' => 'get_rest_event_type',
             'schema' => null
         )
     );
 }
-function get_rest_event_type( $object, $field_name, $request ){
+function get_rest_event_type($object, $field_name, $request)
+{
     $term_taxonomy_id = $object['event_types'][0];
     $event_type = get_term_by('term_taxonomy_id', $term_taxonomy_id);
     return $event_type;
 }
 // register field to REST for media
-add_action( 'rest_api_init', 'register_rest_media' );
-function register_rest_media() {
-    register_rest_field( array('post', 'event', 'logo'), 'rest_media',
+add_action('rest_api_init', 'register_rest_media');
+function register_rest_media()
+{
+    register_rest_field(
+        array('post', 'event', 'logo'),
+        'rest_media',
         array(
             'get_callback' => 'get_rest_media',
             'schema' => null
         )
     );
 };
-function get_rest_media( $object, $field_name, $request ) {
-    if( $object['featured_media'] ){
-        $media = wp_get_attachment_image_src( $object['featured_media'], 'large' )[0];
+function get_rest_media($object, $field_name, $request)
+{
+    if($object['featured_media']) {
+        $media = wp_get_attachment_image_src($object['featured_media'], 'large')[0];
         return $media;
     }
     return false;
 };
 // register field to REST for author
-add_action( 'rest_api_init', 'register_rest_author' );
-function register_rest_author() {
-    register_rest_field( array('post', 'event'), 'rest_author',
+add_action('rest_api_init', 'register_rest_author');
+function register_rest_author()
+{
+    register_rest_field(
+        array('post', 'event'),
+        'rest_author',
         array(
             'get_callback' => 'get_rest_author',
             'schema' => null
         )
     );
 };
-function get_rest_author( $object, $field_name, $request ) {
-    if( $object['author'] ){
+function get_rest_author($object, $field_name, $request)
+{
+    if($object['author']) {
         $author = (object) array(
             'name' => get_the_author_meta('display_name', $object['author']),
             'href'=> get_author_posts_url($object['author']),
@@ -2304,63 +2336,77 @@ function get_rest_author( $object, $field_name, $request ) {
     return false;
 };
 // register field to REST for gutenberg
-add_action( 'rest_api_init', 'register_rest_gutenberg' );
-function register_rest_gutenberg() {
-    register_rest_field( array('post', 'page'), 'rest_gutenberg',
+add_action('rest_api_init', 'register_rest_gutenberg');
+function register_rest_gutenberg()
+{
+    register_rest_field(
+        array('post', 'page'),
+        'rest_gutenberg',
         array(
             'get_callback' => 'get_rest_gutenberg',
             'schema' => null
         )
     );
 };
-function get_rest_gutenberg( $object, $field_name, $request, $object_type  ) {
-    if( $object['content'] ){
+function get_rest_gutenberg($object, $field_name, $request, $object_type)
+{
+    if($object['content']) {
         return parse_blocks(get_the_content(null, false, $object['id']));
     }
     return false;
 };
 // register field to REST for reading_time
-add_action( 'rest_api_init', 'register_rest_reading_time' );
-function register_rest_reading_time() {
-    register_rest_field( array('post'), 'rest_reading_time',
+add_action('rest_api_init', 'register_rest_reading_time');
+function register_rest_reading_time()
+{
+    register_rest_field(
+        array('post'),
+        'rest_reading_time',
         array(
             'get_callback' => 'get_rest_reading_time',
             'schema' => null
         )
     );
 };
-function get_rest_reading_time( $object, $field_name, $request, $object_type  ) {
-    if( $object['content'] ){
+function get_rest_reading_time($object, $field_name, $request, $object_type)
+{
+    if($object['content']) {
         $word_count = str_word_count(strip_tags($object['content']['rendered']));
         return ceil($word_count / 200);
     }
     return false;
 };
 // register field to REST for reading_time
-add_action( 'rest_api_init', 'register_rest_redirect' );
-function register_rest_redirect() {
-    register_rest_field( array('post', 'page'), 'rest_redirect',
+add_action('rest_api_init', 'register_rest_redirect');
+function register_rest_redirect()
+{
+    register_rest_field(
+        array('post', 'page'),
+        'rest_redirect',
         array(
             'get_callback' => 'get_rest_redirect',
             'schema' => null
         )
     );
 };
-function get_rest_redirect( $object, $field_name, $request, $object_type  ) {
-    if( $object['content'] ){
+function get_rest_redirect($object, $field_name, $request, $object_type)
+{
+    if($object['content']) {
         return get_post_meta($object['id'], '_pprredirect_url', true);
     }
     return false;
 };
 // register endpoint to REST for menu
 add_action('rest_api_init', 'register_rest_menus');
-function register_rest_menus() {
+function register_rest_menus()
+{
     register_rest_route('wp/v2', '/menus', array(
         'methods' => 'GET',
         'callback' => 'get_menus'
     ));
 }
-function get_menus(WP_REST_Request $request) {
+function get_menus(WP_REST_Request $request)
+{
     $nav_menus = array();
     $registered_nav_menus = get_nav_menu_locations();
     foreach ($registered_nav_menus as $location => $id) {
@@ -2376,25 +2422,29 @@ function get_menus(WP_REST_Request $request) {
 }
 // register endpoint to REST for instagram
 add_action('rest_api_init', 'register_rest_instagram');
-function register_rest_instagram() {
+function register_rest_instagram()
+{
     register_rest_route('wp/v2', '/instagram', array(
         'methods' => 'GET',
         'callback' => 'get_instagram'
     ));
 }
-function get_instagram(WP_REST_Request $request) {
+function get_instagram(WP_REST_Request $request)
+{
     $instagram = do_shortcode('[instagram-feed]');
     return $instagram;
 }
 // register endpoint to REST for random
 add_action('rest_api_init', 'register_rest_random');
-function register_rest_random() {
+function register_rest_random()
+{
     register_rest_route('wp/v2', '/random', array(
         'methods' => 'GET',
         'callback' => 'get_random'
     ));
 }
-function get_random(WP_REST_Request $request) {
+function get_random(WP_REST_Request $request)
+{
     $args = array(
         'post_status' => 'publish',
         'post_type' => 'random',
@@ -2409,16 +2459,18 @@ function get_random(WP_REST_Request $request) {
     wp_reset_postdata();
     return $posts;
 }
-function custom_parent_dropdown_limit( $args, $request ) {
-    if ( is_user_logged_in() ) {
+function custom_parent_dropdown_limit($args, $request)
+{
+    if (is_user_logged_in()) {
         $args['posts_per_page'] = 1000;
     }
     return $args;
 }
 add_filter('rest_page_query', 'custom_parent_dropdown_limit', 20, 2);
 // theme options
-add_action('customize_register','theme_customize_register');
-function theme_customize_register($wp_customize) {
+add_action('customize_register', 'theme_customize_register');
+function theme_customize_register($wp_customize)
+{
     $wp_customize->add_panel('theme', array(
         'title'=> 'Ustawienia motywu',
         'priority' => 160,
@@ -2533,13 +2585,15 @@ function theme_customize_register($wp_customize) {
 }
 // register endpoint to REST for theme options
 add_action('rest_api_init', 'register_rest_options');
-function register_rest_options() {
+function register_rest_options()
+{
     register_rest_route('wp/v2', '/options', array(
         'methods' => 'GET',
         'callback' => 'get_options'
     ));
 }
-function get_options(WP_REST_Request $request) {
+function get_options(WP_REST_Request $request)
+{
     return (object) array(
         'title' => get_bloginfo('name'),
         'descriptions' => get_bloginfo('description'),
@@ -2548,17 +2602,25 @@ function get_options(WP_REST_Request $request) {
         'domains' => get_theme_mod('domains', ''),
         'logo' => wp_get_attachment_image_src(get_theme_mod('logo', ''), 'medium')[0],
         'placeholder' => wp_get_attachment_image_src(get_theme_mod('placeholder', ''), 'medium')[0],
+        'favicon'=>[
+            '512'=>get_site_icon_url(),
+            '128'=>get_site_icon_url(128),
+            '64'=>get_site_icon_url(64),
+            '32'=>get_site_icon_url(32)
+        ]
     );
 }
 // register endpoint to REST for events
 add_action('rest_api_init', 'register_rest_events');
-function register_rest_events() {
+function register_rest_events()
+{
     register_rest_route('wp/v2', '/acf-events', array(
         'methods' => 'GET',
         'callback' => 'get_acf_events'
     ));
 }
-function get_acf_events(WP_REST_Request $request) {
+function get_acf_events(WP_REST_Request $request)
+{
     // request params
     list(
         'per_page' => $per_page,
@@ -2570,10 +2632,10 @@ function get_acf_events(WP_REST_Request $request) {
         'localizations' => $localizations,
         'without_outdated' => $without_outdated,
         'event_categories' => $event_categories,
-        ) = $request;
+    ) = $request;
 
     // meta_query -> date from ACF
-    $meta_query = array (
+    $meta_query = array(
         'relation' => 'AND',
         array(
             'key'=> 'date_begin',
@@ -2659,12 +2721,12 @@ function get_acf_events(WP_REST_Request $request) {
     $query = new WP_Query($args);
     $posts = $query -> get_posts();
     // helpers
-    $map_to_posts = function($object) {
-        $get_terms_acf = function($object) {
+    $map_to_posts = function ($object) {
+        $get_terms_acf = function ($object) {
             $acf_fields = get_fields($object -> taxonomy . '_' . $object -> term_id);
             return array_merge((array) $object, (array) $acf_fields);
         };
-        $map_to_age_groups = function($object) {
+        $map_to_age_groups = function ($object) {
             return $object -> term_id;
         };
 
@@ -2704,13 +2766,15 @@ function get_acf_events(WP_REST_Request $request) {
 }
 // none logged users can add new event
 add_action('rest_api_init', 'register_rest_post_events');
-function register_rest_post_events() {
+function register_rest_post_events()
+{
     register_rest_route('wp/v2', '/post-events', array(
         'methods' => 'POST',
         'callback' => 'post_events'
     ));
 }
-function post_events(WP_REST_Request $request) {
+function post_events(WP_REST_Request $request)
+{
     // $headers['origin'][0] === 'http://localhost:3000'
     $file = $request->get_file_params();
     list(
@@ -2733,7 +2797,7 @@ function post_events(WP_REST_Request $request) {
         'to_confirm' => $to_confirm,
         'id' => $id,
         'token' => $key
-        ) = $request;
+    ) = $request;
 
     if($id && $key) {
         $status = get_post_status($id);
@@ -2759,7 +2823,7 @@ function post_events(WP_REST_Request $request) {
     $pattern = '/@(.*+)$/i';
     $domains_string = get_theme_mod('domains', '');
     if(strlen($domains_string)) {
-        $domains = explode(',',str_replace(' ', '', $domains_string));
+        $domains = explode(',', str_replace(' ', '', $domains_string));
         preg_match($pattern, $to_confirm, $matches);
         $domain = $matches[1];
         $confirmed = in_array($domain, $domains);
@@ -2828,20 +2892,20 @@ function post_events(WP_REST_Request $request) {
     $upload_overrides = array(
         'test_form' => false,
     );
-    require_once( ABSPATH . 'wp-admin/includes/file.php' );
+    require_once(ABSPATH . 'wp-admin/includes/file.php');
     $file_return = wp_handle_upload($uploadedfile, $upload_overrides);
     $filename = $file_return['file'];
     $attachment = array(
         'post_mime_type' => $file_return['type'],
-        'post_title' => preg_replace( '/\.[^.]+$/', '', basename( $filename ) ),
+        'post_title' => preg_replace('/\.[^.]+$/', '', basename($filename)),
         'post_content' => '',
         'post_status' => 'inherit',
         'guid' => $file_return['url']
     );
-    $attachment_id = wp_insert_attachment( $attachment, $file_return['url'] );
+    $attachment_id = wp_insert_attachment($attachment, $file_return['url']);
     require_once(ABSPATH . 'wp-admin/includes/image.php');
-    $attachment_data = wp_generate_attachment_metadata( $attachment_id, $filename );
-    wp_update_attachment_metadata( $attachment_id, $attachment_data );
+    $attachment_data = wp_generate_attachment_metadata($attachment_id, $filename);
+    wp_update_attachment_metadata($attachment_id, $attachment_data);
     set_post_thumbnail($post_id, $attachment_id);
 
     // send e-mail
@@ -2859,20 +2923,22 @@ function post_events(WP_REST_Request $request) {
     );
 }
 // new post status
-function temporary_post_status() {
-
+function temporary_post_status()
+{
     $args = array(
-        'label'                     => _x( 'Tymczasowy', 'Status General Name', 'text_domain' ),
-        'label_count'               => _n_noop( 'Tymczasowy (%s)',  'Tymczasowe (%s)', 'text_domain' ),
+        'label'                     => _x('Tymczasowy', 'Status General Name', 'text_domain'),
+        'label_count'               => _n_noop('Tymczasowy (%s)', 'Tymczasowe (%s)', 'text_domain'),
         'public'                    => false,
     );
-    register_post_status( 'temporary', $args );
-
+    register_post_status('temporary', $args);
 }
-add_action( 'init', 'temporary_post_status', 0 );
+add_action('init', 'temporary_post_status', 0);
 // notification after transition event status from temporaty to pending
-function transition_post_to_pending($new_status, $old_status, $post) {
-    if(!get_theme_mod('email', '')) return;
+function transition_post_to_pending($new_status, $old_status, $post)
+{
+    if(!get_theme_mod('email', '')) {
+        return;
+    }
     if(('pending' === $new_status && 'temporary' === $old_status) && 'event' === $post->post_type) {
         $to = get_theme_mod('email', '');
         $subject = get_theme_mod('title', '');

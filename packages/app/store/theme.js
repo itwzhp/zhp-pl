@@ -21,6 +21,9 @@ export const getters = {
   title (state) {
     return state.options.title
   },
+  favicon (state) {
+    return state.options.favicon;
+  },
   logo (state) {
     return state.options.logo
   },
