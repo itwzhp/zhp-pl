@@ -27,6 +27,12 @@ export const getters = {
   logo (state) {
     return state.options.logo
   },
+  headerLogos(state){
+    return state.options.header_logos
+  },
+  hasHeaderLogos(state){
+    return Object.entries(state.options.header_logos).map((item)=>item[1]).filter((val)=>val !== '').length>0
+  },
   placeholder (state) {
     return state.options.placeholder
   },

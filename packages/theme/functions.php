@@ -2519,6 +2519,44 @@ function theme_customize_register($wp_customize)
         'type' => 'theme_mod',
         'capability' => 'edit_theme_options',
     ));
+    $wp_customize->add_setting('header_logo_1', array(
+        'type' => 'theme_mod',
+        'capability' => 'edit_theme_options',
+    ));
+
+    $wp_customize->add_setting('header_logo_2', array(
+        'type' => 'theme_mod',
+        'capability' => 'edit_theme_options',
+    ));
+
+    $wp_customize->add_setting('header_logo_3', array(
+        'type' => 'theme_mod',
+        'capability' => 'edit_theme_options',
+    ));
+
+
+
+    $wp_customize->add_control(new WP_Customize_Media_Control($wp_customize, 'header_logo_1', array(
+        'priority'=>10,
+        'section'=>'main',
+        'label'=>'Nagłówek - logo - 1',
+        'description'=>'Logo #1 w nagłówku strony',
+        'mime_type' => 'image'
+    )));
+    $wp_customize->add_control(new WP_Customize_Media_Control($wp_customize, 'header_logo_2', array(
+        'priority'=>10,
+        'section'=>'main',
+        'label'=>'Nagłówek - logo - 2',
+        'description'=>'Logo #2 w nagłówku strony',
+        'mime_type' => 'image'
+    )));
+    $wp_customize->add_control(new WP_Customize_Media_Control($wp_customize, 'header_logo_3', array(
+        'priority'=>10,
+        'section'=>'main',
+        'label'=>'Nagłówek - logo - 3',
+        'description'=>'Logo #3 w nagłówku strony',
+        'mime_type' => 'image'
+    )));
     $wp_customize->add_control(new WP_Customize_Media_Control($wp_customize, 'logo', array(
         'priority'=>10,
         'section'=>'main',
@@ -2608,6 +2646,12 @@ function register_rest_options()
 }
 function get_options(WP_REST_Request $request)
 {
+    $logos = [
+        'header_logo_1'=>get_theme_mod('header_logo_1',false),
+        'header_logo_2'=>get_theme_mod('header_logo_2',false),
+        'header_logo_3'=>get_theme_mod('header_logo_3',false)
+    ];
+    $logos = array_map(fn($val)=>$val ?wp_get_attachment_image_src($val,'medium')[0]: $val, $logos);
     return (object) array(
         'title' => get_bloginfo('name'),
         'descriptions' => get_bloginfo('description'),
@@ -2621,7 +2665,8 @@ function get_options(WP_REST_Request $request)
             '128'=>get_site_icon_url(128),
             '64'=>get_site_icon_url(64),
             '32'=>get_site_icon_url(32)
-        ]
+        ],
+        'header_logos'=>$logos 
     );
 }
 // register endpoint to REST for events
