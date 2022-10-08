@@ -20,8 +20,9 @@
           </ZLink>
 
           <ZLink
-            v-for="logo in headerLogos"
+            v-for="(logo,key) in headerLogos"
             v-if="hasHeaderLogos && logo " 
+            :key="key"
             to="/"
             aria-label="powrót do strony głównej"
           >
