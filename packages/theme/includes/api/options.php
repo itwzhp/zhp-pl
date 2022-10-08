@@ -39,7 +39,10 @@ function get_options(WP_REST_Request $request)
             'primary_lighten'=>get_theme_mod('primary_lighten'),
             'input_background'=>get_theme_mod('input_background'),
             'input_text'=>get_theme_mod('input_text'),
-            'primary_color'=>get_theme_mod('primary_color')
+            'primary_color'=>get_theme_mod('primary_color'),
+            'question_marks'=>get_theme_mod('question_marks'),
+            'banner_background'=>get_theme_mod('banner_background'),
+            'banner_overlay'=>get_theme_mod('banner_overlay'),
         ]
     );
 }
