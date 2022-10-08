@@ -9,6 +9,7 @@
         <div class="z-header__actions" />
         <div class="z-header__logo">
           <ZLink
+            v-if="!hasHeaderLogos"
             to="/"
             aria-label="powrót do strony głównej"
           >
@@ -16,6 +17,18 @@
               :src="require('~/assets/brand.svg')"
               style="--image-width: 8.75rem;"
             />
+          </ZLink>
+
+          <ZLink
+            v-for="logo in headerLogos"
+            v-if="hasHeaderLogos && logo " 
+            to="/"
+            aria-label="powrót do strony głównej"
+          >
+            <ZImage 
+              :src="logo"
+              style="--image-width: 8.75rem"
+              />
           </ZLink>
         </div>
         <div class="z-header__actions z-header__actions--right">
@@ -183,7 +196,9 @@ export default {
       randomText: 'random/text',
       hasMourning: 'theme/hasMourning',
       title: 'theme/title',
-      favicon: 'theme/favicon'
+      favicon: 'theme/favicon',
+      headerLogos: 'theme/headerLogos',
+      hasHeaderLogos: 'theme/hasHeaderLogos'
     }),
     headerMenu () {
       return this.$store.getters['menus/menu']('headerMenu')
@@ -311,9 +326,12 @@ export default {
   &__logo {
     --image-width: 8.75rem;
 
-    display: grid;
+    display: flex;
     justify-content: center;
     padding: 0 1.25rem;
+    .z-image{
+      padding: 0px 5px;
+    }
   }
 
   &__nav {
