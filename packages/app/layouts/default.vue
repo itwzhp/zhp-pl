@@ -213,8 +213,14 @@ export default {
         '--button-text-color':  colors['primary_darken'],
         '--color-primary-lighten': colors['primary_lighten'],
         '--theme-input-background': colors['input_background'],
+        '--input-background': colors['input_background'],
         '--input-border-color':  colors['input_background'],
-        '--theme-input-color':  colors['input_text']
+        '--theme-input-color':  colors['input_text'],
+        '--input-color': colors['input_text'],
+        '--icon-color': colors['input_text'],
+        '--z-meta-text-color': colors['primary_lighten'],
+        '--z-filter-posts--categories-toggle--background': colors['primary_darken'],
+        '--z-card--title--text-color': colors['primary_darken']
       }
     },  
     headerMenu () {
