@@ -184,8 +184,6 @@ function theme_customize_register($wp_customize)
 		'section'  => 'colors',
 	)));
 
-    menu_toggler_color
-
     $wp_customize->add_setting('menu_toggler_color', array(
         'capability'        => 'edit_theme_options',
         'default'           => '#7ba22e',
