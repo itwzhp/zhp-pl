@@ -17,7 +17,7 @@
     >
       <ZList class="z-mega-menu__menu">
         <template v-for="item in menu">
-          <template v-if="item.submenu">
+          <template v-if="item.submenu && !item.isClassic">
             <ZListItem
               :key="item.id"
               class="z-mega-menu__item"
@@ -41,6 +41,32 @@
                 @close="close"
               />
             </ZListItem>
+          </template>
+          <template v-if="item.submenu && item.isClassic">
+            <ZDropdown class="z-classic-menu z-dropdown--has-chevron">
+              <template #toggle="{toggle}">
+                <ZButton
+                  class="z-button--text"
+                  @click="toggle"
+                >
+                  {{ item.name }}
+                </ZButton>
+              </template>
+              <template>
+                <ZList>
+                  <template v-for="subitem in item.submenu">
+                    <ZListItem :key="subitem.id">
+                      <ZLink
+                        :to="subitem.to"
+                        class="z-classic-menu__link"
+                      >
+                        {{ subitem.name }}
+                      </ZLink>
+                    </ZListItem>
+                  </template>
+                </ZList>
+              </template>
+            </ZDropdown>
           </template>
           <template v-else>
             <ZListItem
@@ -72,6 +98,7 @@ import ZLink from '../../atoms/ZLink/ZLink.vue';
 import ZButton from '../../atoms/ZButton/ZButton.vue';
 import ZIcon from '../../atoms/ZIcon/ZIcon.vue';
 import ZList from '../ZList/ZList.vue';
+import ZDropdown from '../../molecules/ZDropdown/ZDropdown.vue';
 import ZMegaMenuDropdown from './_internal/ZMegaMenuDropdown.vue';
 
 Vue.component('ZMegaMenuDropdown', ZMegaMenuDropdown);
@@ -83,6 +110,7 @@ export default {
     ZList,
     ZButton,
     ZIcon,
+    ZDropdown
   },
   props: {
     tag: {

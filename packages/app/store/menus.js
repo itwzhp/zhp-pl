@@ -5,12 +5,11 @@ export const mutations = {
     const { items } = menu
     const links = items.reduce((array, item) => {
       const { menu_item_parent: parent } = item
-      console.log(parent);
       if (parent === '0') {
         itemsAsObject[item.ID].index = array.length
-        return [...array, { to: item.url, name: item.title, id: item.ID }]
+        return [...array, { to: item.url, name: item.title, id: item.ID, isClassic: item.classes.includes('classic') }]
       } else if (itemsAsObject[parent].index !== undefined) {
-        const copyOfItem = { name: item.title, id: item.ID }
+        const copyOfItem = { name: item.title, id: item.ID, to: item.url }
         array[itemsAsObject[parent].index].submenu = array[itemsAsObject[parent].index].submenu
           ? [...array[itemsAsObject[parent].index].submenu, copyOfItem]
           : [copyOfItem]
