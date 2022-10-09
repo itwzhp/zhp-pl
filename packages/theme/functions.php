@@ -1802,7 +1802,7 @@ $blocks = array(
 foreach ($blocks as $block) {
     require __DIR__.'/blocks/'.$block.'/'.$block.'.php';
 }
-function zhp_block_category($categories, $post)
+function zhp_block_category($categories, $context)
 {
     return array_merge(
         $categories,
@@ -1814,7 +1814,7 @@ function zhp_block_category($categories, $post)
         )
     );
 }
-add_filter('block_categories', 'zhp_block_category', 10, 2);
+add_filter('block_categories_all', 'zhp_block_category', 10, 2);
 // remove core patterns
 add_filter('after_setup_theme', 'remove_core_patterns');
 function remove_core_patterns()
@@ -1841,8 +1841,8 @@ function register_block_patterns()
 }
 
 // allowed gutenberg blocks
-add_filter('allowed_block_types', 'allowed_block_types');
-function allowed_block_types($allowed_blocks)
+add_filter('allowed_block_types_all', 'zhp_allowed_block_types', 10, 2);
+function zhp_allowed_block_types($allowed_blocks, $context)
 {
     return $allowed_blocks;
 //      return array(
@@ -2257,7 +2257,7 @@ function register_rest_acf(){
 }
 function get_rest_acf($object, $field_name, $request)
 {
-    if ($taxonomy = $object['taxonomy']) {
+    if (array_key_exists('taxonomy', $object) && $taxonomy = $object['taxonomy']) {
         $acf = get_fields($taxonomy.'_'.$object[id]);
     } else {
         $acf = get_fields($object['id']);
@@ -2410,69 +2410,7 @@ function get_rest_redirect($object, $field_name, $request, $object_type)
     }
     return false;
 };
-// register endpoint to REST for menu
-add_action('rest_api_init', 'register_rest_menus');
-function register_rest_menus()
-{
-    register_rest_route('wp/v2', '/menus', array(
-        'methods' => 'GET',
-        'callback' => 'get_menus'
-    ));
-}
-function get_menus(WP_REST_Request $request)
-{
-    $nav_menus = array();
-    $registered_nav_menus = get_nav_menu_locations();
-    foreach ($registered_nav_menus as $location => $id) {
-        $menu = (object) array(
-            'id' => $id,
-            'location' => $location,
-            'name' => wp_get_nav_menu_name($location),
-            'items' => wp_get_nav_menu_items($id),
-        );
-        array_push($nav_menus, $menu);
-    }
-    return $nav_menus;
-}
-// register endpoint to REST for instagram
-add_action('rest_api_init', 'register_rest_instagram');
-function register_rest_instagram()
-{
-    register_rest_route('wp/v2', '/instagram', array(
-        'methods' => 'GET',
-        'callback' => 'get_instagram'
-    ));
-}
-function get_instagram(WP_REST_Request $request)
-{
-    $instagram = do_shortcode('[instagram-feed]');
-    return $instagram;
-}
-// register endpoint to REST for random
-add_action('rest_api_init', 'register_rest_random');
-function register_rest_random()
-{
-    register_rest_route('wp/v2', '/random', array(
-        'methods' => 'GET',
-        'callback' => 'get_random'
-    ));
-}
-function get_random(WP_REST_Request $request)
-{
-    $args = array(
-        'post_status' => 'publish',
-        'post_type' => 'random',
-        'orderby' => 'rand',
-        'posts_per_page' => 1
-    );
-    $query = new WP_Query($args);
-    $posts = $query->get_posts();
-    $posts = (object) array(
-        'text' => $posts[0] -> post_title
-    );
-    wp_reset_postdata();
-    return $posts;
-}
+
 function custom_parent_dropdown_limit($args, $request)
 {
     if (is_user_logged_in()) {
@@ -2486,317 +2424,7 @@ require_once('includes/settings.php');
 // register endpoint to REST for theme options
 require_once 'includes/api.php';
 // register endpoint to REST for events
-add_action('rest_api_init', 'register_rest_events');
-function register_rest_events()
-{
-    register_rest_route('wp/v2', '/acf-events', array(
-        'methods' => 'GET',
-        'callback' => 'get_acf_events'
-    ));
-}
-function get_acf_events(WP_REST_Request $request)
-{
-    // request params
-    list(
-        'per_page' => $per_page,
-        'page' => $page,
-        'after' => $after,
-        'before' => $before,
-        'age_groups' => $age_groups,
-        'event_types' => $even_types,
-        'localizations' => $localizations,
-        'without_outdated' => $without_outdated,
-        'event_categories' => $event_categories,
-    ) = $request;
 
-    // meta_query -> date from ACF
-    $meta_query = array(
-        'relation' => 'AND',
-        array(
-            'key'=> 'date_begin',
-            'value' => $after,
-            'type' => 'DATE',
-            'compare' => '>='
-        ),
-        array(
-            'key'=> 'date_end',
-            'value' => $before,
-            'type' => 'DATE',
-            'compare' => '<='
-        )
-    );
-
-    // tax_query - can be more generic like now
-    $has_tax_query = false;
-    $tax_query = array(
-        'relation' => 'AND'
-    );
-    if($age_groups) {
-        array_push($tax_query, array(
-            'taxonomy' => 'age_group',
-            'field' => 'term_id',
-            'terms' => explode(',', $age_groups)
-        ));
-        $has_tax_query = true;
-    }
-    if($even_types) {
-        array_push($tax_query, array(
-            'taxonomy' => 'event_type',
-            'field' => 'term_id',
-            'terms' => explode(',', $even_types)
-        ));
-        $has_tax_query = true;
-    }
-    if($localizations) {
-        array_push($tax_query, array(
-            'taxonomy' => 'localization',
-            'field' => 'term_id',
-            'terms' => explode(',', $localizations)
-        ));
-        $has_tax_query = true;
-    }
-    if($event_categories) {
-        array_push($tax_query, array(
-            'taxonomy' => 'event_category',
-            'field' => 'term_id',
-            'terms' => explode(',', $event_categories)
-        ));
-        $has_tax_query = true;
-    }
-
-    // common WP_QUERY args
-    $args = array(
-        'post_type' => 'event',
-        'posts_per_page' => $per_page,
-        'paged' => $page ? $page : 1,
-        'meta_key' => 'date_begin',
-        'orderby' => 'meta_value',
-        'order' => 'DESC',
-    );
-
-    if($without_outdated) {
-        $args['meta_query'] = array(
-            array(
-                'key' => 'date_end',
-                'value' => date('Y-m-d'),
-                'compare' => '>=',
-                'type' => 'DATE'
-            )
-        );
-    }
-
-    if($after && $before) {
-        $args['meta_query'] = $meta_query;
-    }
-
-    if($has_tax_query) {
-        $args['tax_query'] = $tax_query;
-    }
-
-    $query = new WP_Query($args);
-    $posts = $query -> get_posts();
-    // helpers
-    $map_to_posts = function ($object) {
-        $get_terms_acf = function ($object) {
-            $acf_fields = get_fields($object -> taxonomy . '_' . $object -> term_id);
-            return array_merge((array) $object, (array) $acf_fields);
-        };
-        $map_to_age_groups = function ($object) {
-            return $object -> term_id;
-        };
-
-        $age_groups = wp_get_post_terms($object -> ID, ['age_group']);
-        $terms = wp_get_post_terms($object -> ID, ['event_type', 'localization']);
-
-        $terms_with_acf = array();
-        foreach ($terms as $term) {
-            $terms_with_acf['rest_' . $term -> taxonomy] = $get_terms_acf($term);
-        }
-
-        $common = (object) array(
-            'title' => (object) array(
-                'rendered' => $object -> post_title
-            ),
-            'excerpt' => (object) array(
-                'rendered' => $object -> post_excerpt
-            ),
-            'slug' => $object -> post_name,
-            'rest_acf' => get_fields($object -> ID),
-            'rest_media' => get_the_post_thumbnail_url($object -> ID, 'large'),
-            'age_groups' => array_map($map_to_age_groups, $age_groups),
-        );
-
-        return (object) array_merge((array) $common, (array) $terms_with_acf);
-    };
-    $data = array_map($map_to_posts, $posts);
-    $total_pages = $query -> max_num_pages;
-
-    $response = new WP_REST_Response($data);
-    $response -> header('X-WP-TotalPages', $total_pages);
-    $response -> header('X-WP-Args', json_encode($args));
-
-    wp_reset_query();
-
-    return $response;
-}
-// none logged users can add new event
-add_action('rest_api_init', 'register_rest_post_events');
-function register_rest_post_events()
-{
-    register_rest_route('wp/v2', '/post-events', array(
-        'methods' => 'POST',
-        'callback' => 'post_events'
-    ));
-}
-function post_events(WP_REST_Request $request)
-{
-    // $headers['origin'][0] === 'http://localhost:3000'
-    $file = $request->get_file_params();
-    list(
-        'title'=> $post_title,
-        'excerpt' => $post_excerpt,
-        'description' => $post_description,
-        'conditions' => $post_conditions,
-        'place' => $post_place,
-        'unit' => $organizer_unit,
-        'person' => $organizer_person,
-        'phone' => $organizer_phone,
-        'mail' => $organizer_mail,
-        'web' => $web,
-        'begin' => $date_begin,
-        'end' => $date_end,
-        'plikilinki' => $plikilinki,
-        'age_groups' => $tax_age_groups,
-        'localization' => $tax_localization,
-        'event_type' => $tax_event_type,
-        'to_confirm' => $to_confirm,
-        'id' => $id,
-        'token' => $key
-    ) = $request;
-
-    if($id && $key) {
-        $status = get_post_status($id);
-        $token = get_post_meta($id, 'token', true);
-        if($status == 'temporary' && $key == $token) {
-            wp_update_post(array(
-                'ID' => $id,
-                'post_status' => 'pending'
-            ));
-            delete_post_meta($id, 'token');
-
-            return array(
-                'status' => 'success',
-                'message' => 'Zgłoszenie zaakceptowane. Wydarzenie oczekuje na akceptacje ze strony administracji.'
-            );
-        }
-        return array(
-            'status' => 'error',
-            'message' => 'Prawdopodobnie ten link został już wykorzystany a twoje zgłoszenie oczekuje na akceptację.'
-        );
-    }
-
-    $pattern = '/@(.*+)$/i';
-    $domains_string = get_theme_mod('domains', '');
-    if(strlen($domains_string)) {
-        $domains = explode(',', str_replace(' ', '', $domains_string));
-        preg_match($pattern, $to_confirm, $matches);
-        $domain = $matches[1];
-        $confirmed = in_array($domain, $domains);
-        if(!$confirmed) {
-            return array(
-                'status' => 'error',
-                'message' => 'Domena '.$domain.' nie jest dozwolona.'
-            );
-        }
-    }
-
-    $post_content = ''
-        .'<!-- wp:heading -->'
-        .'<h2>Opis wydarzenia</h2>'
-        .'<!-- /wp:heading -->'
-        .'<!-- wp:paragraph -->'
-        .'<p>'.wp_kses($post_description, wp_kses_allowed_html()).'</p>'
-        .'<!-- /wp:paragraph -->'
-        .'<!-- wp:heading -->'
-        .'<h2>Warunki uczestnictwa</h2>'
-        .'<!-- /wp:heading -->'
-        .'<!-- wp:paragraph -->'
-        .'<p>'.wp_kses($post_conditions, wp_kses_allowed_html()).'</p>'
-        .'<!-- /wp:paragraph -->'
-        .'<!-- wp:heading -->'
-        .'<h2>Miejsce wydarzenia</h2>'
-        .'<!-- /wp:heading -->'
-        .'<!-- wp:paragraph -->'
-        .'<p>'.wp_kses($post_place, wp_kses_allowed_html()).'</p>'
-        .'<!-- /wp:paragraph -->';
-
-    $post = array(
-        'post_title' => wp_kses($post_title, wp_kses_allowed_html('title')),
-        'post_content' => $post_content,
-        'post_excerpt' => wp_kses($post_excerpt, wp_kses_allowed_html()),
-        'post_status' => 'temporary',
-        'post_type' => 'event',
-    );
-    $post_id = wp_insert_post($post);
-
-    // set token
-    $date = new DateTime();
-    $token = md5($date->getTimestamp().$to_confirm);
-    add_post_meta($post_id, 'token', $token);
-    // set ACF fields
-    update_field('organizer', array(
-        'unit'=>sanitize_text_field($organizer_unit),
-        'person'=>sanitize_text_field($organizer_person),
-        'phone'=> sanitize_text_field($organizer_phone),
-        'mail'=>sanitize_text_field($organizer_mail)
-    ), $post_id);
-    update_field('web', sanitize_text_field($web), $post_id);
-    update_field('date', array(
-        'begin'=>sanitize_text_field($date_begin),
-        'end'=>sanitize_text_field($date_end)
-    ), $post_id);
-    update_field('plikilinki', $plikilinki, $post_id);
-    // set taxonomies
-    wp_set_post_terms($post_id, $tax_age_groups, 'age_group');
-    wp_set_post_terms($post_id, $tax_localization, 'localization');
-    wp_set_post_terms($post_id, $tax_event_type, 'event_type');
-
-    // * set thumbnail
-    // set_post_thumbnail($id, );
-    $uploadedfile = $file['file'];
-    $upload_overrides = array(
-        'test_form' => false,
-    );
-    require_once(ABSPATH . 'wp-admin/includes/file.php');
-    $file_return = wp_handle_upload($uploadedfile, $upload_overrides);
-    $filename = $file_return['file'];
-    $attachment = array(
-        'post_mime_type' => $file_return['type'],
-        'post_title' => preg_replace('/\.[^.]+$/', '', basename($filename)),
-        'post_content' => '',
-        'post_status' => 'inherit',
-        'guid' => $file_return['url']
-    );
-    $attachment_id = wp_insert_attachment($attachment, $file_return['url']);
-    require_once(ABSPATH . 'wp-admin/includes/image.php');
-    $attachment_data = wp_generate_attachment_metadata($attachment_id, $filename);
-    wp_update_attachment_metadata($attachment_id, $attachment_data);
-    set_post_thumbnail($post_id, $attachment_id);
-
-    // send e-mail
-    $to = $to_confirm;
-    $subject = get_theme_mod('subject', '');
-    $url = site_url();
-    $message = str_replace('{{ token }}', '<a href="'.$url.'/wydarzenia?id='.$post_id.'&token='.$token.'">'.$url.'/wydarzenia?id='.$post_id.'&token='.$token.'</a>', get_theme_mod('message', ''));
-    $headers = array('Content-Type: text/html; charset=UTF-8');
-
-    wp_mail($to, $subject, $message, $headers);
-
-    return array(
-        'status' => 'success',
-        'message' => 'Sprawdź swojego maila i kliknij w link aby potwierdzić swoje wydarzenie.'
-    );
-}
 // new post status
 function temporary_post_status()
 {

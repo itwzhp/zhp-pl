@@ -6,7 +6,8 @@ function register_rest_options()
 {
     register_rest_route('wp/v2', '/options', array(
         'methods' => 'GET',
-        'callback' => 'get_options'
+        'callback' => 'get_options',
+        'permission_callback'=>'__return_true'
     ));
 }
 function get_options(WP_REST_Request $request)
