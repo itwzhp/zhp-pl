@@ -248,7 +248,6 @@ export default {
     },
     cssVars(){
       let colors = this.$store.getters['theme/colors'];
-      console.log(colors);
       return {
         '--button-background': colors['button_background'],
         '--color-primary': colors['primary_color'],
@@ -470,14 +469,30 @@ export default {
   }
 }
 
+.z-classic-menu{
+  --button-font-size: 1rem;
+  --button-height: 1.2rem;
+  --button-color:#000;
+  --dropdown-content-transform: translateY(2rem);
+  display: flex;
+  
+  button{
+    align-self: center;
+  }
+}
 .z-districts,
+.z-groups{
+  --dropdown-content-transform: translateY(0);
+}
+.z-districts,
+.z-classic-menu,
 .z-groups {
   --button-color: var(--color-primary-darken);
   --list-item: 0;
   --link-hover-text-decoration: none;
   --dropdown-content-width: 160px;
   --dropdown-content-padding: 16px 0;
-  --dropdown-content-transform: translateY(0);
+  
 
   z-index: 1000;
 
