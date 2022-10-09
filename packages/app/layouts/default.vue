@@ -274,7 +274,8 @@ export default {
         '--flatpicker-selected-color': colors['flatpicker_selected_color'],
         '--bubble-uncheck-background': colors['bubble_uncheck_background'],
         '--bubble-checked-background': colors['bubble_checked_background'],
-        '--bubble-label-border': colors['bubble_uncheck_background']
+        '--bubble-label-border': colors['bubble_uncheck_background'],
+        '--card-image-overlay-color':colors['card_overlay']
       }
     },  
   },
