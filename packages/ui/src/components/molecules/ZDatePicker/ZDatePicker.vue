@@ -56,11 +56,19 @@ export default {
 
 <style lang="scss">
   @import '~flatpickr/dist/flatpickr';
+  
 
   .z-date-picker {
     & + .flatpickr-calendar {
       background: transparent;
       box-shadow: none;
+    }
+    background: transparent;
+    box-shadow: none;
+    color: var(--color-primary-darken);
+    border: 1px solid var(--color-primary-darken);
+    &::placeholder{
+      color: var(--color-primary-lighten);
     }
   }
 
@@ -96,7 +104,7 @@ export default {
           color: #78a22f;
 
           &:hover {
-            background-color: #a6ce39;
+            background-color: var(--color-primary-lighten, #a6ce39);
             color: #fff;
           }
         }
@@ -106,7 +114,7 @@ export default {
 
           &:hover {
             background-color: #fff;
-            color: #78a22f;
+            color: var(--color-primary-darken, #a6ce39);
           }
         }
       }
@@ -118,7 +126,7 @@ export default {
       &.startRange.endRange,
       &.endRange.endRange {
         border: 0 !important;
-        background: #a6ce39;
+        background: var(--flatpicker-selected-color, #a6ce39);
         border-radius: 50%;
         box-shadow: none !important;
         color: #fff;
@@ -172,10 +180,10 @@ export default {
     &-months {
       .flatpickr-prev-month,
       .flatpickr-next-month {
-        fill: #7ba22e;
+        fill: var(--flatpicker-text-color, #7ba22e);
 
         &:hover svg {
-          fill: #7ba22e;
+          fill: var(--flatpicker-text-color, #7ba22e);
         }
       }
     }
@@ -185,7 +193,7 @@ export default {
     }
 
     &-current-month {
-      color: #7ba22e;
+      color: var(--flatpicker-text-color, #7ba22e);
 
       .flatpickr-monthDropdown-months,
       .numInputWrapper {
@@ -214,7 +222,7 @@ export default {
       }
 
       input.cur-year[disabled] {
-        color: #7ba22e;
+        color: var(--flatpicker-text-color, #7ba22e);
       }
     }
   }

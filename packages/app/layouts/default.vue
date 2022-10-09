@@ -2,7 +2,7 @@
   <div
     class="layout"
     :class="{'layout--mourning': hasMourning}"
-    :style="cssVars"
+    :style="cssVars()"
   >
  
     <header class="z-header">
@@ -202,30 +202,6 @@ export default {
       headerLogos: 'theme/headerLogos',
       hasHeaderLogos: 'theme/hasHeaderLogos'
     }),
-    cssVars(){
-      let colors = this.$store.getters['theme/colors'];
-      console.log(colors);
-      return {
-        '--button-background': colors['button_background'],
-        '--color-primary': colors['primary_color'],
-        '--color-primary-darken': colors['primary_darken'],
-        '--button-color': colors['button_text'],
-        '--button-text-color':  colors['primary_darken'],
-        '--color-primary-lighten': colors['primary_lighten'],
-        '--theme-input-background': colors['input_background'],
-        '--input-background': colors['input_background'],
-        '--input-border-color':  colors['input_background'],
-        '--theme-input-color':  colors['input_text'],
-        '--input-color': colors['input_text'],
-        '--icon-color': colors['input_text'],
-        '--z-meta-text-color': colors['primary_lighten'],
-        '--z-filter-posts--categories-toggle--background': colors['primary_darken'],
-        '--z-card--title--text-color': colors['primary_darken'],
-        '--banner-background': colors['banner_background'],
-        '--z-banner--image-overlay-color': colors['banner_overlay'],
-        '--z-did-you-know--question-marks--color': colors['question_marks']
-      }
-    },  
     headerMenu () {
       return this.$store.getters['menus/menu']('headerMenu')
     },
@@ -269,7 +245,39 @@ export default {
     closeCookies () {
       this.cookies = false
       localStorage.setItem('cookies', JSON.stringify(true))
-    }
+    },
+    cssVars(){
+      let colors = this.$store.getters['theme/colors'];
+      console.log(colors);
+      return {
+        '--button-background': colors['button_background'],
+        '--color-primary': colors['primary_color'],
+        '--color-primary-darken': colors['primary_darken'],
+        '--button-color': colors['button_text'],
+        '--button-text-color':  colors['primary_darken'],
+        '--color-primary-lighten': colors['primary_lighten'],
+        '--theme-input-background': colors['input_background'],
+        '--input-background': colors['input_background'],
+        '--input-border-color':  colors['input_background'],
+        '--theme-input-color':  colors['input_text'],
+        '--input-color': colors['input_text'],
+        '--icon-color': colors['input_text'],
+        '--z-meta-text-color': colors['primary_lighten'],
+        '--z-filter-posts--categories-toggle--background': colors['primary_darken'],
+        '--z-card--title--text-color': colors['primary_darken'],
+        '--banner-background': colors['banner_background'],
+        '--z-banner--image-overlay-color': colors['banner_overlay'],
+        '--z-did-you-know--question-marks--color': colors['question_marks'],
+        '--highlighted-text-color':colors['highlighted_text'],
+        '--form-field-label-color':colors['form_field_label_color'],
+        '--select-border': colors['select_border'],
+        '--flatpicker-text-color': colors['flatpicker_text_color'],
+        '--flatpicker-selected-color': colors['flatpicker_selected_color'],
+        '--bubble-uncheck-background': colors['bubble_uncheck_background'],
+        '--bubble-checked-background': colors['bubble_checked_background'],
+        '--bubble-label-border': colors['bubble_uncheck_background']
+      }
+    },  
   },
   head(){
       return {

@@ -89,7 +89,7 @@ export default {
     display: grid;
 
     &__more {
-      color: #7ba22e;
+      color: var(--highlighted-text-color, #7ba22e);
       place-self: end;
     }
 

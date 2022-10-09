@@ -120,7 +120,7 @@ export default {
       height: 14px;
       align-items: center;
       justify-content: center;
-      background: #a6ce39;
+      background: var(--bubble-uncheck-background,#a6ce39);
       border-radius: 50%;
       outline: var(--bubble-uncheck-outline);
       pointer-events: none;
@@ -133,7 +133,7 @@ export default {
       min-width: var(--bubble-label-min-width, 72px);
       height: var(--bubble-label-height, 24px);
       padding: var(--bubble-label-padding, 0 8px);
-      border: var(--bubble-label-border, 1px solid #a6ce39);
+      border: 1px solid var(--bubble-label-border,  #a6ce39);
       background: var(--bubble-label-background, var(--background, #fff));
       border-radius: var(--bubble-label-border-radius, 10px);
       color: var(--bubble-label-color, var(--color));
@@ -148,9 +148,9 @@ export default {
     &--is-checked {
       --bubble-uncheck-scale: 1;
       --bubble-label-padding: 0 8px 0 26px;
-      --bubble-label-background: #78a22f;
+      --bubble-label-background: var(--bubble-checked-background, #78a22f);
       --bubble-label-color: #fff;
-      --bubble-label-border: 1px solid #78a22f;
+      --bubble-label-border: 1px solid var(--bubble-checked-background, #78a22f);
 
       &:focus-within {
         --bubble-uncheck-outline: 1px auto -webkit-focus-ring-color;

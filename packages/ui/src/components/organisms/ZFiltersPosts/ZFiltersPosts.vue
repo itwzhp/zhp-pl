@@ -306,7 +306,7 @@ export default {
     }
 
     &__categories-toggle {
-      --button-background: #4a7b26;
+      --button-background: var(--z-filter-posts--categories-toggle--background, #4a7b26);
       --button-height: 40px;
     }
 

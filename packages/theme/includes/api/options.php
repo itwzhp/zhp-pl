@@ -43,6 +43,13 @@ function get_options(WP_REST_Request $request)
             'question_marks'=>get_theme_mod('question_marks'),
             'banner_background'=>get_theme_mod('banner_background'),
             'banner_overlay'=>get_theme_mod('banner_overlay'),
+            'highlighted_text'=>get_theme_mod('highlighted_text'),
+            'form_field_label_color'=>get_theme_mod('form_field_label_color'),
+            'select_border'=>get_theme_mod('select_border'),
+            'flatpicker_text_color'=>get_theme_mod('flatpicker_text_color'),
+            'flatpicker_selected_color'=>get_theme_mod('flatpicker_selected_color'),
+            'bubble_uncheck_background'=>get_theme_mod('bubble_uncheck_background'),
+            'bubble_checked_background'=>get_theme_mod('bubble_checked_background'),
         ]
     );
 }
