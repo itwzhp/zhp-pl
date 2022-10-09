@@ -11,8 +11,7 @@ WORKDIR /usr/src/app
 
 
 RUN apk --no-cache add zip
-RUN rm -rf packages/app/node_modules \
-    && npm install --quiet \
+RUN npm install --quiet \
     && npm run create-index \
     && npm run nuxt:build
 
