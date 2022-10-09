@@ -9,7 +9,7 @@ export const mutations = {
         itemsAsObject[item.ID].index = array.length
         return [...array, { to: item.url, name: item.title, id: item.ID, isClassic: item.classes.includes('classic') }]
       } else if (itemsAsObject[parent].index !== undefined) {
-        const copyOfItem = { name: item.title, id: item.ID, to: item.url }
+        const copyOfItem = { name: item.title, id: item.ID, to: item.urlc }
         array[itemsAsObject[parent].index].submenu = array[itemsAsObject[parent].index].submenu
           ? [...array[itemsAsObject[parent].index].submenu, copyOfItem]
           : [copyOfItem]
@@ -24,7 +24,6 @@ export const mutations = {
       }
       return array
     }, [])
-    console.log(links);
     state[menu.location] = { links, name: menu.name }
   }
 }

@@ -248,7 +248,6 @@ export default {
     },
     cssVars(){
       let colors = this.$store.getters['theme/colors'];
-      console.log(colors);
       return {
         '--button-background': colors['button_background'],
         '--color-primary': colors['primary_color'],
