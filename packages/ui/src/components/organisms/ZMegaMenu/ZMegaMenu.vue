@@ -196,7 +196,7 @@ export default {
   }
 
   &__toggler {
-    --icon-color: #7ba22e;
+    --icon-color: var(--menu-toggler-color, #7ba22e);
     --icon-size: 1.5rem;
 
     margin: 0 1.25rem;
