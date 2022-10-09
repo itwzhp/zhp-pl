@@ -275,7 +275,8 @@ export default {
         '--bubble-uncheck-background': colors['bubble_uncheck_background'],
         '--bubble-checked-background': colors['bubble_checked_background'],
         '--bubble-label-border': colors['bubble_uncheck_background'],
-        '--card-image-overlay-color':colors['card_overlay']
+        '--card-image-overlay-color':colors['card_overlay'],
+        '--menu-toggler-color': colors['menu_toggler_color']
       }
     },  
   },

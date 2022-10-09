@@ -184,6 +184,18 @@ function theme_customize_register($wp_customize)
 		'section'  => 'colors',
 	)));
 
+    menu_toggler_color
+
+    $wp_customize->add_setting('menu_toggler_color', array(
+        'capability'        => 'edit_theme_options',
+        'default'           => '#7ba22e',
+    ) );
+    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'menu_toggler_color',
+	array(
+		'label'    => 'Kolor hamburgera (rwd)',
+		'section'  => 'colors',
+	)));
+
 
 
     $wp_customize->add_setting('highlighted_text', array(

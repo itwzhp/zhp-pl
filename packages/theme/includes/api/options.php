@@ -51,7 +51,8 @@ function get_options(WP_REST_Request $request)
             'flatpicker_selected_color'=>get_theme_mod('flatpicker_selected_color'),
             'bubble_uncheck_background'=>get_theme_mod('bubble_uncheck_background'),
             'bubble_checked_background'=>get_theme_mod('bubble_checked_background'),
-            'card_overlay'=>get_theme_mod('card_overlay')
+            'card_overlay'=>get_theme_mod('card_overlay'),
+            'menu_toggler_color'=>get_theme_mod('menu_toggler_color')
         ]
     );
 }
