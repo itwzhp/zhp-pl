@@ -55,7 +55,7 @@ export default {
     width: var(--select-width, 100%);
     height: var(--select-height, 48px);
     padding: var(--select-padding, 0 16px);
-    border: var(--select-border, 1px solid #a6ce39);
+    border: 1px solid var(--select-border, #a6ce39);
     -webkit-appearance: none;
     background: var(--select-background, #fff);
     border-radius: var(--select-border-radius, 10px);
