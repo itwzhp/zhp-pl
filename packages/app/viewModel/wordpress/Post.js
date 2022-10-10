@@ -8,7 +8,7 @@ export default class Post {
 
     get hasFeaturedImage() {
         return (
-            this.rawData.featured_image &&
+            (this.rawData.featured_image || this.rawData.featured_media) &&
             'wp:featuredmedia' in this.rawData._embedded &&
             this.rawData._embedded['wp:featuredmedia'].length > 0
         );
