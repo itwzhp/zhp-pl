@@ -1,7 +1,13 @@
 <?php
+
 add_action('customize_register', 'theme_customize_register');
 function theme_customize_register($wp_customize)
 {
+    $config = require_once __DIR__.'/../config/colors.php';
+    $palette = new Palette();
+    $palette->load($config);
+
+
     $wp_customize->add_panel('theme', array(
         'title'=> 'Ustawienia motywu',
         'priority' => 160,
@@ -10,203 +16,22 @@ function theme_customize_register($wp_customize)
         'title'=>'Paleta kolorów',
         'panel'=>'theme'
     ));
-    $wp_customize->add_setting('primary_color', array(
-        'capability'        => 'edit_theme_options',
-        'default'           => '#78a22f',
-    ) );
-    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'primary_color',
-	array(
-		'label'    => 'Kolor główny',
-		'section'  => 'colors',
-	)));
 
-    $wp_customize->add_setting('primary_darken', array(
-        'capability'        => 'edit_theme_options',
-        'default'           => '#78a22f',
-    ) );
-    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'primary_darken',
-	array(
-		'label'    => 'Kolor główny - ciemny',
-		'section'  => 'colors',
-	)));
-    $wp_customize->add_setting('primary_lighten', array(
-        'capability'        => 'edit_theme_options',
-        'default'           => '#a6ce39',
-    ) );
-    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'primary_lighten',
-	array(
-		'label'    => 'Kolor główny - jasny',
-		'section'  => 'colors',
-	)));
-    
-    $wp_customize->add_setting('button_background', array(
-        'capability'        => 'edit_theme_options',
-        'default'           => '#a6ce39',
-    ) );
-    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'button_background',
-	array(
-		'label'    => 'Kolor tła przycisków',
-		'section'  => 'colors',
-	)));
+    foreach ($palette->iterator() as $color) {
+        $wp_customize->add_setting($color->getName(), array(
+            'capability'        => 'edit_theme_options',
+            'default'           => $color->getDefaultValue(),
+        ));
+        $wp_customize->add_control(new WP_Customize_Color_Control(
+            $wp_customize,
+            $color->getName(),
+            array(
+                'label'    => $color->getLabel(),
+                'section'  => 'colors',
+            )
+        ));
+    }
 
-    $wp_customize->add_setting('button_text', array(
-        'capability'        => 'edit_theme_options',
-        'default'           => '#fff',
-    ) );
-    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'button_text',
-	array(
-		'label'    => 'Kolor tekstu przycisków',
-		'section'  => 'colors',
-	)));
-
-    $wp_customize->add_setting('input_background', array(
-        'capability'        => 'edit_theme_options',
-        'default'           => '#a6ce39',
-    ) );
-    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'input_background',
-	array(
-		'label'    => 'Kolor tła pól',
-		'section'  => 'colors',
-	)));
-
-    $wp_customize->add_setting('input_text', array(
-        'capability'        => 'edit_theme_options',
-        'default'           => '#fff',
-    ) );
-    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'input_text',
-	array(
-		'label'    => 'Kolor tekstu pól',
-		'section'  => 'colors',
-	)));
-
-    $wp_customize->add_setting('form_field_label_color', array(
-        'capability'        => 'edit_theme_options',
-        'default'           => '#84a311',
-    ) );
-    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'form_field_label_color',
-	array(
-		'label'    => 'Kolor etykiety pola formularza',
-		'section'  => 'colors',
-        'description'=>'Na przykład filtry wydarzeń.'
-	)));
-    $wp_customize->add_setting('select_border', array(
-        'capability'        => 'edit_theme_options',
-        'default'           => '#a6ce39',
-    ) );
-    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'select_border',
-	array(
-		'label'    => 'Ramka pola "Select"',
-		'section'  => 'colors',
-        'description'=>'Na przykład filtry wydarzeń.'
-	)));
-
-    $wp_customize->add_setting('flatpicker_text_color', array(
-        'capability'        => 'edit_theme_options',
-        'default'           => '#7ba22e',
-    ) );
-    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'flatpicker_text_color',
-	array(
-		'label'    => 'Kolor etykiety miesięca w kalendarzu.',
-		'section'  => 'colors',
-    
-	)));
-    $wp_customize->add_setting('flatpicker_selected_color', array(
-        'capability'        => 'edit_theme_options',
-        'default'           => '#a6ce39',
-    ) );
-    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'flatpicker_selected_color',
-	array(
-		'label'    => 'Kolor wybranego dnia w kalendarzu.',
-		'section'  => 'colors',
-    
-	)));
-
-    $wp_customize->add_setting('bubble_uncheck_background', array(
-        'capability'        => 'edit_theme_options',
-        'default'           => '#a6ce39',
-    ) );
-    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'bubble_uncheck_background',
-	array(
-		'label'    => 'Kolor tła "tabsa" niezaznaczonego.',
-		'section'  => 'colors',
-    
-	)));
-
-    $wp_customize->add_setting('bubble_checked_background', array(
-        'capability'        => 'edit_theme_options',
-        'default'           => '#78a22f',
-    ) );
-    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'bubble_checked_background',
-	array(
-		'label'    => 'Kolor tła "tabsa" zaznaczonego.',
-		'section'  => 'colors',
-    
-	)));
-
-
-
-    $wp_customize->add_setting('question_marks', array(
-        'capability'        => 'edit_theme_options',
-        'default'           => '#4a7b26',
-    ) );
-    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'question_marks',
-	array(
-		'label'    => '"Czy wiesz, że..." - kolor znaków zapytania',
-		'section'  => 'colors',
-	)));
-
-    $wp_customize->add_setting('banner_background', array(
-        'capability'        => 'edit_theme_options',
-        'default'           => '#78a22f',
-    ) );
-    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'banner_background',
-	array(
-		'label'    => 'Baner - kolor tła',
-		'section'  => 'colors',
-	)));
-
-    $wp_customize->add_setting('banner_overlay', array(
-        'capability'        => 'edit_theme_options',
-        'default'           => '#78a22f',
-    ) );
-    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'banner_overlay',
-	array(
-		'label'    => 'Baner - "odcień" obrazka',
-		'section'  => 'colors',
-	)));
-    $wp_customize->add_setting('card_overlay', array(
-        'capability'        => 'edit_theme_options',
-        'default'           => '#78a22f',
-    ) );
-    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'card_overlay',
-	array(
-		'label'    => 'Card - "odcień" obrazka',
-		'section'  => 'colors',
-	)));
-
-    $wp_customize->add_setting('menu_toggler_color', array(
-        'capability'        => 'edit_theme_options',
-        'default'           => '#7ba22e',
-    ) );
-    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'menu_toggler_color',
-	array(
-		'label'    => 'Kolor hamburgera (rwd)',
-		'section'  => 'colors',
-	)));
-
-
-
-    $wp_customize->add_setting('highlighted_text', array(
-        'capability'        => 'edit_theme_options',
-        'default'           => '#7ba22e',
-    ) );
-    $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'highlighted_text',
-	array(
-		'label'    => '"Podświetlone" linki',
-		'section'  => 'colors',
-        'description'=>'Na przykład, link "zobacz więcej".'
-	)));
-   
     $wp_customize->add_section('main', array(
         'title'=>'Główne',
         'panel'=>'theme'

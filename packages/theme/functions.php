@@ -1,5 +1,7 @@
 <?php
-
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
 // https://github.com/YahnisElsts/plugin-update-checker
 require 'plugin-update-checker-4.11/plugin-update-checker.php';
 $updateChecker = Puc_v4_Factory::buildUpdateChecker(
@@ -2258,7 +2260,7 @@ function register_rest_acf(){
 function get_rest_acf($object, $field_name, $request)
 {
     if (array_key_exists('taxonomy', $object) && $taxonomy = $object['taxonomy']) {
-        $acf = get_fields($taxonomy.'_'.$object[id]);
+        $acf = get_fields($taxonomy.'_'.$object['id']);
     } else {
         $acf = get_fields($object['id']);
     }
@@ -2419,10 +2421,8 @@ function custom_parent_dropdown_limit($args, $request)
     return $args;
 }
 add_filter('rest_page_query', 'custom_parent_dropdown_limit', 20, 2);
-// theme options
-require_once('includes/settings.php');
-// register endpoint to REST for theme options
-require_once 'includes/api.php';
+
+require_once 'includes/autoload.php';
 // register endpoint to REST for events
 
 // new post status
