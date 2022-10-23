@@ -59,7 +59,7 @@ export default {
       sortRoutes(routes)
     }
   },
-  ssr: false,
+  ssr: process.env.SSR,
   generate: {
     exclude: [/^\/.+/],
     subFolders: false,
