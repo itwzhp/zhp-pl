@@ -2366,7 +2366,7 @@ function register_rest_gutenberg()
 };
 function get_rest_gutenberg($object, $field_name, $request, $object_type)
 {
-    if($object['content']) {
+    if(array_key_exists('content',$object) && $object['content']) {
         return parse_blocks(get_the_content(null, false, $object['id']));
     }
     return false;
@@ -2386,7 +2386,7 @@ function register_rest_reading_time()
 };
 function get_rest_reading_time($object, $field_name, $request, $object_type)
 {
-    if($object['content']) {
+    if(array_key_exists('content',$object) && $object['content']) {
         $word_count = str_word_count(strip_tags($object['content']['rendered']));
         return ceil($word_count / 200);
     }
@@ -2407,7 +2407,7 @@ function register_rest_redirect()
 };
 function get_rest_redirect($object, $field_name, $request, $object_type)
 {
-    if($object['content']) {
+    if(array_key_exists('content',$object) && $object['content']) {
         return get_post_meta($object['id'], '_pprredirect_url', true);
     }
     return false;
