@@ -343,7 +343,6 @@
 
 <script>
 import debounce from 'lodash.debounce'
-import urlParser from '@/helpers/urlParser'
 import {
   ZBanner,
   ZCarousel,
@@ -364,6 +363,7 @@ import ZFacebook from '@/components/organisms/ZFacebook.vue'
 import Partner from '@/viewModel/Partner'
 import Banner from '@/viewModel/Banner'
 import { mapGetters } from 'vuex'
+import UrlParser from '../helpers/UrlParser'
 const resize = debounce(() => {
   if (!window.FB) { return }
   window.FB.XFBML.parse()
@@ -591,13 +591,16 @@ export default {
     window.removeEventListener('resize', resize)
   },
   methods: {
+    urlParser(url){
+      const parser = new UrlParser(this.$store)
+      return parser.parse(url)
+    },
     search (query) {
       this.$router.push({
         path: '/szukaj',
         query: { search: query }
       })
-    },
-    urlParser
+    }
   },
   head () {
     const title = this.title

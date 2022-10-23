@@ -120,6 +120,7 @@ import {
   ZList,
   ZButton
 } from '@zhp-pl/ui'
+import UrlParser from '../helpers/UrlParser'
 
 export default {
   components: {
@@ -150,9 +151,12 @@ export default {
         'footer-menu': 'footerMenu',
         'header-units': 'headerUnits'
       }
-      const origin = window.location.origin
       menus.forEach((menu) => {
-        store.commit('menus/update', { location: locations[menu.location], items: menu.items.map(item => ({ ...item, url: item.url.replace(origin, '') })), name: menu.name })
+        store.commit('menus/update', { 
+          location: locations[menu.location], 
+          items: menu.items, // todo: konwersja URL z absolutnych do relatywnych
+          name: menu.name 
+        })
       })
     }
     if (!Object.keys(store.getters['random/text']).length) {
@@ -203,7 +207,7 @@ export default {
       hasHeaderLogos: 'theme/hasHeaderLogos'
     }),
     headerMenu () {
-      return this.$store.getters['menus/menu']('headerMenu')
+      return this.filterMenu(this.$store.getters['menus/menu']('headerMenu'))
     },
     megaMenu () {
       const headerMenu = [...this.headerMenu]
@@ -222,7 +226,7 @@ export default {
       return headerMenu
     },
     footerMenu () {
-      return this.$store.getters['menus/menu']('footerMenu')
+      return this.filterMenu(this.$store.getters['menus/menu']('footerMenu'))
     },
     headerUnits () {
       return this.$store.getters['menus/menu']('headerUnits')
@@ -242,6 +246,10 @@ export default {
     setTimeout(this.closeCookies, 60000)
   },
   methods: {
+    filterMenu(menuLinks){
+        const parser = new UrlParser(this.$store);
+        return menuLinks.map((item)=> 'to' in item? {...item, to: parser.parse(item.to)}: item);
+    },
     closeCookies () {
       this.cookies = false
       localStorage.setItem('cookies', JSON.stringify(true))

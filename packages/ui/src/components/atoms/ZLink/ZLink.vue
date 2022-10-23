@@ -31,8 +31,9 @@ export default {
       /** @var string[] internalDomains */
       let internalDomains = this.$store.getters['theme/domains']
                                           .map((domain)=>'https?:\/\/'+domain.replace('.','\.')).join('|');
+      const regex = new RegExp(internalDomains);
       return typeof this.to === 'string' && !/wp-content/gm.test(this.to)
-        ? this.to.replace('/'+internalDomains+'/gm', '')
+        ? this.to.replace(regex, '')
         : this.to;
     },
     tagComputed() {
