@@ -54,7 +54,7 @@ return [
      /**
      * Card
      */
-    ['name'=>'card_overlay', 'label'=>'Card - "odcień" obrazka','default'=> '#78a22f'],
+    ['name'=>'card_overlay', 'label'=>'Card - maska obrazka','default'=> '#78a22f'],
 
     /**
      * Menu

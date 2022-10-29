@@ -45,7 +45,7 @@ function theme_customize_register($wp_customize)
         'priority'=>10,
         'section'=>'main',
         'label'=>'Żałoba',
-        'description'=>'Cała strona WWW zostaje wyświetlona w odcieniach szarości.'
+        'description'=>'Wyświetlaj całą stronę w odcieniach szarości.'
     ));
     $wp_customize->add_setting('add_event', array(
         'type' => 'theme_mod',
@@ -56,7 +56,7 @@ function theme_customize_register($wp_customize)
         'priority'=>10,
         'section'=>'event',
         'label'=>'Dodawanie wydarzeń',
-        'description'=>'Niezalogowani użytkownicy mogą dodaważ wydarzenia'
+        'description'=>'Pozwól niezalogowanym użytkownikom dodawać wydarzenia'
     ));
     $wp_customize->add_setting('logo', array(
         'type' => 'theme_mod',
@@ -104,7 +104,7 @@ function theme_customize_register($wp_customize)
         'priority'=>10,
         'section'=>'main',
         'label'=>'Logo',
-        'description'=>'Logo zostanie wyświetlone w nagłówku strony.',
+        'description'=>'Logo zostanie wyświetlone hero banerze strony.',
         'mime_type' => 'image'
     )));
     $wp_customize->add_setting('placeholder', array(
@@ -115,7 +115,7 @@ function theme_customize_register($wp_customize)
         'priority'=>10,
         'section'=>'main',
         'label'=>'Placeholder',
-        'description'=>'Placeholder zostanie wyświetlone w momencie gdy nie ustawisz zdjęcia wyróżnionego wpisu.',
+        'description'=>'Placeholder zostanie wyświetlony, gdy nie ustawisz zdjęcia wyróżnionego wpisu.',
         'mime_type' => 'image'
     )));
     $wp_customize->add_section('event', array(
@@ -131,7 +131,7 @@ function theme_customize_register($wp_customize)
         'priority'=>10,
         'section'=>'event',
         'label'=>'Dozwolone domeny',
-        'description'=>'Wprowadź po przecinku domeny dla maili z których można zgłaszać wydarzenia.'
+        'description'=>'Wprowadź domeny adresów e-mail, z których można zgłaszać wydarzenia (rozdzielone przecinkiem).'
     ));
     $wp_customize->add_setting('subject', array(
         'type' => 'theme_mod',
