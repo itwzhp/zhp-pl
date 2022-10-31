@@ -166,7 +166,7 @@ export default {
     const relatedPostsRes = await $axios.get('posts', { params: { per_page: 8, categories: post.categories.shift() } })
     const relatedPosts = relatedPostsRes.data
     // files
-    const files = post.rest_acf.plikilinki
+    const files = Array.isArray(post.rest_acf.plikilinki)
       ? post.rest_acf.plikilinki.map(file => ({
         ...file,
         type: file.file ? 'Dokument' : 'Link',

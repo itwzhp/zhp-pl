@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'ZLink',
   props: {
@@ -24,9 +25,15 @@ export default {
     },
   },
   computed: {
+    ...mapGetters(),
     hack() {
+      // Jak hackować to po całości, a co :) (Zależność od vuex tutaj to trochę rak.)
+      /** @var string[] internalDomains */
+      let internalDomains = this.$store.getters['theme/domains']
+                                          .map((domain)=>'https?:\/\/'+domain.replace('.','\.')).join('|');
+      const regex = new RegExp(internalDomains);
       return typeof this.to === 'string' && !/wp-content/gm.test(this.to)
-        ? this.to.replace(/https?:\/\/prod\.przemyslawspaczek\.pl|https?:\/\/zhp\.pl|https?:\/\/work\.zhp\.pl/gm, '')
+        ? this.to.replace(regex, '')
         : this.to;
     },
     tagComputed() {

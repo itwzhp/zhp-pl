@@ -1,6 +1,7 @@
 <script>
 import Vue from 'vue'
-import urlParser from '@/helpers/urlParser'
+import { mapGetters } from 'vuex'
+import UrlParser from '@/helpers/UrlParser'
 import { ZDivider, ZButton, ZLink, ZAccordion, ZSection, ZCard } from '@zhp-pl/ui'
 import '@fortawesome/fontawesome-free/js/brands.min'
 import '@fortawesome/fontawesome-free/js/solid.min'
@@ -11,6 +12,7 @@ Vue.component('ZLink', ZLink)
 Vue.component('ZAccordion', ZAccordion)
 Vue.component('ZSection', ZSection)
 Vue.component('ZCard', ZCard)
+
 export default {
   name: 'ZWordPress',
   props: {
@@ -20,14 +22,16 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(),
     htmlToRender () {
       const html = this.html
+      const parser = new UrlParser(this.$store);
       const withLinks = html.replace(/<a.*?href="(.*?)".*?>(.*?)<\/a>/gm, (match, href, name) => {
         const isDownloadButton = match.search('wp-block-file__button') > -1
         if (isDownloadButton) {
-          return `<z-button to="${urlParser(href)}">${name}</z-button>`
+          return `<z-button to="${parser.parse(href)}">${name}</z-button>`
         }
-        return `<z-link to="${urlParser(href)}">${name}</z-link>`
+        return `<z-link to="${parser.parse(href)}">${name}</z-link>`
       })
       const withFigcaption = withLinks.replace(/<figcaption.*?>(.*?)<\/figcaption>/gm, (match, label) => {
         return `<z-text class="caption">fot. ${label}</z-text>`
@@ -213,7 +217,7 @@ export default {
   }
 
   .wp-block-file {
-    display: flex;
+    display: block;
     align-content: center;
     justify-content: space-between;
   }

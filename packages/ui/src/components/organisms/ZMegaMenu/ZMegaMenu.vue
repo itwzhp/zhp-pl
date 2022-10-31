@@ -1,59 +1,47 @@
 <template>
-  <component
-    :is="tag"
-    class="z-mega-menu"
-    :class="{'is-open': isOpen}"
-  >
-    <ZButton
-      class="z-button--text z-mega-menu__toggler"
-      aria-label="menu"
-      @click="toggle"
-    >
+  <component :is="tag" class="z-mega-menu" :class="{'is-open': isOpen}">
+    <ZButton class="z-button--text z-mega-menu__toggler" aria-label="menu" @click="toggle">
       <ZIcon :name="icon" />
     </ZButton>
-    <nav
-      ref="menu"
-      class="z-mega-menu__holder"
-    >
+    <nav ref="menu" class="z-mega-menu__holder">
       <ZList class="z-mega-menu__menu">
         <template v-for="item in menu">
           <template v-if="item.submenu">
-            <ZListItem
-              :key="item.id"
-              class="z-mega-menu__item"
-              tabindex="0"
-              @mouseover="submenuHandlerOpen(item.id)"
-              @focus="submenuHandlerOpen(item.id)"
-              @mouseleave="submenuHandlerClose"
-            >
-              <ZLink
-                class="z-mega-menu__link body-1"
-                tag="span"
-                @click="submenuHandlerMobile(item.id)"
-              >
-                {{ item.name }}
-              </ZLink>
-              <ZMegaMenuDropdown
-                v-if="item.id === submenu"
-                :menu="item.submenu"
-                class="z-mega-menu__submenu"
-                :class="{'is-open': submenu === item.id}"
-                @close="close"
-              />
-            </ZListItem>
+            <template v-if="!item.isClassic">
+              <ZListItem :key="item.id" class="z-mega-menu__item" tabindex="0" @mouseover="submenuHandlerOpen(item.id)"
+                @focus="submenuHandlerOpen(item.id)" @mouseleave="submenuHandlerClose">
+                <ZLink class="z-mega-menu__link body-1" tag="span" @click="submenuHandlerMobile(item.id)">
+                  {{ item.name }}
+                </ZLink>
+                <ZMegaMenuDropdown v-if="item.id === submenu" :menu="item.submenu" class="z-mega-menu__submenu"
+                  :class="{'is-open': submenu === item.id}" @close="close" />
+              </ZListItem>
+            </template>
+            <template v-if="item.isClassic">
+              <ZDropdown class="z-classic-menu z-dropdown--has-chevron">
+                <template #toggle="{toggle}">
+                  <ZButton class="z-button--text" @click="toggle">
+                    {{ item.name }}
+                  </ZButton>
+                </template>
+                <template>
+                  <ZList>
+                    <template v-for="subitem in item.submenu">
+                      <ZListItem :key="subitem.id">
+                        <ZLink :to="subitem.to" class="z-classic-menu__link">
+                          {{ subitem.name }}
+                        </ZLink>
+                      </ZListItem>
+                    </template>
+                  </ZList>
+                </template>
+              </ZDropdown>
+            </template>
           </template>
           <template v-else>
-            <ZListItem
-              :key="item.id"
-              class="z-mega-menu__item"
-            >
-              <ZLink
-                class="z-mega-menu__link body-1"
-                :to="item.to"
-                :tag="item.submenu && 'span'"
-                @click.native="close"
-                @focus.native="submenuHandlerClose"
-              >
+            <ZListItem :key="item.id" class="z-mega-menu__item">
+              <ZLink class="z-mega-menu__link body-1" :to="item.to" :tag="item.submenu && 'span'" @click.native="close"
+                @focus.native="submenuHandlerClose">
                 {{ item.name }}
               </ZLink>
             </ZListItem>
@@ -72,6 +60,7 @@ import ZLink from '../../atoms/ZLink/ZLink.vue';
 import ZButton from '../../atoms/ZButton/ZButton.vue';
 import ZIcon from '../../atoms/ZIcon/ZIcon.vue';
 import ZList from '../ZList/ZList.vue';
+import ZDropdown from '../../molecules/ZDropdown/ZDropdown.vue';
 import ZMegaMenuDropdown from './_internal/ZMegaMenuDropdown.vue';
 
 Vue.component('ZMegaMenuDropdown', ZMegaMenuDropdown);
@@ -83,6 +72,7 @@ export default {
     ZList,
     ZButton,
     ZIcon,
+    ZDropdown
   },
   props: {
     tag: {
@@ -168,7 +158,7 @@ export default {
   }
 
   &__toggler {
-    --icon-color: #7ba22e;
+    --icon-color: var(--menu-toggler-color, #7ba22e);
     --icon-size: 1.5rem;
 
     margin: 0 1.25rem;

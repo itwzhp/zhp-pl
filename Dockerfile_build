@@ -11,9 +11,9 @@ WORKDIR /usr/src/app
 
 
 RUN apk --no-cache add zip
-RUN npm install --quiet
-RUN npm run create-index
-RUN npm run nuxt:build
+RUN npm install --quiet \
+    && npm run create-index \
+    && npm run nuxt:build
 
 RUN for i in /usr/src/app/packages/theme/blocks/* ; \
     do \

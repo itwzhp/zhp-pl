@@ -121,7 +121,7 @@ export default {
   }
 
   &__title {
-    color: #78a22f;
+    color: var(--z-card--title--text-color, #78a22f);
     text-transform: var(--text-transform);
 
     &::after {
@@ -176,7 +176,7 @@ export default {
         right: 0;
         bottom: 0;
         left: 0;
-        background: #78a22f;
+        background: var(--card-image-overlay-color, #78a22f);
         content: "";
         opacity: 0.4;
       }

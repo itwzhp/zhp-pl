@@ -7,15 +7,15 @@ export const mutations = {
       const { menu_item_parent: parent } = item
       if (parent === '0') {
         itemsAsObject[item.ID].index = array.length
-        return [...array, { to: item.url, name: item.title, id: item.ID }]
-      } else if (itemsAsObject[parent].index) {
-        const copyOfItem = { name: item.title, id: item.ID }
+        return [...array, { to: item.url, name: item.title, id: item.ID, isClassic: item.classes.includes('classic') }]
+      } else if (itemsAsObject[parent].index !== undefined) {
+        const copyOfItem = { name: item.title, id: item.ID, to: item.url }
         array[itemsAsObject[parent].index].submenu = array[itemsAsObject[parent].index].submenu
           ? [...array[itemsAsObject[parent].index].submenu, copyOfItem]
           : [copyOfItem]
         itemsAsObject[item.ID].root_index = itemsAsObject[parent].index
         itemsAsObject[item.ID].submenu_index = array[itemsAsObject[parent].index].submenu.length - 1
-      } else if (itemsAsObject[parent].root_index) {
+      } else if (itemsAsObject[parent].root_index !== undefined) {
         const { root_index: rootIndex, submenu_index: submenuIndex } = itemsAsObject[parent]
         const copyOfItem = { to: item.url, name: item.title, id: item.ID }
         array[rootIndex].submenu[submenuIndex].mega_menu = array[rootIndex].submenu[submenuIndex].mega_menu

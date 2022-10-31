@@ -10,7 +10,9 @@ export default {
     ],
     link: [
       { rel: 'stylesheet', href: 'https://use.typekit.net/lqw5sjc.css' },
-      { rel: 'icon', type: 'image/png', href: '/wp-content/themes/zhp-pl/favicon.png' }
+      { hid: 'icon-512x512', rel: 'icon', type: 'image/png',sizes: '512x512', href: '/wp-content/themes/zhp-pl/favicon.png' },
+      { hid: 'icon-128x128', rel: 'icon', type: 'image/png',sizes: '128x128', href: '/wp-content/themes/zhp-pl/favicon.png' },
+      { hid: 'icon-32x32', rel: 'icon', type: 'image/png',sizes: '32x32', href: '/wp-content/themes/zhp-pl/favicon.png' }
     ]
   },
   css: [
@@ -57,7 +59,7 @@ export default {
       sortRoutes(routes)
     }
   },
-  ssr: false,
+  ssr: process.env.SSR,
   generate: {
     exclude: [/^\/.+/],
     subFolders: false,

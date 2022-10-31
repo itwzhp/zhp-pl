@@ -58,7 +58,7 @@ export default {
 
   &__question-marks {
     --icon-size: 100px;
-    --icon-color: #4a7b26;
+    --icon-color: var(--z-did-you-know--question-marks--color, #4a7b26);
 
     position: absolute;
     top: -2rem;

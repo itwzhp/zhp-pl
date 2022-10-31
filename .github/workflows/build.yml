@@ -2,7 +2,7 @@ name: Build theme for WP sites
 
 on: 
   push:
-    branches: [theme, development]
+    branches: [theme]
   # pull_request:
   #   branches: [theme]
   workflow_dispatch:

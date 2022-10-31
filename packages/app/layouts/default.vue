@@ -2,12 +2,15 @@
   <div
     class="layout"
     :class="{'layout--mourning': hasMourning}"
+    :style="cssVars()"
   >
+ 
     <header class="z-header">
       <div class="z-header__bar">
         <div class="z-header__actions" />
         <div class="z-header__logo">
           <ZLink
+            v-if="!hasHeaderLogos"
             to="/"
             aria-label="powrót do strony głównej"
           >
@@ -16,9 +19,22 @@
               style="--image-width: 8.75rem;"
             />
           </ZLink>
+
+          <ZLink
+            v-for="(logo,key) in headerLogos"
+            v-if="hasHeaderLogos && logo " 
+            :key="key"
+            to="/"
+            aria-label="powrót do strony głównej"
+          >
+            <ZImage 
+              :src="logo"
+              style="--image-width: 8.75rem"
+              />
+          </ZLink>
         </div>
         <div class="z-header__actions z-header__actions--right">
-          <ZDropdown class="z-districts z-dropdown--has-chevron">
+          <ZDropdown class="z-districts z-dropdown--right z-dropdown--has-chevron">
             <template #toggle="{toggle}">
               <ZButton
                 class="z-button--text"
@@ -46,7 +62,9 @@
       </div>
       <ZMegaMenu :menu="megaMenu" />
     </header>
+    
     <Nuxt class="layout__page" />
+
     <footer class="z-footer">
       <ZSection class="z-footer__content">
         <ZDidYouKnow
@@ -102,6 +120,7 @@ import {
   ZList,
   ZButton
 } from '@zhp-pl/ui'
+import UrlParser from '../helpers/UrlParser'
 
 export default {
   components: {
@@ -123,6 +142,7 @@ export default {
       const options = optionsRes.data
       store.dispatch('theme/update', options)
     }
+
     if (!Object.keys(store.state.menus).length) {
       const menusRes = await $axios.get('menus')
       const menus = menusRes.data
@@ -131,9 +151,12 @@ export default {
         'footer-menu': 'footerMenu',
         'header-units': 'headerUnits'
       }
-      const origin = window.location.origin
       menus.forEach((menu) => {
-        store.commit('menus/update', { location: locations[menu.location], items: menu.items.map(item => ({ ...item, url: item.url.replace(origin, '') })), name: menu.name })
+        store.commit('menus/update', { 
+          location: locations[menu.location], 
+          items: menu.items, // todo: konwersja URL z absolutnych do relatywnych
+          name: menu.name 
+        })
       })
     }
     if (!Object.keys(store.getters['random/text']).length) {
@@ -178,10 +201,13 @@ export default {
     ...mapGetters({
       randomText: 'random/text',
       hasMourning: 'theme/hasMourning',
-      title: 'theme/title'
+      title: 'theme/title',
+      favicon: 'theme/favicon',
+      headerLogos: 'theme/headerLogos',
+      hasHeaderLogos: 'theme/hasHeaderLogos'
     }),
     headerMenu () {
-      return this.$store.getters['menus/menu']('headerMenu')
+      return this.filterMenu(this.$store.getters['menus/menu']('headerMenu'))
     },
     megaMenu () {
       const headerMenu = [...this.headerMenu]
@@ -200,7 +226,7 @@ export default {
       return headerMenu
     },
     footerMenu () {
-      return this.$store.getters['menus/menu']('footerMenu')
+      return this.filterMenu(this.$store.getters['menus/menu']('footerMenu'))
     },
     headerUnits () {
       return this.$store.getters['menus/menu']('headerUnits')
@@ -220,11 +246,59 @@ export default {
     setTimeout(this.closeCookies, 60000)
   },
   methods: {
+    filterMenu(menuLinks){
+        const parser = new UrlParser(this.$store);
+        return menuLinks.map((item)=> 'to' in item? {...item, to: parser.parse(item.to)}: item);
+    },
     closeCookies () {
       this.cookies = false
       localStorage.setItem('cookies', JSON.stringify(true))
+    },
+    cssVars(){
+      let colors = this.$store.getters['theme/colors'];
+      return {
+        '--button-background': colors['button_background'],
+        '--color-primary': colors['primary_color'],
+        '--color-primary-darken': colors['primary_darken'],
+        '--button-color': colors['button_text'],
+        '--button-text-color':  colors['primary_darken'],
+        '--color-primary-lighten': colors['primary_lighten'],
+        '--theme-input-background': colors['input_background'],
+        '--input-background': colors['input_background'],
+        '--input-border-color':  colors['input_background'],
+        '--theme-input-color':  colors['input_text'],
+        '--input-color': colors['input_text'],
+        '--icon-color': colors['input_text'],
+        '--z-meta-text-color': colors['primary_lighten'],
+        '--z-filter-posts--categories-toggle--background': colors['primary_darken'],
+        '--z-card--title--text-color': colors['primary_darken'],
+        '--banner-background': colors['banner_background'],
+        '--z-banner--image-overlay-color': colors['banner_overlay'],
+        '--z-did-you-know--question-marks--color': colors['question_marks'],
+        '--highlighted-text-color':colors['highlighted_text'],
+        '--form-field-label-color':colors['form_field_label_color'],
+        '--select-border': colors['select_border'],
+        '--flatpicker-text-color': colors['flatpicker_text_color'],
+        '--flatpicker-selected-color': colors['flatpicker_selected_color'],
+        '--bubble-uncheck-background': colors['bubble_uncheck_background'],
+        '--bubble-checked-background': colors['bubble_checked_background'],
+        '--bubble-label-border': colors['bubble_uncheck_background'],
+        '--card-image-overlay-color':colors['card_overlay'],
+        '--menu-toggler-color': colors['menu_toggler_color']
+      }
+    },  
+  },
+  head(){
+      return {
+        link: Object.entries(this.favicon).map((options, index)=>{return {
+          hid: 'icon-'+options[0]+'x'+options[0],
+          rel: 'icon',
+          type: 'image/png',
+          sizes: options[0]+'x'+options[0],
+          href: options[1]
+        }})
+      }
     }
-  }
 }
 </script>
 
@@ -295,9 +369,12 @@ export default {
   &__logo {
     --image-width: 8.75rem;
 
-    display: grid;
+    display: flex;
     justify-content: center;
     padding: 0 1.25rem;
+    .z-image{
+      padding: 0px 5px;
+    }
   }
 
   &__nav {
@@ -402,14 +479,30 @@ export default {
   }
 }
 
+.z-classic-menu{
+  --button-font-size: 1rem;
+  --button-height: 1.2rem;
+  --button-color:#000;
+  --dropdown-content-transform: translateY(2rem);
+  display: flex;
+  
+  button{
+    align-self: center;
+  }
+}
 .z-districts,
+.z-groups{
+  --dropdown-content-transform: translateY(0);
+}
+.z-districts,
+.z-classic-menu,
 .z-groups {
   --button-color: var(--color-primary-darken);
   --list-item: 0;
   --link-hover-text-decoration: none;
   --dropdown-content-width: 160px;
   --dropdown-content-padding: 16px 0;
-  --dropdown-content-transform: translateY(0);
+  
 
   z-index: 1000;
 

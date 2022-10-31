@@ -113,7 +113,7 @@ export default {
   &__date {}
 
   &__reading {
-    color: #a6ce39;
+    color: var(--z-meta-text-color, #a6ce39); 
     text-align: right;
   }
 }
