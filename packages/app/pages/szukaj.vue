@@ -95,7 +95,7 @@ export default {
     // console.log(posts);
 
     const totalPages = postsRes.headers['x-wp-totalpages']
-    const total = postsRes.headers['X-WP-Total']
+    const total = postsRes.headers['x-wp-total']
 
     return { posts, page: query.page || '1', totalPages, total, search, query }
   },

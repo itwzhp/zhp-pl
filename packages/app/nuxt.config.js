@@ -10,9 +10,9 @@ export default {
     ],
     link: [
       { rel: 'stylesheet', href: 'https://use.typekit.net/lqw5sjc.css' },
-      { hid: 'icon-512x512', rel: 'icon', type: 'image/png',sizes: '512x512', href: '/wp-content/themes/zhp-pl/favicon.png' },
-      { hid: 'icon-128x128', rel: 'icon', type: 'image/png',sizes: '128x128', href: '/wp-content/themes/zhp-pl/favicon.png' },
-      { hid: 'icon-32x32', rel: 'icon', type: 'image/png',sizes: '32x32', href: '/wp-content/themes/zhp-pl/favicon.png' }
+      { hid: 'icon-512x512', rel: 'icon', type: 'image/png', sizes: '512x512', href: '/wp-content/themes/zhp-pl/favicon.png' },
+      { hid: 'icon-128x128', rel: 'icon', type: 'image/png', sizes: '128x128', href: '/wp-content/themes/zhp-pl/favicon.png' },
+      { hid: 'icon-32x32', rel: 'icon', type: 'image/png', sizes: '32x32', href: '/wp-content/themes/zhp-pl/favicon.png' }
     ]
   },
   css: [
@@ -20,24 +20,32 @@ export default {
   ],
   plugins: [],
   buildModules: [],
-  modules: ['@nuxtjs/axios'],
+  modules: ['@nuxtjs/axios', '@nuxtjs/pwa'],
   axios: { baseURL: process.env.REST_API },
+  pwa: {
+    meta: {
+      name: "Związek Harcerstwa Polskiego",
+      theme: '#78a22f'
+    },
+    manifest: {
+      name: 'Związek Harcerstwa Polskiego',
+      tag: 'pl',
+      useWebmanifestExtension: false
+    }
+  },
   build: {
-    extend (config, { isClient }) {
+    extend(config, { isClient }) {
       config.resolve.alias = {
         ...config.resolve.alias,
         vue$: 'vue/dist/vue.esm.js'
       }
     },
-    transpile: [/^@zhp-pl/],
+    transpile: [/^@zhp-pl/, '@glidejs'],
     publicPath: '/wp-content/themes/zhp-pl/_nuxt'
   },
   publicRuntimeConfig: {},
   router: {
-    scrollBehavior () {
-      return { x: 0, y: 0 }
-    },
-    extendRoutes (routes, resolve) {
+    extendRoutes(routes, resolve) {
       routes.push({
         name: 'custom',
         path: '*',
@@ -59,7 +67,7 @@ export default {
       sortRoutes(routes)
     }
   },
-  ssr: process.env.SSR,
+  ssr: process.env.SSR == 'true',
   generate: {
     exclude: [/^\/.+/],
     subFolders: false,

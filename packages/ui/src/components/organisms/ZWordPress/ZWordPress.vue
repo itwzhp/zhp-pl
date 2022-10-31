@@ -5,6 +5,7 @@ import ZButton from '../../atoms/ZButton/ZButton.vue';
 import ZLink from '../../atoms/ZLink/ZLink.vue';
 import ZAccordion from '../ZAccordion/ZAccordion.vue';
 import ZSection from '../ZSection/ZSection.vue';
+import ZCard from '../../molecules/ZCard/ZCard.vue';
 import '@fortawesome/fontawesome-free/js/brands.min';
 import '@fortawesome/fontawesome-free/js/solid.min';
 import '@fortawesome/fontawesome-free/js/fontawesome.min';
@@ -14,19 +15,26 @@ Vue.component('ZButton', ZButton);
 Vue.component('ZLink', ZLink);
 Vue.component('ZAccordion', ZAccordion);
 Vue.component('ZSection', ZSection);
+Vue.component('ZCard', ZCard)
 
 export default {
   name: 'ZWordPress',
   props: {
     html: {
       type: String,
-      default: '',
+      default: ''
     },
   },
   computed: {
     htmlToRender() {
-      const anchorPattern = /<a.+?href="(.+?)">(.+?)<\/a>/gm;
-      return this.html.replace(anchorPattern, (match, href, name) => (`<z-link to="${href}">${name}</z-link>`));
+      const anchorPattern = /<a.*?href="(.*?)".*?>(.*?)<\/a>/gm;
+      return this.html.replace(anchorPattern, (match, href, name) => {
+        const isDownloadButton = match.search('wp-block-file__button') > -1;
+        if (isDownloadButton){ // TODO: why?
+          return `<z-button to="${href}">${name}</z-button>`; 
+        }
+        return `<z-link to="${href}">${name}</z-link>`;
+      });
     },
     toRender() {
       return {
@@ -203,6 +211,43 @@ export default {
     text-align: center;
   }
 
+  .wp-block-file {
+    display: flex;
+    align-content: center;
+    justify-content: space-between;
+  }
+
+  .wp-block-gallery {
+    margin: 1.5rem 0;
+
+    .blocks-gallery-grid {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 0;
+      margin: -0.5rem 0 0 -0.5rem;
+      list-style-type: none;
+    }
+
+    .blocks-gallery-item {
+      padding: 0.5rem 0 0 0.5rem;
+
+      &__caption {
+        font-size: 0.75rem;
+        font-weight: 300;
+      }
+    }
+
+    @for $i from 1 through 6 {
+      &.columns-#{$i} {
+        .blocks-gallery-item {
+          @media (min-width: 640px) {
+            flex: 1 1 calc(100%/#{$i});
+          }
+        }
+      }
+    }
+  }
+
   .icon {
     display: flex;
   }
@@ -213,6 +258,18 @@ export default {
 
       @media (min-width: 640px) {
         grid-column: span #{$i};
+      }
+    }
+  }
+
+  .z-card--pictured {
+    .z-card {
+      &__title {
+        color: #fff;
+      }
+
+      &__description {
+        margin: 0;
       }
     }
   }

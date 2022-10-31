@@ -30,12 +30,12 @@
       </ZSection>
     </div>
     <ZSection
-      v-if="hasAbout"
+      v-if="hasAbout && basicInfos.length>0"
       :title="about.title"
       :subtitle="about.subtitle"
       class="section-about-us"
     >
-      <template v-for="(tile, key) in about.tiles">
+      <template v-for="(tile, key) in basicInfos">
         <ZCard
           :key="key"
           :thumbnail="tile.thumbnail || placeholder"
@@ -146,6 +146,36 @@
         class="section-join-us__post"
       />
     </ZSection>
+
+
+    <ZSection class="section-mission" v-if="hasMission">
+      <ZCard
+        to="/stopnie-i-sprawnosci"
+        title="Stopnie i sprawności"
+        :thumbnail="`${$config.mediaBaseURL}/wp-content/uploads/2020/12/01.png`"
+        class="section-mission__card section-mission__card--first"
+      />
+      <ZCard
+        to="/czlonkowie-organizacji"
+        title="Członkowie organizacji"
+        :thumbnail="`${$config.mediaBaseURL}/wp-content/uploads/2020/12/02.png`"
+        class="section-mission__card section-mission__card--bigger"
+      />
+      <ZCard
+        title="Statut ZHP i Władze ZHP"
+        :thumbnail="`${$config.mediaBaseURL}/wp-content/uploads/2020/12/03.png`"
+        class="section-mission__card"
+        to="/organizacja"
+      />
+      <ZBanner
+        title="Sprawdź Centralny Bank Pomysłów"
+        content="Szukasz pomysłu na zbiórkę? Inspiracji do pracy z harcerzami?"
+        :calls-to-action="{name: 'Przejdź do strony', to: 'http://cbp.zhp.pl/'}"
+        class="section-mission__banner"
+      />
+    </ZSection>
+
+
     <ZSection
       v-if="hasEvents"
       class="section-events"
@@ -400,13 +430,13 @@ export default {
     const posts = postsRes.data
 
     // * get events for Przedsięwziecia i wydarzenia
+    if (homepage && homepage.rest_acf && homepage.rest_acf.event_categories) {
+      eventsParams.event_categories = homepage.rest_acf.event_categories.join(',')
+    }
     const eventsParams = {
       per_page: 25,
       page: 1,
       without_outdated: true
-    }
-    if (homepage.rest_acf.event_categories) {
-      eventsParams.event_categories = homepage.rest_acf.event_categories.join(',')
     }
     const eventsRes = await $axios.get('acf-events', { params: eventsParams })
     const events = eventsRes.data
@@ -452,6 +482,24 @@ export default {
     const newsRes = await $axios.get('posts', { params: newsParams })
     const news = newsRes.data.map(news => ({ ...news, title: news.title.rendered }))
 
+    // * get basic infos
+    let aboutParams =  {
+      per_page: 50
+    };
+    let basicInfos = [];
+    if (homepage.rest_acf.about.categories) {
+      aboutParams.categories = homepage.rest_acf.about.categories;
+      const basicInfosRes = await $axios.get('posts', { params: aboutParams });
+      
+      basicInfos = basicInfosRes.data.map(basicInfo => ({
+        thumbnail: basicInfo.rest_media,
+        title: basicInfo.title.rendered, 
+        description: basicInfo.content.rendered.split('<!--more-->')[0].replace(/(<([^>]+)>)/gi, "").trim(),
+        to: basicInfo.link
+      }))
+    }
+
+
     // * get post for Aktualności
     const newsCardParams = { per_page: 1, _embed: true }
     if (homepage.rest_acf.highlighted.tags) {
@@ -465,10 +513,10 @@ export default {
     const hasInstagram = instagram.image &&
         instagram.user &&
         instagram.name &&
-        instagram.description
+        instagram.description;
     if (hasInstagram && !Object.keys(store.state.instagram.posts).length) {
       const instagramRes = await $axios.get('instagram')
-      const instagram = instagramRes.data
+      const instagram = instagramRes.data || ''
       const images = instagram.match(/href="(.+?)".+?data-full-res="(.+?)"/gm) || []
       const feed = images.map(match => (
         { href: match.match(/href="(.+?)"/)[1], src: match.match(/data-full-res="(.+?)"/)[1] }
@@ -476,7 +524,7 @@ export default {
       store.commit('instagram/update', feed)
     }
 
-    return { homepage, posts, events, partners, banners, joinUs, news, newsCard }
+    return { homepage, posts, events, partners, banners, joinUs, news, newsCard, basicInfos }
   },
   computed: {
     ...mapGetters({
@@ -492,7 +540,13 @@ export default {
       return this.homepage.rest_acf.about
     },
     hasAbout () {
-      return this.about.visible && this.about.tiles
+      return this.about.visible
+    },
+    mission(){
+      return this.homepage.rest_acf.mission;
+    },
+    hasMission(){
+      return this.mission.visible;
     },
     isOverlayed () {
       return this.about.overlayed
@@ -549,7 +603,7 @@ export default {
           this.instagram.user &&
           this.instagram.name &&
           this.instagram.description &&
-          this.feed.length > 0
+          this.feed.length >= 0
     },
     hasSocial () {
       return this.social.visible && (this.hasFacebook || this.hasInstagram)
@@ -743,6 +797,54 @@ export default {
 
       @media (min-width: 640px) {
         grid-column: span 3;
+      }
+    }
+  }
+
+  .section-mission {
+    --section-content-align-items: end;
+
+    @media (min-width: 640px) {
+      --section-content-grid-template-columns: repeat(24, minmax(auto, 1fr));
+    }
+
+    &__card {
+      grid-column: span 12;
+
+      @media (min-width: 640px) {
+        grid-column: span 5;
+      }
+
+      &--bigger {
+        overflow: hidden;
+
+        @media (min-width: 640px) {
+          height: calc(100% + 2rem);
+          transform: translateY(16px);
+        }
+      }
+
+      &--first {
+        @media (min-width: 640px) {
+          grid-column: 3 / span 5;
+        }
+      }
+    }
+
+    &__banner {
+      --banner-description-grid-row: 1;
+      --banner-description-grid-column: span 12;
+      --banner-title-grid-row: 2;
+      --banner-title-grid-column: span 12;
+      --banner-title-margin: 0 0 2rem 0;
+      --banner-title-font-size: var(--font-size-subtitle-1);
+      --banner-title-text-transform: normal;
+      --banner-cta-grid-column: span 12;
+
+      grid-column: span 12;
+
+      @media (min-width: 640px) {
+        grid-column: span 5;
       }
     }
   }
