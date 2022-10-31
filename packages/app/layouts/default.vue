@@ -289,14 +289,22 @@ export default {
     },  
   },
   head(){
-      return {
-        link: Object.entries(this.favicon).map((options, index)=>{return {
+      let links = Object.entries(this.favicon).map((options, index)=>{return {
           hid: 'icon-'+options[0]+'x'+options[0],
           rel: 'icon',
           type: 'image/png',
           sizes: options[0]+'x'+options[0],
           href: options[1]
-        }})
+        }});
+      links.push({
+        hid: 'icon',
+        rel: 'icon',
+        type: 'image/png',
+        sizes: '128x128',
+        href: this.favicon['128']
+      })
+      return {
+        link: links
       }
     }
 }
