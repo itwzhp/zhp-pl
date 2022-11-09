@@ -1,9 +1,9 @@
 {
   "name": "@zhp-pl/ui",
-  "version": "0.2.4",
+  "version": "0.3.0",
   "scripts": {
     "create-index": "node scripts/create-index-file.js",
-    "version": "yarn create-index",
+    "version": "npm run create-index",
     "lint:js": "vue-cli-service lint --fix",
     "lint:scss": "stylelint 'src/**/*.{vue,htm,html,css,sss,less,scss}' --fix"
   },
@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.3",
-    "@glidejs/glide": "^3.4.1",
+    "@glidejs/glide": "^3.6.0",
     "body-scroll-lock": "^3.1.5",
     "core-js": "^3.12.1",
     "date-fns": "^2.21.3",

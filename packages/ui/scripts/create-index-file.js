@@ -1,8 +1,7 @@
-
-const path = require('path');
-const fs = require('fs');
+const path = require("path");
+const fs = require("fs");
 // eslint-disable-next-line import/no-extraneous-dependencies
-const glob = require('glob');
+const glob = require("glob");
 
 const pathIndexJs = path.resolve(__dirname, '..', 'index.js');
 const pathComponentsRoot = path.resolve(__dirname, '..', 'src/components');

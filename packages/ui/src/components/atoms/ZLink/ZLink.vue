@@ -26,16 +26,6 @@ export default {
   },
   computed: {
     ...mapGetters(),
-    hack() {
-      // Jak hackować to po całości, a co :) (Zależność od vuex tutaj to trochę rak.)
-      /** @var string[] internalDomains */
-      let internalDomains = this.$store.getters['theme/domains']
-                                          .map((domain)=>'https?:\/\/'+domain.replace('.','\.')).join('|');
-      const regex = new RegExp(internalDomains);
-      return typeof this.to === 'string' && !/wp-content/gm.test(this.to)
-        ? this.to.replace(regex, '')
-        : this.to;
-    },
     tagComputed() {
       const { to, tag, routerTag } = this;
       return to
@@ -43,20 +33,20 @@ export default {
         : tag;
     },
     toComputed() {
-      const { hack, tagComputed } = this;
+      const { tagComputed } = this;
       switch (tagComputed) {
         case 'a':
-          return { href: hack, target: '__blank' };
+          return { href: this.to, target: '__blank' };
         case 'router-link':
         case 'nuxt-link':
-          return { to: hack };
+          return { to: this.to };
         default:
           return {};
       }
     },
     isExternal() {
-      const { hack } = this;
-      return typeof hack === 'string' && hack.search(/(^\/)/g) === -1;
+      const { to } = this;
+      return typeof to === 'string' && to.search(/(^\/)/g) === -1;
     },
     routerTag() {
       const { isExternal } = this;

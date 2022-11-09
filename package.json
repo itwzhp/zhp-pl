@@ -2,27 +2,34 @@
   "private": true,
   "version": "0.1.0",
   "devDependencies": {
-    "@commitlint/cli": "^9.1.2",
-    "@commitlint/config-conventional": "^9.1.2",
+    "@commitlint/cli": "^12.1.4",
+    "@commitlint/config-conventional": "^12.1.4",
     "file-save": "^0.2.0",
-    "glob": "^7.1.6",
+    "glob": "^7.1.7",
     "lerna": "^4.0.0",
-    "prompts": "^2.3.2",
+    "prompts": "^2.4.1",
     "uppercamelcase": "^3.0.0"
   },
   "scripts": {
-    "create-component": "node ./scripts/create-component.js && cd packages/ui && yarn create-index",
-    "create-index": "cd packages/ui && yarn create-index",
+    "create-component": "node ./scripts/create-component.js && cd packages/ui && npm run create-index",
+    "create-index": "cd packages/ui && npm run create-index",
     "nuxt:dev": "cd packages/app && yarn dev",
     "nuxt:build": "cd packages/app && yarn build",
     "nuxt:start": "cd packages/app && yarn start"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/pspaczek/nowa-zhp.git"
+  "author": {
+    "name": "Przemysław Spaczek",
+    "email": "kontakt@przemyslawspaczek.pl",
+    "url": "https://github.com/pspaczek"
   },
-  "author": "Przemysław Spaczek",
   "license": "MIT",
+  "contributors": [
+    {
+      "name": "ZHP IT Department",
+      "email": "sekretariat@zhp.pl",
+      "url": "https://zhp.pl"
+    }
+  ],
   "workspaces": [
     "packages/*"
   ]

@@ -1,4 +1,4 @@
-FROM node:16.14.2-alpine3.15 as build
+FROM node:16.17.1-alpine3.15 as build
 
 ARG THEME_VERSION=latest
 ENV THEME_VERSION=$THEME_VERSION
@@ -11,6 +11,7 @@ WORKDIR /usr/src/app
 
 
 RUN apk --no-cache add zip
+RUN npm update -g npm
 RUN npm install --quiet \
     && npm run create-index \
     && npm run nuxt:build

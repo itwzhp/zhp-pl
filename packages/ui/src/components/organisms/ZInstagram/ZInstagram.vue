@@ -10,10 +10,10 @@
       />
       <div>
         <ZText class="z-instagram__user">
-          zhp_pl
+          {{user}}
         </ZText>
         <ZButton
-          to="https://www.instagram.com/zhp_pl/"
+          :to="`https://www.instagram.com/${user}/`"
           class="z-instagram__subscribe"
         >
           Obserwuj
@@ -21,18 +21,11 @@
       </div>
       <div class="z-instagram__description">
         <ZText class="body-1 z-instagram__name">
-          Związek Harcerstwa Polskiego
+          {{ name }}
         </ZText>
-        <ZText class="body-2 normal z-instagram__details">
-          ⚜️ Największa organizacja harcerska w Polsce <ZLink to="https://www.instagram.com/explore/tags/zhp/">
-            #ZHP
-          </ZLink>| The Polish Scouting and Guiding Association official | <ZLink to="https://www.instagram.com//explore/tags/sprawnościnacałeżycie/">
-            #sprawnościnacałeżycie
-          </ZLink> <ZLink
-            to="https://www.instagram.com/explore/tags/harcerstwo/"
-          >
-            #harcerstwo
-          </ZLink> ⚜️
+        <ZText 
+          class="body-2 normal z-instagram__details"
+          v-html="description">
         </ZText>
       </div>
     </div>
@@ -76,6 +69,18 @@ export default {
       type: Array,
       default: () => ([]),
     },
+    name: {
+      type: String,
+      default: ""
+    },
+    user: {
+      type: String,
+      default: ""
+    },
+    description: {
+      type: String,
+      default: ""
+    }
   },
   methods: {
     render(url) {
