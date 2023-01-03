@@ -239,6 +239,12 @@ export default {
     }
   },
   mounted () {
+    // Add custom CSS sheet defined in theme configuration
+    const head = document.head || document.getElementsByTagName('head')[0]
+    const style = document.createElement('style')
+    style.innerText = this.$store.getters['theme/customCss']
+    head.appendChild(style)
+
     this.isMobile = matchMedia('(max-width: 640px)').matches
     matchMedia('(max-width: 640px)').addListener((e) => { this.isMobile = e.matches })
     if (localStorage.getItem('cookies')) { return }
@@ -548,5 +554,37 @@ export default {
   z-index: 100;
   bottom: 0;
   left: 0;
+}
+
+.wp-block-columns {
+  flex-wrap: nowrap;
+}
+.is-layout-flex {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+
+  & > * {
+    margin: 0;
+  }
+}
+.wp-block-column {
+  flex-grow: 1;
+  min-width: 0;
+  overflow-wrap: break-word;
+  word-break: break-word;
+
+  @media (max-width: 781px) {
+    .wp-block-columns:not(.is-not-stacked-on-mobile) > & {
+      flex-basis: 100% !important;
+    }
+  }
+
+  @media (min-width: 782px) {
+    .wp-block-columns:not(.is-not-stacked-on-mobile) > & {
+      flex-basis: 0;
+      flex-grow: 1;
+    }
+  }
 }
 </style>

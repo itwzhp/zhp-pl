@@ -41,5 +41,8 @@ export const getters = {
   },
   colors(state){
     return state.options.colors;
+  },
+  customCss (state) {
+    return state.options.custom_css
   }
 }

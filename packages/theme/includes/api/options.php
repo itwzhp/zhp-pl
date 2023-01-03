@@ -38,6 +38,7 @@ function get_options(WP_REST_Request $request)
             '32'=>get_site_icon_url(32)
         ],
         'header_logos'=>$logos,
-        'colors'=>$palette->getValues()
+        'colors'=>$palette->getValues(),
+        'custom_css' => str_replace(["\r", "\n"], ' ', wp_get_custom_css()),
     );
 }
