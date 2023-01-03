@@ -39,6 +39,6 @@ function get_options(WP_REST_Request $request)
         ],
         'header_logos'=>$logos,
         'colors'=>$palette->getValues(),
-        'custom_css' => str_replace(["\r", "\n"], ' ', wp_get_custom_css()),
+        'custom_css' => trim(str_replace(["\r", "\n"], ' ', wp_get_custom_css())),
     );
 }

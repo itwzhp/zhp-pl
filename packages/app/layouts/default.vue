@@ -240,10 +240,13 @@ export default {
   },
   mounted () {
     // Add custom CSS sheet defined in theme configuration
-    const head = document.head || document.getElementsByTagName('head')[0]
-    const style = document.createElement('style')
-    style.innerText = this.$store.getters['theme/customCss']
-    head.appendChild(style)
+    const customCss = this.$store.getters['theme/customCss']
+    if (customCss) {
+      const head = document.head || document.getElementsByTagName('head')[0]
+      const style = document.createElement('style')
+      style.innerText = customCss
+      head.appendChild(style)
+    }
 
     this.isMobile = matchMedia('(max-width: 640px)').matches
     matchMedia('(max-width: 640px)').addListener((e) => { this.isMobile = e.matches })
