@@ -241,9 +241,6 @@ export default {
       ],
       grupaZHP: [
         { name: 'Muzeum Harcerstwa', href: 'http://muzeumharcerstwa.pl/' },
-        { name: 'Schronisko Górskie Głodówka', href: 'http://glodowka.com.pl/pl/home/' },
-        { name: 'OSW Perkoz/Mazury', href: 'https://perkoz.zhp.pl/' },
-        { name: 'Centrum Wychowania Morskiego', href: 'https://cwm.edu.pl/' },
         { name: 'CSH 4 Żywioły', href: 'https://4zywioly.pl/' },
         { name: 'SZAiL (Konopnickiej6)', href: 'https://szal.pl/' },
         { name: 'Fundacja Światowe Jamboree', href: 'http://fsj.zhp.pl/' }
