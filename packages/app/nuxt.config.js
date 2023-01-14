@@ -51,20 +51,19 @@ export default {
         path: '*',
         component: resolve(__dirname, 'pages/404.vue')
       })
-      const year = new Date().getFullYear()
-      for (let y = 2010; y <= year; y++) {
-        routes.push({
-          name: `slug-${y}`,
-          path: `/${y}/:slug`,
-          component: resolve(__dirname, 'pages/aktualnosci/_slug.vue')
-        })
-        routes.push({
-          name: `${y}`,
-          path: `/${y}`,
-          component: resolve(__dirname, 'pages/aktualnosci/_slug.vue')
-        })
-      }
+
       sortRoutes(routes)
+
+      routes.unshift({
+        name: `news-page`,
+        path: `/:year([1-9][0-9]{3})/:slug`,
+        component: resolve(__dirname, 'pages/aktualnosci/_slug.vue')
+      })
+      routes.unshift({
+        name: `news-page-year`,
+        path: `/:year([1-9][0-9]{3})`,
+        component: resolve(__dirname, 'pages/aktualnosci/_slug.vue')
+      })
     }
   },
   ssr: process.env.SSR == 'true',
