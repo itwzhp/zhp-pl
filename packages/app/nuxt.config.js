@@ -51,17 +51,17 @@ export default {
         path: '*',
         component: resolve(__dirname, 'pages/404.vue')
       })
-      
+
       sortRoutes(routes)
 
       routes.unshift({
         name: `news-page`,
-        path: `/:year(\\d+)/:slug`,
+        path: `/:year([1-9][0-9]{3})/:slug`,
         component: resolve(__dirname, 'pages/aktualnosci/_slug.vue')
       })
       routes.unshift({
         name: `news-page-year`,
-        path: `/:year(\\d+)`,
+        path: `/:year([1-9][0-9]{3})`,
         component: resolve(__dirname, 'pages/aktualnosci/_slug.vue')
       })
     }
