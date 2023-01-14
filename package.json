@@ -2,11 +2,11 @@
   "private": true,
   "version": "0.1.0",
   "devDependencies": {
-    "@commitlint/cli": "^12.1.4",
-    "@commitlint/config-conventional": "^12.1.4",
+    "@commitlint/cli": "^17.4.2",
+    "@commitlint/config-conventional": "^17.4.2",
     "file-save": "^0.2.0",
-    "glob": "^7.1.7",
-    "lerna": "^4.0.0",
+    "glob": "^8.1.0",
+    "lerna": "^6.4.1",
     "prompts": "^2.4.1",
     "uppercamelcase": "^3.0.0"
   },
