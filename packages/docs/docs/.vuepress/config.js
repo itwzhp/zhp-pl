@@ -1,19 +1,21 @@
-module.exports = {
+import { defaultTheme } from '@vuepress/theme-default'
+import { searchPlugin } from '@vuepress/plugin-search'
+export default {
     lang: 'pl-PL',
     title: 'Motyw ZHP',
     head: [['link', { rel: 'icon', type: 'image/png', href: '/images/logo.png' }]],
     plugins: [
-        ['@vuepress/search', {
+        searchPlugin({
             searchMaxSuggestions: 10
-        }],
+        }),
     ],
-    themeConfig: {
+    theme: defaultTheme({
         lastUpdatedText: 'Zaktualizowano',
         contributors: false,
         darkMode: false,
         sidebar: [
-            '',
-            '/nawigacja.md',
+            '/README.md',
+            '/nawigacja.md', 
             '/dostosowanie-motywu.md',
             '/typy-tresci.md',
             '/wymagane-podstrony.md',
@@ -26,5 +28,5 @@ module.exports = {
         themePlugins: {
             backToTop: false
         },
-    },
+    }),
 }
