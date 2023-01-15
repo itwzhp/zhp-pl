@@ -11,17 +11,16 @@ WORKDIR /usr/src/app
 
 
 RUN apk --no-cache add zip
-RUN npm update -g npm
-RUN npm install --quiet \
-    && npm run create-index \
-    && npm run nuxt:build
+RUN yarn install --quiet \
+    && yarn create-index \
+    && yarn nuxt:build
 
 RUN for i in /usr/src/app/packages/theme/blocks/* ; \
     do \
       echo $i; \
       cd $i  \
-    && npm install --quiet  \
-    && npm run build ; \
+    && yarn install --quiet  \
+    && yarn build ; \
     done
 
 RUN cp -r packages/app/dist/wp-content/themes/zhp-pl/_nuxt packages/theme/ \
