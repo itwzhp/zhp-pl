@@ -185,10 +185,10 @@ import {
   ZList,
   ZLink,
   ZImage,
-  ZText
+  ZText,
+  ZWordPress
 } from '@zhp-pl/ui'
 import { mapGetters } from 'vuex'
-import ZWordPress from '@/components/organisms/ZWordPress.vue'
 
 export default {
   components: {
