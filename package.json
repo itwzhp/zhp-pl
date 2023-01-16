@@ -14,7 +14,7 @@
     "create-component": "node ./scripts/create-component.js && cd packages/ui && npm run create-index",
     "create-index": "cd packages/ui && npm run create-index",
     "nuxt:dev": "export NODE_OPTIONS=--openssl-legacy-provider; cd packages/app && yarn dev",
-    "nuxt:build": "export NODE_OPTIONS=--openssl-legacy-provider; cd packages/app && yarn build",
+    "nuxt:build": "cd packages/app && yarn build",
     "nuxt:start": "export NODE_OPTIONS=--openssl-legacy-provider; cd packages/app && yarn start",
     "docs:dev": "export NODE_OPTIONS=--openssl-legacy-provider; cd packages/docs && yarn docs:dev",
     "docs:build": "export NODE_OPTIONS=--openssl-legacy-provider; cd packages/docs && yarn docs:build"
