@@ -1,5 +1,7 @@
 ---
 home: false
+navbar: true
+search: true
 ---
 
 # Instalacja
@@ -12,6 +14,6 @@ home: false
 ![An image](/images/theme.png)
 4. Motyw do działania wymaga skonfigurowania kilku rzeczy, bez nich możesz napotkać na błędy
 
-## Aktualizacjia
+## Aktualizacja
 
 Motyw posiada ten sam mechanizm co motywy dostępne w repozytorium WordPress. Po pojawieniu się nowej wersji motywu powinieneś dostać informację o dostępnej aktualizacji.

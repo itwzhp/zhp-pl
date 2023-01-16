@@ -7,4 +7,5 @@ Project for [The Polish Scouting and Guiding Association (ZHP)](https://zhp.pl/)
 
 # Maintainer
 
-Przemysław Spaczek **kontakt [at] przemyslawspaczek.pl**
+- ZHP IT Department, sekretariat@zhp.pl, [https://zhp.pl](https://zhp.pl).
+- Przemysław Spaczek **kontakt [at] przemyslawspaczek.pl**

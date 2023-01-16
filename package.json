@@ -2,20 +2,22 @@
   "private": true,
   "version": "0.1.0",
   "devDependencies": {
-    "@commitlint/cli": "^12.1.4",
-    "@commitlint/config-conventional": "^12.1.4",
+    "@commitlint/cli": "^17.4.2",
+    "@commitlint/config-conventional": "^17.4.2",
     "file-save": "^0.2.0",
-    "glob": "^7.1.7",
-    "lerna": "^4.0.0",
+    "glob": "^8.1.0",
+    "lerna": "^6.4.1",
     "prompts": "^2.4.1",
     "uppercamelcase": "^3.0.0"
   },
   "scripts": {
     "create-component": "node ./scripts/create-component.js && cd packages/ui && npm run create-index",
     "create-index": "cd packages/ui && npm run create-index",
-    "nuxt:dev": "cd packages/app && yarn dev",
-    "nuxt:build": "cd packages/app && yarn build",
-    "nuxt:start": "cd packages/app && yarn start"
+    "nuxt:dev": "export NODE_OPTIONS=--openssl-legacy-provider; cd packages/app && yarn dev",
+    "nuxt:build": "export NODE_OPTIONS=--openssl-legacy-provider; cd packages/app && yarn build",
+    "nuxt:start": "export NODE_OPTIONS=--openssl-legacy-provider; cd packages/app && yarn start",
+    "docs:dev": "export NODE_OPTIONS=--openssl-legacy-provider; cd packages/docs && yarn docs:dev",
+    "docs:build": "export NODE_OPTIONS=--openssl-legacy-provider; cd packages/docs && yarn docs:build"
   },
   "author": {
     "name": "Przemysław Spaczek",

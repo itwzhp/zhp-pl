@@ -1,5 +1,5 @@
 {
-  "name": "@zhp-pl/dosc",
+  "name": "@zhp-pl/docs",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
@@ -8,11 +8,11 @@
     "docs:build": "vuepress build docs"
   },
   "devDependencies": {
-    "@vuepress/plugin-search": "^2.0.0-beta.19",
-    "vuepress": "^2.0.0-beta.19"
+    "@vuepress/plugin-search": "^1",
+    "vuepress": "^1"
   },
   "dependencies": {
-    "esbuild-loader": "^2.13.1",
-    "style-loader": "^2.0.0"
+    "esbuild-loader": "^2",
+    "style-loader": "^3"
   }
 }
