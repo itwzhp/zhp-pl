@@ -6,21 +6,21 @@ ENV THEME_VERSION=$THEME_VERSION
 ARG UPDATE_DETAILS_URL=http://wordpress.przemyslawspaczek.pl/details.json
 ENV UPDATE_DETAILS_URL=$UPDATE_DETAILS_URL
 
+RUN apk --no-cache add zip
+
 COPY . /usr/src/app
 WORKDIR /usr/src/app
 
-
-RUN apk --no-cache add zip
-RUN yarn install --quiet \
-    && yarn create-index \
-    && yarn nuxt:build
+RUN yarn install --immutable \
+   && yarn create-index \
+   && yarn nuxt:build
 
 RUN for i in /usr/src/app/packages/theme/blocks/* ; \
     do \
       echo $i; \
       cd $i  \
-    && yarn install --quiet  \
-    && yarn build ; \
+      && yarn install --immutable  \
+      && yarn build ; \
     done
 
 RUN cp -r packages/app/dist/wp-content/themes/zhp-pl/_nuxt packages/theme/ \
@@ -30,12 +30,7 @@ RUN cp -r packages/app/dist/wp-content/themes/zhp-pl/_nuxt packages/theme/ \
     && UPDATE_DETAILS_URL=$(echo $UPDATE_DETAILS_URL | sed -e 's/\//\\\//g') \
     && sed -i "s/{UPDATE_DETAILS_URL}/${UPDATE_DETAILS_URL}/g" packages/theme/functions.php
 
-RUN for i in /usr/src/app/packages/theme/blocks/* ; \
-    do \
-      echo $i; \
-      cd $i;  \
-      rm -rf node_modules; \
-    done
+RUN rm -rf /usr/src/app/packages/theme/blocks/*/node_modules
 
 RUN cd packages; \
     mv theme zhp-pl; \

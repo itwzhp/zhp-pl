@@ -3,8 +3,8 @@ name: Build theme for WP sites
 on: 
   push:
     branches: [theme]
-  # pull_request:
-  #   branches: [theme]
+  pull_request:
+    branches: [theme]
   workflow_dispatch:
 
 permissions:
@@ -20,9 +20,11 @@ jobs:
     steps:
       - name: Set current version
         run: echo "VERSION=$(date '+%Y.%m.%d.%H.%M.%S')" >> $GITHUB_ENV
+
       - uses: actions/checkout@v3
         with:
           lfs: true
+
       - name: Build the Docker image
         run: |
           docker build \
@@ -31,8 +33,10 @@ jobs:
             --build-arg THEME_VERSION="${VERSION}" \
             --build-arg UPDATE_DETAILS_URL=${{ env.UPDATE_DETAILS_URL }} \
             .
+
       - name: Extract theme
         run: docker run -v ${PWD}:/usr/dist zhp-pl:latest
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -43,7 +47,8 @@ jobs:
           release_name: Release ${{ env.VERSION }}
           draft: false
           prerelease: false
-        #if: success() && env.GITHUB_EVENT_NAME == 'push'
+        if: success() && env.GITHUB_EVENT_NAME == 'push'
+
       - name: Upload Theme
         id: upload-theme
         uses: actions/upload-release-asset@v1
@@ -54,9 +59,12 @@ jobs:
           asset_path: ./zhp-pl.zip
           asset_name: zhp-pl.zip
           asset_content_type: application/zip
+        if: success() && env.GITHUB_EVENT_NAME == 'push'
+
       - name: Create details.json
         run: |
           echo "{ \"version\": \"$VERSION\", \"details_url\": \"${{ steps.create_release.outputs.html_url }}\",\"download_url\":\"${{ steps.upload-theme.outputs.browser_download_url }}\"  }" > details.json
+        if: success() && env.GITHUB_EVENT_NAME == 'push'
 
       - name: Upload release details
         id: upload-details
@@ -68,3 +76,4 @@ jobs:
           asset_path: ./details.json
           asset_name: details.json
           asset_content_type: application/json
+        if: success() && env.GITHUB_EVENT_NAME == 'push'
