@@ -47,7 +47,7 @@ jobs:
           release_name: Release ${{ env.VERSION }}
           draft: false
           prerelease: false
-        if: success() && env.GITHUB_EVENT_NAME == 'push'
+        if: success() && github.ref == 'refs/heads/theme'
 
       - name: Upload Theme
         id: upload-theme
@@ -59,12 +59,12 @@ jobs:
           asset_path: ./zhp-pl.zip
           asset_name: zhp-pl.zip
           asset_content_type: application/zip
-        if: success() && env.GITHUB_EVENT_NAME == 'push'
+        if: success() && github.ref == 'refs/heads/theme'
 
       - name: Create details.json
         run: |
           echo "{ \"version\": \"$VERSION\", \"details_url\": \"${{ steps.create_release.outputs.html_url }}\",\"download_url\":\"${{ steps.upload-theme.outputs.browser_download_url }}\"  }" > details.json
-        if: success() && env.GITHUB_EVENT_NAME == 'push'
+        if: success() && github.ref == 'refs/heads/theme'
 
       - name: Upload release details
         id: upload-details
@@ -76,4 +76,4 @@ jobs:
           asset_path: ./details.json
           asset_name: details.json
           asset_content_type: application/json
-        if: success() && env.GITHUB_EVENT_NAME == 'push'
+        if: success() && github.ref == 'refs/heads/theme'
