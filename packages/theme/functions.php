@@ -1,4 +1,5 @@
 <?php
+
 ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
@@ -138,8 +139,11 @@ add_filter('rest_post_collection_params', 'add_random_orderby_to_rest');
 require_once __DIR__.'/includes/posttypes.php';
 // register field to REST for ACF
 add_action('rest_api_init', 'register_rest_acf');
-function register_rest_acf(){
-    register_rest_field(array('post', 'page', 'event', 'age_group'), 'rest_acf',
+function register_rest_acf()
+{
+    register_rest_field(
+        array('post', 'page', 'event', 'age_group'),
+        'rest_acf',
         array(
             'get_callback' => 'get_rest_acf',
             'schema' => null
@@ -209,11 +213,11 @@ function register_rest_media()
 };
 function get_rest_media($object, $field_name, $request)
 {
-    if($object['featured_media']) {
-        $media = wp_get_attachment_image_src($object['featured_media'], 'large')[0];
-        return $media;
+    if (!array_key_exists('featured_media', $object) || !$object['featured_media']) {
+        return false;
     }
-    return false;
+    $media = wp_get_attachment_image_src($object['featured_media'], 'large')[0];
+    return $media;
 };
 // register field to REST for author
 add_action('rest_api_init', 'register_rest_author');
@@ -230,15 +234,15 @@ function register_rest_author()
 };
 function get_rest_author($object, $field_name, $request)
 {
-    if($object['author']) {
-        $author = (object) array(
-            'name' => get_the_author_meta('display_name', $object['author']),
-            'href'=> get_author_posts_url($object['author']),
-            'avatar_url' => get_avatar_url($object['author'], (object) array('size' => '48'))
-        );
-        return $author;
+    if (!array_key_exists('author', $object) || !$object['author']) {
+        return false;
     }
-    return false;
+    $author = (object) array(
+        'name' => get_the_author_meta('display_name', $object['author']),
+        'href'=> get_author_posts_url($object['author']),
+        'avatar_url' => get_avatar_url($object['author'], (object) array('size' => '48'))
+    );
+    return $author;
 };
 // register field to REST for gutenberg
 add_action('rest_api_init', 'register_rest_gutenberg');
@@ -255,10 +259,10 @@ function register_rest_gutenberg()
 };
 function get_rest_gutenberg($object, $field_name, $request, $object_type)
 {
-    if(array_key_exists('content',$object) && $object['content']) {
-        return parse_blocks(get_the_content(null, false, $object['id']));
+    if (!array_key_exists('content', $object) || !$object['content']) {
+        return false;
     }
-    return false;
+    return parse_blocks(get_the_content(null, false, $object['id']));
 };
 // register field to REST for reading_time
 add_action('rest_api_init', 'register_rest_reading_time');
@@ -275,11 +279,11 @@ function register_rest_reading_time()
 };
 function get_rest_reading_time($object, $field_name, $request, $object_type)
 {
-    if(array_key_exists('content',$object) && $object['content']) {
-        $word_count = str_word_count(strip_tags($object['content']['rendered']));
-        return ceil($word_count / 200);
+    if (!array_key_exists('content', $object) || !$object['content']) {
+        return false;
     }
-    return false;
+    $word_count = str_word_count(strip_tags($object['content']['rendered']));
+    return ceil($word_count / 200);
 };
 // register field to REST for reading_time
 add_action('rest_api_init', 'register_rest_redirect');
@@ -296,10 +300,10 @@ function register_rest_redirect()
 };
 function get_rest_redirect($object, $field_name, $request, $object_type)
 {
-    if(array_key_exists('content',$object) && $object['content']) {
-        return get_post_meta($object['id'], '_pprredirect_url', true);
+    if (!array_key_exists('content', $object) || !$object['content']) {
+        return false;
     }
-    return false;
+    return get_post_meta($object['id'], '_pprredirect_url', true);
 };
 
 function custom_parent_dropdown_limit($args, $request)
