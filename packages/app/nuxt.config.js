@@ -28,13 +28,7 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
     '@nuxtjs/sentry',
-    'nuxt-facebook-pixel-module',
-    [
-      '@netsells/nuxt-hotjar', {
-        id: process.env.HJID,
-        sv: process.env.HJSV
-      }
-    ]
+    'nuxt-facebook-pixel-module'
   ],
   axios: {
     baseURL: process.env.REST_API
