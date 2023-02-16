@@ -246,9 +246,13 @@
             </template>
           </ZCarousel>
         </ZSection>
-        <ZImage
-          :src="`${$config.mediaBaseURL}/wp-content/uploads/2020/11/ROHIS.png`"
-        />
+        <ZLink
+            to="https://niw.gov.pl/"
+        >
+          <ZImage
+            :src="`${$config.mediaBaseURL}/wp-content/uploads/2020/11/ROHIS.png`"
+          />
+        </ZLink>
       </div>
     </ZSection>
   </div>
