@@ -27,7 +27,6 @@ export default {
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
-    '@nuxtjs/sentry',
     'nuxt-facebook-pixel-module'
   ],
   axios: {
@@ -42,12 +41,6 @@ export default {
       name: 'Związek Harcerstwa Polskiego',
       tag: 'pl',
       useWebmanifestExtension: false
-    }
-  },
-  sentry: {
-    dsn: process.env.DSN,
-    config: {
-      environment: process.env.NODE_ENV
     }
   },
   facebook: {
