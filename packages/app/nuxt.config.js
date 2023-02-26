@@ -19,16 +19,29 @@ export default {
   ],
   buildModules: [
     '@nuxtjs/pwa',
-    '@nuxtjs/google-analytics'
   ],
-  googleAnalytics: {
-    id: process.env.GA
-  },
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
-    'nuxt-facebook-pixel-module'
+    'nuxt-facebook-pixel-module',
+    '@nuxtjs/google-gtag'
   ],
+  'google-gtag': {
+    id: 'G-RXT270TF63', // required
+    config: {
+      // this are the config options for `gtag
+      // check out official docs: https://developers.google.com/analytics/devguides/collection/gtagjs/
+      anonymize_ip: true, // anonymize IP 
+      send_page_view: false, // might be necessary to avoid duplicated page track on page reload
+      linker: {
+        domains: []
+      }
+    },
+    debug: true, // enable to track in dev mode
+    disableAutoPageTrack: false, // disable if you don't want to track each page route with router.afterEach(...)
+    // optional you can add more configuration like [AdWords](https://developers.google.com/adwords-remarketing-tag/#configuring_the_global_site_tag_for_multiple_accounts)
+    additionalAccounts: []
+  },
   axios: {
     baseURL: process.env.REST_API
   },
@@ -50,7 +63,7 @@ export default {
     disabled: false
   },
   build: {
-    extend (config, { isClient }) {
+    extend(config, { isClient }) {
       config.resolve.alias = {
         ...config.resolve.alias,
         vue$: 'vue/dist/vue.esm.js'
@@ -62,10 +75,10 @@ export default {
     mediaBaseURL: process.env.MEDIA_BASE_URL
   },
   router: {
-    scrollBehavior () {
+    scrollBehavior() {
       return { x: 0, y: 0 }
     },
-    extendRoutes (routes, resolve) {
+    extendRoutes(routes, resolve) {
       routes.push({
         name: 'custom',
         path: '*',
