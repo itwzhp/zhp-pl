@@ -42,7 +42,7 @@ export default {
     window.fbAsyncInit = () => {
       FB.init({
         appId: this.appId,
-        cookie: true,
+        cookie: false,
         xfbml: true,
         version: 'v3.2',
       });

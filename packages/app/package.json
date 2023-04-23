@@ -14,12 +14,10 @@
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.13.1",
-    "@nuxtjs/google-analytics": "^2.4.0",
     "@nuxtjs/pwa": "^3.3.5",
     "@zhp-pl/ui": "^0.2.1",
     "body-scroll-lock": "^3.1.5",
     "nuxt": "^2.15.6",
-    "nuxt-facebook-pixel-module": "^1.5.0",
     "uid": "^2.0.0",
     "vue-fragment": "^1.5.2",
     "vuelidate": "^0.7.6"

@@ -18,16 +18,11 @@ export default {
     '@zhp-pl/ui/src/styles/styles.scss'
   ],
   buildModules: [
-    '@nuxtjs/pwa',
-    '@nuxtjs/google-analytics'
+    '@nuxtjs/pwa'
   ],
-  googleAnalytics: {
-    id: process.env.GA
-  },
   modules: [
     '@nuxtjs/axios',
-    '@nuxtjs/pwa',
-    'nuxt-facebook-pixel-module'
+    '@nuxtjs/pwa'
   ],
   axios: {
     baseURL: process.env.REST_API
@@ -42,12 +37,6 @@ export default {
       tag: 'pl',
       useWebmanifestExtension: false
     }
-  },
-  facebook: {
-    track: 'PageView',
-    pixelId: process.env.FB,
-    autoPageView: true,
-    disabled: false
   },
   build: {
     extend (config, { isClient }) {
