@@ -127,11 +127,6 @@
         />
       </div>
     </footer>
-    <ZCookies
-      v-if="cookies"
-      class="cookies"
-      @close="closeCookies"
-    />
   </div>
 </template>
 
@@ -147,8 +142,7 @@ import {
   ZButton,
   ZMenu,
   ZMegaMenu,
-  ZList,
-  ZCookies
+  ZList
 } from '@zhp-pl/ui'
 
 export default {
@@ -162,8 +156,7 @@ export default {
     ZButton,
     ZMenu,
     ZMegaMenu,
-    ZList,
-    ZCookies
+    ZList
   },
   async middleware ({ store, $axios }) {
     if (!Object.keys(store.state.theme.options).length) {
