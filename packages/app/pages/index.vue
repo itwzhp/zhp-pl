@@ -1,14 +1,5 @@
 <template>
   <div id="home">
-    <!-- DODATKI dla Ukrainy (usunąć, jak niepotrzebne)-->
-    <div>
-      <a href="/2022/konta-do-darowizn/">
-        <ZImage
-          :src="`${$config.mediaBaseURL}/wp-content/uploads/2022/03/logo-2.png`"
-        />
-      </a>
-    </div>
-    <!-- Koniec dodatków -->
     <div class="hero-wrapper">
       <ZSection class="section-hero">
         <div class="section-hero__picture">

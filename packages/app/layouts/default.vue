@@ -516,14 +516,4 @@ export default {
   bottom: 0;
   left: 0;
 }
-
-// temporary - remove when not needed
-a[href="/zhpdlaukrainy/"].z-mega-menu__link {
-  background-image: linear-gradient(to bottom, #3396ff 49%, #ffe433 1%, #ffe433 100%);
-  padding: 1px 2px;
-  border-radius: 4px;
-}
-a[href="/zhpdlaukrainy/"].z-mega-menu__link.nuxt-link-active {
-  color: #000;
-}
 </style>
