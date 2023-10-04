@@ -40,7 +40,7 @@ export default {
       const { hack, tagComputed } = this;
       switch (tagComputed) {
         case 'a':
-          return { href: hack, target: '__blank' };
+          return { href: hack, target: '_blank' };
         case 'router-link':
         case 'nuxt-link':
           return { to: hack };
