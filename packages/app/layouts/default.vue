@@ -233,10 +233,11 @@ export default {
         { name: 'Ziemi Lubuskiej', href: 'http://lubuska.zhp.pl/' }
       ],
       grupaZHP: [
-        { name: 'Muzeum Harcerstwa', href: 'http://muzeumharcerstwa.pl/' },
+        { name: 'Muzeum Harcerstwa', href: 'https://muzeumharcerstwa.pl/' },
         { name: 'CSH 4 Żywioły', href: 'https://4zywioly.pl/' },
         { name: 'SZAiL (Konopnickiej6)', href: 'https://szal.pl/' },
-        { name: 'Fundacja Światowe Jamboree', href: 'http://fsj.zhp.pl/' }
+        { name: 'Fundacja Szlaki Przygody', href: 'https://fsj.zhp.pl/' },
+        { name: 'Komitet Organizacyjny Jamboree', href: 'https://jamboree2027.org' }
       ],
       cookies: false
     }
