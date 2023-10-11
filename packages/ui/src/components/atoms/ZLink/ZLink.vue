@@ -36,7 +36,7 @@ export default {
       const { tagComputed } = this;
       switch (tagComputed) {
         case 'a':
-          return { href: this.to, target: '__blank' };
+          return { href: this.to, target: '_blank' };
         case 'router-link':
         case 'nuxt-link':
           return { to: this.to };

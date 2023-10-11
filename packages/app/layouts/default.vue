@@ -257,7 +257,27 @@ export default {
   methods: {
     filterMenu(menuLinks){
         const parser = new UrlParser(this.$store);
-        return menuLinks.map((item)=> 'to' in item? {...item, to: parser.parse(item.to)}: item);
+        return menuLinks.map((item)=> {
+          let newItem = item
+
+          if ('to' in newItem) {
+            newItem = {
+              ...item,
+              to: parser.parse(item.to)
+            }
+          } else {
+            newItem = item
+          }
+
+          if('submenu' in newItem) {
+            newItem.submenu = this.filterMenu(newItem.submenu)
+          }
+          if('mega_menu' in newItem) {
+            newItem.mega_menu = this.filterMenu(newItem.mega_menu)
+          }
+
+          return newItem
+        });
     },
     closeCookies () {
       this.cookies = false
