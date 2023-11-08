@@ -61,6 +61,12 @@ export default {
           thumbnail: `${this.$config.mediaBaseURL}/wp-content/uploads/2021/09/PFRON_wersja_podstawowa_RGB-01.jpg`,
           title: 'Dotacje PFRON',
           to: 'PFRON'
+        },
+        {
+          id: '550',
+          thumbnail: `${this.$config.mediaBaseURL}/wp-content/uploads/2023/11/01_znak_podstawowy_kolor_biale_tlo.png`,
+          title: 'Laboratoria Przyszłości',
+          to: 'laboratoria-przyszlosci'
         }
       ]
     }
