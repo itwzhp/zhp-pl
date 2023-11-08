@@ -64,7 +64,7 @@ export default {
         },
         {
           id: '550',
-          thumbnail: `${this.$config.mediaBaseURL}/wp-content/uploads/2023/11/01_znak_podstawowy_kolor_biale_tlo.png`,
+          thumbnail: `${this.$config.mediaBaseURL}/wp-content/uploads/2023/11/01_znak_podstawowy_kolor_biale_tlo-1.png`,
           title: 'Laboratoria Przyszłości',
           to: 'laboratoria-przyszlosci'
         }
