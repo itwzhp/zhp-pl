@@ -7,11 +7,11 @@ function register_rest_post_events()
 {
     register_rest_route('wp/v2', '/post-events', array(
         'methods' => 'POST',
-        'callback' => 'post_events',
+        'callback' => 'zhp_route_post_events',
         'permission_callback'=>'__return_true'
     ));
 }
-function post_events(WP_REST_Request $request)
+function zhp_route_post_events(WP_REST_Request $request)
 {
     // $headers['origin'][0] === 'http://localhost:3000'
     $file = $request->get_file_params();
