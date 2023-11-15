@@ -1,12 +1,9 @@
 <?php
-
-add_action('customize_register', 'theme_customize_register');
-function theme_customize_register($wp_customize)
+function zhppl_theme_customize_register($wp_customize)
 {
     $config = require_once __DIR__.'/../config/colors.php';
     $palette = new Palette();
     $palette->load($config);
-
 
     $wp_customize->add_panel('theme', array(
         'title'=> 'Ustawienia motywu',
@@ -131,7 +128,7 @@ function theme_customize_register($wp_customize)
         'priority'=>10,
         'section'=>'event',
         'label'=>'Dozwolone domeny',
-        'description'=>'Wprowadź domeny adresów e-mail, z których można zgłaszać wydarzenia (rozdzielone przecinkiem).'
+        'description'=>'Wprowadź domeny adresów e-mail, z których można zgłaszać wydarzenia (rozdzielone przecinkiem). UWAGA: domeny tutaj wypływają także na interpretację linków w menu. Jeśli linki w menu zachowują się dziwnie, nie zapomnij dodać tu domeny tej strony! Więcej informacji znajduje się w notce instrukcji motywu.'
     ));
     $wp_customize->add_setting('subject', array(
         'type' => 'theme_mod',
@@ -178,3 +175,5 @@ function theme_customize_register($wp_customize)
         'description'=>'Wprowadź tytuł maila który zostanie wysłany z powiadomieniem.'
     ));
 }
+
+add_action('customize_register', 'zhppl_theme_customize_register');

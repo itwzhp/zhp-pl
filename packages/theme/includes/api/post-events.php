@@ -1,17 +1,5 @@
 <?php
-
-
-// none logged users can add new event
-add_action('rest_api_init', 'register_rest_post_events');
-function register_rest_post_events()
-{
-    register_rest_route('wp/v2', '/post-events', array(
-        'methods' => 'POST',
-        'callback' => 'post_events',
-        'permission_callback'=>'__return_true'
-    ));
-}
-function post_events(WP_REST_Request $request)
+function zhppl_post_events(WP_REST_Request $request)
 {
     // $headers['origin'][0] === 'http://localhost:3000'
     $file = $request->get_file_params();
@@ -35,7 +23,7 @@ function post_events(WP_REST_Request $request)
         'to_confirm' => $to_confirm,
         'id' => $id,
         'token' => $key
-    ) = $request;
+        ) = $request;
 
     if($id && $key) {
         $status = get_post_status($id);
@@ -160,3 +148,15 @@ function post_events(WP_REST_Request $request)
         'message' => 'Sprawdź swojego maila i kliknij w link aby potwierdzić swoje wydarzenie.'
     );
 }
+
+function zhppl_register_rest_post_events()
+{
+    register_rest_route('wp/v2', '/post-events', array(
+        'methods' => 'POST',
+        'callback' => 'zhppl_post_events',
+        'permission_callback'=>'__return_true'
+    ));
+}
+
+// none logged users can add new event
+add_action('rest_api_init', 'zhppl_register_rest_post_events');

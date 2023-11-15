@@ -1,6 +1,4 @@
 <?php
-
-
 acf_add_local_field_group(array(
     'key' => 'group_6057099b2162c',
     'title' => 'Strona główna',
