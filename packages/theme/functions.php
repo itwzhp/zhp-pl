@@ -577,10 +577,10 @@ add_action('rest_api_init', 'register_rest_menus');
 function register_rest_menus() {
     register_rest_route('wp/v2', '/menus', array(
         'methods' => 'GET',
-        'callback' => 'get_menus'
+        'callback' => 'zhp_route_get_menus'
     ));
 }
-function get_menus(WP_REST_Request $request) {
+function zhp_route_get_menus(WP_REST_Request $request) {
     $nav_menus = array();
     $registered_nav_menus = get_nav_menu_locations();
     foreach ($registered_nav_menus as $location => $id) {
@@ -598,10 +598,10 @@ add_action('rest_api_init', 'register_rest_instagram');
 function register_rest_instagram() {
     register_rest_route('wp/v2', '/instagram', array(
         'methods' => 'GET',
-        'callback' => 'get_instagram'
+        'callback' => 'zhp_route_get_instagram'
     ));
 }
-function get_instagram(WP_REST_Request $request) {
+function zhp_route_get_instagram(WP_REST_Request $request) {
     $instagram = do_shortcode('[instagram-feed]');
     return $instagram;
 }
@@ -610,10 +610,10 @@ add_action('rest_api_init', 'register_rest_random');
 function register_rest_random() {
     register_rest_route('wp/v2', '/random', array(
         'methods' => 'GET',
-        'callback' => 'get_random'
+        'callback' => 'zhp_route_get_random'
     ));
 }
-function get_random(WP_REST_Request $request) {
+function zhp_route_get_random(WP_REST_Request $request) {
     $args = array(
         'post_status' => 'publish',
         'post_type' => 'random',
@@ -733,10 +733,10 @@ add_action('rest_api_init', 'register_rest_options');
 function register_rest_options() {
     register_rest_route('wp/v2', '/options', array(
         'methods' => 'GET',
-        'callback' => 'get_options'
+        'callback' => 'zhp_route_get_options'
     ));
 }
-function get_options(WP_REST_Request $request) {
+function zhp_route_get_options(WP_REST_Request $request) {
     return (object) array(
         'mourning' => get_theme_mod('mourning', ''),
         'domains' => get_theme_mod('domains', ''),
@@ -747,10 +747,10 @@ add_action('rest_api_init', 'register_rest_events');
 function register_rest_events() {
     register_rest_route('wp/v2', '/acf-events', array(
         'methods' => 'GET',
-        'callback' => 'get_acf_events'
+        'callback' => 'zhp_route_get_acf_events'
     ));
 }
-function get_acf_events(WP_REST_Request $request) {
+function zhp_route_get_acf_events(WP_REST_Request $request) {
     // request params
     list(
         'per_page' => $per_page,
@@ -899,10 +899,10 @@ add_action('rest_api_init', 'register_rest_post_events');
 function register_rest_post_events() {
     register_rest_route('wp/v2', '/post-events', array(
         'methods' => 'POST',
-        'callback' => 'post_events'
+        'callback' => 'zhp_route_post_events'
     ));
 }
-function post_events(WP_REST_Request $request) {
+function zhp_route_post_events(WP_REST_Request $request) {
     // $headers['origin'][0] === 'http://localhost:3000'
     $file = $request->get_file_params();
     list(
