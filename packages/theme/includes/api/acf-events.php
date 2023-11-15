@@ -1,15 +1,6 @@
 <?php
 
-add_action('rest_api_init', 'register_rest_events');
-function register_rest_events()
-{
-    register_rest_route('wp/v2', '/acf-events', array(
-        'methods' => 'GET',
-        'callback' => 'get_acf_events',
-        'permission_callback'=>'__return_true'
-    ));
-}
-function get_acf_events(WP_REST_Request $request)
+function zhppl_get_acf_events(WP_REST_Request $request)
 {
     // request params
     list(
@@ -22,7 +13,7 @@ function get_acf_events(WP_REST_Request $request)
         'localizations' => $localizations,
         'without_outdated' => $without_outdated,
         'event_categories' => $event_categories,
-    ) = $request;
+        ) = $request;
 
     // meta_query -> date from ACF
     $meta_query = array(
@@ -154,3 +145,14 @@ function get_acf_events(WP_REST_Request $request)
 
     return $response;
 }
+
+function zhppl_register_rest_events()
+{
+    register_rest_route('wp/v2', '/acf-events', array(
+        'methods' => 'GET',
+        'callback' => 'zhppl_get_acf_events',
+        'permission_callback'=>'__return_true'
+    ));
+}
+
+add_action('rest_api_init', 'zhppl_register_rest_events');

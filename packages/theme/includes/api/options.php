@@ -1,15 +1,5 @@
 <?php
-
-add_action('rest_api_init', 'register_rest_options');
-function register_rest_options()
-{
-    register_rest_route('wp/v2', '/options', array(
-        'methods' => 'GET',
-        'callback' => 'get_options',
-        'permission_callback'=>'__return_true'
-    ));
-}
-function get_options(WP_REST_Request $request)
+function zhppl_get_options(WP_REST_Request $request)
 {
     $config = require_once __DIR__.'/../../config/colors.php';
     $palette = new Palette();
@@ -42,3 +32,14 @@ function get_options(WP_REST_Request $request)
         'custom_css' => trim(str_replace(["\r", "\n"], ' ', wp_get_custom_css())),
     );
 }
+
+function zhppl_register_rest_options()
+{
+    register_rest_route('wp/v2', '/options', array(
+        'methods' => 'GET',
+        'callback' => 'zhppl_get_options',
+        'permission_callback'=>'__return_true'
+    ));
+}
+
+add_action('rest_api_init', 'zhppl_register_rest_options');
