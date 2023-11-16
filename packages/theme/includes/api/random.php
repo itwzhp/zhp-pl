@@ -6,11 +6,11 @@ function register_rest_random()
 {
     register_rest_route('wp/v2', '/random', array(
         'methods' => 'GET',
-        'callback' => 'get_random',
+        'callback' => 'zhp_route_get_random',
         'permission_callback'=>'__return_true'
     ));
 }
-function get_random(WP_REST_Request $request)
+function zhp_route_get_random(WP_REST_Request $request)
 {
     $args = array(
         'post_status' => 'publish',

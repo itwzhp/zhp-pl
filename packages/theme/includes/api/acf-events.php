@@ -5,11 +5,11 @@ function register_rest_events()
 {
     register_rest_route('wp/v2', '/acf-events', array(
         'methods' => 'GET',
-        'callback' => 'get_acf_events',
+        'callback' => 'zhp_route_get_acf_events',
         'permission_callback'=>'__return_true'
     ));
 }
-function get_acf_events(WP_REST_Request $request)
+function zhp_route_get_acf_events(WP_REST_Request $request)
 {
     // request params
     list(
