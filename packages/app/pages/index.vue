@@ -244,13 +244,6 @@
             :src="`${$config.mediaBaseURL}/wp-content/uploads/2020/11/ROHIS.png`"
           />
         </ZLink>
-        <ZLink
-            to="https://www.lasy.gov.pl/"
-        >
-          <ZImage
-            :src="`${$config.mediaBaseURL}/wp-content/uploads/2023/06/logo-lp.png`"
-          />
-        </ZLink>
       </div>
     </ZSection>
   </div>
