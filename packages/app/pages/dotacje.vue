@@ -67,6 +67,12 @@ export default {
           thumbnail: `${this.$config.mediaBaseURL}/wp-content/uploads/2023/11/01_znak_podstawowy_kolor_biale_tlo-1.png`,
           title: 'Laboratoria Przyszłości',
           to: 'laboratoria-przyszlosci'
+        },
+        {
+          id: '551',
+          thumbnail: `${this.$config.mediaBaseURL}/wp-content/uploads/2024/01/zhp_bsp_michal_wiraszka-82.jpg`,
+          title: 'WOW w ZHP',
+          to: 'wsparcie-organizacji-wolontariatu-w-ngo-wow-w-zhp'
         }
       ]
     }
